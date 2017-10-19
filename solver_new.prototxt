@@ -18,3 +18,4 @@ solver_mode: GPU
 solver_type: ADADELTA
 delta: 1e-6
 
+a dummy test
