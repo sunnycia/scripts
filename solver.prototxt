@@ -1,0 +1,18 @@
+train_net: "train.prototxt"
+base_lr: 0.01
+lr_policy: "inv"
+gamma: 0.0001
+power:0.75
+momentum: 0.9
+weight_decay: 0.0005
+
+display: 100
+#average_loss: 100
+iter_size: 1
+# function
+snapshot: 10000
+snapshot_prefix: "training_output"
+#debug_info: true
+solver_mode: GPU
+solver_type: ADADELTA
+delta: 1e-6
