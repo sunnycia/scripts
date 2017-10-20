@@ -10,8 +10,8 @@ display: 100
 #average_loss: 100
 iter_size: 1
 # function
-snapshot: 10000
-snapshot_prefix: "training_output"
+snapshot: 100000
+snapshot_prefix: "../training_output/salicon/snapshot"
 #debug_info: true
 solver_mode: GPU
 solver_type: ADADELTA
