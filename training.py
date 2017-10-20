@@ -1,33 +1,46 @@
+import argparse
 import cv2
 import os
 import glob
 import cPickle as pkl
 import numpy as np
-from PIL import Image
-import pdb
-import matplotlib.pyplot as plt
 import sys
 import time
-# export PYTHONPATH="/home/sunnycia/caffe/python:$PYTHONPATH"
 import caffe
+from random import shuffle
+from utils.file_check import check_path_list
 caffe.set_mode_gpu()
 caffe.set_device(0)
 
+def get_arguments():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--snapshot', type=bool, default=False, help='Snapshot mode or not.')
+    parser.add_argument('--size', type=int, default=1000, help='Dataset length.Show/Cut')
+    parser.add_argument('--debug', type=bool, required=True, help='If debug is ture, a mini set will run into training.Or a complete set will.')
+    return parser.parse_args()
+
+##### Data preparation section.
 ## load training data
-snapshot=True
+### generate solver file
+
 solver_path = 'solver.prototxt'
 pretrained_model_path= '../pretrained_model/ResNet-50-model.caffemodel'
 snapshot_path = '/data/sunnycia/saliency_on_videoset/Train/training_output/salicon/snapshot_iter_100000.solverstate'
-frames_path = '../dataset/salicon_frame-mini.pkl'
-densitys_path = '../dataset/salicon_density-mini.pkl'
+frames_path = '../dataset/salicon_frame.pkl'
+densitys_path = '../dataset/salicon_density.pkl'
 
-#####
+path_list = [solver_path, pretrained_model_path, snapshot_path, frames_path, densitys_path]
+# check_path_list(path_list)
+# frames = pkl.load(open(frames_path, 'rb'))
+# densitys = pkl.load(open(densitys_path, 'rb'))
+frame_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/train2014/images'
+density_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/train2014/density'
+
+print "Parsing arguments..."
+args = get_arguments()
 print "Loading data..."
 MEAN_VALUE = np.array([103.939, 116.779, 123.68], dtype=np.float32)   # B G R/ use opensalicon's mean_value
 MEAN_VALUE = MEAN_VALUE[None, None, ...]
-
-frame_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/train2014/images'
-density_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/train2014/density'
 
 frame_path_list = glob.glob(os.path.join(frame_basedir, '*.*'))
 density_path_list = glob.glob(os.path.join(density_basedir, '*.*'))
@@ -46,23 +59,25 @@ for (frame_path, density_path) in zip(frame_path_list, density_path_list):
     density = density/255.
     frames.append(frame)
     densitys.append(density)
-    if len(frames) % 1000 == 0:
-        print len(frames)
+    if len(frames) % args.size == 0:
+        if args.debug==True:
+            break
+        else:
+            print len(frames)
 
-#####
-# frames = pkl.load(open(frames_path, 'rb'))
-# densitys = pkl.load(open(densitys_path, 'rb'))
-
+##### Training section
+perm = shuffle(np.arange(len(frame)))
+frames = np.array(frames)[perm]
+densitys = np.array(densitys)[perm]
 # load the solver
 solver = caffe.AdaDeltaSolver(solver_path)
-# solver.net.copy_from(pretrained_model_path) # untrained.caffemodel
-if snapshot
-solver.restore(snapshot_path)
-# solver.net.copy_from(pretrained_model_path) # untrained.caffemodel
+if args.snapshot == True:
+    solver.restore(snapshot_path)
+else:
+    solver.net.copy_from(pretrained_model_path) # untrained.caffemodel
 start_time = time.time()
-idx_counter = 0
 epoch=10
-# for e in range(epoch):
+idx_counter = 0
 while time.time() - start_time < 43200*2:
     batch = np.random.permutation(len(frames))
     for i in range(0, len(batch)):
@@ -74,6 +89,3 @@ while time.time() - start_time < 43200*2:
         solver.net.blobs['data'].data[...] = frame
         solver.net.blobs['ground_truth'].data[...] = density
         solver.step(1)
-    #     if int(time.time() - start_time) % 10000 == 0:
-    #         solver.net.save('train_output/finetuned_salicon_{}.caffemodel'.format(idx_counter))
-    # solver.net.save('train_output/finetuned_salicon_{}.caffemodel'.format(idx_counter))
