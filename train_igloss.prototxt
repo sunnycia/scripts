@@ -2620,9 +2620,20 @@ layer {
   param { lr_mult: 1 decay_mult: 0 }
 }
 
+
 layer{
-  name: "loss"
+  name: "eucloss"
   type: "EuclideanLoss"
+  bottom: "saliency_map"
+  bottom: "ground_truth"
+  top: "eucloss"
+  loss_weight: 1
+}
+
+
+layer{
+  name: "igloss"
+  type: "InfogainLoss"
   bottom: "saliency_map"
   bottom: "ground_truth"
   top: "loss"

@@ -1,14 +1,14 @@
 base_lr: 0.01
 delta: 1e-6
 display: 100
-gamma: 0.0001
+gamma: 0.1
 iter_size: 1
 lr_policy: "inv"
 momentum: 0.9
 power: 0.75
 snapshot: 50000
-snapshot_prefix: "../training_output/salicon/snapshot-train_nss-kldloss"
+snapshot_prefix: "../training_output/saliconsnapshot-gamma-0.1"
 solver_mode: GPU
 solver_type: ADADELTA
-train_net: "train_nss-kldloss.prototxt"
+train_net: "train.prototxt"
 weight_decay: 0.0005
