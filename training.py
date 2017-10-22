@@ -23,6 +23,20 @@ def get_arguments():
     return parser.parse_args()
 
 print "Parsing arguments..."
+##
+pretrained_model_path= '../pretrained_model/ResNet-50-model.caffemodel'
+snapshot_path = '/data/sunnycia/saliency_on_videoset/Train/training_output/salicon/snapshot-train_kldloss_withouteuc_iter_100000.solverstate'
+
+# path_list = [solver_path, pretrained_model_path, snapshot_path]
+# check_path_list(path_list)
+
+# frames_path = '../dataset/salicon_frame.pkl'
+# densitys_path = '../dataset/salicon_density.pkl'
+# frames = pkl.load(open(frames_path, 'rb'))
+# densitys = pkl.load(open(densitys_path, 'rb'))
+frame_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/train2014/images'
+density_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/train2014/density'
+
 args = get_arguments()
 
 ##### Data preparation section.
@@ -37,11 +51,10 @@ snapshot_dirname = os.path.dirname(snapshot_prefix)
 if not os.path.isdir(snapshot_dirname):
     os.makedirs(snapshot_dirname)
 
-
 update_dict = {
 }
 
-postfix_str=training_protopath.split('.')[0]
+postfix_str=os.path.basename(training_protopath).split('.')[0]
 for key in update_dict:
     solverproto.sp[key] = update_dict[key]
     postfix_str += '-'+key +'-'+ update_dict[key]
@@ -50,21 +63,6 @@ print "snapshot will be save to", snapshot_prefix, "..."
 solverproto.sp['snapshot_prefix'] = snapshot_prefix
 solverproto.write(solver_path);
 ##
-
-
-##
-pretrained_model_path= '../pretrained_model/ResNet-50-model.caffemodel'
-snapshot_path = '/data/sunnycia/saliency_on_videoset/Train/training_output/salicon/snapshot_iter_100000.solverstate'
-frames_path = '../dataset/salicon_frame.pkl'
-densitys_path = '../dataset/salicon_density.pkl'
-
-path_list = [solver_path, pretrained_model_path, snapshot_path, frames_path, densitys_path]
-# check_path_list(path_list)
-# frames = pkl.load(open(frames_path, 'rb'))
-# densitys = pkl.load(open(densitys_path, 'rb'))
-frame_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/train2014/images'
-density_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/train2014/density'
-
 
 print "Loading data..."
 MEAN_VALUE = np.array([103.939, 116.779, 123.68], dtype=np.float32)   # B G R/ use opensalicon's mean_value
