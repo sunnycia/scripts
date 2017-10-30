@@ -7,21 +7,34 @@
 metricsFolder = 'code4metric'
 addpath(genpath(metricsFolder))
 
-% folder_list={'snapshot-train_kldloss_iter_850000', 'snapshot-train_kldloss_withouteuc_iter_150000'}
-folder_list={'snapshot-train_nss-kldloss_withouteuc_iter_150000', 'snapshot-train_nssloss_iter_550000', 'snapshot-train_nssloss_withouteuc_iter_100000'}
+% folder_list={'snapshot_iter_600000', 'snapshot-train_kldloss_iter_850000', 'snapshot-train_kldloss_withouteuc_iter_150000'}
+folder_list={'sam'}
 
+ds_name='salicon_';
+sal_base = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/saliency/';
 dens_dir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/density';
 fixa_dir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/fixation';
 
-for i=1:length(folder_list)
-    folder = folder_list(i)
+% sal_base = '/data/sunnycia/SaliencyDataset/Image/NUS/saliency';
+% dens_dir = '/data/sunnycia/SaliencyDataset/Image/NUS/Density';
+% fixa_dir = '/data/sunnycia/SaliencyDataset/Image/NUS/Fixation';
 
-    sal_dir = char(fullfile('/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/saliency/', folder))
+% sal_base = '/data/sunnycia/SaliencyDataset/Image/MIT1003/saliency'
+% dens_dir = '/data/sunnycia/SaliencyDataset/Image/MIT1003/ALLFIXATIONMAPS'
+% fixa_dir = '/data/sunnycia/SaliencyDataset/Image/MIT1003/fixPts'
+
+
+for i=1:length(folder_list)
+    folder = folder_list(i);
+
+    sal_dir = char(fullfile(sal_base, folder));
     save_base_dir = '/data/sunnycia/saliency_on_videoset/Train/metric';
 
-    s = dir(fullfile(sal_dir, '*.jpg'));
-    d = dir(fullfile(dens_dir, '*.jpg'));
-    f = dir(fullfile(fixa_dir, '*.mat'));
+
+
+    s = dir(fullfile(sal_dir, '*.*'));
+    d = dir(fullfile(dens_dir, '*.*'));
+    f = dir(fullfile(fixa_dir, '*.*'));
 
     saliencymap_path_list = {s.name};
     densitymap_path_list = {d.name};
@@ -31,7 +44,7 @@ for i=1:length(folder_list)
     fixationmap_path_list = sort(fixationmap_path_list);
     % disp(saliencymap_path_list);
 
-    LengthFiles = length(saliencymap_path_list);
+    LengthFiles = length(saliencymap_path_list)
     saliency_score_CC = zeros(1,LengthFiles);
     saliency_score_SIM = zeros(1,LengthFiles);
     saliency_score_JUD = zeros(1,LengthFiles);
@@ -41,31 +54,30 @@ for i=1:length(folder_list)
     saliency_score_KL = zeros(1,LengthFiles);
     saliency_score_NSS = zeros(1,LengthFiles);
 
-    for j = 1 : LengthFiles
-        sal_map_path = char(saliencymap_path_list(j))
-        dens_map_path = char(densitymap_path_list(j))
-        fix_map_path = char(fixationmap_path_list(j))
+    for j = 3 : LengthFiles
+        sal_map_path = char(saliencymap_path_list(j));
+        dens_map_path = char(densitymap_path_list(j));
+        fix_map_path = char(fixationmap_path_list(j));
         [pathstr,sname,ext] = fileparts(sal_map_path);
         [pathstr,dname,ext] = fileparts(dens_map_path);
         [pathstr,fname,ext] = fileparts(fix_map_path);
 
-        % sname, dname, fname;
+        sname, dname, fname
         assert( strcmp(sname, dname)==1 && strcmp(dname, fname)==1)
 
         smap_path = fullfile(sal_dir, sal_map_path);
         density_path = fullfile(dens_dir, dens_map_path);
         fixation_path = fullfile(fixa_dir, fix_map_path);
 
-
-
         image_saliency = imread(smap_path);
         image_density = imread(density_path);
         load(fixation_path);
         image_fixation = fixation;
+        % image_fixation = imread(fixation_path);
         
 
         %% CC %%
-        %tic
+        tic
         saliency_score_CC(j) = CC(image_saliency, image_density);
         %toc
         %% SIM %% 
@@ -101,8 +113,8 @@ for i=1:length(folder_list)
         %% NSS %%
         %tic
         saliency_score_NSS(j)=NSS(image_saliency, image_density);
-        %toc
-        % fprintf('Done for %s\n', smap_path);
+        toc
+        fprintf('Done for %s\n', char(smap_path));
     end
     saliency_score=[saliency_score_CC;saliency_score_SIM;
                     saliency_score_JUD;saliency_score_BOR;
@@ -110,9 +122,9 @@ for i=1:length(folder_list)
                     saliency_score_KL;saliency_score_NSS;];
 
     % [pathstr,modelname,ext] = fileparts(sal_dir);
-    save_name = strcat(folder, '.mat');
+    save_name = strcat(ds_name, folder, '.mat');
     save_path = fullfile(save_base_dir, save_name);
     save(char(save_path), 'saliency_score');
-    fprintf('%s saved\n',save_path);
+    % fprintf('%s saved\n',save_path);
 
 end

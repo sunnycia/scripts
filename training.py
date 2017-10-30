@@ -47,17 +47,23 @@ solver_path = args.solver_prototxt
 solverproto = CaffeSolver(trainnet_prototxt_path=training_protopath)
 
 snapshot_prefix = solverproto.sp['snapshot_prefix'][1:-1]
-snapshot_dirname = os.path.dirname(snapshot_prefix)
+snapshot_dirname = os.path.join(os.path.dirname(snapshot_prefix), os.path.basename(snapshot_prefix).split('.')[0])
 if not os.path.isdir(snapshot_dirname):
     os.makedirs(snapshot_dirname)
 
 update_dict = {
+'solver_type':'SGD'
+}
+extrainfo_dict = {
 }
 
 postfix_str=os.path.basename(training_protopath).split('.')[0]
 for key in update_dict:
     solverproto.sp[key] = update_dict[key]
     postfix_str += '-'+key +'-'+ update_dict[key]
+for key in extrainfo_dict:
+    postfix_str += '-'+key+ '-'+ extrainfo_dict[key]
+
 snapshot_prefix = '"'+ snapshot_dirname + '/snapshot-' + postfix_str+ '"'
 print "snapshot will be save to", snapshot_prefix, "..."
 solverproto.sp['snapshot_prefix'] = snapshot_prefix

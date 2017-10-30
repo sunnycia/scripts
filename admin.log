@@ -1,0 +1,55 @@
+INFO: Existing model name
+	../training_output/salicon/train_nss-kldloss/snapshot-train_nss-kldloss_iter_50000.caffemodel
+	../training_output/salicon/train_nssloss/snapshot-train_nssloss_iter_550000.caffemodel
+	../training_output/salicon/euc/snapshot_iter_600000.caffemodel
+	../training_output/salicon/train_kldloss_withouteuc/snapshot-train_kldloss_withouteuc_iter_150000.caffemodel
+	../training_output/salicon/train_nssloss_withouteuc/snapshot-train_nssloss_withouteuc_iter_100000.caffemodel
+	../training_output/salicon/train_kldloss/snapshot-train_kldloss_iter_850000.caffemodel
+	../training_output/salicon/train_kldloss/snapshot-train_kldloss_iter_1050000.caffemodel
+	../training_output/salicon/train_kldloss_withouteuc/snapshot-train_kldloss_withouteuc_iter_1100000.caffemodel
+	../training_output/salicon/train_nss_kldloss_goodweight-solver_type-SGD/snapshot-train_nss_kldloss_goodweight-solver_type-SGD_iter_400000.caffemodel
+	../training_output/salicon/train_nss_kldloss_withouteuc/snapshot-train_nss_kldloss_withouteuc_iter_700000.caffemodel
+	../training_output/salicon/train_nss_kldloss_goodweight/snapshot-train_nss_kldloss_goodweight_iter_500000.caffemodel
+	../training_output/salicon/train_nss_kldloss_goodweight-solver_type-SGD/snapshot-train_nss_kldloss_goodweight-solver_type-SGD_iter_600000.caffemodel
+	../training_output/salicon/train_nss_kldloss_withouteuc/snapshot-train_nss_kldloss_withouteuc_iter_900000.caffemodel
+	../training_output/salicon/train_nss_kldloss_goodweight/snapshot-train_nss_kldloss_goodweight_iter_700000.caffemodel
+14 in total.
+INFO: Existing done saliency.
+INFO:  /data/sunnycia/SaliencyDataset/Image/CAT2000/trainSet/combine/saliency
+	snapshot-train_kldloss_iter_850000
+	snapshot-train_kldloss_withouteuc_iter_150000
+	snapshot-train_nss-kldloss_iter_50000
+	snapshot-train_nssloss_iter_550000
+	snapshot_iter_600000
+5 in total.
+INFO:  /data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/saliency
+	snapshot-train_kldloss_iter_850000
+	snapshot-train_kldloss_withouteuc_iter_150000
+	snapshot-train_nss-kldloss_iter_50000
+	snapshot-train_nssloss_iter_550000
+	snapshot_iter_600000
+5 in total.
+INFO:  /data/sunnycia/SaliencyDataset/Image/MIT1003/saliency
+	snapshot-train_kldloss_iter_850000
+	snapshot-train_kldloss_withouteuc_iter_150000
+	snapshot-train_nss-kldloss_iter_50000
+	snapshot-train_nssloss_iter_550000
+	snapshot_iter_600000
+5 in total.
+INFO: Existing done mit1003 metric.
+	/data/sunnycia/saliency_on_videoset/Train/metric/mit1003_snapshot_iter_600000.mat
+	/data/sunnycia/saliency_on_videoset/Train/metric/mit1003_snapshot-train_kldloss_iter_850000.mat
+	/data/sunnycia/saliency_on_videoset/Train/metric/mit1003_snapshot-train_kldloss_withouteuc_iter_150000.mat
+	/data/sunnycia/saliency_on_videoset/Train/metric/mit1003_snapshot-train_nss-kldloss_iter_50000.mat
+	/data/sunnycia/saliency_on_videoset/Train/metric/mit1003_snapshot-train_nssloss_iter_550000.mat
+5 in total.
+INFO: Existing done salicon metric.
+	/data/sunnycia/saliency_on_videoset/Train/metric/salicon_snapshot-train_nssloss_withouteuc_iter_100000.mat
+	/data/sunnycia/saliency_on_videoset/Train/metric/salicon_snapshot-train_nssloss_iter_550000.mat
+	/data/sunnycia/saliency_on_videoset/Train/metric/salicon_snapshot-train_kldloss_withouteuc_iter_150000.mat
+	/data/sunnycia/saliency_on_videoset/Train/metric/salicon_snapshot-train_kldloss_iter_850000.mat
+	/data/sunnycia/saliency_on_videoset/Train/metric/salicon_snapshot-train_nss-kldloss_withouteuc_iter_150000.mat
+	/data/sunnycia/saliency_on_videoset/Train/metric/salicon_snapshot_iter_600000.mat
+	/data/sunnycia/saliency_on_videoset/Train/metric/salicon_snapshot-train_nss-kldloss_iter_50000.mat
+	/data/sunnycia/saliency_on_videoset/Train/metric/salicon_training_output_iter_390000.mat
+8 in total.
