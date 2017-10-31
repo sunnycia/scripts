@@ -1,0 +1,1329 @@
+    1  make -j32
+    2   cd ~/pwd/saliency_on_videoset/_Train/
+    3  git clone https://github.com/ndrplz/dilation-tensorflow.git
+    4  cd dilation-tensorflow/
+    5  python main_tf.py 
+    6  python
+    7  pytho
+    8  python
+    9  vim ~/.bashrc
+   10  source ~/.bashrc
+   11  python
+   12  pwd
+   13  cd /home/sunnycia/pwd/saliency_on_videoset/_Train/Deep-Feature-Flow-master
+   14  ls model/
+   15  python ./rfcn/demo.py
+   16  pip install easydict
+   17  python ./rfcn/demo.py
+   18  pip install mxnet
+   19  ls
+   20  python
+   21  cd /home/sunnycia/pwd/saliency_on_videoset/_Train/dilation-tensorflow
+   22  python
+   23  python main_tf.py 
+   24  vim ~/.bashrc
+   25  source ~/.bashrc
+   26  python
+   27  pwd
+   28  top
+   29  cd 
+   30  cd pwd/saliency_on_videoset/_Train/dilation-tensorflow/
+   31  python
+   32  python main_tf.py 
+   33  exit()
+   34  pip uninstall tensorflow
+   35  pip uninstall tensorflow-gpu
+   36  cd ~
+   37  git clone https://github.com/tensorflow/tensorflow 
+   38  unzip tensorflow-master.zip 
+   39  cd tensorflow-master/
+   40  git checkout
+   41  python
+   42  cd ~
+   43  python
+   44  pip install tensorflow
+   45  cd pwd/saliency_on_videoset/_Train/dilation-tensorflow/
+   46  python main_tf.py 
+   47  python
+   48  pip install opencv-python
+   49  python main_tf.py 
+   50  pip uninstall tensorflow
+   51  git clone https://github.com/bazelbuild/bazel.git
+   52  cd ~
+   53  git clone https://github.com/bazelbuild/bazel.git
+   54  python
+   55  pip install --ignore-installed --upgrade https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.3.0-cp34-cp34m-linux_x86_64.whl
+   56  pip install --ignore-installed https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.3.0-cp36-cp36m-linux_x86_64.whl
+   57  python
+   58  locate libcudnn*
+   59  ls /usr/local
+   60  cd cuda
+   61  cd /usr/local/cuda
+   62  ls
+   63  cd lib
+   64  cd lib64/
+   65  ls
+   66  ls lib cudnn*
+   67  ls libcudnn*
+   68  ls -l libcudnn*
+   69  nvidia-smi
+   70  top
+   71  cd pwd/saliency_on_videoset/_Train/
+   72  ls
+   73  git clone https://github.com/sampepose/flownet2-tf.git
+   74  ls
+   75  ls flow*
+   76  unzip flownet2-tf.zip 
+   77  cd flownet2-tf/
+   78  pip install enum
+   79  python
+   80  cd checkpoints/
+   81  bash download.sh 
+   82  vim download.sh 
+   83  bash download.sh 
+   84  ls
+   85  tar -xzvf weights.tar.gz 
+   86  cd ..
+   87  ls src
+   88  python -m src.flownet2.test --input_a data/samples/0img0.ppm --input_b data/samples/0img1.ppm --out ./
+   89  python
+   90  vim ~/.bahsrc
+   91  vim ~/.bashrc
+   92  source ~/.bashrc
+   93  python -m src.flownet2.test --input_a data/samples/0img0.ppm --input_b data/samples/0img1.ppm --out ./
+   94  cd pwd/saliency_on_videoset/_Train/
+   95  cd flownet2-tf/
+   96  python -m src.flownet2.test --input_a data/samples/0img0.ppm --input_b data/samples/0img1.ppm --out ./
+   97  python
+   98  vim ~/.bahsrc
+   99  vim ~/.bashrc
+  100  source ~/.bashrc
+  101  python
+  102  cd pwd/saliency_on_videoset/_Train/flownet2-tf/
+  103  python -m src.flownet2.test --input_a data/samples/0img0.ppm --input_b data/samples/0img1.ppm --out ./
+  104  pip install image
+  105  python -m src.flownet2.test --input_a data/samples/0img0.ppm --input_b data/samples/0img1.ppm --out ./
+  106  make all
+  107  nvcc
+  108  ls /usr/lib/nvi*
+  109  ls /usr/lib
+  110  ls nvidia-current
+  111  nvcc
+  112  vim ~/.bash_profile 
+  113  vim ~/.bashrc
+  114  source ~/.bashrc
+  115  nvcc
+  116  cd pwd/saliency_on_videoset/_Train/flownet2-tf/
+  117  python -m src.flownet2.test --input_a data/samples/0img0.ppm --input_b data/samples/0img1.ppm --out ./
+  118  make clean
+  119  make all
+  120  make clean
+  121  make -j16 all
+  122  python -m src.flownet2.test --input_a data/samples/0img0.ppm --input_b data/samples/0img1.ppm --out ./
+  123  python -m src.flownet2.test --input_a data/samples/frame88.bmp --input_b data/samples/frame90.bmp --out ./
+  124  python -m src.flownet2.test --input_a data/samples/0img0.ppm --input_b data/samples/0img1.ppm --out ./
+  125  export CUDA_VISIBLE_DEVICES=6
+  126  python -m src.flownet2.test --input_a data/samples/0img0.ppm --input_b data/samples/0img1.ppm --out ./
+  127  python -m src.flownet2.test --input_a data/samples/frame88.bmp --input_b data/samples/frame90.bmp --out ./
+  128  cd ..
+  129  git clone https://github.com/shekkizh/FCN.tensorflow.git
+  130  unzip FCN.tensorflow.zip 
+  131  cd FCN.tensorflow/
+  132  ls
+  133  python FCN.py 
+  134  cd Data_zoo/MIT_SceneParsing/
+  135  unzip ADEChallengeData2016.zip 
+  136  cd ../..
+  137  python FCN.py 
+  138  df -h
+  139  cd /
+  140  cd /data/
+  141  ls
+  142  cd sunnycia/
+  143  ls
+  144  cd YouTube8m/
+  145  ls
+  146  cd ..
+  147  rm -rf YouTube8m/
+  148  df -h
+  149  pwd
+  150  cd ~/pwd/
+  151  du -h --max-depth=1 ./
+  152  mv saliency_on_videoset/ /data/sunnycia/
+  153  df -h
+  154  ln -s /data/sunnycia/saliency_on_videoset/ saliency_on_videoset
+  155  cd saliency_on_videoset/
+  156  pwd
+  157  cd pwd/saliency_on_videoset/
+  158  ls
+  159  cd _Train/
+  160  cd FCN.tensorflow/
+  161  python FCN.py 
+  162  df -h
+  163  ls /data
+  164  ls /data/zhangpp/
+  165  python FCN.py 
+  166  cd pwd/saliency_on_videoset/
+  167  pwd
+  168  cd _Train/FCN.tensorflow/
+  169  python FCN.py 
+  170  top
+  171  nvidia-smi 
+  172  export CUDA_VISIBLE_DEVICES=6
+  173  python FCN.py 
+  174  cd pwd/saliency_on_videoset/_Train/
+  175  cd FCN.tensorflow/
+  176  python FCN --mode=test
+  177  python FCN.py --mode=test
+  178  bash ~/setup.sh 
+  179  vim ~/setup.sh 
+  180  bash ~/setup.sh 
+  181  nvidia-smi
+  182  top
+  183  python FCN.py --mode=test
+  184  python FCN.py --mode=visualize
+  185  python FCN_inference.py 
+  186  export CUDA_VISIBLE_DEVICES=6
+  187  nvidia-smi
+  188  python FCN_inference.py 
+  189  xtermxtermxterm
+  190  python FCN_inference.py 
+  191  top
+  192  nvidia-smi
+  193  top
+  194  free -h
+  195  nvidia-smi
+  196  ls
+  197  cd pwd/
+  198  ln -s /data/sunnycia/pwd/Industry/ Industry
+  199  cd Industry/
+  200  unzip A61.zip 
+  201  cd ~/pwd/saliency_on_videoset/_Train/
+  202  ls
+  203  cd YT8M/
+  204  ls
+  205  cd yt8m-feature-extractor/
+  206  ls
+  207  pwd
+  208  th
+  209  luarock
+  210  cd pwd/saliency_on_videoset/_Train/YT8M/
+  211  l
+  212  ls
+  213  cd yt8m-feature-extractor/
+  214  pwd
+  215  cd /data/sunnycia/pwd/Industry/A61深度学习/黄保胶
+  216  python parse_model.py 
+  217  PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
+  218  python parse_model.py 
+  219  unzip tensorflow-vgg-master.zip 
+  220  cd tensorflow-vgg-master/
+  221  ls
+  222  cd ..
+  223  ls
+  224  cd data/
+  225  ls
+  226  python gen_list.py 
+  227  python gen_dat.py 
+  228  cd training/OK/
+  229  ls 
+  230  python
+  231  cd ..
+  232  python gen_dat.py 
+  233  python
+  234  python gen_dat.py 
+  235  python gen_lbl.py 
+  236  ls
+  237  cd ..
+  238  python calc_mean.py 
+  239  cd data/
+  240  cd _scripts/
+  241  python gen_dat.py 
+  242  python gen_dat.py training
+  243  python gen_dat.py train_imgs.pkl train_lbls.pkl test_imgs.pkl test_lbls.pkl
+  244  cd ..
+  245  python train_vgg19.py 
+  246  cd data/_scripts/
+  247  python gen_dat.py 
+  248  history
+  249  python gen_dat.py train_imgs.pkl train_lbls.pkl test_imgs.pkl test_lbls.pkl
+  250  cd ../..
+  251  python train_vgg19.py 
+  252  python gen_dat.py train_imgs.pkl train_lbls.pkl test_imgs.pkl test_lbls.pkl
+  253  cd data/_scripts/
+  254  python gen_dat.py train_imgs.pkl train_lbls.pkl test_imgs.pkl test_lbls.pkl
+  255  cd pwd/Industry/
+  256  ls
+  257  cd A61/
+  258  l
+  259  ls
+  260  cd data/
+  261  python gen_dat.py 
+  262  top
+  263  nvidia-smi
+  264  free -h
+  265  top
+  266  nvidi-smi
+  267  nviid-amsi
+  268  nvidia-smi
+  269  top
+  270  free -h
+  271  top
+  272  free -h
+  273  cd pwd/Industry/A61/data/_scripts/
+  274  python gen_dat.py 
+  275  history
+  276  python gen_dat.py train_imgs.pkl train_lbls.pkl test_imgs.pkl test_lbls.pkl
+  277  cd ../..
+  278  python train_vgg19.py 
+  279  cd pwd/Industry/A61/
+  280  python train_vgg19.py 
+  281  nvidia-smi
+  282  export CUDA_VISIBLE_DEVICES=7
+  283  python train_vgg19.py 
+  284  cd data/_scripts/
+  285  python gen_dat.py train_imgs.pkl train_lbls.pkl test_imgs.pkl test_lbls.pkl
+  286  top
+  287  nvidia-smi
+  288  free -h
+  289  cd pwd/Industry/A61/
+  290  cd data/_scripts/
+  291  python gen_dat.py train_imgs.pkl train_lbls.pkl test_imgs.pkl test_lbls.pkl
+  292  python gen_dat.py 
+  293  python gen_dat.py train_imgs.pkl train_lbls.pkl test_imgs.pkl test_lbls.pkl
+  294  cd ../..
+  295  python train_vgg19.py 
+  296  nvidia-smi
+  297  python train_vgg19.py 
+  298  export CUDA_VISIBLE_DEVICES=7
+  299  python train_vgg19.py 
+  300  python
+  301  python train_vgg19.py 
+  302  cd data/_scripts/
+  303  python gen_dat.py 
+  304  python gen_dat.py train_imgs.pkl train_lbls.pkl test_imgs.pkl test_lbls.pkl
+  305  cd ../..
+  306  python train_vgg19.py 
+  307  cd data/_scripts/
+  308  python gen_dat.py 
+  309  python gen_dat.py train_imgs.pkl train_lbls.pkl test_imgs.pkl test_lbls.pkl
+  310  cd ../..
+  311  python train_vgg19.py 
+  312  cd data/_scripts/
+  313  python gen_dat.py train_imgs.pkl train_lbls.pkl test_imgs.pkl test_lbls.pkl
+  314  cd ../..
+  315  python train_vgg19.py 
+  316  nvidia-smi
+  317  python train_vgg19.py 
+  318  nvidia-smi
+  319  export CUDA_VISIBLE_DEVICES=1
+  320  cd pwd/Industry/A61/
+  321  python train_vgg19.py 
+  322  nvidia-smi
+  323  history
+  324  export CUDA_VISIBLE_DEVICES=0
+  325  cd pwd/Industry/A61/
+  326  python train_vgg19.py 
+  327  top
+  328  nvidia-smi
+  329  otp
+  330  top
+  331  export CUDA_VISIBLE_DEVICES=7
+  332  python train_vgg19.py 
+  333  cd pwd/Industry/A61/patch_based/
+  334  export CUDA_VISIBLE_DEVICES=6
+  335  python train_vgg19.py 
+  336  cd pwd/Industry/A61/patch_based/
+  337  python train_vgg19.py 
+  338  nvidia-smi
+  339  export CUDA_VISIBLE_DEVICES=7
+  340  python train_vgg19.py 
+  341  cd /data/sunnycia/pwd/Industry/A61/data/_scripts
+  342  python gen_list.py 
+  343  python gen_dat.py 
+  344  python gen_dat.py training_imgs.pkl training_lbls.pkl _ _
+  345  python gen_dat.py 
+  346  python gen_dat.py training_imgs.pkl training_lbls.pkl
+  347  python gen_dat.py training_imgs.pkl training_lbls.pkl _ _
+  348  nvidia-smi
+  349  cd pwd/Industry/A61/patch_based/
+  350  ls
+  351  export CUDA_VISIBLE_DEVICES=6
+  352  ls
+  353  python 4_convolutional_network.py 
+  354  python
+  355  python 4_convolutional_network.py 
+  356  export CUDA_VISIBLE_DEVICES=7
+  357  cd pwd/Industry/A61/patch_based/
+  358  python 4_convolutional_network.py 
+  359  nvidia-smi
+  360  top
+  361  nvidia-smi
+  362  cd pwd/Industry/A61/data/
+  363  cd _scripts/
+  364  python gen_dat.py 
+  365  python gen_dat.py training_imgs.pkl training_lbls.pkl _ _
+  366  export CUDA_VISIBLE_DEVICES=7
+  367  python 
+  368  cp -R /usr/local/caffe-master/examples/ ~/pwd/
+  369  cd pdw
+  370  cd ~/pwd/
+  371  ls
+  372  mv -R caffe_examples/ /data/sunnycia/pwd/
+  373  mv caffe_examples/ /data/sunnycia/pwd/
+  374  ln -s /data/sunnycia/pwd/caffe_examples/ caffe_examples
+  375  df -h
+  376  cd caffe_examples/
+  377  ls
+  378  cd mnist/
+  379  caffe
+  380  vim ~/.bashrc
+  381  source ~/.bashrc
+  382  top
+  383  nvidia-smi
+  384  caffe
+  385  locate VGG_ILSVRC_16_layers.caffemodel
+  386  rsync -avz 172.31.234.250:/home/qiudan/caffe/models/bvlc_vgg/VGG_ILSVRC_16_layers.caffemodel /home/sunnycia/pwd/Industry/A61
+  387  caffe
+  388  cd /data/sunnycia/pwd/Industry/A61/caffe/finetune_VGG16
+  389  cp VGG_ILSVRC_16_layers_deploy.prototxt deploy.prototxt
+  390  cd ..
+  391  vim spot.py
+  392  python spot.py 
+  393  python
+  394  vim ~/.bashrc
+  395  source ~/.bashrc
+  396  top
+  397  nvidia-smi
+  398  export CUDA_VISIBLE_DEVICES=6
+  399  cd pwd/Industry/A61/
+  400  cd patch_based/
+  401  python 4_convolutional_network.py 
+  402  top
+  403  nvidia-smi
+  404  python spot.py 
+  405  vim ~/.bashrc
+  406  vim spot.py
+  407  python spot.py
+  408  nvidia-smi
+  409  top
+  410  cd /data/root/
+  411  ls
+  412  cd MATLAB_2017a/
+  413  ls
+  414  ./install
+  415  cd ..
+  416  top
+  417  nvidia-smi
+  418  ls
+  419  cd ~/pwd/mat
+  420  cd /data/sunnycia/pwd/matconvnet_examples/
+  421  ls
+  422  matlab -nodesktop
+  423  export CUDA_VISIBLE_DEVICES=6
+  424  matlab -nodesktop
+  425  pwd
+  426  cd ..
+  427  ls
+  428  cd matconvnet-master/
+  429  ls
+  430  matlab -nodeskto
+  431  matlab -nodesktop
+  432  top
+  433  nvidia-smi
+  434  top
+  435  ls
+  436  matlab -nodesktop
+  437  cd pwd/Industry/A61/
+  438  mkdir matlab
+  439  cd matlab
+  440  ls
+  441  git clone https://github.com/vlfeat/matconvnet.git
+  442  cd matconvnet/
+  443  matlab -nodesktop
+  444  clear
+  445  cd /data/sunnycia/saliency_on_videoset/_Train/Deep-Feature-Flow-master
+  446  cd ~
+  447  l
+  448  ls
+  449  cd mxnet/
+  450  make -j8
+  451  locate cblas_*
+  452  make clean
+  453  make -j8
+  454  make clean
+  455  make -j16
+  456  ls /root
+  457  yum install atlas
+  458  cd mxnet/
+  459  make -j4
+  460  make clean
+  461  make -j32
+  462  make clean
+  463  make -j32
+  464  -lcblas
+  465  cd mxnet/
+  466  make clean
+  467  make -j32
+  468  cd ~/pwd/saliency_on_videoset/_Train/
+  469  ls
+  470  git clone https://github.com/lmb-freiburg/flownet2.git
+  471  cd flownet2
+  472  ls
+  473  cp Makefile.config.example Makefile.config
+  474  python
+  475  conda install nomkl numpy scipy scikit-learn numexpr
+  476  python
+  477  exit()
+  478  vim ~/.bashrc
+  479  source ~/.bashrc
+  480  python
+  481  cd pwd/saliency_on_videoset/_Train/flownet2
+  482  ls
+  483  make -j5 all tools pycaffe
+  484  cd models/
+  485  tar -xf flownet2-models.tar.gz 
+  486  tar -xf flownet2-models-sintel.tar.gz
+  487  tar -xf flownet2-models-kitti.tar.gz
+  488  vim ~/.bashrc
+  489  source ~/.bashrc
+  490  cd pwd/saliency_on_videoset/_Train/flownet2
+  491  run-flownet.py /path/to/$net/$net_weights.caffemodel[.h5]                  /path/to/$net/$net_deploy.prototxt.template \ 
+  492  cd scripts/
+  493  ls
+  494  run-flownet.py
+  495  cd ..
+  496  source set-env.sh 
+  497  PATH
+  498  $PATH
+  499  run-flownet.py models/FlowNet2/FlowNet2_weights.caffemodel.h5 models/FlowNet2/FlowNet2_deploy.prototxt.template x.png y.png z.flo
+  500  python run-flownet.py models/FlowNet2/FlowNet2_weights.caffemodel.h5 models/FlowNet2/FlowNet2_deploy.prototxt.template x.png y.png z.flo
+  501  cd scripts/
+  502  python run-flownet.py models/FlowNet2/FlowNet2_weights.caffemodel.h5 models/FlowNet2/FlowNet2_deploy.prototxt.template x.png y.png z.flo
+  503  python run-flownet.py ../models/FlowNet2/FlowNet2_weights.caffemodel.h5 ../models/FlowNet2/FlowNet2_deploy.prototxt.template x.png y.png z.flo
+  504  python run-flownet.py ../models/FlowNet2/FlowNet2_weights.caffemodel.h5 ../models/FlowNet2/FlowNet2_deploy.prototxt.template frame4.bmp frame6.bmp output.flo
+  505  nvidia-smi
+  506  export CUDA_VISIBLE_DEVICES=6
+  507  python run-flownet.py ../models/FlowNet2/FlowNet2_weights.caffemodel.h5 ../models/FlowNet2/FlowNet2_deploy.prototxt.template frame4.bmp frame6.bmp output.flo
+  508  nvidia-smi
+  509  export CUDA_VISIBLE_DEVICES=6,7
+  510  python run-flownet.py ../models/FlowNet2/FlowNet2_weights.caffemodel.h5 ../models/FlowNet2/FlowNet2_deploy.prototxt.template frame4.bmp frame6.bmp output.flo
+  511  cd /data/sunnycia/pwd/Industry/A61/tensorflow/vgg_stuff
+  512  nvidia-smi
+  513  export CUDA_VISIBLE_DEVICES=6
+  514  python train_vgg19.py 
+  515  nvidia-smi
+  516  export CUDA_VISIBLE_DEVICES=7
+  517  cd /data/sunnycia/pwd/Industry/A61/tensorflow/patch_based
+  518  python 4_convolutional_network.py 
+  519  python train_vgg19.py 
+  520  nvidia-smi
+  521  cd mxnet/
+  522  make -j16
+  523  cd ..
+  524  mkdir mxtest
+  525  cd mxtest/
+  526  git clone https://github.com/msracver/Deep-Feature-Flow.git
+  527  git clone --recursive https://github.com/dmlc/mxnet.git
+  528  unzip mxnet.zip 
+  529  cd mxnet/
+  530  git checkout 62ecb60
+  531  make -j16
+  532  cd /data/sunnycia/
+  533  ls
+  534  mkdir ILSVRC2015
+  535  cd ILSVRC2015/
+  536  mkdir VID && cd VID
+  537  wget http://bvisionweb1.cs.unc.edu/ilsvrc2015/ILSVRC2015_VID.tar.gz
+  538  ls
+  539  rm ILSVRC2015_VID.tar.gz 
+  540  wget http://bvisionweb1.cs.unc.edu/ilsvrc2015/ILSVRC2015_VID.tar.gz
+  541  x25% frame6.bmp frame7.bmp
+  542  ls
+  543  ls -l
+  544  python run-flownet.py ../models/FlowNet2/FlowNet2_weights.caffemodel.h5 ../models/FlowNet2/FlowNet2_deploy.prototxt.template frame5.bmp frame7.bmp output.flo
+  545  convert -sample 25%x25% frame6.bmp frame7.jpg
+  546  convert -sample 25%x25% frame4.bmp frame5.jpg
+  547  python run-flownet.py ../models/FlowNet2/FlowNet2_weights.caffemodel.h5 ../models/FlowNet2/FlowNet2_deploy.prototxt.template frame5.jpg frame7.jpg output.flo
+  548  python
+  549  caffe --version
+  550  python
+  551  pwd
+  552  cd ../../Deep-Feature-Flow-master/
+  553  python rfcn/demo.py 
+  554  du -h max-depth=3 /data/sunnycia
+  555  du -h max-depth=1 /data/sunnycia
+  556  du -h max_depth=1 /data/sunnycia
+  557  du -h --max-depth=1 /data/sunnycia
+  558  du -h --max-depth=1 /data/sunnycia/pwd
+  559  du -h --max-depth=1 /data/sunnycia/pwd/saliency_on_videoset/
+  560  du -h --max-depth=1 /data/sunnycia/pwd/saliency_on_videoset/_Saliencymap/
+  561  du -h --max-depth=1 /data/sunnycia/ImageSet
+  562  du -h --max-depth=1 /data
+  563  du -h --max-depth=1 /data/zhangpp
+  564  cd /data/sunnycia/saliency_on_videoset/_Train/sam-master
+  565  python main.py test figs
+  566  python
+  567  vim ~/.bashrc
+  568  source ~/.bashrc
+  569  python
+  570  pip install keras==1.1.0
+  571  python main.py test figs
+  572  vim ~/.keras/keras.json 
+  573  locate keras.json
+  574  vim ~/.keras/keras.json 
+  575  python main.py test figs
+  576  vim ~/.keras/keras.json 
+  577  python main.py test figs
+  578  vim ~/.keras/keras.json 
+  579  python main.py test figs
+  580  cd ..
+  581  git clone https://github.com/marcellacornia/sam.git
+  582  unzip sam-master
+  583  cd sam-master
+  584  python main.py test sample_images
+  585  top
+  586  ssh qiudan@172.31.234.248
+  587  cd pwd/saliency_on_videoset/_Train/
+  588  ls
+  589  cd sam-master/
+  590  ls
+  591  vim main.py 
+  592  python main.py test sample_images/
+  593  vim main.py 
+  594  pwd
+  595  cd /data/sunnycia/SaliencyDataset/Image/SALICON/Tools/salicon-api/PythonAPI
+  596  python saliconDemo.py 
+  597  conda install nomkl numpy scipy scikit-learn numexpr
+  598  vim ~/.bashrc
+  599  source ~/.bashrc
+  600  python
+  601  cd /data/sunnycia/
+  602  ls
+  603  cd ImageSet
+  604  ls
+  605  pwd
+  606  cd ..
+  607  ls
+  608  clean
+  609  cd ILSVRC2015/
+  610  ls
+  611  cd VID/
+  612  ls
+  613  cd ..
+  614  wget --help
+  615  wget -c 
+  616  cd VID/
+  617  ls
+  618  tail -f wget-log
+  619  wget -c http://bvisionweb1.cs.unc.edu/ilsvrc2015/ILSVRC2015_VID.tar.gz
+  620  top
+  621  nvidia-smi
+  622  top
+  623  tar -tf ILSVRC2015_VID.tar.gz 
+  624  vim ILSVRC2015_VID.tar.gz 
+  625  tar -vf ILSVRC2015_VID.tar.gz 
+  626  tar -xf ILSVRC2015_VID.tar.gz 
+  627  cd pwd/saliency_on_videoset/_Train/
+  628  ls
+  629  cd sam-master/
+  630  ls
+  631  cd /data/sunnycia/SaliencyDataset/Image/SALICON/Tools/salicon-api/PythonAPI
+  632  python
+  633  python saliconDemo.py 
+  634  cd /data/sunnycia/SaliencyDataset/Image/SALICON/Images
+  635  unzip image.zip 
+  636  cd ..
+  637  ls
+  638  cd salicon-api/
+  639  ls
+  640  cd PythonAPI/
+  641  python saliconDemo.py
+  642  cd PythonAPI/
+  643  python saliconDemo.py
+  644  python gen_saliconset.py 
+  645  python
+  646  whereis python
+  647  ls -l /usr/bin/python*
+  648  ls
+  649  python saliconDemo.
+  650  python saliconDemo.py
+  651  python gen_saliconset.py 
+  652  python saliconDemo.
+  653  python saliconDemo.py
+  654  python gen_saliconset.py 
+  655  ls
+  656  cd ..
+  657  ls
+  658  cd ..
+  659  ls
+  660  cd ..
+  661  cd DATA/
+  662  ls
+  663  df -h
+  664  python assign_images.py 
+  665  rsync -avz 172.31.234.248:/home/qiudan/sunnycia/sam-master-from-dd ./
+  666  cd sam-master-from-dd/
+  667  python main.py test sample_images/
+  668  vim ~/.bashrc
+  669  vim ~/.keras/keras.json 
+  670  python main.py test sample_images/
+  671  cd ..
+  672  rm -rf sam-master-from-dd/
+  673  cd pwd/saliency_on_videoset/_Train/
+  674  ls
+  675  cd Deep-Feature-Flow-master/
+  676  ls
+  677  cd experiments/
+  678  ls
+  679  cd rfcn/
+  680  ls
+  681  cd /data/sunnycia/saliency_on_videoset/_Train/Deep-Feature-Flow-master/model/fortrain
+  682  unzip pretrained_model.zip 
+  683  clear
+  684  cd pwd/saliency_on_videoset/_Train/Deep-Feature-Flow-master/
+  685  ls
+  686  nvidia-smi
+  687  python experiments/dff_rfcn/dff_rfcn_end2end_train_test.py --cfg experiments/dff_rfcn/cfgs/resnet_v1_101_flownet_imagenet_vid_rfcn_end2end_ohem.yaml
+  688  export CUDA_VISIBLE_DEVICES=6,7
+  689  nvidia-smi
+  690  clear
+  691  python experiments/dff_rfcn/dff_rfcn_end2end_train_test.py --cfg experiments/dff_rfcn/cfgs/resnet_v1_101_flownet_imagenet_vid_rfcn_end2end_ohem.yaml
+  692  cd /data/sunnycia/saliency_on_videoset/_Train/Deep-Feature-Flow-master
+  693  export CUDA_VISIBLE_DEVICES=4,5,6,7
+  694  python experiments/dff_rfcn/dff_rfcn_end2end_train_test.py --cfg experiments/dff_rfcn/cfgs/resnet_v1_101_flownet_imagenet_vid_rfcn_end2end_ohem.yaml
+  695  cd pwd/saliency_on_videoset/Train/
+  696  cd gen_dataset/
+  697  python gen_dataset.py 
+  698  top
+  699  free -h
+  700  python
+  701  top
+  702  free -h
+  703  history
+  704  clear
+  705  ls /data/sunnycia/
+  706  ls /data/sunnycia/ImageSet
+  707  ls /data/sunnycia/ImageSet/frame/
+  708  cd /data/sunnycia/ImageSet/frame/
+  709  cd videoSRC001
+  710  ls
+  711  cd ..
+  712  pwd
+  713  cd ~/pwd/saliency_on_videoset/Train/
+  714  ls
+  715  cd gen_dataset/
+  716  python gen_dataset.py 
+  717  top
+  718  nvidia-smi
+  719  python gen_dataset.py 
+  720  cd ..
+  721  ls
+  722  python training.py 
+  723  nvidia-smi
+  724  export CUDA_VISIBLE_DEVICES=6
+  725  python training.py 
+  726  python
+  727  cd /data/sunnycia/ILSVRC2015/ImageSets
+  728  clear
+  729  cd DET/
+  730  rename
+  731  for f in *;do mv "$f" "DET_$f";done
+  732  cd ../VID/
+  733  ls
+  734  for f in *;do mv "$f" "VID_$f";done
+  735  pwd
+  736  cd ..
+  737  pwd
+  738  ls
+  739  nvidia-smi
+  740  top
+  741  nvidia-smi
+  742  top
+  743  nvidia-smi
+  744  top
+  745  nvidia-smi
+  746  top
+  747  nvidia-smi
+  748  nvidi-amsi
+  749  nvidia-smi
+  750  top
+  751  nvidia-smi
+  752  top
+  753  nvidia-smi
+  754  top
+  755  pwd
+  756  cd ~/caffe-master/
+  757  ls
+  758  make matcaffe
+  759  make -j16 matcaffe
+  760  vim Makefile.config
+  761  top
+  762  vim Makefile.config
+  763  cd /usr/local/MATLAB/
+  764  ls
+  765  nvidia-smi
+  766  top
+  767  nvidia-smi
+  768  vim ~/.bashrc
+  769  df -h
+  770  top
+  771  free -h
+  772  cd /data/sunnycia/saliency_on_videoset/Train
+  773  python training.py 
+  774    name: "bn4f_branch2c"
+  775  CFLAGS="-O0" pip install greenlet==0.4.0
+  776  python training.py 
+  777  cd pwd/saliency_on_videoset/_Train/
+  778  ls
+  779  cd Deep-Feature-Flow-master/
+  780  ls
+  781  python experiments/dff_rfcn/dff_rfcn_end2end_train_test.py --cfg experiments/dff_rfcn/cfgs/resnet_v1_101_flownet_imagenet_vid_rfcn_end2end_ohem.yaml
+  782  cd /data/sunnycia/saliency_on_videoset/Train
+  783  python training.py 
+  784  nvidia-smi
+  785  python training.py 
+  786  nvidia-smi
+  787  en_dataset.py 
+  788  free -h
+  789  python gen_dataset.py 
+  790  cd /data/sunnycia/saliency_on_videoset/Train/dataset
+  791  python
+  792  cd ..
+  793  python training.py
+  794  ls
+  795  top
+  796  nviida-smi
+  797  nvidia-smi
+  798  pwd
+  799  nvidia-smi
+  800  cp *.p* training_script
+  801  cd training_script/
+  802  cd ..
+  803  cd script/
+  804  ls
+  805  git init
+  806  git add --all
+  807  git commit -m 'Init. Commit first convergence network. all scripts should be placed under this folder.'
+  808  git config --global user.email sunzhenhao@sina.com
+  809  git config --global user.name sunnycia
+  810  git commit -m 'Init. Commit first convergence network. all scripts should be placed under this folder.'
+  811  git log
+  812  git stage
+  813  git add .
+  814  git stage
+  815  vim solver_new.prototxt 
+  816  git status
+  817  git add .
+  818  git status
+  819  git commit 'a dummy test for version unroll'
+  820  git add --all
+  821  git commit 'a dummy test for version unroll'
+  822  git log
+  823  git commit 'a dummy test for version unroll'
+  824  vim solver_new.prototxt 
+  825  git commit 'a dummy test for version unroll'
+  826  git fetch
+  827  git checkout
+  828  git remote add origin https://github.com/sunnycia/scripts.git
+  829  git push -u origin master
+  830  git status
+  831  git add --all
+  832  git status
+  833  git commit 'a dummy test'
+  834  git clone https://github.com/sunnycia/scripts.git
+  835  cd scripts/
+  836  ls
+  837  vim solver_new.prototxt 
+  838  git status
+  839  git add -a
+  840  git add --all
+  841  git commit 'a dummy test'
+  842  git commit "a dummy test"
+  843  git commit "adummytest"
+  844  git commit -m "a dummy test"
+  845  git push -u origin master
+  846  cd ..
+  847  rm -rf scripts/
+  848  git status
+  849  git reset HEAD solver_new.prototxt
+  850  git status
+  851  git checkout -- solver_new.prototxt
+  852  git status
+  853  git fetch
+  854  git status
+  855  git pull
+  856  vim ~/.bashrc
+  857  source ~/.bashrc
+  858  cd /data/sunnycia/saliency_on_videoset/Train
+  859  export CUDA_VISIBLE_DEVICES=6
+  860  python training.py 
+  861  cd scripts/
+  862  python test.py 
+  863  nvidia-smi
+  864  python 
+  865  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+  866  export CUDA_VISIBLE_DEVICES=6
+  867  python test.py 
+  868  cd ~/pwd/saliency_on_videoset/
+  869  ls
+  870  cd _Train/Deep-Feature-Flow-master/
+  871  ls
+  872  export CUDA_VISIBLE_DEVICES=6,7
+  873  cd experiments/
+  874  ls
+  875  cd dff_rfcn/
+  876  ls
+  877  cd cfgs/
+  878  ls
+  879  vim resnet_v1_101_flownet_imagenet_vid_rfcn_end2end_ohem.yaml 
+  880  cd ../../..
+  881  python experiments/dff_rfcn/dff_rfcn_end2end_train_test.py --cfg experiments/dff_rfcn/cfgs/resnet_v1_101_flownet_imagenet_vid_rfcn_end2end_ohem.yaml
+  882  history
+  883  git log
+  884  git reset --hard 0a667d660f7e906c1c632d481ecbf90bacee9b60
+  885  vim solver_new.prototxt 
+  886  top
+  887  nvidia-smi
+  888  cd ..
+  889  rm -rf script/
+  890  git clone https://github.com/sunnycia/scripts.git
+  891  cd scripts/
+  892  ls
+  893  git log
+  894  vim solver_new.prototxt 
+  895  git reset --hard 0a667d660f7e906c1c632d481ecbf90bacee9b60
+  896  vim solver_new.prototxt 
+  897  export CUDA_VISIBLE_DEVICES=7
+  898  python training.py
+  899  python training.py 
+  900  top
+  901  nvidia-smi
+  902  pwd
+  903  top
+  904  nvidia-smi
+  905  top
+  906  history
+  907  cd /data/sunnycia/saliency_on_videoset/Train
+  908  convert_imageset -encoded -shuffle -encode_type jpg / imagedata_mini.txt dataset/mini_lmdb
+  909  export locate convert_imageset
+  910  locate convert_imageset
+  911  export PATH=$PATH:/usr/local/caffe-master/tools/
+  912  convert_imageset -encoded -shuffle -encode_type jpg / imagedata_mini.txt dataset/mini_lmdb
+  913  export PATH=$PATH:/usr/local/caffe-master/.build_release/tools/
+  914  convert_imageset -encoded -shuffle -encode_type jpg / imagedata_mini.txt dataset/mini_lmdb
+  915  python 
+  916  free -h
+  917  python
+  918  cd nvidia-smi
+  919  nvidia-smi
+  920  free -h
+  921  export CUDA_VISIBLE_DEVICES=6
+  922  free -h
+  923  top
+  924  nvidia-smi
+  925  free -h
+  926  cd ../_Train/
+  927  ls
+  928  cd Deep-Feature-Flow-master/
+  929  ls
+  930  cd experiments/dff_rfcn/cfgs/
+  931  vim resnet_v1_101_flownet_imagenet_vid_rfcn_end2end_ohem.yaml 
+  932  cd ../../
+  933  cd ..
+  934  python experiments/dff_rfcn/dff_rfcn_end2end_train_test.py --cfg experiments/dff_rfcn/cfgs/resnet_v1_101_flownet_imagenet_vid_rfcn_end2end_ohem.yaml
+  935  export CUDA_VISIBLE_DEVICES=4,5,6,7
+  936  python experiments/dff_rfcn/dff_rfcn_end2end_train_test.py --cfg experiments/dff_rfcn/cfgs/resnet_v1_101_flownet_imagenet_vid_rfcn_end2end_ohem.yaml
+  937  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+  938  export CUDA_VISIBLE_DEVICES=6
+  939  python training.py
+  940  cd pwd/saliency_on_videoset/Train
+  941  cd dataset/
+  942  ls
+  943  top
+  944  python gen_dataset.py 
+  945  top
+  946  nvidia-smi
+  947  df -h
+  948  pwd
+  949  cd ..
+  950  python gen_lmdb.py 
+  951  ls 
+  952  convert_imageset
+  953  vim ~/.bahser
+  954  vim ~/.bahsr
+  955  vim ~/.bashrc
+  956  clear
+  957  locate convert_imageset.bin
+  958  cp /usr/local/caffe-master/.build_release/tools/convert_imageset.bin ./
+  959  ls
+  960  convert_imageset
+  961  ./convert_imageset
+  962  ./bin
+  963  ./convert_imageset.bin
+  964  ls /usr/local/caffe-master/.build_release/tools/
+  965  export PATH=$PATH:/usr/local/caffe-master/.build_release/tools/
+  966  clear
+  967  convert_imagenet
+  968  ./convert_imagenet
+  969  convert_imageset
+  970  convert_imageset -encoded -shuffle -encode_type jpg / imagedata.txt dataset/lmdb
+  971  python gen_lmdb.py 
+  972  convert_imageset -encoded -shuffle -encode_type jpg / framedata.txt dataset/lmdb
+  973  cxx
+  974  CXX
+  975  convert_imageset -encoded -shuffle -encode_type jpg / framedata.txt dataset/lmdb
+  976  cd /data/sunnycia/SaliencyDataset/Image/CAT2000
+  977  unzip trainSet.zip 
+  978  cd ~/pwd/saliency_on_videoset/Train/
+  979  cd scripts/
+  980  python gen_salicon_dataset.py 
+  981  export CUDA_VISIBLE_DEVICES=6
+  982  python training.
+  983  python training.py 
+  984  git status
+  985  git add --all
+  986  git commit -m "add test module, revise on salicon dataset. Salicon-Ver-1.'
+  987  git commit -m "add test module, revise on salicon dataset. Salicon-Ver1'
+  988  git commit -m "add test module, revise on salicon dataset. Salicon-Ver1"
+  989  git push -u origin master
+  990  git pull
+  991  git status
+  992  git log
+  993  git reset --hard 4e7cda7fa4cebd123a7c81912d2a2db3cc8c756b
+  994  git status
+  995  git push -u origin master
+  996  git pull
+  997  git push -u origin master
+  998  top
+  999  nvidia-smi
+ 1000  df -h
+ 1001  clear
+ 1002  top
+ 1003  cd pwd/saliency_on_videoset/clearn
+ 1004  clear
+ 1005  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+ 1006  git fetch
+ 1007  git status
+ 1008  git add --all
+ 1009  git commit -m "Version3, combination of euc loss and kld/nss loss."
+ 1010  git push -u origin master
+ 1011  clear
+ 1012  python metric.py 
+ 1013  python
+ 1014  python metric.py 
+ 1015  python
+ 1016  python -h
+ 1017  python -m 'import matlab.engine'
+ 1018  nvidia-smi
+ 1019  python -m 'import matlab.engine'
+ 1020  python -m 'import matlab'
+ 1021  python metric.py 
+ 1022  top
+ 1023  export CUDA_VISIBLE_DEVICES=6 && cd /data/sunnycia/saliency_on_videoset/Train/scripts && export PYTHONPATH=../caffe-master/python:$PYTHONPATH
+ 1024  python metric.py 
+ 1025  python
+ 1026  python metric.py 
+ 1027  cd /usr/lib/python2.7/site-packages/
+ 1028  ls
+ 1029  python metric.py 
+ 1030  cd -
+ 1031  python metric.py 
+ 1032  python
+ 1033  python metric.py 
+ 1034  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+ 1035  python gen_salicon_dataset.py 
+ 1036  nvidia-smi
+ 1037  top
+ 1038  nvidia-smi
+ 1039  top
+ 1040  nvidia-smi
+ 1041  top
+ 1042  python
+ 1043  top
+ 1044  nvidia-smi
+ 1045  cd ../caffe-saliency/
+ 1046  ls
+ 1047  make clean
+ 1048  cd ..
+ 1049  ls
+ 1050  cd caffe-saliency/
+ 1051  make clean
+ 1052  ls
+ 1053  vim Makefile.config
+ 1054  make -j8 all
+ 1055  make -j4 all
+ 1056  make clean
+ 1057  make -j8 all
+ 1058  make clean
+ 1059  vim Makefile.config
+ 1060  make -j8 all
+ 1061  vim Makefile.config
+ 1062  cp ~/caffe-master/ ../
+ 1063  cp -R ~/caffe-master/ ../
+ 1064  cd ../caffe-master/
+ 1065  ls
+ 1066  make clean
+ 1067  make -j8 all
+ 1068  make -j4 pycaffe
+ 1069  cd ..
+ 1070  cd scripts/
+ 1071  top
+ 1072  nvidia-smi
+ 1073  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+ 1074  export CUDA_VISIBLE_DEVICES=6
+ 1075  python training.py 
+ 1076  python test.py 
+ 1077  python
+ 1078  ls /usr/local/MATLAB/
+ 1079  ls
+ 1080  python training.py 
+ 1081  vim bashrc
+ 1082  vim ~/.bashrc
+ 1083  export PYTHONPATH=../caffe-master/python:$PYTHONPATH
+ 1084  python
+ 1085  top
+ 1086  nvidia-smi
+ 1087  top
+ 1088  nvidia-smi
+ 1089  top
+ 1090  nvidia-smi
+ 1091  top
+ 1092  python avg_metric.py 
+ 1093  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+ 1094  python training.py 
+ 1095  export CUDA_VISIBLE_DEVICES=7
+ 1096  python training.py --debug=True
+ 1097  python training.py -debug=True
+ 1098  python training.py --debug=True
+ 1099  python training.py 
+ 1100  python training.py -h
+ 1101  python training.py --debug True
+ 1102  git add --all
+ 1103  git commit -m "Last version for loss=95820 on salicon dataset.Consider it may due to bad performance of sigmoid layer, loss layer will be changed in next version."
+ 1104  git push -u origin master
+ 1105  git fetch
+ 1106  git status
+ 1107  git push
+ 1108  python training.py
+ 1109  python training.py --debug True
+ 1110  python training.py --debug False
+ 1111  nvidia-smi
+ 1112  top
+ 1113  nvidia-smi
+ 1114  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+ 1115  export PYTHONPATH=../caffe-master/python:$PYTHONPATH
+ 1116  python training.py --debug=True --prototxt='train_nssloss.prototxt'
+ 1117  python training.py --debug=True --train_prototxt='train_nssloss.prototxt'
+ 1118  python training.py --debug=False --train_prototxt='train_nssloss.prototxt'
+ 1119  python training.py --debug=False --train_prototxt='train_kldloss_withouteuc.prototxt'
+ 1120  python training.py --debug=False --use_snapshot=True --train_prototxt='train_kldloss_withouteuc.prototxt'
+ 1121  python training.py --debug=False --use_snapshot=True --train_prototxt='../train_prototxt/train_kldloss_withouteuc.prototxt'
+ 1122  python training.py --debug=False --use_snapshot=True --train_prototxt='train_prototxt/train_kldloss_withouteuc.prototxt'
+ 1123  python training.py --debug=False --use_snapshot=True --train_prototxt='training_protocol/train_kldloss_withouteuc.prototxt'
+ 1124  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+ 1125  export CUDA_VISIBLE_DEVICES=4
+ 1126  export PYTHONPATH=../caffe-master/python:$PYTHONPATH
+ 1127  python training.py --debug=True --train_prototxt='train_igloss.prototxt'
+ 1128  python training.py --debug=True --train_prototxt='train_kldloss.prototxt'
+ 1129  python training.py --debug=False --train_prototxt='train_kldloss.prototxt'
+ 1130  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+ 1131  export CUDA_VISIBLE_DEVICES=5
+ 1132  export PYTHONPATH=../caffe-master/python:$PYTHONPATH
+ 1133  python training.py --debug=True --train_prototxt='train_nss-kldloss.prototxt'
+ 1134  python training.py --debug=False --train_prototxt='train_nss-kldloss.prototxt'
+ 1135  python training.py --debug=False --train_prototxt='train_nssloss_withouteuc.prototxt'
+ 1136  cd pwd/saliency_on_videoset/Train/scripts/
+ 1137  python test.py 
+ 1138  python test.py
+ 1139  top
+ 1140  nvidia-smi
+ 1141  export CUDA_VISIBLE_DEVICES=6
+ 1142  python test.py 
+ 1143  df -h
+ 1144  cd /data/sunnycia/SaliencyDataset/Image/NUS
+ 1145  python change_name.py 
+ 1146  cd -
+ 1147  python test.py
+ 1148  cd /data/sunnycia/SaliencyDataset/Image/MIT1003
+ 1149  python change_name.py 
+ 1150  cd ALLFIXATIONMAPS/
+ 1151  rm -f *_fixPts.jpg
+ 1152  cd -
+ 1153  cd --
+ 1154  cd pwd/saliency_on_videoset/Train/scripts/
+ 1155  python avg_metric.py 
+ 1156  top
+ 1157  nvidia-smi
+ 1158  ./plot_training_log.py.example
+ 1159  cd caffe_plot/
+ 1160  chmod u+x *
+ 1161  ./parse_log.sh ../../log/train_kldloss_withouteuc 
+ 1162  ./plot_training_log.py.example 0 save.png ../../log/train_kldloss
+ 1163  ./plot_training_log.py.example 0 save.png ../../log/train_nss_kldloss_goodweight
+ 1164  ./plot_training_log.py.example 0 save.png caffe.localhost.localdomain.sunnycia.log.INFO.20171012-085342.16593 
+ 1165  ./plot_training_log.py.example 0 save.png ../../log/train_nss_kldloss_goodweight
+ 1166  ./plot_training_log.py.example 0 save.png ../../log/caffe.localhost.localdomain.sunnycia.log.INFO.20171012-085342.16592
+ 1167  df -h
+ 1168  cd /data/sunnycia/SaliencyDataset/Image/CAT2000
+ 1169  unzip testSet.zip 
+ 1170  cd trainSet/
+ 1171  python combine.py 
+ 1172  cd  
+ 1173  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+ 1174  python test.py 
+ 1175  nvidia-smi
+ 1176  export CUDA_VISIBLE_DEVICES=6
+ 1177  python test.py 
+ 1178  top
+ 1179  nvidia-smi
+ 1180  top
+ 1181  matlab -nodesktop
+ 1182  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+ 1183  matlab -nodesktop
+ 1184  export CUDA_VISIBLE_DEVICES=5 && cd /data/sunnycia/saliency_on_videoset/Train/scripts && export PYTHONPATH=../caffe-master/python:$PYTHONPATH
+ 1185  python training.py --debug=False --train_prototxt='./training_protocol/train_nss_kldloss_goodweight.prototxt 2>&1 | tee ../log/train_nss_kldloss_goodweight_SGDSOLVER
+ 1186  python training.py --debug=False --train_prototxt='./training_protocol/train_nss_kldloss_goodweight.prototxt' 2>&1 | tee ../log/train_nss_kldloss_goodweight_SGDSOLVER
+ 1187  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+ 1188  nvidia-smi
+ 1189  export CUDA_VISIBLE_DEVICES=6
+ 1190  export PYTHONPATH=../caffe-master/python:$PYTHONPATH
+ 1191  python training.py --debug=True --train_prototxt='train_nss-kldloss_withouteuc.prototxt'
+ 1192  top
+ 1193  nvidia-smi
+ 1194  git fetch
+ 1195  git add --all
+ 1196  git status
+ 1197  git commit -m "Add different loss function training prototxt. Add metric code."
+ 1198  git push -u origin master
+ 1199  ./train.sh
+ 1200  chmod u+x train.sh
+ 1201  ./train.sh
+ 1202  vim train.sh 
+ 1203  ./train.sh
+ 1204  ./train.sh ../training_protocol/train_nss_kldloss_withouteuc.prototxt
+ 1205  ./train.sh training_protocol/train_nss_kldloss_withouteuc.prototxt
+ 1206  ./train.sh training_protocol/train_nss_kldloss_withouteuc.prototxt False
+ 1207  df -h
+ 1208  clear
+ 1209  cd pwd/saliency_on_videoset/Train/scripts/
+ 1210  ./train.sh ./training_protocol/train_nss_kldloss_goodweight.prototxt False
+ 1211  nvidia-smi
+ 1212  export CUDA_VISIBLE_DEVICES=7
+ 1213  ./train.sh ./training_protocol/train_nss_kldloss_goodweight.prototxt False
+ 1214  export CUDA_VISIBLE_DEVICES=7 && cd /data/sunnycia/saliency_on_videoset/Train/scripts && export PYTHONPATH=../caffe-master/python:$PYTHONPATH
+ 1215  ./train.sh ./training_protocol/train_nss_kldloss_goodweight.prototxt False
+ 1216  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+ 1217  matlab -nodesktop
+ 1218  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+ 1219  ls /home
+ 1220  top
+ 1221  nvidia-smi
+ 1222  matlab -nodesktop
+ 1223  cd pwd/saliency_on_videoset/Train/scripts/
+ 1224  vim ~/.bashrc
+ 1225  cd /data/sunnycia/saliency_on_videoset/_Train/DSCLRCN/caffe-master
+ 1226  make -j8 all
+ 1227  vim Makefile.config
+ 1228  make clean
+ 1229  make -j8 all
+ 1230  vim Makefile.config
+ 1231  make clean
+ 1232  make -j8 all
+ 1233  vim Makefile.config
+ 1234  cd ..
+ 1235  cd caffe-master/
+ 1236  ls
+ 1237  vim Makefile.config
+ 1238  make -j8 all
+ 1239  make clean
+ 1240  make -j8 all
+ 1241  vim Makefile.config
+ 1242  make clean
+ 1243  make -j16 all
+ 1244  cd /home/sunnycia/pwd/saliency_on_videoset/Train/scripts
+ 1245  python metric.py
+ 1246  cd /home/sunnycia/pwd/saliency_on_videoset/Train/scripts
+ 1247  python metric.py
+ 1248  cd pwd/saliency_on_videoset/Train/scripts/
+ 1249  python avg_metric.py 
+ 1250  top
+ 1251  nvidia-smi
+ 1252  python avg_metric.py 
+ 1253  vim /etc/profile
+ 1254  git clone https://github.com/herrlich10/saliency.git
+ 1255  mv saliency/ pymetric
+ 1256  python metric.py
+ 1257  clear
+ 1258  python metric.py
+ 1259  clear
+ 1260  python metric.py
+ 1261  clear
+ 1262  python metric.py
+ 1263  clear
+ 1264  python metric.py
+ 1265  clear
+ 1266  python metric.py
+ 1267  pwd
+ 1268  top
+ 1269  nvidia-smi
+ 1270  cd pwd/saliency_on_videoset/Train/scripts/
+ 1271  matlab -nodesktop
+ 1272  clear
+ 1273  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+ 1274  python avg_metric.py 
+ 1275  nvidia-smi
+ 1276  export CUDA_VISIBLE_DEVICES=6 && cd /data/sunnycia/saliency_on_videoset/Train/scripts && export PYTHONPATH=../caffe-master/python:$PYTHONPATH
+ 1277  python test.py 
+ 1278  python admin.py 
+ 1279  vim ~/.bashrc
+ 1280  python admin.py 
+ 1281  python test.py 
+ 1282  python admin.py 
+ 1283  top
+ 1284  nvdia-smi
+ 1285  nvidia-smi
+ 1286  clear
+ 1287  rsync -avz 172.31.234.248:/home/data/qiudan/DATASET/SALICON/val2014/saliency/* /data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/saliency/sam
+ 1288  rsync -avz 172.31.234.248:/home/data/qiudan/DATASET/MIT1003/saliency/* /data/sunnycia/SaliencyDataset/Image/MIT1003/saliency/sam
+ 1289  matlab -nodesktop
+ 1290  python metric.py
+ 1291  clear
+ 1292  python metric.py
+ 1293  cd /data/sunnycia/saliency_on_videoset/_Train/flownet2-tf
+ 1294  python
+ 1295  cd /data/sunnycia/saliency_on_videoset/_Train/flownet2
+ 1296  python
+ 1297  cd /data/sunnycia/SaliencyDataset/Video/XU
+ 1298  clear
+ 1299  python extract_fixation.py 
+ 1300  matlab
+ 1301  top
+ 1302  nvidia-smi
+ 1303  clear
+ 1304  df -h
+ 1305  cd ..
+ 1306  cd DIEM/
+ 1307  python gen_fixation.py 
+ 1308  clear
+ 1309  python gen_fixation.py 
+ 1310  clear
+ 1311  python gen_fixation.py 
+ 1312  ffmpeg
+ 1313  cd ../MSU/
+ 1314  ffmpeg -r 25 -f image2 -s 1920x1080 -i _temp/frame_%d.jpg -vcodec libx264 -crf 25 -pix_fmt yuv420p test.mp4
+ 1315  python
+ 1316  nvidia-smi
+ 1317  top
+ 1318  nvidia-smi
+ 1319  top
+ 1320  nvidia-smi
+ 1321  python add_frame_index_hist.py 
+ 1322  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+ 1323  git status
+ 1324  git add --all
+ 1325  git commit -m "update, forget what i've done.."
+ 1326  git push -u origin master
+ 1327  python avg_metric.py 
+ 1328  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+ 1329  history > history.txt

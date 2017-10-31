@@ -2620,10 +2620,10 @@ layer {
 }
 
 layer{
-  name: "kldloss"
+  name: "loss"
   type: "KLDivLoss"
   bottom: "saliency_map"
   bottom: "ground_truth"
-  top: "kldloss"
+  top: "loss"
   loss_weight: 1
 }

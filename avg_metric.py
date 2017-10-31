@@ -3,7 +3,7 @@ import glob
 import os
 import scipy.io as scio
 
-metric_dir = '../metric'
+metric_dir = '../metric-py'
 metric_list = ['CC', 'SIM', 'AUC_JUD', 'AUC_BOR', 'SAUC', 'EMD', 'KLD', 'NSS']
 metric_mat_list = glob.glob(os.path.join(metric_dir, '*.mat'))
 
