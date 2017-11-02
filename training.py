@@ -144,7 +144,6 @@ while _step * batch < max_iter:
     solver.net.blobs['ground_truth'].data[...] = density_minibatch
     solver.step(1)
 
-
     x.append(_step)
     y.append(solver.net.blobs['loss'].data[...].tolist())
 

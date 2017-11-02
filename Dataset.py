@@ -26,8 +26,11 @@ class Dataset():
             if len(self.data) % 1 == 0:
                 print len(self.data), '\r',
         print 'Done'
-
         self.num_examples = len(self.data)
+        
+        self.data = np.array(self.data)
+        self.labels = np.array(self.labels)
+        
         self.completed_epoch = 0
         self.index_in_epoch = 0
 
