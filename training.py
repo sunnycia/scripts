@@ -33,6 +33,7 @@ pretrained_model_path= '../pretrained_model/ResNet-50-model.caffemodel'
 snapshot_path = '/data/sunnycia/saliency_on_videoset/Train/training_output/salicon/snapshot-train_kldloss_withouteuc_iter_100000.solverstate'
 
 args = get_arguments()
+debug_mode = args.debug
 
 ##### Data preparation section.
 ## load training data
@@ -78,7 +79,6 @@ solverproto = CaffeSolver(trainnet_prototxt_path=training_protopath)
 
 snapshot_prefix = solverproto.sp['snapshot_prefix'][1:-1]
 
-
 postfix_str=os.path.basename(training_protopath).split('.')[0]
 for key in update_solver_dict:
     solverproto.sp[key] = update_solver_dict[key]
@@ -104,13 +104,12 @@ print "Loss figure will be save to", plot_figure_dir
 ##
 print "Loading data..."
 
-print args.debug
 train_frame_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/train2014/images'
 train_density_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/train2014/density'
-tranining_dataset = Dataset(train_frame_basedir, train_density_basedir, debug=False)
+tranining_dataset = Dataset(train_frame_basedir, train_density_basedir, debug=debug_mode)
 validation_frame_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/images'
 validation_density_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/density'
-# validation_dataset = Dataset(train_frame_basedir, train_density_basedir)
+# validation_dataset = Dataset(train_frame_basedir, train_density_basedir, debug=debug_mode)
 
 ##### Training section
 # load the solver
@@ -135,9 +134,16 @@ idx_counter = 0
 
 x=[]
 y=[]
+z=[] # validation
+
 plt.plot(x, y)
 _step=0
 while _step * batch < max_iter:
+
+    if _step%validation_iter==0:
+        ##do validation
+        pass
+
     frame_minibatch, density_minibatch = tranining_dataset.next_batch(batch)
     # print frame_minibatch.shape;exit()
     solver.net.blobs['data'].data[...] = frame_minibatch
@@ -155,6 +161,7 @@ while _step * batch < max_iter:
         plt.clf()
     if args.visualization:
         plt.show()
+
     _step+=1
 
 import cPickle as pkl
