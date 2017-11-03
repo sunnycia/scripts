@@ -31,7 +31,6 @@ def merge_roidb(roidbs):
         roidb.extend(r)
     return roidb
 
-
 def filter_roidb(roidb, config):
     """ remove roidb entries without usable rois """
 
@@ -49,7 +48,6 @@ def filter_roidb(roidb, config):
     print 'filtered %d roidb entries: %d -> %d' % (num - num_after, num, num_after)
 
     return filtered_roidb
-
 
 def load_gt_segdb(dataset_name, image_set_name, root_path, dataset_path, result_path=None,
                   flip=False):

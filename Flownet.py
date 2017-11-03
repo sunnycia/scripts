@@ -41,7 +41,16 @@ class Flownet():
         caffe.set_mode_gpu()
         return caffe.Net(tmp.name, self.caffe_model, caffe.TEST)
 
-    def get_optical_flow(self, img1_path, img2_path):
+    def get_optical_flow(self, img1_path, img2_path, output_file_path=None):
+        ##Check if file exists
+        if not os.path.isfile(img1_path):
+            raise BaseException('Image does not exist: '+img1_path)
+            # print img1_path, "not exists.Abort."
+            # return None
+        if not os.path.isfile(img2_path):
+            raise BaseException('Image does not exist: '+img2_path)
+            # print img2_path, "not exists.Abort."
+            # return None
 
         num_blobs = 2
         input_data = []
@@ -87,7 +96,10 @@ class Flownet():
                 print('**************** FOUND NANs, RETRYING ****************')
 
         optical_flow = np.squeeze(self.net.blobs['predict_flow_final'].data).transpose(1, 2, 0)
-        self.writeFlow('output.flo', optical_flow)
+        if output_file_path is None:
+            return optical_flow
+
+        self.writeFlow(output_file_path, optical_flow)
         # return optical_flow
 
     def writeFlow(self, output_name, optical_flow):

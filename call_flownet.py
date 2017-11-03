@@ -1,5 +1,6 @@
-import argparse
 import os 
+import utils.OpticalFlowToolkit.lib.flowlib as flib
+import argparse
 from Flownet import Flownet
 
 def get_arguments():
@@ -8,13 +9,14 @@ def get_arguments():
     return parser.parse_args()
 args = get_arguments()
 
-
-flow_net_model_base='flownet2/models'
+flow_net_model_base='utils/flownet2/models'
 flownet_dict={
     '0': 'FlowNet2', 
     'c': 'FlowNet2-c', 
     's': 'FlowNet2-s', 
     'ss': 'Flownet2-ss'
+    'sss': 'Flownet2-sss'
+    'css': 'Flownet2-css'
 }
 
 code=args.code
@@ -26,5 +28,7 @@ caffe_model_path = os.path.join(flow_net_model_base, flownet_dict[code], flownet
 # print deploy_proto_path, caffe_model_path
 fn = Flownet(deploy_proto_path, caffe_model_path, (480, 270))
 
-of = fn.get_optical_flow('frame5.bmp', 'frame7.bmp')
+# of = fn.get_optical_flow('frame5.bmp', 'frame7.bmp', "output.flo")
+of = fn.get_optical_flow('test_img/frame5.bmp', 'test_img/frame7.bmp')
+flib.visualize_flow(of)
 # fn.writeFlow("test.flo", of)

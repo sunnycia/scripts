@@ -68,7 +68,6 @@ pslist[0]= str(batch)
 new_paramstr = (',').join(pslist)
 gt_layer.python_param.param_str = new_paramstr
 
-
 print 'writing', training_protopath
 with open(training_protopath, 'w') as f:
     f.write(str(net))
@@ -89,7 +88,7 @@ postfix_str += '-'+'batch'+'-'+str(batch)
 postfix_str += '_'+str(int(time.time()))
 snapshot_dirname = os.path.join(os.path.dirname(snapshot_prefix), postfix_str)
 print snapshot_dirname;
-if not os.path.isdir(snapshot_dirname):
+if not os.path.isdir(snapshot_dirname): 
     os.makedirs(snapshot_dirname)
 snapshot_prefix = '"'+ snapshot_dirname + '/snapshot-"'
 print "snapshot will be save to", snapshot_prefix
