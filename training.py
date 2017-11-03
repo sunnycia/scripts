@@ -17,8 +17,8 @@ caffe.set_mode_gpu()
 
 def get_arguments():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--train_prototxt', type=str, default='train.prototxt', help='the network prototxt')
-    parser.add_argument('--solver_prototxt', type=str, default='solver.prototxt', help='the network prototxt')
+    parser.add_argument('--train_prototxt', type=str, default='prototxt/train.prototxt', help='the network prototxt')
+    parser.add_argument('--solver_prototxt', type=str, default='prototxt/solver.prototxt', help='the network prototxt')
     parser.add_argument('--use_snapshot', type=bool, default=False, help='Use snapshot mode or not.')
     parser.add_argument('--size', type=int, default=1000, help='Dataset length.Show/Cut')
     parser.add_argument('--debug', type=bool, default=False, help='If debug is ture, a mini set will run into training.Or a complete set will.')
