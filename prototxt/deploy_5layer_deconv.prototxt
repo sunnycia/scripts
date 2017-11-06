@@ -2554,53 +2554,82 @@ layer {
   bottom: "res5c"
   top: "upsample_1"
   convolution_param {
-    kernel_size: 8
-    stride: 4
     num_output: 512
-    group: 512
-    pad: 2
-    weight_filler: {
-        type: "bilinear" 
-        } 
     bias_term: false
+    pad: 1
+    kernel_size: 4
+    group: 512
+    stride: 2
+    weight_filler {
+      type: "bilinear"
+    }
   }
-  param { lr_mult: 1 decay_mult: 0 }
 }
-
 layer {
   name: "upsample_2"
   type: "Deconvolution"
   bottom: "upsample_1"
   top: "upsample_2"
   convolution_param {
-    kernel_size: 8
-    stride: 4
-    num_output: 64
-    group: 64
-    pad: 2
-    weight_filler: {
-        type: "bilinear" 
-        } 
+    num_output: 128
     bias_term: false
+    pad: 1
+    kernel_size: 4
+    group: 128
+    stride: 2
+    weight_filler {
+      type: "bilinear"
+    }
   }
-  param { lr_mult: 1 decay_mult: 0 }
 }
-
+layer {
+  name: "upsample_3"
+  type: "Deconvolution"
+  bottom: "upsample_2"
+  top: "upsample_3"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 4
+    group: 32
+    stride: 2
+    weight_filler {
+      type: "bilinear"
+    }
+  }
+}
+layer {
+  name: "upsample_4"
+  type: "Deconvolution"
+  bottom: "upsample_3"
+  top: "upsample_4"
+  convolution_param {
+    num_output: 8
+    bias_term: false
+    pad: 1
+    kernel_size: 4
+    group: 8
+    stride: 2
+    weight_filler {
+      type: "bilinear"
+    }
+  }
+}
 layer {
   name: "saliency_map"
   type: "Deconvolution"
-  bottom: "upsample_2"
+  bottom: "upsample_4"
   top: "saliency_map"
   convolution_param {
-    kernel_size: 4
-    stride: 2
     num_output: 1
-    group: 1
-    pad: 1
-    weight_filler: {
-        type: "bilinear" 
-        } 
     bias_term: false
+    pad: 1
+    kernel_size: 4
+    group: 1
+    stride: 2
+    weight_filler {
+      type: "bilinear"
+    }
   }
-  param { lr_mult: 1 decay_mult: 0 }
 }

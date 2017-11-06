@@ -1,4 +1,4 @@
-from Dataset import Dataset
+from Dataset import StaticDataset
 import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
@@ -19,7 +19,7 @@ def get_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument('--train_prototxt', type=str, default='prototxt/train.prototxt', help='the network prototxt')
     parser.add_argument('--solver_prototxt', type=str, default='prototxt/solver.prototxt', help='the network prototxt')
-    parser.add_argument('--use_snapshot', type=bool, default=False, help='Use snapshot mode or not.')
+    parser.add_argument('--use_snapshot', type=str, default='', help='Snapshot path.')
     parser.add_argument('--size', type=int, default=1000, help='Dataset length.Show/Cut')
     parser.add_argument('--debug', type=bool, default=False, help='If debug is ture, a mini set will run into training.Or a complete set will.')
     parser.add_argument('--visualization', type=bool, default=False, help='visualization option')
@@ -27,13 +27,18 @@ def get_arguments():
     return parser.parse_args()
 
 print "Parsing arguments..."
+args = get_arguments()
 ##
 plot_figure_dir = '../figure'
 pretrained_model_path= '../pretrained_model/ResNet-50-model.caffemodel'
-snapshot_path = '/data/sunnycia/saliency_on_videoset/Train/training_output/salicon/snapshot-train_kldloss_withouteuc_iter_100000.solverstate'
-
-args = get_arguments()
+# snapshot_path = '/data/sunnycia/saliency_on_videoset/Train/training_output/salicon/snapshot-train_kldloss_withouteuc_iter_100000.solverstate'
 debug_mode = args.debug
+snapshot_path = args.use_snapshot
+#Check if snapshot exists
+if snapshot_path is not '':
+    if not os.path.isfile(snapshot_path):
+        print snapshot_path, "not exists.Abort"
+        exit()
 
 ##### Data preparation section.
 ## load training data
@@ -42,6 +47,7 @@ update_solver_dict = {
 # 'solver_type':'SGD'
 }
 extrainfo_dict = {
+'kld_weight':'1000'
 }
 batch = args.batch
 
@@ -72,7 +78,6 @@ print 'writing', training_protopath
 with open(training_protopath, 'w') as f:
     f.write(str(net))
 
-
 solver_path = args.solver_prototxt
 solverproto = CaffeSolver(trainnet_prototxt_path=training_protopath)
 
@@ -86,8 +91,10 @@ for key in extrainfo_dict:
     postfix_str += '-'+key+ '-'+ extrainfo_dict[key]
 postfix_str += '-'+'batch'+'-'+str(batch)
 postfix_str += '_'+str(int(time.time()))
+if not args.use_snapshot == '':
+    postfix_str += '_'+"usesnapshot_"+os.path.dirname(snapshot_path).split('_')[-1]+'_'+os.path.basename(snapshot_path).split('.')[0]
 snapshot_dirname = os.path.join(os.path.dirname(snapshot_prefix), postfix_str)
-print snapshot_dirname;
+print snapshot_dirname
 if not os.path.isdir(snapshot_dirname): 
     os.makedirs(snapshot_dirname)
 snapshot_prefix = '"'+ snapshot_dirname + '/snapshot-"'
@@ -105,10 +112,10 @@ print "Loading data..."
 
 train_frame_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/train2014/images'
 train_density_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/train2014/density'
-tranining_dataset = Dataset(train_frame_basedir, train_density_basedir, debug=debug_mode)
+tranining_dataset = StaticDataset(train_frame_basedir, train_density_basedir, debug=debug_mode)
 validation_frame_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/images'
 validation_density_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/density'
-# validation_dataset = Dataset(train_frame_basedir, train_density_basedir, debug=debug_mode)
+# validation_dataset = StaticDataset(train_frame_basedir, train_density_basedir, debug=debug_mode)
 
 ##### Training section
 # load the solver
@@ -118,10 +125,10 @@ if 'solver_type' in update_solver_dict:
 else:
     solver = caffe.AdaDeltaSolver(solver_path)
 
-if args.use_snapshot == True:
-    solver.restore(snapshot_path)
-else:
+if args.use_snapshot == '':
     solver.net.copy_from(pretrained_model_path) # untrained.caffemodel
+else:
+    solver.restore(snapshot_path)
 
 tart_time = time.time()
 
@@ -138,7 +145,6 @@ z=[] # validation
 plt.plot(x, y)
 _step=0
 while _step * batch < max_iter:
-
     if _step%validation_iter==0:
         ##do validation
         pass
@@ -150,6 +156,8 @@ while _step * batch < max_iter:
     solver.step(1)
 
     x.append(_step)
+    # y1.append(solver.net.blobs['loss'].data[...].tolist())
+    # y2.append(solver.net.blobs['loss'].data[...].tolist())
     y.append(solver.net.blobs['loss'].data[...].tolist())
 
     plt.plot(x, y)
@@ -164,5 +172,5 @@ while _step * batch < max_iter:
     _step+=1
 
 import cPickle as pkl
-pkl.dump(x, open(os.path.join(plot_figure_dir, "x.pkl")))
-pkl.dump(y, open(os.path.join(plot_figure_dir, "y.pkl")))
+pkl.dump(x, open(os.path.join(plot_figure_dir, "x.pkl"), 'wb'))
+pkl.dump(y, open(os.path.join(plot_figure_dir, "y.pkl"), 'wb'))

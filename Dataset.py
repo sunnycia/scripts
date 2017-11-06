@@ -1,6 +1,6 @@
 import os, glob, cv2, numpy as np
 
-class Dataset():
+class StaticDataset():
     def __init__(self, frame_basedir, density_basedir, debug):
         MEAN_VALUE = np.array([103.939, 116.779, 123.68], dtype=np.float32)   # B G R/ use opensalicon's mean_value
         self.MEAN_VALUE = MEAN_VALUE[None, None, ...]
@@ -64,3 +64,27 @@ class Dataset():
             assert batch_size <= self.num_examples
         end = self.index_in_epoch
         return self.data[start:end], self.labels[start:end]
+
+class VideoDataset():
+    def __init__(self, frame_basedir, density_basedir, flownet):
+        MEAN_VALUE = np.array([103.939, 116.779, 123.68], dtype=np.float32)   # B G R/ use opensalicon's mean_value
+        self.MEAN_VALUE = MEAN_VALUE[None, None, ...]
+        self.img_size = (480, 288)
+        self.dataset_dict={}
+        self.T = 8
+        # self.step = 4
+        self.frame_basedir = frame_basedir
+        self.density_basedir = density_basedir
+        self.setup_video_dataset()
+
+    def setup_video_dataset():
+        video_subdir_list = os.listdir(self.frame_basedir)
+        for video_subdir in video_subdir_list:
+            video_name = video_subdir
+            frame_count = len(os.listdir(os.path.join(self.frame_basedir, video_subdir)))
+            video_dict={'frame_count'}
+
+    def get_frame_pair():
+        pass
+
+    # def 

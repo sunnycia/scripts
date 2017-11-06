@@ -1,0 +1,14 @@
+base_lr: 0.01
+delta: 1e-6
+display: 100
+gamma: 0.0001
+iter_size: 1
+lr_policy: "inv"
+momentum: 0.9
+power: 0.75
+snapshot: 50000
+snapshot_prefix: "../training_output/salicon/train_kldloss_withouteuc_5layer_deconv-kld_weight-1000-batch-8_1509885700/snapshot-"
+solver_mode: GPU
+solver_type: ADADELTA
+train_net: "prototxt/train_kldloss_withouteuc_5layer_deconv.prototxt"
+weight_decay: 0.0005

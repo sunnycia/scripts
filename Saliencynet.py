@@ -5,7 +5,7 @@ class Saliencynet:
     def __init__(self, deploy_proto, caffe_model):
         self.net = caffe.Net(deploy_proto, caffe_model, caffe.TEST) 
         self.MEAN_VALUE = np.array([103.939, 116.779, 123.68])   # BGR
-        self.MEAN_VALUE = MEAN_VALUE[:,None, None]
+        self.MEAN_VALUE = self.MEAN_VALUE[:,None, None]
         self.std_wid = 480
         self.std_hei = 288
 
@@ -14,9 +14,9 @@ class Saliencynet:
         h, w, c = img_arr.shape
         # subtract mean
         if sub_mean:
-            img_arr[:, :, 0] -= MEAN_VALUE[0] # B
-            img_arr[:, :, 1] -= MEAN_VALUE[1] # G
-            img_arr[:, :, 2] -= MEAN_VALUE[2] # R
+            img_arr[:, :, 0] -= self.MEAN_VALUE[0] # B
+            img_arr[:, :, 1] -= self.MEAN_VALUE[1] # G
+            img_arr[:, :, 2] -= self.MEAN_VALUE[2] # R
 
         ## this version simply resize the test image
         img_arr = cv2.resize(img_arr, dsize=(self.std_wid, self.std_hei))

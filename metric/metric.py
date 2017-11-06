@@ -39,7 +39,7 @@
 
         print cc, sim;exit()
 '''
-from pymetric.metrics import *
+from utils.pymetric.metrics import *
 import os
 import glob
 import scipy.io as scio
@@ -49,12 +49,17 @@ import argparse
 from utils.color_print import Colored
 # metric_list = ['CC', 'SIM', 'AUC_JUD', 'AUC_BOR', 'SAUC', 'EMD', 'KLD', 'NSS']
 # mask_code = [0, 0, 0, 0, ]
+def get_arguments():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--debug', type=bool, default=False)
+    parser.add_argument('--dsname', type=str, required=True)
+    return parser.parse_args()
+args = get_arguments()
+
 metric_save_path = '../metric-py'
-
-
-
-ds_name='mit1003';
-debug=True
+# ds_name='mit1003';
+ds_name = args.dsname
+debug = args.debug
 color = Colored()
 ## salicon
 if ds_name == 'salicon':
@@ -66,6 +71,14 @@ elif ds_name == 'mit1003':
     sal_base = '/data/sunnycia/SaliencyDataset/Image/MIT1003/saliency'
     dens_dir = '/data/sunnycia/SaliencyDataset/Image/MIT1003/ALLFIXATIONMAPS'
     fixa_dir = '/data/sunnycia/SaliencyDataset/Image/MIT1003/fixPts'
+elif ds_name == 'nus':
+    sal_base = '/data/sunnycia/SaliencyDataset/Image/NUS/saliency'
+    dens_dir = '/data/sunnycia/SaliencyDataset/Image/NUS/Density'
+    fixa_dir = '/data/sunnycia/SaliencyDataset/Image/NUS/Fixation'
+# elif ds_name == 'nctu':
+#     sal_base = '/data/sunnycia/SaliencyDataset/Image/MIT1003/saliency'
+#     dens_dir = '/data/sunnycia/SaliencyDataset/Image/NCTU/AllFixMap/sigma_52'
+#     fixa_dir = '/data/sunnycia/SaliencyDataset/Image/MIT1003/fixPts'
 
 if ds_name not in sal_base.lower():
     print "Caution the dataset version"
@@ -73,7 +86,12 @@ if ds_name not in sal_base.lower():
 
 evaluation_list = os.listdir(sal_base)
 for evaluation in evaluation_list:
-    print "Info: evaluating", color.yellow(evaluation)
+    output_path = os.path.join(metric_save_path, ds_name+'_'+evaluation+'.mat')
+    print color.red(output_path)
+    if os.path.isfile(output_path):
+        print output_path, "already exists, skip.."
+        continue
+    print "Info: evaluating", color.red(evaluation)
     # if already done:
     #     pass this file
 
@@ -141,7 +159,6 @@ for evaluation in evaluation_list:
 
     saliency_score = [saliency_score_cc, saliency_score_sim, saliency_score_jud, saliency_score_bor, saliency_score_sauc, saliency_score_emd, saliency_score_kld, saliency_score_nss]
 
-    output_path = os.path.join(metric_save_path, ds_name+'_'+evaluation+'.mat')
     if not debug == True:
         scio.savemat(output_path, {'saliency_score':saliency_score})
         print output_path, 'saved'

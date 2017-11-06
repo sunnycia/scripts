@@ -1,5 +1,5 @@
 #!/bin/bash 
-export CUDA_VISIBLE_DEVICES=6 
+export CUDA_VISIBLE_DEVICES=7
 export PYTHONPATH=../caffe-flownet/python:$PYTHONPATH
 RELEASE_PATH="../caffe-flownet/build" 
 export LD_LIBRARY_PATH="$RELEASE_PATH/lib:$LD_LIBRARY_PATH"
