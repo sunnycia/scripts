@@ -10,6 +10,16 @@ layer {
   }
 }
 layer {
+  name: "flow"
+  type: "Python"
+  top: "flow"
+  python_param{
+    module: "CustomData"
+    layer: "CustomData"
+    param_str: "1,2,288,480"
+  }
+}
+layer {
   name: "ground_truth"
   type: "Python"
   top: "ground_truth"
@@ -2287,6 +2297,13 @@ layer {
   top: "res5c"
 }
 layer {
+  name: "warp_feature"
+  type: "FlowWarp"
+  bottom: "res5c"
+  bottom: "flow"
+}
+
+layer {
   name: "upsample_1"
   type: "Deconvolution"
   bottom: "res5c"
@@ -2350,18 +2367,10 @@ layer {
   }
 }
 layer {
-  name: "eucloss"
-  type: "EuclideanLoss"
-  bottom: "saliency_map"
-  bottom: "ground_truth"
-  top: "eucloss"
-  loss_weight: 1.0
-}
-layer {
-  name: "kldloss"
+  name: "loss"
   type: "KLDivLoss"
   bottom: "saliency_map"
   bottom: "ground_truth"
-  top: "kldloss"
-  loss_weight: 100.0
+  top: "loss"
+  loss_weight: 1.0
 }

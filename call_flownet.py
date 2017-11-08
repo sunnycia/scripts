@@ -14,9 +14,9 @@ flownet_dict={
     '0': 'FlowNet2', 
     'c': 'FlowNet2-c', 
     's': 'FlowNet2-s', 
-    'ss': 'Flownet2-ss'
-    'sss': 'Flownet2-sss'
-    'css': 'Flownet2-css'
+    'ss': 'FlowNet2-ss'
+    'sss': 'FlowNet2-sss'
+    'css': 'FlowNet2-css'
 }
 
 code=args.code

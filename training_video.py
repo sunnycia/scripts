@@ -1,4 +1,4 @@
-from Dataset import StaticDataset
+from Dataset import VideoDataset
 import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
@@ -11,8 +11,11 @@ from utils.caffe_tools import CaffeSolver
 from utils.file_check import check_path_list
 from caffe.proto import caffe_pb2
 import google.protobuf.text_format as txtf
+from Flownet import Flownet
+import utils.OpticalFlowToolkit.lib.flowlib as flib
 
 caffe.set_mode_gpu()
+
 
 def get_arguments():
     parser = argparse.ArgumentParser()
@@ -23,12 +26,13 @@ def get_arguments():
     parser.add_argument('--debug', type=bool, default=False, help='If debug is ture, a mini set will run into training.Or a complete set will.')
     parser.add_argument('--visualization', type=bool, default=False, help='visualization option')
     parser.add_argument('--batch', type=int, default=1, help='training mini batch')
+    parser.add_argument('--flownet_code', type=str, default='0')
+    parser.add_argument('--image_size', type=tuple, default=(480,288))
     return parser.parse_args()
-
 print "Parsing arguments..."
 args = get_arguments()
-##
-plot_figure_dir = '../figure'
+
+
 pretrained_model_path= '../pretrained_model/ResNet-50-model.caffemodel'
 debug_mode = args.debug
 snapshot_path = args.use_snapshot
@@ -38,20 +42,24 @@ if snapshot_path is not '':
         print snapshot_path, "not exists.Abort"
         exit()
 
-##################                                                        _    
-#  /| |      /                   /                   /                   / |   
-# ( | | ___ (___       ___  ___ (          ___  ___ (___       ___      (__/   
-# | | )|___)|    |   )|   )|   )|___)     |___ |___)|    |   )|   )      / \)  
-# | |/ |__  |__  |/\/ |__/ |    | \        __/ |__  |__  |__/ |__/      |__/\  
-#                                                             |                
-#   __                                                                         
-# |/  |      /                                                 /    /          
-# |   | ___ (___  ___       ___  ___  ___  ___  ___  ___  ___ (___    ___  ___ 
-# |   )|   )|    |   )     |   )|   )|___)|   )|   )|   )|   )|    | |   )|   )
-# |__/ |__/||__  |__/|     |__/ |    |__  |__/ |__/||    |__/||__  | |__/ |  / 
-##################         |              |                                    
+##########################################################################_#####
+#  /| |      /                   /                   /                   / |   #
+# ( | | ___ (___       ___  ___ (          ___  ___ (___       ___      (__/   #
+# | | )|___)|    |   )|   )|   )|___)     |___ |___)|    |   )|   )      / \)  #
+# | |/ |__  |__  |/\/ |__/ |    | \        __/ |__  |__  |__/ |__/      |__/\  #
+#                                                             |                #
+#   __                                                                         #
+# |/  |      /                                                 /    /          #
+# |   | ___ (___  ___       ___  ___  ___  ___  ___  ___  ___ (___    ___  ___ #
+# |   )|   )|    |   )     |   )|   )|___)|   )|   )|   )|   )|    | |   )|   )#
+# |__/ |__/||__  |__/|     |__/ |    |__  |__/ |__/||    |__/||__  | |__/ |  / #
+###########################|##############|#####################################
+
 
 """A1: Update network prototxt"""
+# ╦ ╦┌─┐┌┬┐┌─┐┌┬┐┌─┐  ┌┐┌┌─┐┌┬┐┬ ┬┌─┐┬─┐┬┌─  ┌─┐┬─┐┌─┐┌┬┐┌─┐┌┬┐─┐ ┬┌┬┐
+# ║ ║├─┘ ││├─┤ │ ├┤   │││├┤  │ ││││ │├┬┘├┴┐  ├─┘├┬┘│ │ │ │ │ │ ┌┴┬┘ │ 
+# ╚═╝┴  ─┴┘┴ ┴ ┴ └─┘  ┘└┘└─┘ ┴ └┴┘└─┘┴└─┴ ┴  ┴  ┴└─└─┘ ┴ └─┘ ┴ ┴ └─ ┴ 
 batch = args.batch
 training_protopath = args.train_prototxt
 net = caffe_pb2.NetParameter()
@@ -84,15 +92,17 @@ with open(training_protopath, 'w') as f:
 """End of A1"""
 
 """A2: Update solver prototxt"""
+# ╦ ╦┌─┐┌┬┐┌─┐┌┬┐┌─┐  ┌─┐┌─┐┬  ┬  ┬┌─┐┬─┐  ┌─┐┬─┐┌─┐┌┬┐┌─┐┌┬┐─┐ ┬┌┬┐
+# ║ ║├─┘ ││├─┤ │ ├┤   └─┐│ ││  └┐┌┘├┤ ├┬┘  ├─┘├┬┘│ │ │ │ │ │ ┌┴┬┘ │ 
+# ╚═╝┴  ─┴┘┴ ┴ ┴ └─┘  └─┘└─┘┴─┘ └┘ └─┘┴└─  ┴  ┴└─└─┘ ┴ └─┘ ┴ ┴ └─ ┴ 
 update_solver_dict = {
 # 'solver_type':'SGD'
 }
 extrainfo_dict = {
-'kld_weight':'100'
 }
 solver_path = args.solver_prototxt
 solverproto = CaffeSolver(trainnet_prototxt_path=training_protopath)
-solverproto.update_solver(update_solver_dict)
+solverproto.update_solver(dict(update_solver_dict, **extrainfo_dict))
 
 '''A2B: Add postfix to identify a model version'''
 merge_dict = dict(update_solver_dict, **extrainfo_dict)
@@ -112,7 +122,6 @@ snapshot_prefix = '"'+ snapshot_dirname + '/snapshot-"'
 print "snapshot will be save to", snapshot_prefix
 solverproto.sp['snapshot_prefix'] = snapshot_prefix
 solverproto.write(solver_path);
-"""End of A2"""
 
 # load the solver
 if 'solver_type' in update_solver_dict:
@@ -124,29 +133,57 @@ if args.use_snapshot == '':
     solver.net.copy_from(pretrained_model_path) # untrained.caffemodel
 else:
     solver.restore(snapshot_path)
+"""End of A2"""
 
+"""A3 Setup flow net"""
+# ╔═╗┌─┐┌┬┐┬ ┬┌─┐  ┌─┐┬  ┌─┐┬ ┬  ┌┐┌┌─┐┌┬┐
+# ╚═╗├┤  │ │ │├─┘  ├┤ │  │ ││││  │││├┤  │ 
+# ╚═╝└─┘ ┴ └─┘┴    └  ┴─┘└─┘└┴┘  ┘└┘└─┘ ┴ 
+flow_net_model_base='utils/flownet2/models'
+flownet_dict={
+    '0': 'FlowNet2', 
+    'c': 'FlowNet2-c', 
+    's': 'FlowNet2-s', 
+    'ss': 'FlowNet2-ss'
+    'sss': 'FlowNet2-sss'
+    'css': 'FlowNet2-css'
+}
+flownet_code = args.flownet_code
+deploy_postfix = '_deploy.prototxt.template'
+model_postfix = '_weights.caffemodel.h5'
+deploy_proto_path = os.path.join(flow_net_model_base, flownet_dict[code], flownet_dict[code]+deploy_postfix)
+caffe_model_path = os.path.join(flow_net_model_base, flownet_dict[code], flownet_dict[code]+model_postfix)
+flownet = Flownet(deploy_proto_path, caffe_model_path, args.image_size)
+
+# ╔═╗┌─┐┌┬┐┬ ┬┌─┐  ┌┬┐┌─┐┌┬┐┌─┐┌─┐┌─┐┌┬┐
+# ╚═╗├┤  │ │ │├─┘   ││├─┤ │ ├─┤└─┐├┤  │ 
+# ╚═╝└─┘ ┴ └─┘┴    ─┴┘┴ ┴ ┴ ┴ ┴└─┘└─┘ ┴ 
+print "Loading data..."
+train_frame_basedir = '/data/sunnycia/SaliencyDataset/Video/MSU/frames'
+train_density_basedir = '/data/sunnycia/SaliencyDataset/Video/MSU/density'
+validation_frame_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/images'
+validation_density_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/density'
+tranining_dataset = VideoDataset(train_frame_basedir, train_density_basedir, debug=debug_mode)
+# validation_dataset = StaticDataset(train_frame_basedir, train_density_basedir, debug=debug_mode)
+
+# ╔╦╗╦╔═╗╔═╗
+# ║║║║╚═╗║  
+# ╩ ╩╩╚═╝╚═╝
+plot_figure_dir = '../figure'
 ## Figure dir
 plot_figure_dir = os.path.join(plot_figure_dir, postfix_str)
 if not os.path.isdir(plot_figure_dir):
     os.makedirs(plot_figure_dir)
 print "Loss figure will be save to", plot_figure_dir
 
-##
-print "Loading data..."
-train_frame_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/train2014/images'
-train_density_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/train2014/density'
-tranining_dataset = StaticDataset(train_frame_basedir, train_density_basedir, debug=debug_mode)
-validation_frame_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/images'
-validation_density_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/density'
-# validation_dataset = StaticDataset(train_frame_basedir, train_density_basedir, debug=debug_mode)
 
 
-#######                            
-#  /|            /      /          
-# ( |  ___  ___    ___    ___  ___ 
-#   | |   )|   )| |   )| |   )|   )
-#   | |    |__/|| |  / | |  / |__/ 
-#######                       __/  
+####################################
+#  /|            /      /          #
+# ( |  ___  ___    ___    ___  ___ #
+#   | |   )|   )| |   )| |   )|   )#
+#   | |    |__/|| |  / | |  / |__/ #
+##############################__/###
 tart_time = time.time()
 
 max_iter = 1000000
@@ -166,8 +203,11 @@ while _step * batch < max_iter:
         ##do validation
         pass
 
-    frame_minibatch, density_minibatch = tranining_dataset.next_batch(batch)
+    key_frame_path,cur_frame_path, cur_frame_gt_path= tranining_dataset.next_frame_pair(batch)
+    flow = flownet.get_optical_flow(key_frame_path, cur_frame_path)
+
     # print frame_minibatch.shape;exit()
+    solver.net.blobs['data'].data[...] = frame_minibatch
     solver.net.blobs['data'].data[...] = frame_minibatch
     solver.net.blobs['ground_truth'].data[...] = density_minibatch
     solver.step(1)
@@ -175,12 +215,12 @@ while _step * batch < max_iter:
     x.append(_step)
     # y1.append(solver.net.blobs['loss'].data[...].tolist())
     # y2.append(solver.net.blobs['loss'].data[...].tolist())
-    y.append(solver.net.blobs['kldloss'].data[...].tolist())
+    y.append(solver.net.blobs['loss'].data[...].tolist())
 
     plt.plot(x, y)
     if _step%plot_iter==0:
         plt.xlabel('Iter')
-        plt.ylabel('kld loss')
+        plt.ylabel('loss')
         plt.savefig(os.path.join(plot_figure_dir, "plot"+str(_step)+".png"))
         plt.clf()
     if args.visualization:

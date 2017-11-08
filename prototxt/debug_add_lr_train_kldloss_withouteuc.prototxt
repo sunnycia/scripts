@@ -6,7 +6,7 @@ layer {
   python_param {
     module: "CustomData"
     layer: "CustomData"
-    param_str: "1,3,288,480"
+    param_str: "8,3,288,480"
   }
 }
 layer {
@@ -16,7 +16,7 @@ layer {
   python_param {
     module: "CustomData"
     layer: "CustomData"
-    param_str: "1,1,288,480"
+    param_str: "8,1,288,480"
   }
 }
 layer {
@@ -24,6 +24,10 @@ layer {
   type: "Convolution"
   bottom: "data"
   top: "conv1"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 64
     bias_term: true
@@ -75,6 +79,10 @@ layer {
   type: "Convolution"
   bottom: "pool1"
   top: "res2a_branch1"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 256
     bias_term: false
@@ -109,6 +117,10 @@ layer {
   type: "Convolution"
   bottom: "pool1"
   top: "res2a_branch2a"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 64
     bias_term: false
@@ -149,6 +161,10 @@ layer {
   type: "Convolution"
   bottom: "res2a_branch2a"
   top: "res2a_branch2b"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 64
     bias_term: false
@@ -189,6 +205,10 @@ layer {
   type: "Convolution"
   bottom: "res2a_branch2b"
   top: "res2a_branch2c"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 256
     bias_term: false
@@ -239,6 +259,10 @@ layer {
   type: "Convolution"
   bottom: "res2a"
   top: "res2b_branch2a"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 64
     bias_term: false
@@ -279,6 +303,10 @@ layer {
   type: "Convolution"
   bottom: "res2b_branch2a"
   top: "res2b_branch2b"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 64
     bias_term: false
@@ -319,6 +347,10 @@ layer {
   type: "Convolution"
   bottom: "res2b_branch2b"
   top: "res2b_branch2c"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 256
     bias_term: false
@@ -369,6 +401,10 @@ layer {
   type: "Convolution"
   bottom: "res2b"
   top: "res2c_branch2a"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 64
     bias_term: false
@@ -409,6 +445,10 @@ layer {
   type: "Convolution"
   bottom: "res2c_branch2a"
   top: "res2c_branch2b"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 64
     bias_term: false
@@ -449,6 +489,10 @@ layer {
   type: "Convolution"
   bottom: "res2c_branch2b"
   top: "res2c_branch2c"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 256
     bias_term: false
@@ -499,6 +543,10 @@ layer {
   type: "Convolution"
   bottom: "res2c"
   top: "res3a_branch1"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 512
     bias_term: false
@@ -533,6 +581,10 @@ layer {
   type: "Convolution"
   bottom: "res2c"
   top: "res3a_branch2a"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 128
     bias_term: false
@@ -573,6 +625,10 @@ layer {
   type: "Convolution"
   bottom: "res3a_branch2a"
   top: "res3a_branch2b"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 128
     bias_term: false
@@ -613,6 +669,10 @@ layer {
   type: "Convolution"
   bottom: "res3a_branch2b"
   top: "res3a_branch2c"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 512
     bias_term: false
@@ -663,6 +723,10 @@ layer {
   type: "Convolution"
   bottom: "res3a"
   top: "res3b_branch2a"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 128
     bias_term: false
@@ -703,6 +767,10 @@ layer {
   type: "Convolution"
   bottom: "res3b_branch2a"
   top: "res3b_branch2b"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 128
     bias_term: false
@@ -743,6 +811,10 @@ layer {
   type: "Convolution"
   bottom: "res3b_branch2b"
   top: "res3b_branch2c"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 512
     bias_term: false
@@ -793,6 +865,10 @@ layer {
   type: "Convolution"
   bottom: "res3b"
   top: "res3c_branch2a"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 128
     bias_term: false
@@ -833,6 +909,10 @@ layer {
   type: "Convolution"
   bottom: "res3c_branch2a"
   top: "res3c_branch2b"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 128
     bias_term: false
@@ -873,6 +953,10 @@ layer {
   type: "Convolution"
   bottom: "res3c_branch2b"
   top: "res3c_branch2c"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 512
     bias_term: false
@@ -923,6 +1007,10 @@ layer {
   type: "Convolution"
   bottom: "res3c"
   top: "res3d_branch2a"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 128
     bias_term: false
@@ -963,6 +1051,10 @@ layer {
   type: "Convolution"
   bottom: "res3d_branch2a"
   top: "res3d_branch2b"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 128
     bias_term: false
@@ -1003,6 +1095,10 @@ layer {
   type: "Convolution"
   bottom: "res3d_branch2b"
   top: "res3d_branch2c"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 512
     bias_term: false
@@ -1053,6 +1149,10 @@ layer {
   type: "Convolution"
   bottom: "res3d"
   top: "res4a_branch1"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 1024
     bias_term: false
@@ -1087,6 +1187,10 @@ layer {
   type: "Convolution"
   bottom: "res3d"
   top: "res4a_branch2a"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 256
     bias_term: false
@@ -1127,6 +1231,10 @@ layer {
   type: "Convolution"
   bottom: "res4a_branch2a"
   top: "res4a_branch2b"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 256
     bias_term: false
@@ -1167,6 +1275,10 @@ layer {
   type: "Convolution"
   bottom: "res4a_branch2b"
   top: "res4a_branch2c"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 1024
     bias_term: false
@@ -1217,6 +1329,10 @@ layer {
   type: "Convolution"
   bottom: "res4a"
   top: "res4b_branch2a"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 256
     bias_term: false
@@ -1257,6 +1373,10 @@ layer {
   type: "Convolution"
   bottom: "res4b_branch2a"
   top: "res4b_branch2b"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 256
     bias_term: false
@@ -1297,6 +1417,10 @@ layer {
   type: "Convolution"
   bottom: "res4b_branch2b"
   top: "res4b_branch2c"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 1024
     bias_term: false
@@ -1347,6 +1471,10 @@ layer {
   type: "Convolution"
   bottom: "res4b"
   top: "res4c_branch2a"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 256
     bias_term: false
@@ -1387,6 +1515,10 @@ layer {
   type: "Convolution"
   bottom: "res4c_branch2a"
   top: "res4c_branch2b"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 256
     bias_term: false
@@ -1427,6 +1559,10 @@ layer {
   type: "Convolution"
   bottom: "res4c_branch2b"
   top: "res4c_branch2c"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 1024
     bias_term: false
@@ -1477,6 +1613,10 @@ layer {
   type: "Convolution"
   bottom: "res4c"
   top: "res4d_branch2a"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 256
     bias_term: false
@@ -1517,6 +1657,10 @@ layer {
   type: "Convolution"
   bottom: "res4d_branch2a"
   top: "res4d_branch2b"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 256
     bias_term: false
@@ -1557,6 +1701,10 @@ layer {
   type: "Convolution"
   bottom: "res4d_branch2b"
   top: "res4d_branch2c"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 1024
     bias_term: false
@@ -1607,6 +1755,10 @@ layer {
   type: "Convolution"
   bottom: "res4d"
   top: "res4e_branch2a"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 256
     bias_term: false
@@ -1647,6 +1799,10 @@ layer {
   type: "Convolution"
   bottom: "res4e_branch2a"
   top: "res4e_branch2b"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 256
     bias_term: false
@@ -1687,6 +1843,10 @@ layer {
   type: "Convolution"
   bottom: "res4e_branch2b"
   top: "res4e_branch2c"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 1024
     bias_term: false
@@ -1737,6 +1897,10 @@ layer {
   type: "Convolution"
   bottom: "res4e"
   top: "res4f_branch2a"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 256
     bias_term: false
@@ -1777,6 +1941,10 @@ layer {
   type: "Convolution"
   bottom: "res4f_branch2a"
   top: "res4f_branch2b"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 256
     bias_term: false
@@ -1817,6 +1985,10 @@ layer {
   type: "Convolution"
   bottom: "res4f_branch2b"
   top: "res4f_branch2c"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 1024
     bias_term: false
@@ -1867,6 +2039,10 @@ layer {
   type: "Convolution"
   bottom: "res4f"
   top: "res5a_branch1"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 2048
     bias_term: false
@@ -1901,6 +2077,10 @@ layer {
   type: "Convolution"
   bottom: "res4f"
   top: "res5a_branch2a"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 512
     bias_term: false
@@ -1941,6 +2121,10 @@ layer {
   type: "Convolution"
   bottom: "res5a_branch2a"
   top: "res5a_branch2b"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 512
     bias_term: false
@@ -1981,6 +2165,10 @@ layer {
   type: "Convolution"
   bottom: "res5a_branch2b"
   top: "res5a_branch2c"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 2048
     bias_term: false
@@ -2031,6 +2219,10 @@ layer {
   type: "Convolution"
   bottom: "res5a"
   top: "res5b_branch2a"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 512
     bias_term: false
@@ -2071,6 +2263,10 @@ layer {
   type: "Convolution"
   bottom: "res5b_branch2a"
   top: "res5b_branch2b"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 512
     bias_term: false
@@ -2111,6 +2307,10 @@ layer {
   type: "Convolution"
   bottom: "res5b_branch2b"
   top: "res5b_branch2c"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 2048
     bias_term: false
@@ -2161,6 +2361,10 @@ layer {
   type: "Convolution"
   bottom: "res5b"
   top: "res5c_branch2a"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 512
     bias_term: false
@@ -2201,6 +2405,10 @@ layer {
   type: "Convolution"
   bottom: "res5c_branch2a"
   top: "res5c_branch2b"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 512
     bias_term: false
@@ -2241,6 +2449,10 @@ layer {
   type: "Convolution"
   bottom: "res5c_branch2b"
   top: "res5c_branch2c"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
   convolution_param {
     num_output: 2048
     bias_term: false
@@ -2350,18 +2562,10 @@ layer {
   }
 }
 layer {
-  name: "eucloss"
-  type: "EuclideanLoss"
-  bottom: "saliency_map"
-  bottom: "ground_truth"
-  top: "eucloss"
-  loss_weight: 1.0
-}
-layer {
-  name: "kldloss"
+  name: "loss"
   type: "KLDivLoss"
   bottom: "saliency_map"
   bottom: "ground_truth"
-  top: "kldloss"
-  loss_weight: 100.0
+  top: "loss"
+  loss_weight: 1.0
 }

@@ -41,7 +41,6 @@ if __name__ =='__main__':
             # saliency_map = sn.compute_saliency('../test_imgs/face.jpg')
             # cv2.imwrite('../test_imgs/frame140.bmp', saliency_map)
 
-
             # test_img_dir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/images'
             # test_img_dir  = '/data/sunnycia/SaliencyDataset/Image/CAT2000/trainSet/combine/Stimuli'
             test_img_dir  = '/data/sunnycia/SaliencyDataset/Image/MIT1003/ALLSTIMULI'

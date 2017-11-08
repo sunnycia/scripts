@@ -49,6 +49,9 @@ class SimpleTransformer:
 
         return np.uint8(im)
 
+class CaffeNetwork:
+    # def __init__(self, )
+    pass
 
 class CaffeSolver:
 
@@ -58,7 +61,6 @@ class CaffeSolver:
     Note that all parameters are stored as strings. Strings variables are
     stored as strings in strings.
     """
-
     def __init__(self, trainnet_prototxt_path="train.prototxt"):
 
         self.sp = {}
@@ -88,6 +90,12 @@ class CaffeSolver:
         #snapshot
         self.sp['snapshot'] = '50000'
         self.sp['snapshot_prefix'] = '"../training_output/salicon/snapshot"'
+
+    def update_solver(self, update_dict):
+        for key in update_dict:
+            self.sp[key] = update_dict[key]
+
+
     def add_from_file(self, filepath):
         """
         Reads a caffe solver prototxt file and updates the Caffesolver
