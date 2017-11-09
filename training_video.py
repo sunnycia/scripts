@@ -25,6 +25,7 @@ def get_arguments():
     parser.add_argument('--train_prototxt', type=str, default='prototxt/train.prototxt', help='the network prototxt')
     parser.add_argument('--solver_prototxt', type=str, default='prototxt/solver.prototxt', help='the network prototxt')
     parser.add_argument('--use_snapshot', type=str, default='', help='Snapshot path.')
+    parser.add_argument('--use_model', type=str, default='../pretrained_model/ResNet-50-model.caffemodel', help='Pretrained model')
     parser.add_argument('--size', type=int, default=1000, help='Dataset length.Show/Cut')
     parser.add_argument('--debug', type=bool, default=False, help='If debug is ture, a mini set will run into training.Or a complete set will.')
     parser.add_argument('--visualization', type=bool, default=False, help='visualization option')
@@ -35,7 +36,7 @@ def get_arguments():
 print "Parsing arguments..."
 args = get_arguments()
 
-pretrained_model_path= '../pretrained_model/ResNet-50-model.caffemodel'
+pretrained_model_path= args.use_model
 debug_mode = args.debug
 snapshot_path = args.use_snapshot
 #Check if snapshot exists
@@ -186,7 +187,7 @@ print "Loss figure will be save to", plot_figure_dir
 ##############################__/###
 tart_time = time.time()
 
-max_iter = 1000000
+max_iter = 5000000
 validation_iter = 1000
 plot_iter = 500
 epoch=10

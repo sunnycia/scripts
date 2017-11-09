@@ -43,9 +43,11 @@ if __name__ =='__main__':
 
             # test_img_dir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/images'
             # test_img_dir  = '/data/sunnycia/SaliencyDataset/Image/CAT2000/trainSet/combine/Stimuli'
-            test_img_dir  = '/data/sunnycia/SaliencyDataset/Image/MIT1003/ALLSTIMULI'
+            # test_img_dir  = '/data/sunnycia/SaliencyDataset/Image/MIT1003/ALLSTIMULI'
             # test_img_dir  = '/data/sunnycia/SaliencyDataset/Image/NUS/Color'
             # test_img_dir = '/data/sunnycia/SaliencyDataset/Image/NCTU/AllTestImg/Limages'
+            
+            test_img_dir = '/data/sunnycia/SaliencyDataset/Video/MSU/frames_allinone'
 
             test_img_path_list = glob.glob(os.path.join(test_img_dir, '*.*'))
             test_output_dir = os.path.join(os.path.dirname(test_img_dir), 'saliency', model_version)

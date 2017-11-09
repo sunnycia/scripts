@@ -18,6 +18,7 @@ class StaticDataset():
         self.labels = []
         print len(frame_path_list)
         for (frame_path, density_path) in zip(frame_path_list, density_path_list):
+            # assert frame_path
             frame = cv2.imread(frame_path).astype(np.float32)
             density = cv2.imread(density_path, 0).astype(np.float32)
 
@@ -118,6 +119,8 @@ class VideoDataset():
 
             self.index_in_epoch += 1
         else:
+            print "One epoch finished, shuffling data..."
+
             shuffle(self.tuple_list)
             self.index_in_epoch = 0
             self.num_epoch += 1
@@ -128,7 +131,7 @@ class VideoDataset():
         video_index, key_frame_index, cur_frame_index = tup
         video_dir = self.video_dir_list[video_index]
         video_name = os.path.basename(video_dir)
-        print video_dir, key_frame_index, cur_frame_index
+        # print video_dir, key_frame_index, cur_frame_index
         key_frame_name_wildcard = "frame_%d.*" % key_frame_index
         cur_frame_name_wildcard = "frame_%d.*" % cur_frame_index
         key_frame_path = glob.glob(os.path.join(video_dir, key_frame_name_wildcard))[0]

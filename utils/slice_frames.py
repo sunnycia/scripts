@@ -10,8 +10,8 @@ import imageio
 
 def get_arguments():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--videobase', type=str, required=True, help='the network prototxt')
-    parser.add_argument('--outputbase', type=str, required=True, help='the network prototxt')
+    parser.add_argument('--videobase', type=str, required=True, help='video directory')
+    parser.add_argument('--outputbase', type=str, required=True, help='output frames directory')
     parser.add_argument('--vowildcard', type=str, default='*.*', help='Dataset length.Show/Cut')
     parser.add_argument('--imgfmt', type=str, default='jpg')
     parser.add_argument('--imgwildcard', type=str, default='frame_%s.%s', help='wildcard of save image name')
@@ -33,7 +33,6 @@ output_base = args.outputbase
 if not os.path.isdir(output_base):
     os.makedirs(output_base)
 
-
 video_path_list = glob.glob(os.path.join(video_base, vowildcard))
 print args.debug    
 if args.debug is True:
@@ -47,6 +46,7 @@ for video_path in video_path_list:
         os.makedirs(save_dir)
     video_reader = imageio.get_reader(video_path)
     for frame_idx, frame in enumerate(video_reader):
+        frame = frame[:, :, ::-1] #switch channel to BGR
         frame_name = imgwildcard % (str(frame_idx+1), imgfmt)
         frame_path = os.path.join(save_dir, frame_name)
         if args.verbose:

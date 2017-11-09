@@ -71,14 +71,14 @@ elif ds_name == 'mit1003':
     sal_base = '/data/sunnycia/SaliencyDataset/Image/MIT1003/saliency'
     dens_dir = '/data/sunnycia/SaliencyDataset/Image/MIT1003/ALLFIXATIONMAPS'
     fixa_dir = '/data/sunnycia/SaliencyDataset/Image/MIT1003/fixPts'
-elif ds_name == 'nus':
-    sal_base = '/data/sunnycia/SaliencyDataset/Image/NUS/saliency'
-    dens_dir = '/data/sunnycia/SaliencyDataset/Image/NUS/Density'
-    fixa_dir = '/data/sunnycia/SaliencyDataset/Image/NUS/Fixation'
-# elif ds_name == 'nctu':
-#     sal_base = '/data/sunnycia/SaliencyDataset/Image/MIT1003/saliency'
-#     dens_dir = '/data/sunnycia/SaliencyDataset/Image/NCTU/AllFixMap/sigma_52'
-#     fixa_dir = '/data/sunnycia/SaliencyDataset/Image/MIT1003/fixPts'
+elif ds_name == 'nctu':
+    sal_base = '/data/sunnycia/SaliencyDataset/Image/NCTU/AllTestImg/saliency'
+    dens_dir = '/data/sunnycia/SaliencyDataset/Image/NCTU/AllFixMap/sigma_52'
+    fixa_dir = '/data/sunnycia/SaliencyDataset/Image/NCTU/AllFixPtsMap/FixPtsMap_allfixs'
+# elif ds_name == 'nus':
+#     sal_base = '/data/sunnycia/SaliencyDataset/Image/NUS/saliency'
+#     dens_dir = '/data/sunnycia/SaliencyDataset/Image/NUS/Density'
+#     fixa_dir = '/data/sunnycia/SaliencyDataset/Image/NUS/Fixation'
 
 if ds_name not in sal_base.lower():
     print "Caution the dataset version"

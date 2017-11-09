@@ -19,6 +19,7 @@ def get_arguments():
     parser.add_argument('--train_prototxt', type=str, default='prototxt/train.prototxt', help='the network prototxt')
     parser.add_argument('--solver_prototxt', type=str, default='prototxt/solver.prototxt', help='the network prototxt')
     parser.add_argument('--use_snapshot', type=str, default='', help='Snapshot path.')
+    parser.add_argument('--dsname', type=str, default='salicon', help='training dataset')
     parser.add_argument('--size', type=int, default=1000, help='Dataset length.Show/Cut')
     parser.add_argument('--debug', type=bool, default=False, help='If debug is ture, a mini set will run into training.Or a complete set will.')
     parser.add_argument('--visualization', type=bool, default=False, help='visualization option')
@@ -133,11 +134,23 @@ print "Loss figure will be save to", plot_figure_dir
 
 ##
 print "Loading data..."
-train_frame_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/train2014/images'
-train_density_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/train2014/density'
+if args.dsname == 'salicon':
+    train_frame_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/train2014/images'
+    train_density_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/train2014/density'
+    validation_frame_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/images'
+    validation_density_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/density'
+elif args.dsname == 'nus':
+    train_frame_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/train2014/images'
+    train_density_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/train2014/density'
+    # validation_frame_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/images'
+    # validation_density_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/density'
+elif args.dsname == 'nctu':
+    train_frame_basedir = '/data/sunnycia/SaliencyDataset/Image/NCTU/AllTestImg/Limages'
+    train_density_basedir = '/data/sunnycia/SaliencyDataset/Image/NCTU/AllFixMap/sigma_52'
+    # validation_frame_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/images'
+    # validation_density_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/density'
+
 tranining_dataset = StaticDataset(train_frame_basedir, train_density_basedir, debug=debug_mode)
-validation_frame_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/images'
-validation_density_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/density'
 # validation_dataset = StaticDataset(train_frame_basedir, train_density_basedir, debug=debug_mode)
 
 
