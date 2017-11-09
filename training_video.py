@@ -1,3 +1,6 @@
+#coding=utf-8
+
+import cPickle as pkl
 from Dataset import VideoDataset
 import matplotlib
 matplotlib.use('TkAgg')
@@ -31,7 +34,6 @@ def get_arguments():
     return parser.parse_args()
 print "Parsing arguments..."
 args = get_arguments()
-
 
 pretrained_model_path= '../pretrained_model/ResNet-50-model.caffemodel'
 debug_mode = args.debug
@@ -144,15 +146,15 @@ flownet_dict={
     '0': 'FlowNet2', 
     'c': 'FlowNet2-c', 
     's': 'FlowNet2-s', 
-    'ss': 'FlowNet2-ss'
-    'sss': 'FlowNet2-sss'
+    'ss': 'FlowNet2-ss', 
+    'sss': 'FlowNet2-sss', 
     'css': 'FlowNet2-css'
 }
 flownet_code = args.flownet_code
 deploy_postfix = '_deploy.prototxt.template'
 model_postfix = '_weights.caffemodel.h5'
-deploy_proto_path = os.path.join(flow_net_model_base, flownet_dict[code], flownet_dict[code]+deploy_postfix)
-caffe_model_path = os.path.join(flow_net_model_base, flownet_dict[code], flownet_dict[code]+model_postfix)
+deploy_proto_path = os.path.join(flow_net_model_base, flownet_dict[flownet_code], flownet_dict[flownet_code]+deploy_postfix)
+caffe_model_path = os.path.join(flow_net_model_base, flownet_dict[flownet_code], flownet_dict[flownet_code]+model_postfix)
 flownet = Flownet(deploy_proto_path, caffe_model_path, args.image_size)
 
 # ╔═╗┌─┐┌┬┐┬ ┬┌─┐  ┌┬┐┌─┐┌┬┐┌─┐┌─┐┌─┐┌┬┐
@@ -160,10 +162,10 @@ flownet = Flownet(deploy_proto_path, caffe_model_path, args.image_size)
 # ╚═╝└─┘ ┴ └─┘┴    ─┴┘┴ ┴ ┴ ┴ ┴└─┘└─┘ ┴ 
 print "Loading data..."
 train_frame_basedir = '/data/sunnycia/SaliencyDataset/Video/MSU/frames'
-train_density_basedir = '/data/sunnycia/SaliencyDataset/Video/MSU/density'
+train_density_basedir = '/data/sunnycia/SaliencyDataset/Video/MSU/density/sigma32'
 validation_frame_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/images'
 validation_density_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/density'
-tranining_dataset = VideoDataset(train_frame_basedir, train_density_basedir, debug=debug_mode)
+tranining_dataset = VideoDataset(train_frame_basedir, train_density_basedir)
 # validation_dataset = StaticDataset(train_frame_basedir, train_density_basedir, debug=debug_mode)
 
 # ╔╦╗╦╔═╗╔═╗
@@ -175,8 +177,6 @@ plot_figure_dir = os.path.join(plot_figure_dir, postfix_str)
 if not os.path.isdir(plot_figure_dir):
     os.makedirs(plot_figure_dir)
 print "Loss figure will be save to", plot_figure_dir
-
-
 
 ####################################
 #  /|            /      /          #
@@ -198,18 +198,25 @@ z=[] # validation
 
 plt.plot(x, y)
 _step=0
-while _step * batch < max_iter:
+while _step < max_iter:
     if _step%validation_iter==0:
         ##do validation
         pass
+    # tranining_dataset.get_frame_pair()
+    key_frame,cur_frame, cur_frame_gt= tranining_dataset.get_frame_pair()
+    flow = flownet.get_optical_flow(key_frame, cur_frame)
+    
+    key_frame = np.transpose(key_frame, (2, 0, 1))[None, ...]
+    cur_frame = np.transpose(cur_frame, (2, 0, 1))[None, ...]
+    cur_frame_gt = cur_frame_gt[None, None, ...]
+    flow = np.transpose(flow, (2, 0, 1))[None, ...]
 
-    key_frame_path,cur_frame_path, cur_frame_gt_path= tranining_dataset.next_frame_pair(batch)
-    flow = flownet.get_optical_flow(key_frame_path, cur_frame_path)
+    # print flow.shape, key_frame.shape, cur_frame.shape,cur_frame_gt.shape;exit()
 
     # print frame_minibatch.shape;exit()
-    solver.net.blobs['data'].data[...] = frame_minibatch
-    solver.net.blobs['data'].data[...] = frame_minibatch
-    solver.net.blobs['ground_truth'].data[...] = density_minibatch
+    solver.net.blobs['data'].data[...] = key_frame
+    solver.net.blobs['flow'].data[...] = flow
+    solver.net.blobs['ground_truth'].data[...] = cur_frame_gt
     solver.step(1)
 
     x.append(_step)
@@ -228,6 +235,5 @@ while _step * batch < max_iter:
 
     _step+=1
 
-import cPickle as pkl
 pkl.dump(x, open(os.path.join(plot_figure_dir, "x.pkl"), 'wb'))
 pkl.dump(y, open(os.path.join(plot_figure_dir, "y.pkl"), 'wb'))

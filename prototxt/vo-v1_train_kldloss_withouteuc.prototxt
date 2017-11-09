@@ -13,7 +13,7 @@ layer {
   name: "flow"
   type: "Python"
   top: "flow"
-  python_param{
+  python_param {
     module: "CustomData"
     layer: "CustomData"
     param_str: "1,2,288,480"
@@ -30,9 +30,19 @@ layer {
   }
 }
 layer {
-  name: "conv1"
-  type: "Convolution"
+  name: "concat_flow_RGB"
+  type: "Concat"
+  bottom: "flow"
   bottom: "data"
+  top: "concat_flow_RGB"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "conv1_new"
+  type: "Convolution"
+  bottom: "concat_flow_RGB"
   top: "conv1"
   convolution_param {
     num_output: 64
@@ -2297,13 +2307,6 @@ layer {
   top: "res5c"
 }
 layer {
-  name: "warp_feature"
-  type: "FlowWarp"
-  bottom: "res5c"
-  bottom: "flow"
-}
-
-layer {
   name: "upsample_1"
   type: "Deconvolution"
   bottom: "res5c"
@@ -2372,5 +2375,4 @@ layer {
   bottom: "saliency_map"
   bottom: "ground_truth"
   top: "loss"
-  loss_weight: 1.0
 }

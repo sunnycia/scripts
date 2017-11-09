@@ -7,7 +7,7 @@ import tempfile
 from math import ceil
 
 class Flownet():
-    def __init__(self, deploy_proto, caffe_model, img_size=(1920,1080), gpu_id=0):
+    def __init__(self, deploy_proto, caffe_model, img_size=(1920,1080), gpu_id=1):
         self.deploy_proto = deploy_proto
         self.caffe_model = caffe_model
         self.img_size = img_size
@@ -41,7 +41,8 @@ class Flownet():
         caffe.set_mode_gpu()
         return caffe.Net(tmp.name, self.caffe_model, caffe.TEST)
 
-    def get_optical_flow(self, img1_path, img2_path, output_file_path=None):
+    def get_optical_flow(self, img1, img2, output_file_path=None):
+        '''
         ##Check if file exists
         if not os.path.isfile(img1_path):
             raise BaseException('Image does not exist: '+img1_path)
@@ -51,14 +52,15 @@ class Flownet():
             raise BaseException('Image does not exist: '+img2_path)
             # print img2_path, "not exists.Abort."
             # return None
-
-        num_blobs = 2
-        input_data = []
-        # img1 = misc.imread(img1_path)
-        # img2 = misc.imread(img2_path)
         img1 = cv2.imread(img1_path)
         img2 = cv2.imread(img2_path)
-        ##assert img1.shape==img2.shape==self.img_size
+        '''
+        
+
+        
+        num_blobs = 2
+        input_data = []
+        assert img1.shape==img2.shape
         if len(img1.shape) < 3: 
             input_data.append(img1[np.newaxis, np.newaxis, :, :])
         else:
@@ -73,7 +75,7 @@ class Flownet():
         for blob_idx in range(num_blobs):
             input_dict[self.net.inputs[blob_idx]] = input_data[blob_idx]
 
-        print('Network forward pass using %s.' % self.caffe_model)
+        # print('Network forward pass using %s.' % self.caffe_model)
         i = 1
         while i<=5:
             i+=1
@@ -90,10 +92,11 @@ class Flownet():
                     containsNaN = True
 
             if not containsNaN:
-                print('Succeeded.')
+                # print('Succeeded.')
                 break
             else:
-                print('**************** FOUND NANs, RETRYING ****************')
+                pass
+                # print('**************** FOUND NANs, RETRYING ****************')
 
         optical_flow = np.squeeze(self.net.blobs['predict_flow_final'].data).transpose(1, 2, 0)
         if output_file_path is None:
