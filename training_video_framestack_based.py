@@ -14,11 +14,9 @@ from utils.caffe_tools import CaffeSolver
 from utils.file_check import check_path_list
 from caffe.proto import caffe_pb2
 import google.protobuf.text_format as txtf
-from Flownet import Flownet
 import utils.OpticalFlowToolkit.lib.flowlib as flib
 
 caffe.set_mode_gpu()
-
 
 def get_arguments():
     parser = argparse.ArgumentParser()
@@ -138,26 +136,6 @@ else:
     solver.restore(snapshot_path)
 """End of A2"""
 
-"""A3 Setup flow net"""
-# ╔═╗┌─┐┌┬┐┬ ┬┌─┐  ┌─┐┬  ┌─┐┬ ┬  ┌┐┌┌─┐┌┬┐
-# ╚═╗├┤  │ │ │├─┘  ├┤ │  │ ││││  │││├┤  │ 
-# ╚═╝└─┘ ┴ └─┘┴    └  ┴─┘└─┘└┴┘  ┘└┘└─┘ ┴ 
-flow_net_model_base='utils/flownet2/models'
-flownet_dict={
-    '0': 'FlowNet2', 
-    'c': 'FlowNet2-c', 
-    's': 'FlowNet2-s', 
-    'ss': 'FlowNet2-ss', 
-    'sss': 'FlowNet2-sss', 
-    'css': 'FlowNet2-css'
-}
-flownet_code = args.flownet_code
-deploy_postfix = '_deploy.prototxt.template'
-model_postfix = '_weights.caffemodel.h5'
-deploy_proto_path = os.path.join(flow_net_model_base, flownet_dict[flownet_code], flownet_dict[flownet_code]+deploy_postfix)
-caffe_model_path = os.path.join(flow_net_model_base, flownet_dict[flownet_code], flownet_dict[flownet_code]+model_postfix)
-flownet = Flownet(deploy_proto_path, caffe_model_path, args.image_size)
-
 # ╔═╗┌─┐┌┬┐┬ ┬┌─┐  ┌┬┐┌─┐┌┬┐┌─┐┌─┐┌─┐┌┬┐
 # ╚═╗├┤  │ │ │├─┘   ││├─┤ │ ├─┤└─┐├┤  │ 
 # ╚═╝└─┘ ┴ └─┘┴    ─┴┘┴ ┴ ┴ ┴ ┴└─┘└─┘ ┴ 
@@ -167,6 +145,7 @@ train_density_basedir = '/data/sunnycia/SaliencyDataset/Video/MSU/density/sigma3
 validation_frame_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/images'
 validation_density_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/density'
 tranining_dataset = VideoDataset(train_frame_basedir, train_density_basedir)
+tranining_dataset.setup_video_dataset_stack()
 # validation_dataset = StaticDataset(train_frame_basedir, train_density_basedir, debug=debug_mode)
 
 # ╔╦╗╦╔═╗╔═╗
@@ -194,38 +173,34 @@ epoch=10
 idx_counter = 0
 
 x=[]
-y=[]
+y1=[]
+y2=[]
 z=[] # validation
 
-plt.plot(x, y)
+plt.plot(x, y1, x, y2)
 _step=0
 while _step < max_iter:
     if _step%validation_iter==0:
         ##do validation
         pass
     # tranining_dataset.get_frame_pair()
-    key_frame,cur_frame, cur_frame_gt= tranining_dataset.get_frame_pair()
-    flow = flownet.get_optical_flow(key_frame, cur_frame)
+    frame_stack, density_stack = tranining_dataset.get_frame_stack()
+
+    frame_stack = np.transpose(frame_stack, (2, 0, 1))[None, ...]
+    density_stack = np.transpose(density_stack, (2, 0, 1))[None, ...]
+
+    # print frame_stack.shape, density_stack.shape;exit()
     
-    key_frame = np.transpose(key_frame, (2, 0, 1))[None, ...]
-    cur_frame = np.transpose(cur_frame, (2, 0, 1))[None, ...]
-    cur_frame_gt = cur_frame_gt[None, None, ...]
-    flow = np.transpose(flow, (2, 0, 1))[None, ...]
-
-    # print flow.shape, key_frame.shape, cur_frame.shape,cur_frame_gt.shape;exit()
-
     # print frame_minibatch.shape;exit()
-    solver.net.blobs['data'].data[...] = key_frame
-    solver.net.blobs['flow'].data[...] = flow
-    solver.net.blobs['ground_truth'].data[...] = cur_frame_gt
+    solver.net.blobs['data'].data[...] = frame_stack
+    solver.net.blobs['ground_truth'].data[...] = density_stack
     solver.step(1)
 
     x.append(_step)
-    # y1.append(solver.net.blobs['loss'].data[...].tolist())
-    # y2.append(solver.net.blobs['loss'].data[...].tolist())
-    y.append(solver.net.blobs['loss'].data[...].tolist())
+    y1.append(solver.net.blobs['loss1'].data[...].tolist())
+    y2.append(solver.net.blobs['loss5'].data[...].tolist())
 
-    plt.plot(x, y)
+    plt.plot(x, y1, x, y2)
     if _step%plot_iter==0:
         plt.xlabel('Iter')
         plt.ylabel('loss')
@@ -237,4 +212,5 @@ while _step < max_iter:
     _step+=1
 
 pkl.dump(x, open(os.path.join(plot_figure_dir, "x.pkl"), 'wb'))
-pkl.dump(y, open(os.path.join(plot_figure_dir, "y.pkl"), 'wb'))
+pkl.dump(y1, open(os.path.join(plot_figure_dir, "y1.pkl"), 'wb'))
+pkl.dump(y2, open(os.path.join(plot_figure_dir, "y2.pkl"), 'wb'))

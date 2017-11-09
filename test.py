@@ -6,7 +6,6 @@ from Saliencynet import Saliencynet
 caffe.set_mode_gpu()
 caffe.set_device(0)
 
-
 if __name__ =='__main__':
     model_base = '../training_output/salicon'
     subdirs = [name for name in os.listdir(model_base) if os.path.isdir(os.path.join(model_base, name))]
@@ -46,7 +45,7 @@ if __name__ =='__main__':
             # test_img_dir  = '/data/sunnycia/SaliencyDataset/Image/MIT1003/ALLSTIMULI'
             # test_img_dir  = '/data/sunnycia/SaliencyDataset/Image/NUS/Color'
             # test_img_dir = '/data/sunnycia/SaliencyDataset/Image/NCTU/AllTestImg/Limages'
-            
+
             test_img_dir = '/data/sunnycia/SaliencyDataset/Video/MSU/frames_allinone'
 
             test_img_path_list = glob.glob(os.path.join(test_img_dir, '*.*'))

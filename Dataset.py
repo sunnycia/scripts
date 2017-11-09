@@ -68,21 +68,21 @@ class StaticDataset():
         end = self.index_in_epoch
         return self.data[start:end], self.labels[start:end]
 
-
 class VideoDataset():
-    def __init__(self, frame_basedir, density_basedir, img_size=(480,288), key_frame_interval=10):
+    def __init__(self, frame_basedir, density_basedir, img_size=(480,288), key_frame_interval=10, stack=5):
         MEAN_VALUE = np.array([103.939, 116.779, 123.68], dtype=np.float32)   # B G R/ use opensalicon's mean_value
         self.MEAN_VALUE = MEAN_VALUE[None, None, ...]
         self.img_size = img_size
         self.dataset_dict={}
         self.T = key_frame_interval
         self.step = 3
+        self.stack = stack
         assert self.step < self.T
         self.frame_basedir = frame_basedir
         self.density_basedir = density_basedir
-        self.setup_video_dataset()
+        # self.setup_video_dataset()
 
-    def setup_video_dataset(self):
+    def setup_video_dataset_flow(self):
         # self.video_dir_list = os.listdir(self.frame_basedir)
         self.video_dir_list = glob.glob(os.path.join(self.frame_basedir, "*"))
 
@@ -109,6 +109,35 @@ class VideoDataset():
         shuffle(self.tuple_list)
         self.num_examples = len(self.tuple_list)
         print self.num_examples, "samples generated..."
+
+        self.num_epoch = 0
+        self.index_in_epoch = 0
+
+    def setup_video_dataset_stack(self, random=False):
+        self.video_dir_list = glob.glob(os.path.join(self.frame_basedir, "*"))
+        self.tuple_list = []
+
+        if random:
+            pass
+        else:
+            for i in range(len(self.video_dir_list)):
+                video_dir = self.video_dir_list[i]
+                frame_list = glob.glob(os.path.join(video_dir, '*.*'))
+                # print frame_list;exit()
+
+                total_frame = len(frame_list)
+
+                for j in range(total_frame):
+                    ceil = j + (self.stack-1) * self.step
+                    if ceil > total_frame:
+                        break
+                    tup = tuple([k for k in range(j, j+self.step*self.stack, self.step)])
+                    self.tuple_list.append((i,tup)) #video index & frame stack index
+                # print self.tuple_list
+
+        shuffle(self.tuple_list)
+        self.num_examples = len(self.tuple_list)
+        print self.num_examples, "samples generated...";#exit()
 
         self.num_epoch = 0
         self.index_in_epoch = 0
@@ -148,6 +177,37 @@ class VideoDataset():
 
         return key_frame, cur_frame, cur_frame_gt
     
+    def get_frame_stack(self):
+        if not self.index_in_epoch >= self.num_examples:
+            tup = self.tuple_list[self.index_in_epoch]
+        else:
+            print "One epoch finished, shuffling data..."
+
+            shuffle(self.tuple_list)
+            self.index_in_epoch = 0
+            self.num_epoch += 1
+            tup = self.tuple_list[self.index_in_epoch]
+            self.index_in_epoch += 1
+        video_index, frame_stack_tuple = tup
+        video_dir = self.video_dir_list[video_index]
+        video_name = os.path.basename(video_dir)
+        frame_wildcard = "frame_%d.*" 
+
+        frame_stack = []
+        density_stack = []
+        for i in range(len(frame_stack_tuple)):
+            index = frame_stack_tuple[i]
+            frame_path = glob.glob(os.path.join(video_dir, frame_wildcard % index))[0]
+            frame = cv2.resize(cv2.imread(frame_path), dsize=self.img_size)
+            frame_stack.append(frame)
+
+            density_path = glob.glob(os.path.join(self.density_basedir, video_name, frame_wildcard % index))[0]
+            density = cv2.resize(cv2.imread(density_path, 0), dsize=self.img_size)
+            density_stack.append(density)
+        
+        # print len(frame_stack), frame_stack[0].shape;#exit()
+        return np.dstack(frame_stack), np.dstack(density_stack)
+
     def pre_process_img(self, image, greyscale=False):
         if greyscale==False:
             image = image-self.MEAN_VALUE
