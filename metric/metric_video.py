@@ -21,54 +21,56 @@ ds_name = args.dsname
 debug = args.debug
 color = Colored()
 ## salicon
-if ds_name == 'salicon':
-    sal_base = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/saliency/';
-    dens_dir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/density';
-    fixa_dir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/fixation';
-elif ds_name == 'mit1003':
-    ## mit1003
-    sal_base = '/data/sunnycia/SaliencyDataset/Image/MIT1003/saliency'
-    dens_dir = '/data/sunnycia/SaliencyDataset/Image/MIT1003/ALLFIXATIONMAPS'
-    fixa_dir = '/data/sunnycia/SaliencyDataset/Image/MIT1003/fixPts'
-elif ds_name == 'nctu':
-    sal_base = '/data/sunnycia/SaliencyDataset/Image/NCTU/AllTestImg/saliency'
-    dens_dir = '/data/sunnycia/SaliencyDataset/Image/NCTU/AllFixMap/sigma_52'
-    fixa_dir = '/data/sunnycia/SaliencyDataset/Image/NCTU/AllFixPtsMap/FixPtsMap_allfixs'
-elif ds_name == 'msu':
-    sal_base = '/data/sunnycia/SaliencyDataset/Video/MSU/saliency'
-    dens_dir = '/data/sunnycia/SaliencyDataset/Video/MSU/density/sigma32_allinone'
-    fixa_dir = '/data/sunnycia/SaliencyDataset/Video/MSU/fixation/mat_allinone'
-# elif ds_name == 'nus':
-#     sal_base = '/data/sunnycia/SaliencyDataset/Image/NUS/saliency'
-#     dens_dir = '/data/sunnycia/SaliencyDataset/Image/NUS/Density'
-#     fixa_dir = '/data/sunnycia/SaliencyDataset/Image/NUS/Fixation'
+if ds_name == 'videoset':
+    sal_base = '/data/sunnycia/pwd/saliency_on_videoset/_Saliencymap/';
+    dens_dir = '/data/sunnycia/ImageSet/density-6';
+    fixa_dir = '/data/sunnycia/ImageSet/fixation';
+    vo_name_prefix='videoSRC'
+    fr_name_prefix='frame'
+    
+if ds_name == 'msu':
+    pass
+if ds_name == 'ledov':
+    pass
 
-if ds_name not in sal_base.lower():
-    print "Caution the dataset version"
-    exit()
+def path_based_sort(frame_path, videoname_prefix=vo_name_prefix, framename_prefix=fr_name_prefix):
+    ##video index
+    # print frame_path
+    videoname = os.path.dirname(frame_path).split('/')[-1]
+    video_index = int(videoname.replace(videoname_prefix, ''))
 
-evaluation_list = os.listdir(sal_base)
-for evaluation in evaluation_list:
-    output_path = os.path.join(metric_save_path, ds_name+'_'+evaluation+'.mat')
+    ##frame index
+    framename = os.path.basename(frame_path)
+    frame_index = int(framename.split('.')[0].replace(framename_prefix, ''))
+
+    return video_index*1000+ frame_index
+
+
+model_list = os.listdir(sal_base)
+for model in model_list:
+    if os.path.isfile(os.path.join(sal_base,model)):
+        continue
+    output_path = os.path.join(metric_save_path, ds_name+'_'+model+'.mat')
     print color.red(output_path)
     if os.path.isfile(output_path):
         print output_path, "already exists, skip.."
         continue
-    print "Info: evaluating", color.red(evaluation)
+    print "Info: evaluating", color.red(model)
     # if already done:
     #     pass this file
 
-    saliency_map_list = glob.glob(os.path.join(sal_base, evaluation, "*.*"))
-    density_map_list = glob.glob(os.path.join(dens_dir,  "*.*"))
-    fixation_map_list = glob.glob(os.path.join(fixa_dir,  "*.*"))
-    saliency_map_list.sort()
-    density_map_list.sort()
-    fixation_map_list.sort()
+    saliency_map_list = glob.glob(os.path.join(sal_base, model, "*", "*.*"))
+    density_map_list = glob.glob(os.path.join(dens_dir, "*",  "*.*"))
+    fixation_map_list = glob.glob(os.path.join(fixa_dir,  "*", "*.*"))
+    saliency_map_list.sort(key=path_based_sort)
+    density_map_list.sort(key=path_based_sort)
+    fixation_map_list.sort(key=path_based_sort)
+    # print saliency_map_list[-10:], density_map_list[-10:], fixation_map_list[-10:];exit()
+
     # print len(saliency_map_list), len(density_map_list), len(fixation_map_list)
     assert len(saliency_map_list)==len(density_map_list) and len(density_map_list) == len(fixation_map_list)
 
     ## compute other map
-
     length = len(saliency_map_list)
     saliency_score_cc = np.zeros((length))
     saliency_score_sim = np.zeros((length))
@@ -78,6 +80,7 @@ for evaluation in evaluation_list:
     saliency_score_emd = np.zeros((length))
     saliency_score_kld = np.zeros((length))
     saliency_score_nss = np.zeros((length))
+    
     if debug:
         length = 2
 

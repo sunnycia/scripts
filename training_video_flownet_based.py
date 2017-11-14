@@ -1,5 +1,4 @@
 #coding=utf-8
-
 import cPickle as pkl
 from Dataset import VideoDataset
 import matplotlib

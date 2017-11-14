@@ -68,4 +68,4 @@ if __name__ =='__main__':
                 output_path = os.path.join(test_output_dir, img_name)
                 cv2.imwrite(output_path, saliency_map)
                 duration = toc()
-                print output_path, "saved. %s passed" % duration
+                print output_path, "saved. %s passed" % duration 

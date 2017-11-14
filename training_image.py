@@ -22,7 +22,7 @@ def get_arguments():
     parser.add_argument('--dsname', type=str, default='salicon', help='training dataset')
     parser.add_argument('--size', type=int, default=1000, help='Dataset length.Show/Cut')
     parser.add_argument('--debug', type=bool, default=False, help='If debug is ture, a mini set will run into training.Or a complete set will.')
-    parser.add_argument('--visualization', type=bool, default=False, help='visualization option')
+    parser.add_argument('--visualization', type=bool, default=False, help='visualization training loss option')
     parser.add_argument('--batch', type=int, default=1, help='training mini batch')
     return parser.parse_args()
 
@@ -89,7 +89,6 @@ update_solver_dict = {
 # 'solver_type':'SGD'
 }
 extrainfo_dict = {
-'kld_weight':'100'
 }
 solver_path = args.solver_prototxt
 solverproto = CaffeSolver(trainnet_prototxt_path=training_protopath)
@@ -188,7 +187,7 @@ while _step * batch < max_iter:
     x.append(_step)
     # y1.append(solver.net.blobs['loss'].data[...].tolist())
     # y2.append(solver.net.blobs['loss'].data[...].tolist())
-    y.append(solver.net.blobs['kldloss'].data[...].tolist())
+    y.append(solver.net.blobs['loss'].data[...].tolist())
 
     plt.plot(x, y)
     if _step%plot_iter==0:

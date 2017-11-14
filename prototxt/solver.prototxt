@@ -7,8 +7,8 @@ lr_policy: "inv"
 momentum: 0.9
 power: 0.75
 snapshot: 50000
-snapshot_prefix: "../training_output/salicon/vo-v3_train_kldloss_withouteuc-batch-1_1510229829/snapshot-"
+snapshot_prefix: "../training_output/salicon/train_kldloss_withouteuc_uniform-batch-8_1510316119/snapshot-"
 solver_mode: GPU
 solver_type: ADADELTA
-train_net: "prototxt/vo-v3_train_kldloss_withouteuc.prototxt"
+train_net: "prototxt/train_kldloss_withouteuc_uniform.prototxt"
 weight_decay: 0.0005
