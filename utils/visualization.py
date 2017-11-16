@@ -2,6 +2,7 @@ import imageio
 import os, glob
 import cv2
 import numpy as np
+
 def blend_video(video_path1, video_path2, output_path):
     ## check if exists
 
@@ -29,10 +30,16 @@ def blend_video(video_path1, video_path2, output_path):
         index += 1
 
 if __name__ == "__main__":
-    ori_video_dir = "/data/sunnycia/SaliencyDataset/Video/MSU/videos"
-    sal_video_dir = "/data/sunnycia/SaliencyDataset/Video/MSU/saliency_video"
-    output_dir = "/data/sunnycia/SaliencyDataset/Video/MSU/blend"
+    # ori_video_dir = "/data/sunnycia/SaliencyDataset/Video/MSU/videos"
+    # sal_video_dir = "/data/sunnycia/SaliencyDataset/Video/MSU/saliency_video"
+    # output_dir = "/data/sunnycia/SaliencyDataset/Video/MSU/blend"
+    
+    ori_video_dir = "/data/sunnycia/SaliencyDataset/Video/VideoSet/videos"
+    sal_video_dir = "/data/sunnycia/SaliencyDataset/Video/VideoSet/saliency_video"
+    output_dir = "/data/sunnycia/SaliencyDataset/Video/VideoSet/blend"
 
+    if not os.path.isdir(output_dir):
+        os.makedirs(output_dir)
     sal_video_path_list = glob.glob(os.path.join(sal_video_dir, "*.*"))
     for sal_video_path in sal_video_path_list:
         video_name = os.path.basename(sal_video_path)

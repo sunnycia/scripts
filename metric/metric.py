@@ -38,6 +38,12 @@ elif ds_name == 'msu':
     sal_base = '/data/sunnycia/SaliencyDataset/Video/MSU/saliency'
     dens_dir = '/data/sunnycia/SaliencyDataset/Video/MSU/density/sigma32_allinone'
     fixa_dir = '/data/sunnycia/SaliencyDataset/Video/MSU/fixation/mat_allinone'
+elif ds_name == 'videoset':
+    sal_base = '/data/sunnycia/SaliencyDataset/Video/VideoSet/saliency_map/v1'
+    dens_dir = '/data/sunnycia/SaliencyDataset/Video/VideoSet/All_in_one/density'
+    fixa_dir = '/data/sunnycia/SaliencyDataset/Video/VideoSet/All_in_one/fixation'
+
+
 # elif ds_name == 'nus':
 #     sal_base = '/data/sunnycia/SaliencyDataset/Image/NUS/saliency'
 #     dens_dir = '/data/sunnycia/SaliencyDataset/Image/NUS/Density'
@@ -58,13 +64,14 @@ for evaluation in evaluation_list:
     # if already done:
     #     pass this file
 
-    saliency_map_list = glob.glob(os.path.join(sal_base, evaluation, "*.*"))
+    saliency_map_list = glob.glob(os.path.join(sal_base, "*.*"))
+    # saliency_map_list = glob.glob(os.path.join(sal_base, evaluation, "*.*"))
     density_map_list = glob.glob(os.path.join(dens_dir,  "*.*"))
     fixation_map_list = glob.glob(os.path.join(fixa_dir,  "*.*"))
     saliency_map_list.sort()
     density_map_list.sort()
     fixation_map_list.sort()
-    # print len(saliency_map_list), len(density_map_list), len(fixation_map_list)
+    print len(saliency_map_list), len(density_map_list), len(fixation_map_list)
     assert len(saliency_map_list)==len(density_map_list) and len(density_map_list) == len(fixation_map_list)
 
     ## compute other map
@@ -86,10 +93,16 @@ for evaluation in evaluation_list:
         density_map_path = density_map_list[i]
         fixation_map_path = fixation_map_list[i]
 
+
+        print os.path.basename(saliency_map_path).split('.')[0], os.path.basename(density_map_path).split('.')[0], os.path.basename(fixation_map_path).split('.')[0]
         assert os.path.basename(saliency_map_path).split('.')[0] == os.path.basename(density_map_path).split('.')[0] == os.path.basename(fixation_map_path).split('.')[0]
 
         saliency_map = cv2.imread(saliency_map_path, 0).astype(np.float32)
         density_map = cv2.imread(density_map_path, 0).astype(np.float32)
+        ##resize saliency map to the same size as density map
+        h,w = density_map.shape
+        saliency_map = cv2.resize(saliency_map, dsize=(w,h))
+        # print saliency_map.shape, density_map.shape;exit()
 
         if os.path.basename(fixation_map_path).split('.')[-1] == 'mat':
             # print "loading mat file"
