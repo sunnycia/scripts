@@ -39,7 +39,7 @@ elif ds_name == 'msu':
     dens_dir = '/data/sunnycia/SaliencyDataset/Video/MSU/density/sigma32_allinone'
     fixa_dir = '/data/sunnycia/SaliencyDataset/Video/MSU/fixation/mat_allinone'
 elif ds_name == 'videoset':
-    sal_base = '/data/sunnycia/SaliencyDataset/Video/VideoSet/saliency_map/v1'
+    sal_base = '/data/sunnycia/SaliencyDataset/Video/VideoSet/saliency_map'
     dens_dir = '/data/sunnycia/SaliencyDataset/Video/VideoSet/All_in_one/density'
     fixa_dir = '/data/sunnycia/SaliencyDataset/Video/VideoSet/All_in_one/fixation'
 
@@ -53,8 +53,18 @@ if ds_name not in sal_base.lower():
     print "Caution the dataset version"
     exit()
 
+def videoset_name_sort(imagepath):
+    basename = os.path.basename(imagepath)
+    video_index = int(basename.split('_')[0].replace('videoSRC', ''))
+    frame_index = int(basename.split('.')[0].split('_')[-1])
+
+    return video_index * 1000 + frame_index
+
+
 evaluation_list = os.listdir(sal_base)
 for evaluation in evaluation_list:
+    # if evaluation == 'v1':
+    #     continue
     output_path = os.path.join(metric_save_path, ds_name+'_'+evaluation+'.mat')
     print color.red(output_path)
     if os.path.isfile(output_path):
@@ -64,13 +74,13 @@ for evaluation in evaluation_list:
     # if already done:
     #     pass this file
 
-    saliency_map_list = glob.glob(os.path.join(sal_base, "*.*"))
-    # saliency_map_list = glob.glob(os.path.join(sal_base, evaluation, "*.*"))
+    # saliency_map_list = glob.glob(os.path.join(sal_base, "*.*"))
+    saliency_map_list = glob.glob(os.path.join(sal_base, evaluation, "*.*"))
     density_map_list = glob.glob(os.path.join(dens_dir,  "*.*"))
     fixation_map_list = glob.glob(os.path.join(fixa_dir,  "*.*"))
-    saliency_map_list.sort()
-    density_map_list.sort()
-    fixation_map_list.sort()
+    saliency_map_list.sort(key=videoset_name_sort)
+    density_map_list.sort(key=videoset_name_sort)
+    fixation_map_list.sort(key=videoset_name_sort)
     print len(saliency_map_list), len(density_map_list), len(fixation_map_list)
     assert len(saliency_map_list)==len(density_map_list) and len(density_map_list) == len(fixation_map_list)
 

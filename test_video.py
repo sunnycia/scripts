@@ -2,7 +2,7 @@ import imghdr, imageio
 from math import floor
 import glob, cv2, os, numpy as np, sys, caffe
 from utils.tictoc import tic, toc
-from Saliencynet import FlowbasedVideoSaliencyNet#, ConsframebasedVideoSaliencyNet
+from Saliencynet import FlowbasedVideoSaliencyNet, ConsframebasedVideoSaliencyNet
 import argparse
 caffe.set_mode_gpu()
 caffe.set_device(0)
@@ -16,7 +16,7 @@ def get_arguments():
     parser.add_argument('--output_type', type=str, required=True, help='Output saliency (video) or (image)')
     parser.add_argument('--allinone', type=bool, default=False)
     parser.add_argument('--video_base', type=str, required=True)
-    parser.add_argument('--model_code', type=str, default='v1')
+    parser.add_argument('--model_code', type=str, required=True)
     return parser.parse_args()
 print "Parsing arguments..."
 args = get_arguments()
@@ -33,7 +33,8 @@ if __name__ =='__main__':
         video_deploy_path = "./prototxt/vo-v1_deploy.prototxt"
         video_model_path = "../training_output/salicon/vo-v1_train_kldloss_withouteuc-batch-1_1510204874/snapshot-_iter_450000.caffemodel"
     if args.model_code=='v3':
-        pass
+        video_deploy_path = "./prototxt/vo-v3_deploy.prototxt"
+        video_model_path = "../training_output/salicon/vo-v3_train_kldloss_withouteuc-batch-1_1510229829/snapshot-_iter_400000.caffemodel"
 
     #MSU dataset
     # test_video_dir = "/data/sunnycia/SaliencyDataset/Video/MSU/videos/"
@@ -57,24 +58,21 @@ if __name__ =='__main__':
 
     ## V3
     if args.model_code=='v3':
-        pass
+        vs = ConsframebasedVideoSaliencyNet(video_deploy_path, video_model_path)
         # vs = ConsframebasedVideoSaliencyNet(video_deploy_path, video_model_path)
 
     for video_path in video_path_list:
-        video_name = os.path.basename(video_path).split('.')[0].split('_')[0]
-        if len(glob.glob(os.path.join(output_saliency_map_dir, args.model_code, video_name+'*'))) != 0:
-            print video_name, "already done, pass."
-            continue
-        else:
-            print len(glob.glob(os.path.join(output_saliency_map_dir, video_name+'*')))
-            print "Handling",video_name
-        vs.setup_video(video_path)
-        vs.create_saliency_video()
-        fps = vs.video_meta_data['fps']
         if args.output_type=="image":
+            video_name = os.path.basename(video_path).split('.')[0].split('_')[0]
+            if len(glob.glob(os.path.join(output_saliency_map_dir, args.model_code, video_name+'*'))) != 0:
+                print video_name, "already done, pass."
+                continue
+            else:
+                print len(glob.glob(os.path.join(output_saliency_map_dir, video_name+'*')))
+                print "Handling",video_name
+            output_dir = os.path.join(output_saliency_map_dir, args.model_code)
             vs.setup_video(video_path)
             vs.create_saliency_video()
-            output_dir = os.path.join(output_saliency_map_dir, args.model_code)
             vs.dump_predictions_as_images(output_dir, video_name, args.allinone)
 
         if args.output_type=="video":
@@ -84,5 +82,8 @@ if __name__ =='__main__':
             if os.path.isfile(saliency_video_path):
                 print saliency_video_path, "exists, pass..."
                 continue
+            vs.setup_video(video_path)
+            vs.create_saliency_video()
+            fps = vs.video_meta_data['fps']
             vs.dump_predictions_as_video(saliency_video_path, fps)
         print "Done for video", video_path

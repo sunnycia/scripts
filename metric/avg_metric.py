@@ -18,7 +18,15 @@ for metric_mat in metric_mat_list:
     metric = scio.loadmat(metric_mat)
     saliency_score = metric['saliency_score'];
     for line in saliency_score:
+        line = np.array(line)
+        # print(len(line));exit()
         # print line, line.shape, type(line), np.mean(line),;exit()
+        ## delete nan data
+        nan_idx = np.isnan(line)
+
+        print nan_idx
+        line = line[~nan_idx]
+
         mean_line = round(np.mean(line), 4)
         # std_line = np.std(line)
         print >> w_f, mean_line, '\t', 
