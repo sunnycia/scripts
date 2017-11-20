@@ -2,7 +2,7 @@ import imghdr
 from math import floor
 import glob, cv2, os, numpy as np, sys, caffe
 from utils.tictoc import tic, toc
-from Saliencynet import Saliencynet
+from Saliencynet import ImageSaliencyNet
 caffe.set_mode_gpu()
 caffe.set_device(0)
 
@@ -33,9 +33,9 @@ if __name__ =='__main__':
             # print sub_dirs;exit()
             # model_path = '../training_output/ver1/training_output_iter_390000.caffefemodel'
             if '5layer' in model_path:
-                sn = Saliencynet('prototxt/deploy_5layer_deconv.prototxt', model_path)
+                sn = ImageSaliencyNet('prototxt/deploy_5layer_deconv.prototxt', model_path)
             else:
-                sn = Saliencynet('prototxt/deploy_3layer_deconv.prototxt', model_path)
+                sn = ImageSaliencyNet('prototxt/deploy_3layer_deconv.prototxt', model_path)
             # test script for a single image
             # saliency_map = sn.compute_saliency('../test_imgs/face.jpg')
             # cv2.imwrite('../test_imgs/frame140.bmp', saliency_map)
@@ -45,9 +45,9 @@ if __name__ =='__main__':
             # test_img_dir  = '/data/sunnycia/SaliencyDataset/Image/MIT1003/ALLSTIMULI'
             # test_img_dir  = '/data/sunnycia/SaliencyDataset/Image/NUS/Color'
             # test_img_dir = '/data/sunnycia/SaliencyDataset/Image/NCTU/AllTestImg/Limages'
-
-            test_img_dir = '/data/sunnycia/SaliencyDataset/Video/MSU/frames_allinone'
-
+            # test_img_dir = '/data/sunnycia/SaliencyDataset/Video/MSU/frames_allinone'
+            test_img_dir = '/data/sunnycia/SaliencyDataset/Video/VideoSet/All_in_one/frame'
+            
             test_img_path_list = glob.glob(os.path.join(test_img_dir, '*.*'))
             test_output_dir = os.path.join(os.path.dirname(test_img_dir), 'saliency', model_version)
 
