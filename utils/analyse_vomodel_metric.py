@@ -8,7 +8,7 @@ import math
 import shutil
 import tempfile
 import cv2
-from utils.common import mean_without_nan
+from utils.common import mean_without_nan, check_prime, explode_number
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--metricdir', type=str, required=True, help="Directory of video model metric")
@@ -93,8 +93,6 @@ def filter_video(video_dir, output_dir, metric_name, index_list, video_name_wild
         shutil.copy(video_path, output_path)
 
 
-
-
 #         _         _                      _          _       
 #  _ __  | |  ___  | |_   _ __ ___    ___ | |_  _ __ (_)  ___ 
 # | '_ \ | | / _ \ | __| | '_ ` _ \  / _ \| __|| '__|| | / __|
@@ -103,7 +101,7 @@ def filter_video(video_dir, output_dir, metric_name, index_list, video_name_wild
 # |_|
 video_metric_list = glob.glob(os.path.join(metric_dir, "*.mat"))
 video_metric_list.sort()
-print video_metric_list;exit()
+# print video_metric_list;exit()
 cc=[]
 sim=[]
 auc_jud=[]
@@ -173,26 +171,133 @@ metric_map = {
 # |___/ \___||_| \___| \___| \__|   \_/  |_| \__,_| \___| \___/ |___/
                                                                    
 # baseline model configuration
-origin_video_dir = '/data/sunnycia/SaliencyDataset/Video/VideoSet/Videos/videos_origin'
-density_video_dir = '/data/sunnycia/SaliencyDataset/Video/VideoSet/Videos/density_videos'
-blend_video_dir = '/data/sunnycia/SaliencyDataset/Video/VideoSet/Videos/videos_blend_baseline'
-saliency_video_dir = '/data/sunnycia/SaliencyDataset/Video/VideoSet/Results/saliency_video/image_model_result/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000'
-metric_video_dir = ''
 
 # output_base = '../analyse_vomodel'
 
+
+''' 
 for metric_name in metric_index_dict:
     index = metric_index_dict[metric_name]
     filter_video(origin_video_dir, os.path.join(filter_video_dir, 'origin_video'), metric_name, index)
     filter_video(density_video_dir, os.path.join(filter_video_dir, 'density_video'), metric_name, index)
-    filter_video(blend_video_dir, os.path.join(filter_video_dir, 'blend_video'), metric_name, index)
+    filter_video(metric_video_dir, os.path.join(filter_video_dir, 'metric_video'), metric_name, index)
     filter_video(saliency_video_dir, os.path.join(filter_video_dir, 'saliency_video'), metric_name, index)
+'''
+
+# ╦  ╦╦╔═╗╦ ╦╔═╗╦  ╦╔═╗╔═╗╔╦╗╦╔═╗╔╗╔
+# ╚╗╔╝║╚═╗║ ║╠═╣║  ║╔═╝╠═╣ ║ ║║ ║║║║
+#  ╚╝ ╩╚═╝╚═╝╩ ╩╩═╝╩╚═╝╩ ╩ ╩ ╩╚═╝╝╚╝
+def jigsaw(image_list, padding=0):
+    delta=None
+    nimage = len(image_list)
+    dest_size = image_list[0].shape
+    # print dest_size;exit()
+    row, col = explode_number(nimage)
+    # print row, col;
+    std_size = (dest_size[1]/col, dest_size[0]/row)
+
+    if row*col > nimage:
+        delta =  row*col - nimage
+        patch_img = np.zeros((std_size[0], std_size[1], 3))
+
+    ## resize original image
+    for i in range(len(image_list)):
+        image_list[i] = cv2.resize(image_list[i], dsize=std_size)
+    if delta is not None :
+        for i in range(delta):
+            image_list.append(patch_img)
+    # imgs = []
+
+    img = np.concatenate(image_list, 0)
+    # print img.shape
+
+    img = img.reshape(row, col, std_size[1], std_size[0], 3)
+    # print img.shape
+
+    if not padding==0:
+        mask = np.ones(img.shape[:-1], dtype=bool)
+        mask[:, :, padding:-padding, padding:-padding]=False
+        img[mask] = 255
+
+    img = img.swapaxes(1, 2).reshape(row*std_size[1], col*std_size[0], 3)
+    # print img.shape
+    return img
+
+def grey2color(image, color='r'):
+    # color: r, g, b
+    assert len(image.shape) == 3
+    color_channel_dict={
+        'r':2, 
+        'b':0, 
+        'g':1
+    }
+
+    exclude_index = color_channel_dict[color]
+    for i in range(3):
+        if i == exclude_index:
+            continue
+        image[:, :, i] = 0
+    return image
 
 
- #          _                     _  _              _    _               
- # /\   /\ (_) ___  _   _   __ _ | |(_) ____  __ _ | |_ (_)  ___   _ __  
- # \ \ / / | |/ __|| | | | / _` || || ||_  / / _` || __|| | / _ \ | '_ \ 
- #  \ V /  | |\__ \| |_| || (_| || || | / / | (_| || |_ | || (_) || | | |
- #   \_/   |_||___/ \__,_| \__,_||_||_|/___| \__,_| \__||_| \___/ |_| |_|
+origin_video_dir = '/data/sunnycia/SaliencyDataset/Video/VideoSet/Videos/videos_origin'
+density_video_dir = '/data/sunnycia/SaliencyDataset/Video/VideoSet/Videos/density_videos'
+# blend_video_dir = '/data/sunnycia/SaliencyDataset/Video/VideoSet/Videos/videos_blend_baseline'
+saliency_video_dir = '/data/sunnycia/SaliencyDataset/Video/VideoSet/Results/saliency_video/image_model_result/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000'
+metric_video_base = '/data/sunnycia/saliency_on_videoset/Train/analyse_vomodel/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000'
+# metric_video_dir = '/data/sunnycia/saliency_on_videoset/Train/analyse_vomodel/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000/jud'
 
-viz_dir = os.path.join(output_base, 'visualization')
+# metric_list = ['sim', 'jud', 'sauc', 'kld', 'nss']
+# for metric_name in metric_list:
+for metric_name in metric_index_dict:
+    metric_video_dir = os.path.join(metric_video_base, metric_name)
+
+    viz_dir = os.path.join(output_base, 'visualization', metric_name)
+    if not os.path.isdir(viz_dir):
+        os.makedirs(viz_dir)
+
+    # index_list = [i for i in range(220)]
+    index_list = metric_index_dict[metric_name]
+
+    for index in index_list:
+        video_name = 'videoSRC%s.avi' % str(index+1).zfill(3)
+        output_path = os.path.join(viz_dir, video_name)
+        # print "Processing", video_name
+        if os.path.isfile(output_path):
+            print output_path, "already exists, pass"
+        print "Video will be save to",output_path
+
+        ori_video = cv2.VideoCapture(os.path.join(origin_video_dir, video_name))
+        dens_video = cv2.VideoCapture(os.path.join(density_video_dir, video_name))
+        # blend_video = cv2.VideoCapture(os.path.join(blend_video_dir, video_name))
+        sal_video = cv2.VideoCapture(os.path.join(saliency_video_dir, video_name))
+        metric_video = cv2.VideoCapture(os.path.join(metric_video_dir, video_name))
+
+        fps = math.ceil(ori_video.get(cv2.CAP_PROP_FPS))
+        resolution = (int(ori_video.get(cv2.CAP_PROP_FRAME_WIDTH)), int(ori_video.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+
+        codec = cv2.VideoWriter_fourcc('D','I','V','X')
+        video_writer = cv2.VideoWriter(output_path, codec, fps, resolution)
+
+        status, ori_frame = ori_video.read()
+        _, dens_frame = dens_video.read()
+        # _, blend_frame = blend_video.read()
+        _, metric_frame= metric_video.read()
+        _, sal_frame = sal_video.read()
+        while status:
+            image_list = [cv2.addWeighted(grey2color(dens_frame, 'r'), 0.5, ori_frame, 0.5, 0), cv2.addWeighted(grey2color(dens_frame, 'r'), 0.7, grey2color(sal_frame, 'g'), 0.3, 0), cv2.addWeighted(grey2color(sal_frame, 'g'), 0.5, ori_frame, 0.5, 0), metric_frame]
+            jig_frame = jigsaw(image_list)
+            # cv2.imwrite('jigframe.jpg', jig_frame)
+            # exit()
+            video_writer.write(jig_frame)
+
+            status, ori_frame = ori_video.read()
+            _, dens_frame = dens_video.read()
+            # _, blend_frame = blend_video.read()
+            _, sal_frame = sal_video.read()
+            _, metric_frame= metric_video.read()
+
+        video_writer.release()
+
+
+

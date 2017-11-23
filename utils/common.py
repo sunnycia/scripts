@@ -25,6 +25,33 @@ def toc():
     else:
         return None
 
+def check_prime(number): 
+    # if not type(number)==int:
+        # print "Please input an interger number."
+        # return 0;
+    ceil = int(np.sqrt(number));
+    for i in range(2, ceil+1):
+        if number%i == 0:
+            return 0
+    return 1
+            
+def explode_number(number):
+    if not type(number)==int:
+        print "Please input an interger number."
+        return 0;
+    while check_prime(number):
+        print "It's a prime"
+        number += 1
+    a = int(np.sqrt(number))
+    if a**2 == number:
+        return a, a
+    while not number%a == 0:
+        a -= 1
+    b = number /a
+    if a > b:
+        b, a = a, b
+    return a, b
+    
 #coding:gbk 
 class Colored(object):  
     RED = '\033[31m'
