@@ -12,12 +12,18 @@ from utils.common import mean_without_nan, check_prime, explode_number
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--metricdir', type=str, required=True, help="Directory of video model metric")
-# parser.add_argument('--plotdir', type=str, required=True, help="output directory of plot")
+parser.add_argument('--salvodir', type=str, required=True, help="Directory of saliency video")
+parser.add_argument('--metvobase', type=str, required=True, help="Directory of metric video")
 parser.add_argument('--outputbase', type=str, required=True, help="output base directory")
+parser.add_argument('--filter', type=str, default=False, help="Use filter algorithm to filter bad performance video.")
+
+# parser.add_argument('--plotdir', type=str, required=True, help="output directory of plot")
 
 args = parser.parse_args()
 
 metric_dir = args.metricdir
+saliency_video_dir = args.salvodir
+metric_video_base = args.metvobase
 output_base = os.path.join(args.outputbase, os.path.basename(metric_dir))
 # plot_dir = args.plotdir
 plot_dir = os.path.join(output_base, 'plots')
@@ -163,7 +169,6 @@ metric_map = {
     'nss':7
 }
 
-
 #             _              _            _      _                   
 #  ___   ___ | |  ___   ___ | |_  __   __(_)  __| |  ___   ___   ___ 
 # / __| / _ \| | / _ \ / __|| __| \ \ / /| | / _` | / _ \ / _ \ / __|
@@ -243,8 +248,8 @@ def grey2color(image, color='r'):
 origin_video_dir = '/data/sunnycia/SaliencyDataset/Video/VideoSet/Videos/videos_origin'
 density_video_dir = '/data/sunnycia/SaliencyDataset/Video/VideoSet/Videos/density_videos'
 # blend_video_dir = '/data/sunnycia/SaliencyDataset/Video/VideoSet/Videos/videos_blend_baseline'
-saliency_video_dir = '/data/sunnycia/SaliencyDataset/Video/VideoSet/Results/saliency_video/image_model_result/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000'
-metric_video_base = '/data/sunnycia/saliency_on_videoset/Train/analyse_vomodel/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000'
+# saliency_video_dir = '/data/sunnycia/SaliencyDataset/Video/VideoSet/Results/saliency_video/image_model_result/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000'
+# metric_video_base = '/data/sunnycia/saliency_on_videoset/Train/analyse_vomodel/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000'
 # metric_video_dir = '/data/sunnycia/saliency_on_videoset/Train/analyse_vomodel/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000/jud'
 
 # metric_list = ['sim', 'jud', 'sauc', 'kld', 'nss']
@@ -256,8 +261,10 @@ for metric_name in metric_index_dict:
     if not os.path.isdir(viz_dir):
         os.makedirs(viz_dir)
 
-    # index_list = [i for i in range(220)]
-    index_list = metric_index_dict[metric_name]
+    if args.filter:
+        index_list = metric_index_dict[metric_name]
+    else:
+        index_list = [i for i in range(220)]
 
     for index in index_list:
         video_name = 'videoSRC%s.avi' % str(index+1).zfill(3)

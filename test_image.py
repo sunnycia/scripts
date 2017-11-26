@@ -1,7 +1,7 @@
 import imghdr
 from math import floor
 import glob, cv2, os, numpy as np, sys, caffe
-from utils.tictoc import tic, toc
+from utils.common import tic, toc
 from Saliencynet import ImageSaliencyNet
 caffe.set_mode_gpu()
 caffe.set_device(0)
@@ -46,7 +46,8 @@ if __name__ =='__main__':
             # test_img_dir  = '/data/sunnycia/SaliencyDataset/Image/NUS/Color'
             # test_img_dir = '/data/sunnycia/SaliencyDataset/Image/NCTU/AllTestImg/Limages'
             # test_img_dir = '/data/sunnycia/SaliencyDataset/Video/MSU/frames_allinone'
-            test_img_dir = '/data/sunnycia/SaliencyDataset/Video/VideoSet/All_in_one/frame'
+            # test_img_dir = '/data/sunnycia/SaliencyDataset/Video/VideoSet/All_in_one/frame'
+            test_img_dir = "/data/sunnycia/SaliencyDataset/Image/MIT300/BenchmarkIMAGES"
             
             test_img_path_list = glob.glob(os.path.join(test_img_dir, '*.*'))
             test_output_dir = os.path.join(os.path.dirname(test_img_dir), 'saliency', model_version)

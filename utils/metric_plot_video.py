@@ -49,7 +49,7 @@ def metric_plot_video(metric_dir, output_dir, temp_file_dir, metric_name, index_
         mean = mean_without_nan(metric)
         plt.plot(x,y)
         plt.plot(x, mean_list, ':')
-        tmpfig_path = os.path.join(temp_file_dir, 'plot_fig.png')
+        tmpfig_path = os.path.join(temp_file_dir, 'plot_fig_'+base64.b64encode(str(time.time()))+'.png')
         for i in range(nframe):
             print "\tprocessing frame",i, '\r', 
             y[i] = metric[i]

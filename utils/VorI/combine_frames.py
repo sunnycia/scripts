@@ -38,6 +38,7 @@ for video_dir in video_dir_list:
 
     frame_dir = os.path.join(frame_basedir, video_dir)
     frame_path_list = glob.glob(os.path.join(frame_dir, '*.*'))
+    # print frame_path_list;exit()
     frame_path_list.sort(key=sort_frame_path)
     # print frame_path_list;exit()
 
@@ -45,6 +46,8 @@ for video_dir in video_dir_list:
     fps = nframe/video_length
     out_video = cv2.VideoWriter(output_path, fourcc, fps, resolution)
     for frame_path in frame_path_list:
-        out_video.write(cv2.imread(frame_path))
+        frame = cv2.resize(cv2.imread(frame_path), dsize=resolution)
+
+        out_video.write(frame)
     out_video.release()
     print "Done for video",video_name
