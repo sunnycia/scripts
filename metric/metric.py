@@ -3,15 +3,16 @@ import os
 import glob
 import scipy.io as scio
 import cv2
-from utils.tictoc import *
+from utils.common import *
 import argparse
-from utils.color_print import Colored
-# metric_list = ['CC', 'SIM', 'AUC_JUD', 'AUC_BOR', 'SAUC', 'EMD', 'KLD', 'NSS']
+# from utils. import Colored
+# metric_list = ['CC'color_print, 'SIM', 'AUC_JUD', 'AUC_BOR', 'SAUC', 'EMD', 'KLD', 'NSS']
 # mask_code = [0, 0, 0, 0, ]
 def get_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument('--debug', type=bool, default=False)
     parser.add_argument('--dsname', type=str, required=True)
+    parser.add_argument('--modelname', type=str, default=None)
     return parser.parse_args()
 args = get_arguments()
 
@@ -43,7 +44,6 @@ elif ds_name == 'videoset':
     dens_dir = '/data/sunnycia/SaliencyDataset/Video/VideoSet/All_in_one/density'
     fixa_dir = '/data/sunnycia/SaliencyDataset/Video/VideoSet/All_in_one/fixation'
 
-
 # elif ds_name == 'nus':
 #     sal_base = '/data/sunnycia/SaliencyDataset/Image/NUS/saliency'
 #     dens_dir = '/data/sunnycia/SaliencyDataset/Image/NUS/Density'
@@ -60,11 +60,13 @@ def videoset_name_sort(imagepath):
 
     return video_index * 1000 + frame_index
 
-
 evaluation_list = os.listdir(sal_base)
 for evaluation in evaluation_list:
     # if evaluation == 'v1':
     #     continue
+    if args.modelname is not None:
+        evaluation=args.modelname
+
     output_path = os.path.join(metric_save_path, ds_name+'_'+evaluation+'.mat')
     print color.red(output_path)
     if os.path.isfile(output_path):
@@ -78,9 +80,14 @@ for evaluation in evaluation_list:
     saliency_map_list = glob.glob(os.path.join(sal_base, evaluation, "*.*"))
     density_map_list = glob.glob(os.path.join(dens_dir,  "*.*"))
     fixation_map_list = glob.glob(os.path.join(fixa_dir,  "*.*"))
-    saliency_map_list.sort(key=videoset_name_sort)
-    density_map_list.sort(key=videoset_name_sort)
-    fixation_map_list.sort(key=videoset_name_sort)
+    if ds_name =='videoset':
+        saliency_map_list.sort(key=videoset_name_sort)
+        density_map_list.sort(key=videoset_name_sort)
+        fixation_map_list.sort(key=videoset_name_sort)
+    else:
+        saliency_map_list.sort()
+        density_map_list.sort()
+        fixation_map_list.sort()
     print len(saliency_map_list), len(density_map_list), len(fixation_map_list)
     assert len(saliency_map_list)==len(density_map_list) and len(density_map_list) == len(fixation_map_list)
 
@@ -102,7 +109,6 @@ for evaluation in evaluation_list:
         saliency_map_path = saliency_map_list[i]
         density_map_path = density_map_list[i]
         fixation_map_path = fixation_map_list[i]
-
 
         print os.path.basename(saliency_map_path).split('.')[0], os.path.basename(density_map_path).split('.')[0], os.path.basename(fixation_map_path).split('.')[0]
         assert os.path.basename(saliency_map_path).split('.')[0] == os.path.basename(density_map_path).split('.')[0] == os.path.basename(fixation_map_path).split('.')[0]
@@ -148,3 +154,5 @@ for evaluation in evaluation_list:
     if not debug == True:
         scio.savemat(output_path, {'saliency_score':saliency_score})
         print output_path, 'saved'
+    if args.modelname is not None:
+        break

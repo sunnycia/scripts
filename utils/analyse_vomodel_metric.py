@@ -116,7 +116,6 @@ shuf_auc=[]
 kld=[]
 nss=[]
 
-
 for video_metric in video_metric_list:
     video_metric = sio.loadmat(video_metric)
     score = video_metric["saliency_score"];
@@ -138,7 +137,6 @@ for video_metric in video_metric_list:
 
     # print score.shape;exit()
 # cc = cc[~np.isnan(cc)]
-
 
 ## plot images
 cc_index = plot_result(cc, plot_dir, "cc")
