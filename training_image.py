@@ -8,7 +8,6 @@ import numpy as np
 import caffe
 from random import shuffle
 from utils.caffe_tools import CaffeSolver
-from utils.file_check import check_path_list
 from caffe.proto import caffe_pb2
 import google.protobuf.text_format as txtf
 
@@ -89,6 +88,7 @@ update_solver_dict = {
 # 'solver_type':'SGD'
 }
 extrainfo_dict = {
+'dataset':'bigunion'
 }
 solver_path = args.solver_prototxt
 solverproto = CaffeSolver(trainnet_prototxt_path=training_protopath)
@@ -148,6 +148,11 @@ elif args.dsname == 'nctu':
     train_density_basedir = '/data/sunnycia/SaliencyDataset/Image/NCTU/AllFixMap/sigma_52'
     # validation_frame_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/images'
     # validation_density_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/density'
+elif args.dsname == 'bigunion':
+    train_frame_basedir = '/data/sunnycia/SaliencyDataset/Image/Combine_salicon_msu_nus_cat2000_videoset/Image'
+    train_density_basedir = '/data/sunnycia/SaliencyDataset/Image/Combine_salicon_msu_nus_cat2000_videoset/Density'
+    # validation_frame_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/images'
+    # validation_density_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/density'
 
 tranining_dataset = StaticDataset(train_frame_basedir, train_density_basedir, debug=debug_mode)
 # validation_dataset = StaticDataset(train_frame_basedir, train_density_basedir, debug=debug_mode)
@@ -161,7 +166,7 @@ tranining_dataset = StaticDataset(train_frame_basedir, train_density_basedir, de
 #######                       __/  
 tart_time = time.time()
 
-max_iter = 1000000
+max_iter = 5000000
 validation_iter = 1000
 plot_iter = 500
 epoch=10
@@ -187,7 +192,7 @@ while _step * batch < max_iter:
     x.append(_step)
     # y1.append(solver.net.blobs['loss'].data[...].tolist())
     # y2.append(solver.net.blobs['loss'].data[...].tolist())
-    y.append(solver.net.blobs['loss'].data[...].tolist())
+    y.append(solver.net.blobs['kldloss'].data[...].tolist())
 
     plt.plot(x, y)
     if _step%plot_iter==0:

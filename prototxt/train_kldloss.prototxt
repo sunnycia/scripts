@@ -6,7 +6,7 @@ layer {
   python_param {
     module: "CustomData"
     layer: "CustomData"
-    param_str: "1,3,288,480"
+    param_str: "8,3,288,480"
   }
 }
 layer {
@@ -16,7 +16,7 @@ layer {
   python_param {
     module: "CustomData"
     layer: "CustomData"
-    param_str: "1,1,288,480"
+    param_str: "8,1,288,480"
   }
 }
 layer {

@@ -2,8 +2,14 @@ import numpy as np
 import glob
 import os
 import scipy.io as scio
+import argparse
 
-metric_dir = '../metric-py'
+parser = argparse.ArgumentParser()
+parser.add_argument('--metricdir', type=str, required=True)
+args = parser.parse_args()
+
+# metric_dir = '../metric-py'
+metric_dir = args.metricdir
 metric_list = ['CC', 'SIM', 'AUC_JUD', 'AUC_BOR', 'SAUC', 'EMD', 'KLD', 'NSS']
 metric_mat_list = glob.glob(os.path.join(metric_dir, '*.mat'))
 
@@ -24,7 +30,7 @@ for metric_mat in metric_mat_list:
         ## delete nan data
         nan_idx = np.isnan(line)
 
-        print nan_idx
+        # print nan_idx
         line = line[~nan_idx]
 
         mean_line = round(np.mean(line), 4)
@@ -36,5 +42,3 @@ for metric_mat in metric_mat_list:
         std_line = round(np.std(line), 4)
         print >> w_f, std_line, '\t', 
     print >> w_f, '\n'
-
-

@@ -1,5 +1,5 @@
-%  delete(gcp);
-% matlabpool 8
+ delete(gcp);
+matlabpool 8
 
 metricsFolder = 'saliency/code_forMetrics'
 addpath(genpath(metricsFolder))
@@ -15,7 +15,7 @@ if strcmp(dsname,'mit1003')==1
     sal_base = '/data/sunnycia/SaliencyDataset/Image/MIT1003/saliency';
     dens_dir = strcat('/data/sunnycia/SaliencyDataset/Image/MIT1003/ALLFIXATIONMAPS');
     fixa_dir = strcat('/data/sunnycia/SaliencyDataset/Image/MIT1003/fixPts');
-    all_in_one_fixation_directory = '/data/sunnycia/SaliencyDataset/Image/MIT1003/fixPts';
+    all_in_one_fixation_directory = '/data/sunnycia/SaliencyDataset/Image/MIT1003/fixPts-mat';
 end
 if strcmp(dsname,'nus')==1
     % sal_base = '/data/sunnycia/SaliencyDataset/Image/MIT1003/saliency';
@@ -68,7 +68,7 @@ for m = 1 : length(model_list)
     %% CALCULATE METRICS %%
     disp('calculate the metrics...');
     t1=clock;
-    for j = 1 : LengthFiles
+    parfor j = 1 : LengthFiles
         smap_path = char(fullfile(sal_dir,saliencymap_path_list(j)));
         density_path = char(fullfile(dens_dir,densitymap_path_list(j)));
         fixation_path = char(fullfile(fixa_dir, fixationmap_path_list(j)));
@@ -78,8 +78,8 @@ for m = 1 : length(model_list)
         image_saliency = imread(smap_path);
         image_density = imread(density_path);
         image_fixation = imread(fixation_path);
-        other_map=zeros(1080, 1920);
-        
+        % other_map=zeros(1080, 1920);
+        [row,col] = size(image_fixation)
         imresize(image_saliency, size(image_density));
 
         if cc_msk
@@ -104,7 +104,7 @@ for m = 1 : length(model_list)
         
         if sauc_msk
             %% SAUC %%
-            other_map = compute_othermap(10, 1080, 1920, all_in_one_fixation_directory);
+            other_map = compute_othermap(10, row, col, all_in_one_fixation_directory);
             saliency_score_SAUC(j) = AUC_shuffled(image_saliency, image_fixation, other_map);
         end
         
@@ -129,16 +129,22 @@ for m = 1 : length(model_list)
             b_map(logical(image_fixation))=0;
             saliency_score_IG(j) = InfoGain(double(image_saliency), double(image_fixation), double(b_map));
         end
-        saliency_score=[saliency_score_CC;saliency_score_SIM;
-                        saliency_score_JUD;saliency_score_BOR;
-                        saliency_score_SAUC;saliency_score_EMD;
-                        saliency_score_KL;saliency_score_NSS;
-                        saliency_score_IG;];
-        t2=clock;
-        time_cost=etime(t2,t1);
-
-        save_path = fullfile(save_base, strcat(dsname, model_name,'.mat'))
-        save(save_path, 'saliency_score','time_cost');
-        fprintf('%s saved\n',save_path);
+        [saliency_score_CC(j);saliency_score_SIM(j);
+                    saliency_score_JUD(j);saliency_score_BOR(j);
+                    saliency_score_SAUC(j);saliency_score_EMD(j);
+                    saliency_score_KL(j);saliency_score_NSS(j);
+                    saliency_score_IG(j);]
     end
+
+    saliency_score=[saliency_score_CC;saliency_score_SIM;
+                    saliency_score_JUD;saliency_score_BOR;
+                    saliency_score_SAUC;saliency_score_EMD;
+                    saliency_score_KL;saliency_score_NSS;
+                    saliency_score_IG;]
+    t2=clock;
+    time_cost=etime(t2,t1);
+
+    save_path = fullfile(save_base, strcat(dsname,'_', model_name,'.mat'))
+    save(save_path, 'saliency_score','time_cost');
+    fprintf('%s saved\n',save_path);
 end

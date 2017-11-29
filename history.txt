@@ -1294,36 +1294,1131 @@
  1294  python
  1295  cd /data/sunnycia/saliency_on_videoset/_Train/flownet2
  1296  python
- 1297  cd /data/sunnycia/SaliencyDataset/Video/XU
- 1298  clear
- 1299  python extract_fixation.py 
- 1300  matlab
- 1301  top
- 1302  nvidia-smi
- 1303  clear
- 1304  df -h
- 1305  cd ..
- 1306  cd DIEM/
- 1307  python gen_fixation.py 
- 1308  clear
- 1309  python gen_fixation.py 
- 1310  clear
- 1311  python gen_fixation.py 
- 1312  ffmpeg
- 1313  cd ../MSU/
- 1314  ffmpeg -r 25 -f image2 -s 1920x1080 -i _temp/frame_%d.jpg -vcodec libx264 -crf 25 -pix_fmt yuv420p test.mp4
- 1315  python
- 1316  nvidia-smi
- 1317  top
- 1318  nvidia-smi
- 1319  top
- 1320  nvidia-smi
- 1321  python add_frame_index_hist.py 
- 1322  cd /data/sunnycia/saliency_on_videoset/Train/scripts
- 1323  git status
- 1324  git add --all
- 1325  git commit -m "update, forget what i've done.."
- 1326  git push -u origin master
- 1327  python avg_metric.py 
- 1328  cd /data/sunnycia/saliency_on_videoset/Train/scripts
- 1329  history > history.txt
+ 1297  clear
+ 1298  cd /data/sunnycia/SaliencyDataset/Video/XU
+ 1299  python
+ 1300  clear
+ 1301  python gen_fixation_map.py 
+ 1302  cd ..
+ 1303  cd DIEM/
+ 1304  python gen_fixation.py 
+ 1305  clear
+ 1306  python gen_fixation.py 
+ 1307  clear
+ 1308  python gen_fixation.py 
+ 1309  clear
+ 1310  python gen_fixation.py 
+ 1311  clear
+ 1312  cd ..
+ 1313  cd MSU/
+ 1314   python gen_fixation.py 
+ 1315  clear
+ 1316   python gen_fixation.py 
+ 1317  ls
+ 1318  python playground.py 
+ 1319  python add_frame_index.py 
+ 1320  clear
+ 1321  python add_frame_index.py 
+ 1322  vim ~/.bashrc
+ 1323  cd /data/sunnycia/saliency_on_videoset/_Train/flownet2
+ 1324  source set-env.sh 
+ 1325  vim ~/.bashrc
+ 1326  PATH
+ 1327  $PATH
+ 1328  python run-flownet.py
+ 1329  ls ~/.*
+ 1330  vim ~/.bash_history 
+ 1331  cd scripts/
+ 1332  ls -h
+ 1333  ls /home
+ 1334  cd ~/pwd/saliency_on_videoset/_Train/Deep-Feature-Flow-master/
+ 1335  history>history.txt
+ 1336  export CUDA_VISIBLE_DEVICES=4,5,6,7
+ 1337  python experiments/dff_rfcn/dff_rfcn_end2end_train_test.py --cfg experiments/dff_rfcn/cfgs/resnet_v1_101_flownet_imagenet_vid_rfcn_end2end_ohem.yaml
+ 1338  export CUDA_VISIBLE_DEVICES=6,7
+ 1339  python experiments/dff_rfcn/dff_rfcn_end2end_train_test.py --cfg experiments/dff_rfcn/cfgs/resnet_v1_101_flownet_imagenet_vid_rfcn_end2end_ohem.yaml
+ 1340  cd /data/sunnycia/SaliencyDataset/Video/MSU
+ 1341  python add_frame_index_hist.py 
+ 1342  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+ 1343  export CUDA_VISIBLE_DEVICES=7
+ 1344  python training.py --debug=True --train_prototxt='train_nss-kldloss_withouteuc.prototxt'
+ 1345  export CUDA_VISIBLE_DEVICES=7
+ 1346  python training.py --debug=True --train_prototxt='../training_protocol/train_nss-kldloss_withouteuc.prototxt'
+ 1347  python training.py --debug=True --train_prototxt='training_protocol/train_nss-kldloss_withouteuc.prototxt'
+ 1348  python training.py --debug=True --train_prototxt='training_protocol/train_kldloss_withouteuc.prototxt'
+ 1349  export PYTHONPATH=../caffe-master/python:$PYTHONPATH
+ 1350  python training.py --debug=True --train_prototxt='training_protocol/train_kldloss_withouteuc.prototxt'
+ 1351  clear
+ 1352  cd pwd/saliency_on_videoset/Train/scripts/
+ 1353  python training.py --train_prototxt='prototxt/train_kldloss_withouteuc_5layer_deconv.prototxt' --batch=8
+ 1354  export CUDA_VISIBLE_DEVICES=5
+ 1355  python training.py --train_prototxt='prototxt/train_kldloss_withouteuc_5layer_deconv.prototxt' --batch=8
+ 1356  clear
+ 1357  python training.py --train_prototxt='prototxt/train_kldloss_withouteuc_5layer_deconv.prototxt' --batch=8
+ 1358  bash set_env.sh 
+ 1359  python training.py --train_prototxt='prototxt/train_kldloss_withouteuc_5layer_deconv.prototxt' --batch=8 --debug=1
+ 1360  source set_env.sh 
+ 1361  python training.py --train_prototxt='prototxt/train_kldloss_withouteuc_5layer_deconv.prototxt' --batch=8 --debug=1
+ 1362  cd pwd/saliency_on_videoset/Train/scripts/
+ 1363  python scavenger.py 
+ 1364  git status
+ 1365  git add --all
+ 1366  git commit -m "add dilated convolution network prototxt"
+ 1367  git push -u origin master
+ 1368  clear
+ 1369  cd pwd/saliency_on_videoset/Train/scripts/
+ 1370  source set_env.sh 
+ 1371  history
+ 1372  clear
+ 1373  python training.py --train_prototxt='prototxt/train_kldloss_withouteuc_5layer_deconv.prototxt' --batch=8 --debug=1
+ 1374  python training.py --train_prototxt='prototxt/train_kldloss_withouteuc_5layer_deconv.prototxt' --batch=8
+ 1375  clear
+ 1376  python training.py --train_prototxt='prototxt/train_kldloss_withouteuc_5layer_deconv.prototxt' --batch=8
+ 1377  export CUDA_VISIBLE_DEVICES=6
+ 1378  python training.py --train_prototxt='prototxt/debug_add_lr_train_kldloss_withouteuc.prototxt' --batch=8
+ 1379  python training.py --train_prototxt='prototxt/debug_add_lr_train_kldloss_withouteuc.prototxt' --batch=8 --debug=1
+ 1380  python training.py --train_prototxt='prototxt/debug_add_lr_train_kldloss_withouteuc.prototxt' --batch=8
+ 1381  export CUDA_VISIBLE_DEVICES=6 && cd /data/sunnycia/saliency_on_videoset/Train/scripts && export PYTHONPATH=../caffe-master/python:$PYTHONPATH
+ 1382  history
+ 1383  python training.py --debug=True --train_prototxt='training_protocol/train_kldloss_withouteuc.prototxt'
+ 1384  python
+ 1385  python training.py --debug=True --train_prototxt='training_protocol/train_kldloss_withouteuc.prototxt'
+ 1386  ls
+ 1387  git status
+ 1388  git add --all
+ 1389  git commit -m "Add loss plot module in training.py"
+ 1390  git push -u origin master
+ 1391  git status
+ 1392  cd /data/sunnycia/fang
+ 1393  python pictureshow.py 
+ 1394  cd 
+ 1395  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+ 1396  python change_net_test.py 
+ 1397  python training.py 
+ 1398  python training.py --debug=False
+ 1399  python training.py --debug=False --train_prototxt='net/train.prototxt'
+ 1400  python training.py --debug=False
+ 1401  python training.py --debug=False --train_prototxt='net/train.prototxt'
+ 1402  python training.py --debug=False --train_prototxt='net/train.prototxt' --batch=512
+ 1403  python training.py --debug=False --train_prototxt='net/train.prototxt' --batch=32
+ 1404  python training.py --debug=False --train_prototxt='net/train.prototxt' --batch=512
+ 1405  python training.py --debug False --train_prototxt='net/train.prototxt' --batch=512
+ 1406  python training.py --debug=False --train_prototxt='net/train.prototxt' --batch=512
+ 1407  export CUDA_VISIBLE_DEVICES=7
+ 1408  python training.py --debug=False --train_prototxt='net/train.prototxt' --batch=512
+ 1409  python training.py --debug=False --train_prototxt='net/train.prototxt' --batch=64
+ 1410  python training.py --debug=False --train_prototxt='net/train.prototxt' --batch=16
+ 1411  export CUDA_VISIBLE_DEVICES=6,7
+ 1412  python training.py --debug=False --train_prototxt='net/train.prototxt' --batch=8
+ 1413  python training.py --debug=False --train_prototxt='net/train.prototxt' --batch=16
+ 1414  python training.py --debug='False' --train_prototxt='net/train.prototxt' --batch=16
+ 1415  python scavenger.py 
+ 1416  python training.py --debug='False' --train_prototxt='net/train.prototxt' --batch=16
+ 1417  python training.py --debug='False' --train_prototxt='net/train.prototxt' --batch=8
+ 1418  python training.py --debug='False' --train_prototxt='net/train_kldloss_withouteuc.prototxt' --batch=8
+ 1419  clear
+ 1420  python training.py --train_prototxt='net/train_kldloss_withouteuc.prototxt' --batch=8 --use_snapshot='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.solverstate'
+ 1421  python training.py --train_prototxt='prototxt/train_kldloss_withouteuc.prototxt' --batch=8 --use_snapshot='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.solverstate'
+ 1422  df -h
+ 1423  python utils/scavenger.py 
+ 1424  python utils/scavenger.py --snapshot=1
+ 1425  git status
+ 1426  git add --all
+ 1427  git commit -m "add generate density map script. Clean training script, add vo-training script(not done yet)"
+ 1428  git push -u origin master
+ 1429  cd /data/sunnycia/SaliencyDataset/Video/XU
+ 1430  clear
+ 1431  python extract_fixation.py 
+ 1432  matlab
+ 1433  top
+ 1434  nvidia-smi
+ 1435  clear
+ 1436  df -h
+ 1437  cd ..
+ 1438  cd DIEM/
+ 1439  python gen_fixation.py 
+ 1440  clear
+ 1441  python gen_fixation.py 
+ 1442  clear
+ 1443  python gen_fixation.py 
+ 1444  ffmpeg
+ 1445  cd ../MSU/
+ 1446  ffmpeg -r 25 -f image2 -s 1920x1080 -i _temp/frame_%d.jpg -vcodec libx264 -crf 25 -pix_fmt yuv420p test.mp4
+ 1447  python
+ 1448  nvidia-smi
+ 1449  top
+ 1450  nvidia-smi
+ 1451  top
+ 1452  nvidia-smi
+ 1453  python add_frame_index_hist.py 
+ 1454  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+ 1455  git status
+ 1456  git add --all
+ 1457  git commit -m "update, forget what i've done.."
+ 1458  git push -u origin master
+ 1459  python avg_metric.py 
+ 1460  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+ 1461  history > history.txt
+ 1462  python training.py
+ 1463  python training.py --debug=True
+ 1464  python training.py --debug=True --train_prototxt='training_protocol/train_kldloss_withouteuc.prototxt'
+ 1465  export PYTHONPATH=../caffe-master/python:$PYTHONPATH
+ 1466  python training.py --debug=True --train_prototxt='training_protocol/train_kldloss_withouteuc.prototxt'
+ 1467  export CUDA_VISIBLE_DEVICES=6
+ 1468  python training.py --debug=True --train_prototxt='training_protocol/train_kldloss_withouteuc.prototxt'
+ 1469  python scavenger.py 
+ 1470  git add --all
+ 1471  git commit -m "add batch training function.Programatically change net prototxt"
+ 1472  git push -u origin master
+ 1473  python scavenger.py 
+ 1474  git status
+ 1475  git add --all
+ 1476  git commit -m "fixed some bug"
+ 1477  git push -u origin master
+ 1478  python scavenger.py 
+ 1479  python training.py --debug --train_prototxt='net/train_kldloss_withouteuc_dilated4_conv.prototxt'
+ 1480  python training.py --debug=1 --train_prototxt='net/train_kldloss_withouteuc_dilated4_conv.prototxt'
+ 1481  python training.py --debug=1 --train_prototxt='net/train_kldloss_withouteuc_dilated4_conv.prototxt' batch=8
+ 1482  export CUDA_VISIBLE_DEVICES=3
+ 1483  python training.py --debug=1 --train_prototxt='net/train_kldloss_withouteuc_dilated4_conv.prototxt' batch=8
+ 1484  python training.py --debug=1 --train_prototxt='net/train_kldloss_withouteuc_dilated4_conv.prototxt' --batch=8
+ 1485  python training.py --train_prototxt='net/train_kldloss_withouteuc_dilated4_conv.prototxt' --batch=8
+ 1486  cd ../../_Train/
+ 1487  git clone https://github.com/remega/OMCNN_2CLSTM.git
+ 1488  clear
+ 1489  python training.py --train_prototxt='prototxt/train_kldloss_withouteuc_dilated4_conv.prototxt' --batch=8 --use_snapshot='../training_output/salicon/train_kldloss_withouteuc_dilated4_conv-batch-8_1509601246/snapshot-_iter_100000.solverstate'
+ 1490  cd ../Train/scripts/
+ 1491  python training.py --train_prototxt='prototxt/train_kldloss_withouteuc_dilated4_conv.prototxt' --batch=8 --use_snapshot='../training_output/salicon/train_kldloss_withouteuc_dilated4_conv-batch-8_1509601246/snapshot-_iter_100000.solverstate'
+ 1492  python utils/scavenger.py 
+ 1493  python test.py 
+ 1494  nvidia-smi
+ 1495  export CUDA_VISIBLE_DEVICES=5
+ 1496  python test.py 
+ 1497  cd /data/sunnycia/SaliencyDataset/Video/MSU
+ 1498  python gen_density.py 
+ 1499  git clone https://github.com/clibs/lmdb.git
+ 1500  ls
+ 1501  pip install lmdb
+ 1502  cd /data/sunnycia/saliency_on_videoset/_Train/flownet2
+ 1503  cd python/
+ 1504  python
+ 1505  cd ..
+ 1506  cd ~
+ 1507  clear
+ 1508  wget https://s3.amazonaws.com/videomattingstor/savam/sources.zip
+ 1509  ls
+ 1510  ls sources.zip 
+ 1511  ls -l sources.zip 
+ 1512  rm sources.zip 
+ 1513  clear
+ 1514  cd /data/sunnycia/SaliencyDataset/Video/XU
+ 1515  python gen_fixation_map.py 
+ 1516  vim ~/.bashrc
+ 1517  cd ..
+ 1518  ls
+ 1519  cd MSU/
+ 1520  ls
+ 1521  unzip sources.zip 
+ 1522  nvidia-smi
+ 1523  free -h
+ 1524  top
+ 1525  df ph
+ 1526  df -h
+ 1527  ls
+ 1528  mv COPYRIGHTED_sources/*.avi videos/
+ 1529  mv VQEG_sources/*.avi videos/
+ 1530  top
+ 1531  nvidia-smi
+ 1532  top
+ 1533  cd ~/pwd/saliency_on_videoset/_Train/Deep-Feature-Flow-master/
+ 1534  export CUDA_VISIBLE_DEVICES=6,7
+ 1535  python experiments/dff_rfcn/dff_rfcn_end2end_train_test.py --cfg experiments/dff_rfcn/cfgs/
+ 1536  python experiments/dff_rfcn/dff_rfcn_end2end_train_test.py --cfg experiments/dff_rfcn/cfgs/resnet_v1_101_flownet_imagenet_vid_rfcn_end2end_ohem.yaml
+ 1537  python experiments/dff_rfcn/dff_rfcn_end2end_train_test.py --cfg experiments/dff_rfcn/cfgs/
+ 1538  python experiments/dff_rfcn/dff_rfcn_end2end_train_test.py --cfg experiments/dff_rfcn/cfgs/resnet_v1_101_flownet_imagenet_vid_rfcn_end2end_ohem.yaml
+ 1539  cd /data/sunnycia/SaliencyDataset/Video/MSU
+ 1540  python add_frame_index.py 
+ 1541  cd /data/sunnycia/saliency_on_videoset/_Train/Deep-Feature-Flow-master
+ 1542  python experiments/dff_rfcn/dff_rfcn_end2end_train_test.py --cfg experiments/dff_rfcn/cfgs/resnet_v1_101_flownet_imagenet_vid_rfcn_end2end_ohem.yaml
+ 1543  export CUDA_VISIBLE_DEVICES=6,7
+ 1544  python experiments/dff_rfcn/dff_rfcn_end2end_train_test.py --cfg experiments/dff_rfcn/cfgs/resnet_v1_101_flownet_imagenet_vid_rfcn_end2end_ohem.yaml
+ 1545  free -h
+ 1546  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+ 1547  python training.py
+ 1548  python training.py --debug=True
+ 1549  python training.py --debug=True --train_prototxt='net/train_kldloss_withouteuc_dilated_conv.prototxt' --batch=8
+ 1550  export PYTHONPATH=../caffe-master/python:$PYTHONPATH
+ 1551  python training.py --debug=True --train_prototxt='net/train_kldloss_withouteuc_dilated_conv.prototxt' --batch=8
+ 1552  export CUDA_VISIBLE_DEVICES=7
+ 1553  python training.py --debug=True --train_prototxt='net/train_kldloss_withouteuc_dilated_conv.prototxt' --batch=8
+ 1554  python training.py --debug=False --train_prototxt='net/train_kldloss_withouteuc_dilated_conv.prototxt' --batch=8
+ 1555  python training.py --train_prototxt='net/train_kldloss_withouteuc_dilated_conv.prototxt' --batch=8
+ 1556  clera
+ 1557  clear
+ 1558  python training.py --train_prototxt='prototxt/train_kldloss_withouteuc_dilated_conv.prototxt' --batch=8 --use_snapshot='../training_output/salicon/train_kldloss_withouteuc_dilated_conv-batch-8_1509595085/snapshot-_iter_100000.solverstate'
+ 1559  nvidia-smi
+ 1560  top
+ 1561  nvidia-smi
+ 1562  heaven
+ 1563  nvidia-smi
+ 1564  python
+ 1565  top
+ 1566  clear
+ 1567  free -h
+ 1568  nvidia-smi
+ 1569  python utils/slice_frames.py 
+ 1570  python utils/slice_frames.py --videobase='/data/sunnycia/SaliencyDataset/Video/MSU/videos' --outputbase='/data/sunnycia/SaliencyDataset/Video/MSU/frames' --wildcard='*left.*' --debug=1
+ 1571  python utils/slice_frames.py --videobase='/data/sunnycia/SaliencyDataset/Video/MSU/videos' --outputbase='/data/sunnycia/SaliencyDataset/Video/MSU/frames' --wildcard="*left.*" --debug=1
+ 1572  python utils/slice_frames.py --videobase='/data/sunnycia/SaliencyDataset/Video/MSU/videos' --outputbase='/data/sunnycia/SaliencyDataset/Video/MSU/frames' --vowildcard="*left.*" --debug=1
+ 1573  python utils/slice_frames.py --videobase='/data/sunnycia/SaliencyDataset/Video/MSU/videos' --outputbase='/data/sunnycia/SaliencyDataset/Video/MSU/frames' --vowildcard="*left.*"
+ 1574  unrar
+ 1575  cd ..
+ 1576  cd -
+ 1577  cd /data/sunnycia/SaliencyDataset/Video/LEDOV
+ 1578  unrar LEDOV.part1.rar 
+ 1579  unrar e LEDOV.part1.rar 
+ 1580  unrar x LEDOV.part1.rar 
+ 1581  cd -
+ 1582  clear
+ 1583  cd /data/sunnycia/SaliencyDataset/Video/MSU
+ 1584  python gen_fixation.py 
+ 1585  vim gen_fixation.py 
+ 1586  clear
+ 1587  python gen_fixation.py 
+ 1588  python gen_density.py --sigma=32
+ 1589  clear
+ 1590  cd pwd/saliency_on_videoset/Train/scripts/
+ 1591  source set_env.sh 
+ 1592  nvidia-smi
+ 1593  source set_env.sh 
+ 1594  python test.py
+ 1595  clear
+ 1596  python test.py
+ 1597  cd /data/sunnycia/SaliencyDataset/Image/NCTU
+ 1598  unzip NCTU-3DFixation.zip 
+ 1599  unzip -q NCTU-3DFixation.zip 
+ 1600  cd -
+ 1601  clear
+ 1602  source set_env.sh 
+ 1603  export CUDA_VISIBLE_DEVICES=7
+ 1604  python test.py 
+ 1605  python 
+ 1606  clear
+ 1607  python
+ 1608  clear
+ 1609  python test.py
+ 1610  python metric/metric.py 
+ 1611  clear
+ 1612  python metric/metric.py 
+ 1613  clear
+ 1614  python metric/metric.py --debug --ds_name='mit1003'
+ 1615  python metric/metric.py --debug=1 --ds_name=mit1003
+ 1616  clear
+ 1617  python metric/metric.py --debug=1 --ds_name=mit1003
+ 1618  clear
+ 1619  python metric/metric.py --debug=1 --ds_name=mit1003
+ 1620  clear
+ 1621  python metric/metric.py --ds_name=mit1003
+ 1622  nvidia-smi
+ 1623  top
+ 1624  nvidia-smi
+ 1625  top
+ 1626  nvidia-smi
+ 1627  df -h
+ 1628  top
+ 1629  nvida-smi
+ 1630  nvidia-smi
+ 1631  clear
+ 1632  nvidia-smi
+ 1633  top
+ 1634  nvidia-smi
+ 1635  top
+ 1636  python metric/metric_video.py 
+ 1637  python metric/metric_video.py -dsname='videoset'
+ 1638  python metric/metric_video.py --dsname='videoset'
+ 1639  python metric/avg_metric.py 
+ 1640  cd pwd/saliency_on_videoset/Train/scripts/
+ 1641  source set_env.sh 
+ 1642  export CUDA_VISIBLE_DEVICES=0
+ 1643  clear
+ 1644  python test.py 
+ 1645  top
+ 1646  nvidia-smi
+ 1647  top
+ 1648  nvidia-smi
+ 1649  clear
+ 1650  cd  /data/sunnycia/saliency_on_videoset/_Train
+ 1651  git clone https://github.com/liruoteng/FlowNet.git
+ 1652  top
+ 1653  nvidia-smi
+ 1654  top
+ 1655  free -h
+ 1656  python
+ 1657  cd ../Train/
+ 1658  cd scripts/
+ 1659  cd /data/sunnycia/SaliencyDataset/Video/MSU
+ 1660  python all_in_one.py 
+ 1661  top
+ 1662  nvidia-smi
+ 1663  clear
+ 1664  top
+ 1665  nvidia-smi
+ 1666  top
+ 1667  clear
+ 1668  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+ 1669  python training_image.py --train_prototxt='prototxt/train_kldloss_withouteuc_msra.prototxt' --batch=8
+ 1670  export CUDA_VISIBLE_DEVICES=4
+ 1671  python training_image.py --train_prototxt='prototxt/train_kldloss_withouteuc_msra.prototxt' --batch=8
+ 1672  python training_image.py --train_prototxt='prototxt/train_kldloss_withouteuc_msra.prototxt' --batch=8 --debug=1
+ 1673  python training_image.py --train_prototxt='prototxt/train_kldloss_withouteuc_uniform.prototxt' --batch=8
+ 1674  free
+ 1675  free -h
+ 1676  vim ~/.bashrc
+ 1677  top
+ 1678  nvidia-smi
+ 1679  top
+ 1680  clear
+ 1681  cd pwd/saliency_on_videoset/Train/scripts/
+ 1682  source set_env.sh 
+ 1683  nvidia-smi
+ 1684  export CUDA_VISIBLE_DEVICES=7
+ 1685  python test.py 
+ 1686  clear
+ 1687  python test.py
+ 1688  clear
+ 1689  python metric/metric.py --dsname='salicon'
+ 1690  python training_video.py 
+ 1691  cler
+ 1692  clear
+ 1693  python training_video.py 
+ 1694  matlab
+ 1695  python training_video.py 
+ 1696  python training_video.py --train_prototxt='prototxt/vo_train_kldloss_withouteuc.prototxt' 
+ 1697  clear
+ 1698  python training_video.py --train_prototxt='prototxt/vo-v1_train_kldloss_withouteuc.prototxt' 
+ 1699  export CUDA_VISIBLE_DEVICES=6
+ 1700  python training_video.py --train_prototxt='prototxt/vo-v1_train_kldloss_withouteuc.prototxt' 
+ 1701  export CUDA_VISIBLE_DEVICES=6,7
+ 1702  python training_video.py --train_prototxt='prototxt/vo-v1_train_kldloss_withouteuc.prototxt' 
+ 1703  clear
+ 1704  python training_video.py --train_prototxt='prototxt/vo-v1_train_kldloss_withouteuc.prototxt' 
+ 1705  clear
+ 1706  python test.py 
+ 1707  python metric/metric.py 
+ 1708  python metric/metric.py --dsname='mit1003'
+ 1709  python metric/avg_metric.py 
+ 1710  export CUDA_VISIBLE_DEVICES=5
+ 1711  python training_video_framestack_based.py --train_prototxt='prototxt/vo-v3_train_kldloss_withouteuc.prototxt' --use_model='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.caffemodel' 
+ 1712  clear
+ 1713  python training_video_framestack_based.py --train_prototxt='prototxt/vo-v3_train_kldloss_withouteuc.prototxt' --use_model='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.caffemodel' 
+ 1714  clear
+ 1715  python training_video_framestack_based.py --train_prototxt='prototxt/vo-v3_train_kldloss_withouteuc.prototxt' --use_model='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.caffemodel' 
+ 1716  python training_video_framestack_based.py --train_prototxt='prototxt/vo-v3_train_kldloss_withouteuc.prototxt' --use_model='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.caffemodel' --visualization=1
+ 1717  clear
+ 1718  python training_video_framestack_based.py --train_prototxt='prototxt/vo-v3_train_kldloss_withouteuc.prototxt' --use_model='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.caffemodel'
+ 1719  top
+ 1720  nvidia-smi
+ 1721  top
+ 1722  nvidia-smi
+ 1723  export CUDA_VISIBLE_DEVICES=0
+ 1724  cd pwd/saliency_on_videoset/Train/scripts/
+ 1725  source set_env.sh 
+ 1726  export CUDA_VISIBLE_DEVICES=0
+ 1727  clear
+ 1728  python test.py 
+ 1729  clear
+ 1730  git status
+ 1731  git add --all 
+ 1732  git commit -m "regular update. 5 layer deconvolution."
+ 1733  git push -u origin master
+ 1734  python metric/avg_metric.py 
+ 1735  python utils/scavenger.py 
+ 1736  cd /data/sunnycia/SaliencyDataset/Video/MSU/density/sigma32
+ 1737  rename 's/(.*)/$1_left/' *
+ 1738  rename 's/(*)/$1_left/' *
+ 1739  rename 's/^/_left/' *
+ 1740  for f in *; do mv "$f" "$f_left"; done
+ 1741  rename 's/^//_left' *
+ 1742  rename 's/^/_left' *
+ 1743  rename 's/^/^_left' *
+ 1744  rename 's/^/^_left/' *
+ 1745  rename 's/*/*_left/' *
+ 1746  rename 's/(*)/$1_left/' *
+ 1747  rename 's/(.*)$/$1_left/' *
+ 1748  rename 's/(.*)$/.$1_left/' *
+ 1749  python
+ 1750  cd -
+ 1751  git status
+ 1752  git add --all
+ 1753  git commit -m "VideoDataset complete, training video script complete.Network version-1, concate RGB and flow vector after datalayer"
+ 1754  git push -u origin master
+ 1755  cd /data/sunnycia/SaliencyDataset/Video/MSU
+ 1756  python all_in_one.py 
+ 1757  cd -
+ 1758  clear
+ 1759  nvidia-smi
+ 1760  top
+ 1761  nvidia-smi
+ 1762  export CUDA_VISIBLE_DEVICES=6
+ 1763  python test.py 
+ 1764  cd -
+ 1765  ls
+ 1766  cd -
+ 1767  python utils/slice_frames.py --videobase='/data/sunnycia/SaliencyDataset/Video/MSU/videos' --outputbase='/data/sunnycia/SaliencyDataset/Video/MSU/frames' --vowildcard='*_left.*'
+ 1768  cd -
+ 1769  python all_in_one.py 
+ 1770  cd -
+ 1771  python test.py 
+ 1772  git status
+ 1773  git add --all
+ 1774  git commit -m "Done for video network version-3"
+ 1775  git push -u origin master
+ 1776  clear
+ 1777  python visualize_weight.py 
+ 1778  python visualize_weight.py --deploy='prototxt/deploy_3layer_deconv.prototxt' --model='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.caffemodel' --output='conv1.jpg' 
+ 1779  python visualize_weight.py --deploy='prototxt/deploy_3layer_deconv.prototxt' --model='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.caffemodel' --output='conv2.jpg' --layer='conv2'
+ 1780  python visualize_weight.py --deploy='prototxt/deploy_3layer_deconv.prototxt' --model='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.caffemodel' --output='upsample1.jpg' --layer='upsample_1'
+ 1781  python visualize_weight.py --deploy='prototxt/deploy_3layer_deconv.prototxt' --model='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.caffemodel' --output='upsample2.jpg' --layer='upsample_2'
+ 1782  python visualize_weight.py --deploy='prototxt/deploy_3layer_deconv.prototxt' --model='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.caffemodel' --output='scale5c_branch2c.jpg' --layer='scale5c_branch2c'
+ 1783  python visualize_weight.py --deploy='prototxt/deploy_3layer_deconv.prototxt' --model='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.caffemodel' --output='saliency_map.jpg' --layer='saliency_map'
+ 1784  python visualize_weight.py --deploy='prototxt/deploy_3layer_deconv.prototxt' --model='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.caffemodel' --output='res3c_branch2c.jpg' --layer='res3c_branch2c'
+ 1785  python visualize_weight.py --deploy='prototxt/deploy_3layer_deconv.prototxt' --model='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.caffemodel' --output='res2a_branch2a.jpg' --layer='res2a_branch2a'
+ 1786  python visualize_weight.py --deploy='prototxt/deploy_3layer_deconv.prototxt' --model='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.caffemodel' --output='scale_conv1.jpg' --layer='scale_conv1'
+ 1787  python visualize_weight.py --deploy='prototxt/deploy_3layer_deconv.prototxt' --model='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.caffemodel' --output='res2a_branch1.jpg' --layer='res2a_branch1'
+ 1788  nvidia-smi
+ 1789  vim ~/.bashrc
+ 1790  clear
+ 1791  nvidia-smi
+ 1792  df -h
+ 1793  nvidia-smi
+ 1794  clear
+ 1795  cd /data/sunnycia/saliency_on_videoset
+ 1796  python main.py 
+ 1797  cd Fruit-Ninja-Final-Project/
+ 1798  python main.py 
+ 1799  clear
+ 1800  history
+ 1801  nvidia-smi
+ 1802  cd ../../
+ 1803  cd pwd/saliency_on_videoset/
+ 1804  ls
+ 1805  cd ~/pwd/saliency_on_videoset/Train/scripts/
+ 1806  python utils/scavenger.py 
+ 1807  top
+ 1808  nvidia-smi
+ 1809  free -h
+ 1810  clear
+ 1811  clc
+ 1812  cd ../../_Train/Deep-Feature-Flow-master/
+ 1813  ls
+ 1814  pwd
+ 1815  export CUDA_VISIBLE_DEVICES=4,5,6,7
+ 1816  python experiments/dff_rfcn/dff_rfcn_end2end_train_test.py --cfg experiments/dff_rfcn/cfgs/resnet_v1_101_flownet_imagenet_vid_rfcn_end2end_ohem.yaml
+ 1817  clear
+ 1818  python experiments/dff_rfcn/dff_rfcn_end2end_train_test.py --cfg experiments/dff_rfcn/cfgs/resnet_v1_101_flownet_imagenet_vid_rfcn_end2end_ohem.yaml
+ 1819  nvidia-smi
+ 1820  export CUDA_VISIBLE_DEVICES=4,7
+ 1821  python experiments/dff_rfcn/dff_rfcn_end2end_train_test.py --cfg experiments/dff_rfcn/cfgs/resnet_v1_101_flownet_imagenet_vid_rfcn_end2end_ohem.yaml
+ 1822  nvidia-smi
+ 1823  top
+ 1824  nvidia-smi
+ 1825  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+ 1826  nvidia-smi
+ 1827  export CUDA_VISIBLE_DEVICES=5,6
+ 1828  clear
+ 1829  python training_video.py --train_prototxt='prototxt/vo-v2_train_kldloss_withouteuc.prototxt' --use_model='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.caffemodel'
+ 1830  source set_env.sh 
+ 1831  export CUDA_VISIBLE_DEVICES=5,6
+ 1832  python training_video.py --train_prototxt='prototxt/vo-v2_train_kldloss_withouteuc.prototxt' --use_model='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.caffemodel'
+ 1833  clear
+ 1834  cd pwd/saliency_on_videoset/_Train/Deep-Feature-Flow-master/
+ 1835  ls
+ 1836  nvidia-smi
+ 1837  export CUDA_VISIBLE_DEVICES=4,5
+ 1838  history > histroy.txt
+ 1839  python experiments/dff_rfcn/dff_rfcn_end2end_train_test.py --cfg experiments/dff_rfcn/cfgs/resnet_v1_101_flownet_imagenet_vid_rfcn_end2end_ohem.yaml
+ 1840  clear
+ 1841  cd ../../Train/
+ 1842  cd scripts/
+ 1843  export PYTHONPATH=../caffe-flownet/python:$PYTHONPATH
+ 1844  python training.py --train_prototxt='prototxt/train_kldloss.prototxt' --use_snapshot='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.solverstate' --batch=1
+ 1845  export CUDA_VISIBLE_DEVICES=3
+ 1846  python training.py --train_prototxt='prototxt/train_kldloss.prototxt' --use_snapshot='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.solverstate' --batch=1
+ 1847  clear
+ 1848  python training_video.py --train_prototxt='prototxt/vo-v1_train_kldloss_withouteuc.prototxt' --use_model='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.caffemodel'
+ 1849  export CUDA_VISIBLE_DEVICES=6
+ 1850  python training_video.py --train_prototxt='prototxt/vo-v1_train_kldloss_withouteuc.prototxt' --use_model='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.caffemodel'
+ 1851  export CUDA_VISIBLE_DEVICES=6,7
+ 1852  python training_video.py --train_prototxt='prototxt/vo-v1_train_kldloss_withouteuc.prototxt' --use_model='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.caffemodel'
+ 1853  clear
+ 1854  python training_video.py --train_prototxt='prototxt/vo-v1_train_kldloss_withouteuc.prototxt' --use_model='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.caffemodel'
+ 1855  clear
+ 1856  cd 
+ 1857  cd /home/sunnycia/pwd/saliency_on_videoset/Train/caffe-flownet
+ 1858  make -j16 all
+ 1859  make -j8 pycaffe
+ 1860  make clean
+ 1861  make -j16 all && make -j4 pycaffe
+ 1862  make clean
+ 1863  make -j16 all && make -j4 pycaffe
+ 1864  make clean
+ 1865  make -j16 all && make -j4 pycaffe
+ 1866  make clean
+ 1867  make -j16 all && make -j4 pycaffe
+ 1868  make clean
+ 1869  make -j16 all && make -j4 pycaffe
+ 1870  make clean
+ 1871  make -j16 all && make -j4 pycaffe
+ 1872  make clean
+ 1873  make -j16 all && make -j4 pycaffe
+ 1874  make clean
+ 1875  make -j16 all && make -j4 pycaffe
+ 1876  make clean
+ 1877  make -j16 all && make -j4 pycaffe
+ 1878  cd ../scripts/
+ 1879  ls
+ 1880  pwd
+ 1881  source set_env.sh 
+ 1882  vim set_env.sh 
+ 1883  source set_env.sh 
+ 1884  python training.py --debug 
+ 1885  python training.py --debug =1
+ 1886  python training.py --debug =1 --solver_prototxt='net/train.prototxt'
+ 1887  python training.py --debug =1 --train_prototxt='net/train.prototxt'
+ 1888  python training.py --debug =1 --train_prototxt='net/train_kldloss_withouteuc.prototxt'
+ 1889  cd ..
+ 1890  cd Train/caffe-flownet/
+ 1891  make -j8 pycaffe
+ 1892  cd ..
+ 1893  cd scripts/
+ 1894  python training.py --debug =1 --train_prototxt='net/train_kldloss_withouteuc.prototxt'
+ 1895  cd ../caffe-flownet/
+ 1896  make clean
+ 1897  vim Makefile.config
+ 1898  make clean
+ 1899  make -j16 all && make pycaffe
+ 1900  cd ..
+ 1901  cd scripts/
+ 1902  python training.py --debug =1 --train_prototxt='net/train_kldloss_withouteuc.prototxt'
+ 1903  clear
+ 1904  export PYTHONPATH=../caffe-flownet/python:$PYTHONPATH
+ 1905  python training.py --train_prototxt='prototxt/train_kldloss.prototxt' --use_snapshot='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.solverstate' --batch=1
+ 1906  export CUDA_VISIBLE_DEVICES=6
+ 1907  python training.py --train_prototxt='prototxt/train_kldloss.prototxt' --use_snapshot='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.solverstate' --batch=1
+ 1908  nvidia-smi
+ 1909  export CUDA_VISIBLE_DEVICES=7
+ 1910  python training.py --train_prototxt='prototxt/train_kldloss.prototxt' --use_snapshot='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.solverstate' --batch=1
+ 1911  top
+ 1912  nvidia-smi
+ 1913  top
+ 1914  nvidia-smi
+ 1915  top
+ 1916  clear
+ 1917  top
+ 1918  nvidia-smi
+ 1919  free -h
+ 1920  top
+ 1921  nvidia-smi
+ 1922  cd pwd/saliency_on_videoset/Train/scripts/
+ 1923  source set_env.sh 
+ 1924  nvidia-smi
+ 1925  export CUDA_VISIBLE_DEVICES=7
+ 1926  python test_video.py --output_type='image' --model_code='v3' --video_base="/data/sunnycia/SaliencyDataset/Video/VideoSet"
+ 1927  top
+ 1928  clear
+ 1929  top
+ 1930  clear
+ 1931  ssh qiudan@172.31.234.248
+ 1932  source set_env.sh 
+ 1933  nvidia-smi
+ 1934  export CUDA_VISIBLE_DEVICES=5,6
+ 1935  python test_image.py 
+ 1936  python utils/video_image_type_converter.py --type='tomany' --basedir='/data/sunnycia/SaliencyDataset/Video/VideoSet/All_in_one/frame'
+ 1937  python utils/video_image_type_converter.py --type='toone' --basedir='/data/sunnycia/SaliencyDataset/Video/VideoSet/All_in_one/frame'
+ 1938  python utils/video_image_type_converter.py --type='tomany' --basedir='/data/sunnycia/SaliencyDataset/Video/VideoSet/All_in_one/frame'
+ 1939  python utils/video_image_type_converter.py --type='toone' --basedir='/data/sunnycia/SaliencyDataset/Video/VideoSet/All_in_one/frame'
+ 1940  python utils/video_image_type_converter.py --type='tomany' --basedir='/data/sunnycia/SaliencyDataset/Video/VideoSet/All_in_one/frame'
+ 1941  python utils/video_image_type_converter.py --basedir='/data/sunnycia/SaliencyDataset/Video/VideoSet/All_in_one/saliency' --type='tomany' --group=1
+ 1942  top
+ 1943  nvidia-smi
+ 1944  cd pwd/saliency_on_videoset/Train/scripts/
+ 1945  ls
+ 1946  python utils/visualization.py 
+ 1947  clear
+ 1948  python utils/visualization.py 
+ 1949  git status
+ 1950  git add --all
+ 1951  git commit -m "Video inference module"
+ 1952  git push -u origin master
+ 1953  python utils/visualization.py 
+ 1954  python metric/avg_metric.py 
+ 1955  python utils/visualization.py 
+ 1956  git status
+ 1957  git add --all
+ 1958  git commit -m "Done for v1 model inference and metric "
+ 1959  clear
+ 1960  python test_video.py 
+ 1961  python test_video.py --output_type='video' --model_code='v3'
+ 1962  python test_video.py --output_type='video' --model_code='v3' --video_base="/data/sunnycia/SaliencyDataset/Video/VideoSet"
+ 1963  export CUDA_VISIBLE_DEVICES=7
+ 1964  python test_video.py --output_type='video' --model_code='v3' --video_base="/data/sunnycia/SaliencyDataset/Video/VideoSet"
+ 1965  python utils/convert_2_all_in_one.py --basedir="/data/sunnycia/SaliencyDataset/Video/VideoSet/saliency_map/v3"
+ 1966  cler
+ 1967  clear
+ 1968  python metric/metric.py --dsname='videoset'
+ 1969  python metric/avg_metric.py 
+ 1970  nvidia-smi
+ 1971  python utils/scavenger.py 
+ 1972  ls -a utils
+ 1973  mv .py video_image_type_converter.py
+ 1974  cd utils && mv .py video_image_type_converter.py
+ 1975  cd ..
+ 1976  python utils/video_image_type_converter.py --basedir='/data/sunnycia/SaliencyDataset/Video/VideoSet/saliency_map/v3' --type='tomany'
+ 1977  python utils/video_image_type_converter.py --basedir='/data/sunnycia/SaliencyDataset/Video/VideoSet/saliency_map/v1' --type='tomany'
+ 1978  top
+ 1979  clear
+ 1980  python
+ 1981  cd /data/sunnycia/saliency_on_videoset/_Train/OMCNN_2CLSTM
+ 1982  python TestDemo.py 
+ 1983  top
+ 1984  nvidia-smi
+ 1985  python TestDemo.py 
+ 1986  pwd
+ 1987  python TestDemo.py 
+ 1988  top
+ 1989  nvidia-smi
+ 1990  top
+ 1991  free -h
+ 1992  clear
+ 1993  cd pwd/saliency_on_videoset/Train/
+ 1994  cd scripts/
+ 1995  python test_video.py 
+ 1996  nvidia-smi
+ 1997  export CUDA_VISIBLE_DEVICES=4
+ 1998  python test_video.py 
+ 1999  nvidia-smi
+ 2000  export CUDA_VISIBLE_DEVICES=4,5
+ 2001  python test_video.py 
+ 2002  source set_env.sh 
+ 2003  export CUDA_VISIBLE_DEVICES=4,5
+ 2004  python test_video.py 
+ 2005  clear
+ 2006  python test_video.py 
+ 2007  clear
+ 2008  python test_video.py 
+ 2009  clear
+ 2010  python test_video.py 
+ 2011  sudo apt-get purge nvidia* 
+ 2012  python test_video.py 
+ 2013  cd /data/sunnycia/SaliencyDataset/Video/VideoSet/ImageSet/frame
+ 2014  ffmpeg
+ 2015  ffmpeg -f image2 -i videoSRC001/frame%d.bmp -vcodec libx264 -r 100 -b 200k test.mp4
+ 2016  ffmpeg -f image2 -i videoSRC001/frame%d.bmp -vcodec libx264 -r 100 test.mp4
+ 2017  ffmpeg -f image2 -i videoSRC001/frame%d.bmp -vcodec libx264 -r 50 test.mp4
+ 2018  ffmpeg -f image2 -i videoSRC001/frame%d.bmp -vcodec libx264 -r 10 test.mp4
+ 2019  ffmpeg -f image2 -i videoSRC001/frame%d.bmp -vcodec libx264 -r 5 test.mp4
+ 2020  top
+ 2021  nvidia-smi
+ 2022  pwd
+ 2023  cd /data/sunnycia/saliency_on_videoset/_Train/OMCNN_2CLSTM
+ 2024  python TestDemo.py 
+ 2025  python
+ 2026  cd ~/pwd/saliency_on_videoset/
+ 2027  ls
+ 2028  cd _Utils/
+ 2029  ls
+ 2030  clear
+ 2031  cd metric_code/
+ 2032  ls
+ 2033  matlab -nodesktop
+ 2034  clear
+ 2035  cd pwd/saliency_on_videoset/Train/
+ 2036  ls
+ 2037  cd scripts/
+ 2038  ls
+ 2039  source set_env.sh 
+ 2040  nvidia-smi
+ 2041  export CUDA_VISIBLE_DEVICES=5,6
+ 2042  python test_video.py 
+ 2043  python test_video.py --output_type=image
+ 2044  python test_video.py --output_type="image"
+ 2045  python test_video.py --output_type="image" allinone=1
+ 2046  python test_video.py --output_type="image" --allinone=1
+ 2047  python test_video.py --output_type="image" --allinone=1 --video_base="/data/sunnycia/SaliencyDataset/Video/VideoSet"
+ 2048  cd /data/sunnycia/SaliencyDataset/Video/VideoSet/All_in_one
+ 2049  python
+ 2050  python change_name.py 
+ 2051  cd -
+ 2052  python metric/metric.py --ds_name='videoset' --debug=1
+ 2053  python metric/metric.py --dsname='videoset' --debug=1
+ 2054  cd -
+ 2055  python change_name.py 
+ 2056  cd -
+ 2057  python metric/metric.py --dsname='videoset' --debug=1
+ 2058  python metric/metric.py --dsname='videoset'
+ 2059  cler
+ 2060  clear
+ 2061  python metric/metric.py --dsname='videoset' --debug=1
+ 2062  python metric/metric.py --dsname='videoset'
+ 2063  clear
+ 2064  python metric/metric.py --dsname='videoset'
+ 2065  git status
+ 2066  git add --all
+ 2067  git commit -m "v3 model inference"
+ 2068  git push -u origin master
+ 2069  top
+ 2070  nvidia-smi
+ 2071  cd pwd/saliency_on_videoset/Train/scripts/
+ 2072  ls
+ 2073  python utils/copy_last_frame.py --videodir="/data/sunnycia/SaliencyDataset/Video/VideoSet/videos" --exttype="duplicate" --extlength=30 --outputdir="/data/sunnycia/SaliencyDataset/Video/VideoSet/ext_videos"
+ 2074  top
+ 2075  nvidia-smi
+ 2076  git status
+ 2077  git add --all
+ 2078  git commit -m "Copy last frame for video"
+ 2079  git push -u origin master
+ 2080  clear
+ 2081  python metric/avg_metric.py 
+ 2082  matlab
+ 2083  top
+ 2084  nvidia-smi
+ 2085  top
+ 2086  clear
+ 2087  clc
+ 2088  clear
+ 2089  python utils/analyse_vomodel_metric.py --metricdir="/data/sunnycia/saliency_on_videoset/novt_result/final/_Result_1_fc_6/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000" --plotdir="../analyse_vomodel"
+ 2090  python utils/analyse_vomodel_metric.py --metricdir="/data/sunnycia/saliency_on_videoset/novt_result/final/_Result_1_fc_6/v3" --plotdir="../analyse_vomodel"
+ 2091  python utils/analyse_vomodel_metric.py --metricdir="/data/sunnycia/saliency_on_videoset/novt_result/final/_Result_1_fc_6/SAM" --plotdir="../analyse_vomodel"
+ 2092  python utils/analyse_vomodel_metric.py --metricdir="/data/sunnycia/saliency_on_videoset/novt_result/final/_Result_1_fc_6/v3" --plotdir="../analyse_vomodel"
+ 2093  clear
+ 2094  python utils/analyse_vomodel_metric.py --metricdir="/data/sunnycia/saliency_on_videoset/novt_result/final/_Result_1_fc_6/v3" --plotdir="../analyse_vomodel"
+ 2095  clear
+ 2096  python utils/analyse_vomodel_metric.py --metricdir="/data/sunnycia/saliency_on_videoset/novt_result/final/_Result_1_fc_6/v3" --plotdir="../analyse_vomodel"
+ 2097  clear
+ 2098  python utils/analyse_vomodel_metric.py --metricdir="/data/sunnycia/saliency_on_videoset/novt_result/final/_Result_1_fc_6/v3" --plotdir="../analyse_vomodel"
+ 2099  python utils/analyse_vomodel_metric.py --metricdir="/data/sunnycia/saliency_on_videoset/novt_result/final/_Result_1_fc_6/sam" --plotdir="../analyse_vomodel"
+ 2100  python utils/analyse_vomodel_metric.py --metricdir="/data/sunnycia/saliency_on_videoset/novt_result/final/_Result_1_fc_6/SAM" --plotdir="../analyse_vomodel"
+ 2101  clear
+ 2102  python utils/analyse_vomodel_metric.py --metricdir="/data/sunnycia/saliency_on_videoset/novt_result/final/_Result_1_fc_6/SAM" --plotdir="../analyse_vomodel"
+ 2103  git status
+ 2104  python utils/VorI/combine_frames.py --framedir="/data/sunnycia/SaliencyDataset/Video/VideoSet/Results/saliency_map/image_model_result/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000" --outputdir='/data/sunnycia/SaliencyDataset/Video/VideoSet/Results/saliency_video/image_model_result/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000' --videolength=5 --resolution=(1920,1080)
+ 2105  python utils/VorI/combine_frames.py --framedir="/data/sunnycia/SaliencyDataset/Video/VideoSet/Results/saliency_map/image_model_result/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000" --outputdir='/data/sunnycia/SaliencyDataset/Video/VideoSet/Results/saliency_video/image_model_result/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000' --videolength=5 
+ 2106  python utils/blend_video.py --orivideodir='/data/sunnycia/SaliencyDataset/Video/VideoSet/Videos/videos_origin' --salvideodir='/data/sunnycia/SaliencyDataset/Video/VideoSet/Results/saliency_video/image_model_result/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000' --outputdir='/data/sunnycia/SaliencyDataset/Video/VideoSet/Videos/videos_blend_baseline' --weight=0.3
+ 2107  python utils/blend_video.py --orivideodir='/data/sunnycia/SaliencyDataset/Video/VideoSet/Videos/videos_origin' --salvideodir='/data/sunnycia/SaliencyDataset/Video/VideoSet/Results/saliency_video/image_model_result/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000' --outputdir='/data/sunnycia/SaliencyDataset/Video/VideoSet/Videos/videos_blend_baseline' --weight=0.3  clear
+ 2108  ccccccccccccccccc
+ 2109  clear
+ 2110  python utils/analyse_vomodel_metric.py --metricdir="/data/sunnycia/saliency_on_videoset/novt_result/final/_Result_1_fc_6/SAM" --outputbase="../analyse_vomodel"
+ 2111  git status
+ 2112  git add --all
+ 2113  python utils/analyse_vomodel_metric.py 
+ 2114  python utils/analyse_vomodel_metric.py --metricdir="/data/sunnycia/saliency_on_videoset/novt_result/final/_Result_1_fc_6/SAM" --outputbase="../analyse_vomodel"
+ 2115  clear
+ 2116  python utils/analyse_vomodel_metric.py --metricdir="/data/sunnycia/saliency_on_videoset/novt_result/final/_Result_1_fc_6/SAM" --outputbase="../analyse_vomodel"
+ 2117  python utils/metric_plot_video.py --metricdir='/data/sunnycia/saliency_on_videoset/novt_result/final/_Result_1_fc_6/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000' --outputdir='/data/sunnycia/saliency_on_videoset/Train/analyse_vomodel'
+ 2118  python utils/metric_plot_video.py --metricdir='/data/sunnycia/saliency_on_videoset/novt_result/final/_Result_1_fc_6/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000' --outputbase='/data/sunnycia/saliency_on_videoset/Train/analyse_vomodel'
+ 2119  python utils/analyse_vomodel_metric.py --metricdir="/data/sunnycia/saliency_on_videoset/novt_result/final/_Result_1_fc_6/SAM" --outputbase="../analyse_vomodel"
+ 2120  python utils/metric_plot_video.py --metricdir='/data/sunnycia/saliency_on_videoset/novt_result/final/_Result_1_fc_6/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000' --outputbase='/data/sunnycia/saliency_on_videoset/Train/analyse_vomodel'
+ 2121  claer
+ 2122  clear
+ 2123  python utils/metric_plot_video.py --metricdir='/data/sunnycia/saliency_on_videoset/novt_result/final/_Result_1_fc_6/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000' --outputbase='/data/sunnycia/saliency_on_videoset/Train/analyse_vomodel'
+ 2124  python utils/analyse_vomodel_metric.py --metricdir="/data/sunnycia/saliency_on_videoset/novt_result/final/_Result_1_fc_6/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000" --outputbase="../analyse_vomodel"
+ 2125  clear
+ 2126  python utils/analyse_vomodel_metric.py --metricdir="/data/sunnycia/saliency_on_videoset/novt_result/final/_Result_1_fc_6/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000" --outputbase="../analyse_vomodel"
+ 2127  clear
+ 2128  python utils/analyse_vomodel_metric.py --metricdir="/data/sunnycia/saliency_on_videoset/novt_result/final/_Result_1_fc_6/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000" --outputbase="../analyse_vomodel"
+ 2129  clear
+ 2130  python utils/analyse_vomodel_metric.py --metricdir="/data/sunnycia/saliency_on_videoset/novt_result/final/_Result_1_fc_6/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000" --outputbase="../analyse_vomodel"
+ 2131  git status 
+ 2132  git add --all
+ 2133  git commit -m "Done for jigsaw video visualization"
+ 2134  git push -u origin master
+ 2135  python
+ 2136  clear
+ 2137  top
+ 2138  nvidia-smi
+ 2139  top
+ 2140  python utils/metric_plot_video.py --metricdir='/data/sunnycia/saliency_on_videoset/_Metric_results/nopar/final/_Result_1_fc_6/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000' --outputbase='/data/sunnycia/saliency_on_videoset/Train/analyse_vomodel'
+ 2141  python utils/analyse_vomodel_metric.py --metricdir='/data/sunnycia/saliency_on_videoset/_Metric_results/nopar/final/_Result_1_fc_6/xu_dupext40' --outputbase='../analyse_vomodel'
+ 2142  python utils/metric_plot_video.py 
+ 2143  python utils/metric_plot_video.py --metricdir
+ 2144  python utils/metric_plot_video.py --metricdir='/data/sunnycia/saliency_on_videoset/_Metric_results/nopar/final/_Result_1_fc_6/xu_dupext40'
+ 2145  python utils/metric_plot_video.py --metricdir='/data/sunnycia/saliency_on_videoset/_Metric_results/nopar/final/_Result_1_fc_6/xu_dupext40' --outputbase='../analyse_vomodel'
+ 2146  python utils/VorI/combine_frames.py --framedir='/data/sunnycia/SaliencyDataset/Video/VideoSet/Results/saliency_map/video_model_result/xu_dupext40' --outputdir='/data/sunnycia/SaliencyDataset/Video/VideoSet/Results/saliency_video/video_model_result/xu_dupext40' --videolength=5 
+ 2147  cd /data/sunnycia/SaliencyDataset/Video/VideoSet/Results/saliency_map/image_model_result/SAM
+ 2148  python
+ 2149  python utils/analyse_vomodel_metric.py --metricdir='/data/sunnycia/saliency_on_videoset/_Metric_results/nopar/final/_Result_1_fc_6/SAM' --salvodir='/data/sunnycia/SaliencyDataset/Video/VideoSet/Results/saliency_video/image_model_result/SAM' --metvobase='/data/sunnycia/saliency_on_videoset/Train/analyse_vomodel/SAM' --outputbase='../all_visualization
+ 2150  '
+ 2151  python utils/analyse_vomodel_metric.py --metricdir='/data/sunnycia/saliency_on_videoset/_Metric_results/nopar/final/_Result_1_fc_6/SAM' --salvodir='/data/sunnycia/SaliencyDataset/Video/VideoSet/Results/saliency_video/image_model_result/SAM' --metvobase='/data/sunnycia/saliency_on_videoset/Train/analyse_vomodel/SAM' --outputbase='../all_visualization'
+ 2152  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+ 2153  python utils/analyse_vomodel_metric.py --metricdir='/data/sunnycia/saliency_on_videoset/_Metric_results/nopar/final/_Result_1_fc_6/SAM' --salvodir='/data/sunnycia/SaliencyDataset/Video/VideoSet/Results/saliency_video/image_model_result/SAM' --metvobase='/data/sunnycia/saliency_on_videoset/Train/analyse_vomodel/SAM' --outputbase='../all_visualization'
+ 2154  cd utils/
+ 2155  ls
+ 2156  touch concat_videos.py
+ 2157  cd ..
+ 2158  python utils/concat_videos.py --videodir='/data/sunnycia/saliency_on_videoset/Train/analyse_vomodel/xu_dupext40/jud' --outputpath='../output.avi'
+ 2159  git status
+ 2160  git add --all
+ 2161  git commit -m "Add concat video function"
+ 2162  git push -m origin master
+ 2163  git push -u origin master
+ 2164  python utils/concat_videos.py --videodir='/data/sunnycia/saliency_on_videoset/Train/analyse_vomodel/xu_dupext40/jud' --outputpath='../output.avi' --randomorder=1
+ 2165  python utils/concat_videos.py --videodir='/data/sunnycia/saliency_on_videoset/Train/all_visualization/xu_dupext40/visualization/jud' --outputpath='../xulstm_jud.avi' --randomorder=1
+ 2166  python utils/concat_videos.py --videodir='/data/sunnycia/saliency_on_videoset/Train/all_visualization/xu_dupext40/visualization/sauc' --outputpath='../xulstm_sauc.avi' --randomorder=1
+ 2167  python utils/concat_videos.py --videodir='/data/sunnycia/saliency_on_videoset/Train/all_visualization/xu_dupext40/visualization/kld' --outputpath='../xulstm_kld.avi' --randomorder=1
+ 2168  python utils/concat_videos.py --videodir='/data/sunnycia/saliency_on_videoset/Train/all_visualization/xu_dupext40/visualization/nss' --outputpath='../xulstm_nss.avi' --randomorder=1
+ 2169  python utils/concat_videos.py --videodir='/data/sunnycia/saliency_on_videoset/Train/all_visualization/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000/visualization/nss' --outputpath='../propose_nss.avi' --randomorder=1
+ 2170  python utils/concat_videos.py --videodir='/data/sunnycia/saliency_on_videoset/Train/all_visualization/sam/visualization/nss' --outputpath='../sam_nss.avi' --randomorder=1
+ 2171  python utils/concat_videos.py --videodir='/data/sunnycia/saliency_on_videoset/Train/all_visualization/SAM/visualization/nss' --outputpath='../sam_nss.avi' --randomorder=1
+ 2172  python utils/concat_videos.py --videodir='/data/sunnycia/saliency_on_videoset/Train/all_visualization/SAM/visualization/kld' --outputpath='../sam_kld.avi' --randomorder=1
+ 2173  python utils/concat_videos.py --videodir='/data/sunnycia/saliency_on_videoset/Train/all_visualization/SAM/visualization/sauc' --outputpath='../sam_sauc.avi' --randomorder=1
+ 2174  python utils/concat_videos.py --videodir='/data/sunnycia/saliency_on_videoset/Train/all_visualization/SAM/visualization/jud' --outputpath='../sam_jud.avi' --randomorder=1
+ 2175  ls
+ 2176  vim ~/.bashrc
+ 2177  top
+ 2178  etop
+ 2179  top
+ 2180  clear
+ 2181  python
+ 2182  cd pwd/saliency_on_videoset/
+ 2183  cd _Train/OMCNN_2CLSTM/
+ 2184  ls
+ 2185  nvidia-smi
+ 2186  export CUDA_VISIBLE_DEVICES=6
+ 2187  python TestDemo.py 
+ 2188  python test.py --videodir='/data/sunnycia/SaliencyDataset/Video/VideoSet/videos' --ouptutdir='/data/sunnycia/SaliencyDataset/Video/VideoSet/saliency_video/xu' --outputtype='video'
+ 2189  python test.py --videodir='/data/sunnycia/SaliencyDataset/Video/VideoSet/videos' --outputdir='/data/sunnycia/SaliencyDataset/Video/VideoSet/saliency_video/xu' --outputtype='video'
+ 2190  top
+ 2191  nvidia-smi
+ 2192  top
+ 2193  pwd
+ 2194  python test.py --videodir='/data/sunnycia/SaliencyDataset/Video/VideoSet/ext_videos_cv2' --outputdir='/data/sunnycia/SaliencyDataset/Video/VideoSet/saliency_video/xu_dupext30" --outputtype="video"
+ 2195  python test.py --videodir='/data/sunnycia/SaliencyDataset/Video/VideoSet/ext_videos_cv2' --outputdir='/data/sunnycia/SaliencyDataset/Video/VideoSet/saliency_video/xu_dupext30' --outputtype="video"
+ 2196  nvidia-smi
+ 2197  export CUDA_VISIBLE_DEVICES=6
+ 2198  python test.py --videodir='/data/sunnycia/SaliencyDataset/Video/VideoSet/ext_videos_cv2' --outputdir='/data/sunnycia/SaliencyDataset/Video/VideoSet/saliency_video/xu_dupext30' --outputtype="video"
+ 2199  python test.py --videodir='/data/sunnycia/SaliencyDataset/Video/VideoSet/ext_videos_cv2' --outputdir='/data/sunnycia/SaliencyDataset/Video/VideoSet/saliency_map/xu_dupext30' --outputtype="image"
+ 2200  python test.py --videodir='/data/sunnycia/SaliencyDataset/Video/VideoSet/ext_videos_cv2' --outputdir='/data/sunnycia/SaliencyDataset/Video/VideoSet/saliency_map/xu_dupext40' --outputtype="image"
+ 2201  top
+ 2202  cd -
+ 2203  cd ~/pwd/saliency_on_videoset/Train/scripts/
+ 2204  ls
+ 2205  clear
+ 2206  cd 
+ 2207  cd /data/sunnycia/SaliencyDataset/Video/VideoSet/Videos
+ 2208  python rename.py 
+ 2209  top
+ 2210  nvidia-smi
+ 2211  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+ 2212  git status
+ 2213  git add --all
+ 2214  git commit -m "add common util. add videl/frame level analysis module"
+ 2215  git push -u origin master
+ 2216  nvidia-smi
+ 2217  top
+ 2218  python utils/analyse_vomodel_metric.py --metricdir='/data/sunnycia/saliency_on_videoset/novt_result/final/_Result_1_fc_6/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000' --outputbase='../analyse_vomodel'
+ 2219  top
+ 2220  python utils/analyse_vomodel_metric.py --metricdir='/data/sunnycia/saliency_on_videoset/novt_result/final/_Result_1_fc_6/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000' --outputbase='../analyse_vomodel'
+ 2221  python utils/metric_plot_video.py --metricdir='/data/sunnycia/saliency_on_videoset/novt_result/final/_Result_1_fc_6/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000' --outputbase='../analyse_vomodel'
+ 2222  cd /data/sunnycia/saliency_on_videoset/_Train
+ 2223  git clone https://github.com/piiswrong/deep3d.git
+ 2224  df -h
+ 2225  top
+ 2226  cd /data/sunnycia/saliency_on_videoset/_Utils/metric_code
+ 2227  matlab -nodesktop
+ 2228  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+ 2229  ls
+ 2230  python utils/metric_plot_video.py --metricdir='/data/sunnycia/saliency_on_videoset/_Metric_results/nopar/final/_Result_1_fc_6/xu_dupext40' --outputbase='../analyse_vomodel'
+ 2231  python utils/analyse_vomodel_metric.py --metricdir='/data/sunnycia/saliency_on_videoset/_Metric_results/nopar/final/_Result_1_fc_6/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000' --outputbase='../analyse_vomodel'
+ 2232  ls
+ 2233  python utils/VorI/combine_frames.py --framedir='/data/sunnycia/SaliencyDataset/Video/VideoSet/Results/saliency_map/image_model_result/SAM' --outputdir='/data/sunnycia/SaliencyDataset/Video/VideoSet/Results/saliency_video/image_model_result/SAM' --videolength=5
+ 2234   python utils/analyse_vomodel_metric.py --metricdir='/data/sunnycia/saliency_on_videoset/_Metric_results/nopar/final/_Result_1_fc_6/xu_dupext40' --salvodir='/data/sunnycia/SaliencyDataset/Video/VideoSet/Results/saliency_video/video_model_result/xu_dupext40' --metvobase='/data/sunnycia/saliency_on_videoset/Train/analyse_vomodel/xu_dupext40' --outputbase='../all_visualization' 
+ 2235   python utils/analyse_vomodel_metric.py --metricdir='/data/sunnycia/saliency_on_videoset/_Metric_results/nopar/final/_Result_1_fc_6/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000' --salvodir='/data/sunnycia/SaliencyDataset/Video/VideoSet/Results/saliency_video/image_model_result/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000' --metvobase='/data/sunnycia/saliency_on_videoset/Train/analyse_vomodel/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000' --outputbase='../all_visualization' 
+ 2236  clear
+ 2237  cd pwd/saliency_on_videoset/_Train/OMCNN_2CLSTM/
+ 2238  python test.py 
+ 2239  python test.py --videodir='/data/sunnycia/SaliencyDataset/Video/VideoSet/videos' --outputdir='/data/sunnycia/SaliencyDataset/Video/VideoSet/saliency_map/xu' --outputtype='image'
+ 2240  nvidia-smi
+ 2241  clear
+ 2242  export CUDA_VISIBLE_DEVICES=7
+ 2243  clear
+ 2244  python test.py --videodir='/data/sunnycia/SaliencyDataset/Video/VideoSet/videos' --outputdir='/data/sunnycia/SaliencyDataset/Video/VideoSet/saliency_map/xu' --outputtype='image'
+ 2245  clear
+ 2246  python test.py --videodir='/data/sunnycia/SaliencyDataset/Video/VideoSet/videos' --outputdir='/data/sunnycia/SaliencyDataset/Video/VideoSet/saliency_map/xu' --outputtype='image'
+ 2247  clear
+ 2248  python test.py --videodir='/data/sunnycia/SaliencyDataset/Video/VideoSet/videos' --outputdir='/data/sunnycia/SaliencyDataset/Video/VideoSet/saliency_map/xu' --outputtype='image'
+ 2249  python TestDemo.py 
+ 2250  cd ~/pwd/saliency_on_videoset/Train/
+ 2251  ls
+ 2252  cd scripts/
+ 2253  ls
+ 2254  git status
+ 2255  git add --all
+ 2256  git commit -m "routine submit"
+ 2257  git push -u origin master
+ 2258  python utils/copy_last_frame.py --videodir="/data/sunnycia/SaliencyDataset/Video/VideoSet/videos" --exttype="duplicate" --extlength=30 --outputdir"/data/sunnycia/SaliencyDataset/Video/VideoSet/ext_videos_cv2"
+ 2259  python utils/copy_last_frame.py --videodir="/data/sunnycia/SaliencyDataset/Video/VideoSet/videos" --exttype="duplicate" --extlength=30 --outputdir="/data/sunnycia/SaliencyDataset/Video/VideoSet/ext_videos_cv2"
+ 2260  python utils/copy_last_frame.py --videodir="/data/sunnycia/SaliencyDataset/Video/VideoSet/videos" --exttype="duplicate" --extlength=30 --outputdir"/data/sunnycia/SaliencyDataset/Video/VideoSet/ext_videos_cv2"
+ 2261  python utils/copy_last_frame.py --videodir="/data/sunnycia/SaliencyDataset/Video/VideoSet/videos" --exttype="duplicate" --extlength=30 --outputdir="/data/sunnycia/SaliencyDataset/Video/VideoSet/ext_videos_cv2"
+ 2262  python utils/copy_last_frame.py --videodir="/data/sunnycia/SaliencyDataset/Video/VideoSet/videos" --exttype="duplicate" --extlength=40 --outputdir="/data/sunnycia/SaliencyDataset/Video/VideoSet/ext_videos_cv2"
+ 2263  cd /data/sunnycia/saliency_on_videoset/_Utils
+ 2264  cd -
+ 2265  matlab -nodesktop
+ 2266  top
+ 2267  cd /data/sunnycia/SaliencyDataset/Image/MIT300
+ 2268  ls
+ 2269  unzip BenchmarkIMAGES.zip 
+ 2270  ls
+ 2271  cd BenchmarkIMAGES/
+ 2272  ls
+ 2273  cd pwd/saliency_on_videoset/Train/scripts/
+ 2274  git clone https://github.com/lmb-freiburg/flownet2.git
+ 2275  cp -R /data/sunnycia/saliency_on_videoset/_Train/flownet2 ./
+ 2276  cd flownet2/
+ 2277  git status
+ 2278  cd ../pymetric/
+ 2279  ls -a
+ 2280  cd ..
+ 2281  cd flownet2/
+ 2282  ls
+ 2283  history > history
+ 2284  python run-flownet.py ../models/FlowNet2/FlowNet2_weights.caffemodel.h5 ../models/FlowNet2/FlowNet2_deploy.prototxt.template frame5.jpg frame7.jpg output.flo
+ 2285  cd scripts/
+ 2286  python run-flownet.py ../models/FlowNet2/FlowNet2_weights.caffemodel.h5 ../models/FlowNet2/FlowNet2_deploy.prototxt.template frame5.jpg frame7.jpg output.flo
+ 2287  cd ..
+ 2288  ./set-env.sh 
+ 2289  cd scripts/
+ 2290  python run-flownet.py ../models/FlowNet2/FlowNet2_weights.caffemodel.h5 ../models/FlowNet2/FlowNet2_deploy.prototxt.template frame5.jpg frame7.jpg output.flo
+ 2291  python
+ 2292  cd ..
+ 2293  ./set-env.sh 
+ 2294  export PYTHONPATH="$CAFFE_PATH/python:$PYTHONPATH"
+ 2295  export PYTHONPATH="./python:$PYTHONPATH"
+ 2296  python
+ 2297  python run-flownet.py ../models/FlowNet2/FlowNet2_weights.caffemodel.h5 ../models/FlowNet2/FlowNet2_deploy.prototxt.template frame5.jpg frame7.jpg output.flo
+ 2298  cd scripts/
+ 2299  python run-flownet.py ../models/FlowNet2/FlowNet2_weights.caffemodel.h5 ../models/FlowNet2/FlowNet2_deploy.prototxt.template frame5.jpg frame7.jpg output.flo
+ 2300  cd ..
+ 2301  source set-env.sh 
+ 2302  cd scripts/
+ 2303  python run-flownet.py ../models/FlowNet2/FlowNet2_weights.caffemodel.h5 ../models/FlowNet2/FlowNet2_deploy.prototxt.template frame5.jpg frame7.jpg output.flo
+ 2304  python run-flownet.py ../models/FlowNet2/FlowNet2_weights.caffemodel.h5 ../models/FlowNet2/FlowNet2_deploy.prototxt.template frame4.bmp frame6.bmp output.flo
+ 2305  cd ..
+ 2306  cp -R flownet2/ ../
+ 2307  cd ..
+ 2308  cd caffe-flownet/
+ 2309  make clean
+ 2310  pwd
+ 2311  cd ../scripts/
+ 2312  python scavenger.py 
+ 2313  cd flownet2/
+ 2314  source set-env.sh 
+ 2315  cd scripts/
+ 2316  python run-flownet.py ../models/FlowNet2/FlowNet2_weights.caffemodel.h5 ../models/FlowNet2/FlowNet2_deploy.prototxt.template frame5.jpg frame7.jpg output.flo
+ 2317  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+ 2318  python call_flownet.py 
+ 2319  cd flownet2/
+ 2320  source set-env.sh 
+ 2321  cd ..
+ 2322  python call_flownet.py 
+ 2323  source set_env.sh 
+ 2324  python call_flownet.py 
+ 2325  export CUDA_VISIBLE_DEVICES=0
+ 2326  python call_flownet.py 
+ 2327  git status
+ 2328  git add --all
+ 2329  git commit -m "Add flownet module, set environment variable"
+ 2330  git push -u origin master
+ 2331  git clone https://github.com/liruoteng/OpticalFlowToolkit.git
+ 2332  git status
+ 2333  git add --all 
+ 2334  git commit -m "clean my table. Something need to be modify later"
+ 2335  git push -u origin master
+ 2336  python call_flownet.py 
+ 2337  $PATH
+ 2338  python call_flownet.py 
+ 2339  git status
+ 2340  git add --all
+ 2341  git commit -m "Extract Saliencynet from test module, not check yet"
+ 2342  clear
+ 2343  export CUDA_VISIBLE_DEVICES=7
+ 2344  python training.py --train_prototxt='prototxt/train_kldloss.prototxt' --use_snapshot='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.solverstate' --batch=1
+ 2345  pwd
+ 2346  git status
+ 2347  git add --all
+ 2348  git commit -m "Video network version-2 on going"
+ 2349  git push -u origin master
+ 2350  clear
+ 2351  nvidia-smi
+ 2352  python utils/scavenger.py 
+ 2353  clear
+ 2354  python metric/metric.py --dsname='msu'
+ 2355  cd /data/sunnycia/SaliencyDataset/Video/VideoSet/All_in_one/saliency
+ 2356  ls
+ 2357  cd -
+ 2358  cd /data/sunnycia/saliency_on_videoset/_Utils/metric_code
+ 2359  matlab -nodesktop
+ 2360  matlab
+ 2361  matlab -nodesktop
+ 2362  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+ 2363  ls
+ 2364  git status
+ 2365  python utils/metric_plot_video.py --metricdir='/data/sunnycia/saliency_on_videoset/_Metric_results/nopar/final/_Result_1_fc_6/SAM' --outputbase='/data/sunnycia/saliency_on_videoset/Train/analyse_vomodel'
+ 2366  python utils/analyse_vomodel_metric.py --metricdir='/data/sunnycia/saliency_on_videoset/_Metric_results/nopar/final/_Result_1_fc_6/SAM' --outputbase='../analyse_vomodel'
+ 2367  source set_env.sh 
+ 2368  nvidia-smi
+ 2369  export CUDA_VISIBLE_DEVICES=6
+ 2370  python test_image.py 
+ 2371  python utils/analyse_vomodel_metric.py --metricdir='/data/sunnycia/saliency_on_videoset/_Metric_results/nopar/final/_Result_1_fc_6/SAM' --salvodir='/data/sunnycia/SaliencyDataset/Video/VideoSet/Results/saliency_video/image_model_result/SAM' --metvobase='/data/sunnycia/saliency_on_videoset/Train/analyse_vomodel/SAM' --outputbase='../analyse_vomodel'
+ 2372  python utils/analyse_vomodel_metric.py --metricdir='/data/sunnycia/saliency_on_videoset/_Metric_results/nopar/final/_Result_1_fc_6/xu_dupext40' --salvodir='/data/sunnycia/SaliencyDataset/Video/VideoSet/Results/saliency_video/video_model_result/xu_dupext40' --metvobase='/data/sunnycia/saliency_on_videoset/Train/analyse_vomodel/xu_dupext40' --outputbase='../analyse_vomodel'
+ 2373  df -h
+ 2374  top
+ 2375  nvidia-smi
+ 2376  clear
+ 2377  cd /data//sunnycia/SaliencyDataset/Video/MSU/
+ 2378  ls
+ 2379  cd frames_allinone/
+ 2380  ls F*
+ 2381  ls A*
+ 2382  ls a*
+ 2383  ls
+ 2384  clear
+ 2385  cp * /data/sunnycia/SaliencyDataset/Image/Combine_salicon_msu_nus_cat2000_videoset/Image/
+ 2386  cd /data/sunnycia/SaliencyDataset/Image/SALICON/DATA
+ 2387  ls
+ 2388  cd images
+ 2389  ls *
+ 2390  clear
+ 2391  cp * /data/sunnycia/SaliencyDataset/Image/Combine_salicon_msu_nus_cat2000_videoset/Image
+ 2392  cd ..
+ 2393  ls
+ 2394  cd train_val/
+ 2395  ls
+ 2396  cd train2014/
+ 2397  ls
+ 2398  pwd
+ 2399  ls
+ 2400  cd images/
+ 2401  cp * /data/sunnycia/SaliencyDataset/Image/Combine_salicon_msu_nus_cat2000_videoset/Image/
+ 2402  cd ../..
+ 2403  ls
+ 2404  cd val2014/
+ 2405  ls
+ 2406  cd images/
+ 2407  cp * /data/sunnycia/SaliencyDataset/Image/Combine_salicon_msu_nus_cat2000_videoset/Image
+ 2408  cd ..
+ 2409  ls
+ 2410  cd density/
+ 2411  cp * /
+ 2412  cp * /data/sunnycia/SaliencyDataset/Image/Combine_salicon_msu_nus_cat2000_videoset/Density
+ 2413  pwd
+ 2414  cd ../../train2014/density/
+ 2415  cp * /data/sunnycia/SaliencyDataset/Image/Combine_salicon_msu_nus_cat2000_videoset/Density
+ 2416  cd ..
+ 2417  cd /home/sunnycia/pwd/saliency_on_videoset/Train/scripts
+ 2418  ls
+ 2419  clear
+ 2420  claer
+ 2421  source set_env.sh 
+ 2422  nvidia-smi
+ 2423  export CUDA_VISIBLE_DEVICES=6
+ 2424  history > history.txt 

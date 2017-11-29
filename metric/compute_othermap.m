@@ -4,7 +4,7 @@
 %%%%%sss%%%%%uuuu%%%nn%%%nn%nn%%%nn%%%%yy%%%%%cccc%%iii%aa%%%%aa%%%%%
 
 % Other map computer for videoset.
-function other_map = compute_othermap_sunnycia(M, row,column,map_dir)
+function other_map = compute_othermap(M, row,column,map_dir)
 % addpath(map_dir)
 fixation_list = dir(map_dir);
 rdm_idx = [];
@@ -19,8 +19,9 @@ for j = 1 : M
     idx = rdm_idx(j);
     % fixation_path = fullfile(map_dir, fixation_list(idx).name)
     % fixationmap = imread(fixation_path)
-    idx
     load(fullfile(map_dir, fixation_list(idx).name))
+    fixation = imresize(fixation, size(other_map));
+    % size(fixation)
+    % size(other_map)
     other_map(logical(fixation))=1;
 end
-
