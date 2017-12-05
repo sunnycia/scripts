@@ -1,3 +1,4 @@
+import argparse
 import imghdr
 from math import floor
 import glob, cv2, os, numpy as np, sys, caffe
@@ -6,28 +7,61 @@ from Saliencynet import ImageSaliencyNet
 caffe.set_mode_gpu()
 caffe.set_device(0)
 
+def get_arguments():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--modelbase',type=str,default='../training_output/salicon')
+    parser.add_argument('--modelname', type=str, default=None, help='the network prototxt')
+    parser.add_argument('--testset', type=str, default=None, help='the network prototxt')
+    parser.add_argument('--iterselection',type=str, default='full',help='(full) or (half) or (newest)')
+    return parser.parse_args()
+print "Parsing arguments..."
+args = get_arguments()
+iter_selection = args.iterselection
+
+test_set = args.testset
+test_img_dir_dict={
+    'salicon':'/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/images',
+    'cat2000':'/data/sunnycia/SaliencyDataset/Image/CAT2000/trainSet/combine/Stimuli',
+    'mit1003':'/data/sunnycia/SaliencyDataset/Image/MIT1003/ALLSTIMULI',
+    'nus': '/data/sunnycia/SaliencyDataset/Image/NUS/Color',
+    'nctu': '/data/sunnycia/SaliencyDataset/Image/NCTU/AllTestImg/Limages',
+    'msu': '/data/sunnycia/SaliencyDataset/Video/MSU/frames_allinone',
+    'videoset': '/data/sunnycia/SaliencyDataset/Video/VideoSet/All_in_one/frame',
+    'mit300': '/data/sunnycia/SaliencyDataset/Image/MIT300/BenchmarkIMAGES'
+}
+
 if __name__ =='__main__':
-    model_base = '../training_output/salicon'
+    model_base = args.modelbase
     subdirs = [name for name in os.listdir(model_base) if os.path.isdir(os.path.join(model_base, name))]
 
     for subdir in subdirs:
+        if args.modelname is not None:
+            subdir=args.modelname
         model_path_list = glob.glob(os.path.join(model_base, subdir, "*.caffemodel"))
         model_path_list.sort(key=os.path.getmtime)
+        # print model_path_list;exit()
         length = len(model_path_list)
         if length == 0:
             continue
         # print model_path_list;continue
-        if length-1 == floor(length/2.):
+        selection_list=[]
+        if iter_selection=='half':
+            if length-1 == floor(length/2.):
+                selection_list=[length-1]
+            else:
+                selection_list = [length-1, int(floor(length/2.))]
+        elif iter_selection=='full':
+            selection_list=[i for i in range(length)]
+        elif iter_selection=='newest':
             selection_list=[length-1]
-        else:
-            selection_list = [length-1, int(floor(length/2.))]
 
         # for model_path in model_path_list:
         for selection in selection_list:
+            # print selection_list,selection;exit()
             model_path = model_path_list[selection]
-            # print model_path;
+            # print model_path;exit()
             version_postfix = ''
-            model_version = model_path.split('/')[-2].split('.')[0]+version_postfix;
+            model_version = model_path.split('/')[-2].split('.')[0]+model_path.split('/')[-1].split('.')[0]+version_postfix;
             print model_version
             # continue
             # print sub_dirs;exit()
@@ -40,20 +74,14 @@ if __name__ =='__main__':
             # saliency_map = sn.compute_saliency('../test_imgs/face.jpg')
             # cv2.imwrite('../test_imgs/frame140.bmp', saliency_map)
 
-            # test_img_dir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/images'
-            # test_img_dir  = '/data/sunnycia/SaliencyDataset/Image/CAT2000/trainSet/combine/Stimuli'
-            # test_img_dir  = '/data/sunnycia/SaliencyDataset/Image/MIT1003/ALLSTIMULI'
-            # test_img_dir  = '/data/sunnycia/SaliencyDataset/Image/NUS/Color'
-            # test_img_dir = '/data/sunnycia/SaliencyDataset/Image/NCTU/AllTestImg/Limages'
-            # test_img_dir = '/data/sunnycia/SaliencyDataset/Video/MSU/frames_allinone'
-            # test_img_dir = '/data/sunnycia/SaliencyDataset/Video/VideoSet/All_in_one/frame'
-            test_img_dir = "/data/sunnycia/SaliencyDataset/Image/MIT300/BenchmarkIMAGES"
-            
+            test_img_dir = test_img_dir_dict[test_set]
             test_img_path_list = glob.glob(os.path.join(test_img_dir, '*.*'))
             test_output_dir = os.path.join(os.path.dirname(test_img_dir), 'saliency', model_version)
 
             if not os.path.isdir(test_output_dir):
                 os.makedirs(test_output_dir)
+            elif len(glob.glob(os.path.join(test_output_dir,'*.*'))) == 0:
+                pass
             else:
                 print test_output_dir, 'exists, pass.'
                 continue
@@ -70,3 +98,6 @@ if __name__ =='__main__':
                 cv2.imwrite(output_path, saliency_map)
                 duration = toc()
                 print output_path, "saved. %s passed" % duration 
+        if args.modelname is not None:
+            print "done for",args.modelname
+            break

@@ -145,7 +145,7 @@ train_density_basedir = '/data/sunnycia/SaliencyDataset/Video/MSU/density/sigma3
 validation_frame_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/images'
 validation_density_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/density'
 tranining_dataset = VideoDataset(train_frame_basedir, train_density_basedir)
-tranining_dataset.setup_video_dataset_stack()
+tranining_dataset.setup_video_dataset_c3d()
 # validation_dataset = StaticDataset(train_frame_basedir, train_density_basedir, debug=debug_mode)
 
 # ╔╦╗╦╔═╗╔═╗

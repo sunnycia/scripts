@@ -23,6 +23,8 @@ def get_arguments():
     parser.add_argument('--debug', type=bool, default=False, help='If debug is ture, a mini set will run into training.Or a complete set will.')
     parser.add_argument('--visualization', type=bool, default=False, help='visualization training loss option')
     parser.add_argument('--batch', type=int, default=1, help='training mini batch')
+    # parser.add_argument('--updatesolverdict', type=dict, default={}, help='update solver prototxt')
+    # parser.add_argument('--extrainfodict', type=dict, default={}, help='Extra information to add on the model name')
     return parser.parse_args()
 
 print "Parsing arguments..."
@@ -84,11 +86,17 @@ with open(training_protopath, 'w') as f:
 """End of A1"""
 
 """A2: Update solver prototxt"""
+# update_solver_dict=args.updatesolverdict
+# extrainfo_dict=args.extrainfodict
 update_solver_dict = {
+# 'lr_policy':'"step"',
+# 'stepsize':'100000',
+# 'gamma':'0.1',
 # 'solver_type':'SGD'
 }
 extrainfo_dict = {
-'dataset':'bigunion'
+'dataset':'bigunion',
+'lrpolicy':'step1e601'
 }
 solver_path = args.solver_prototxt
 solverproto = CaffeSolver(trainnet_prototxt_path=training_protopath)

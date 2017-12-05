@@ -2373,52 +2373,257 @@
  2373  df -h
  2374  top
  2375  nvidia-smi
- 2376  clear
- 2377  cd /data//sunnycia/SaliencyDataset/Video/MSU/
- 2378  ls
- 2379  cd frames_allinone/
- 2380  ls F*
- 2381  ls A*
- 2382  ls a*
- 2383  ls
- 2384  clear
- 2385  cp * /data/sunnycia/SaliencyDataset/Image/Combine_salicon_msu_nus_cat2000_videoset/Image/
- 2386  cd /data/sunnycia/SaliencyDataset/Image/SALICON/DATA
- 2387  ls
- 2388  cd images
- 2389  ls *
- 2390  clear
- 2391  cp * /data/sunnycia/SaliencyDataset/Image/Combine_salicon_msu_nus_cat2000_videoset/Image
- 2392  cd ..
- 2393  ls
- 2394  cd train_val/
- 2395  ls
- 2396  cd train2014/
- 2397  ls
- 2398  pwd
- 2399  ls
- 2400  cd images/
- 2401  cp * /data/sunnycia/SaliencyDataset/Image/Combine_salicon_msu_nus_cat2000_videoset/Image/
- 2402  cd ../..
+ 2376  top
+ 2377  nvidia-smi
+ 2378  top
+ 2379  nvidia-smi
+ 2380  top
+ 2381  nvidia-smi
+ 2382  top
+ 2383  nvidia-smi
+ 2384  top
+ 2385  cd pwd/saliency_on_videoset/Train/scripts/
+ 2386  ls
+ 2387  git status
+ 2388  python metric/img2mat.py --help
+ 2389  python metric/img2mat.py --imgdir='/data/sunnycia/SaliencyDataset/Image/MIT1003/fixPts' --matdir='/data/sunnycia/SaliencyDataset/Image/MIT1003/fixPts-mat'
+ 2390  git status
+ 2391  git add --all
+ 2392  git commit -m "Clean code for metric 1. add function: img2mat"
+ 2393  git push -u origin master
+ 2394  git status
+ 2395  python metric/avg_metric.py --metricdir='../metric-matlab'
+ 2396  pwd
+ 2397  top
+ 2398  nvidia-smi
+ 2399  cd metric/l
+ 2400  cd metric/
+ 2401  ls
+ 2402  cd saliency/
  2403  ls
- 2404  cd val2014/
+ 2404  cd code_forOptimization/
  2405  ls
- 2406  cd images/
- 2407  cp * /data/sunnycia/SaliencyDataset/Image/Combine_salicon_msu_nus_cat2000_videoset/Image
+ 2406  matlab 
+ 2407  cd ../..
  2408  cd ..
- 2409  ls
- 2410  cd density/
- 2411  cp * /
- 2412  cp * /data/sunnycia/SaliencyDataset/Image/Combine_salicon_msu_nus_cat2000_videoset/Density
- 2413  pwd
- 2414  cd ../../train2014/density/
- 2415  cp * /data/sunnycia/SaliencyDataset/Image/Combine_salicon_msu_nus_cat2000_videoset/Density
- 2416  cd ..
- 2417  cd /home/sunnycia/pwd/saliency_on_videoset/Train/scripts
- 2418  ls
- 2419  clear
- 2420  claer
- 2421  source set_env.sh 
- 2422  nvidia-smi
- 2423  export CUDA_VISIBLE_DEVICES=6
- 2424  history > history.txt 
+ 2409  git status
+ 2410  git add --all
+ 2411  git commit -m "add metric for videoset data base. Special:fadopt frame_cut"
+ 2412  git push -u origin master
+ 2413  cd pwd/saliency_on_videoset/Train/scripts/
+ 2414  ls
+ 2415  python metric/avg_metric.py --metricdir='../metric-matlab'
+ 2416  history >history
+ 2417  clear
+ 2418  cd pwd/saliency_on_videoset/Train/
+ 2419  ls
+ 2420  cd scripts/
+ 2421  matlab -nodesktop
+ 2422  top
+ 2423  df -h
+ 2424  top
+ 2425  nvidia-smi
+ 2426  free -h
+ 2427  python test_image.py --testset='mit1003' --modelname='train_kldloss-dataset-bigunion-batch-8_1511876736_usesnapshot_1509584263_snapshot-_iter_100000' --iterselection='full'
+ 2428  export CUDA_VISIBLE_DEVICES=7
+ 2429  nvidia-smi
+ 2430  python test_image.py --testset='mit1003' --modelname='train_kldloss-dataset-bigunion-batch-8_1511876736_usesnapshot_1509584263_snapshot-_iter_100000' --iterselection='full'
+ 2431  clear
+ 2432  python test_image.py --testset='mit1003' --modelname='train_kldloss-dataset-bigunion-batch-8_1511876736_usesnapshot_1509584263_snapshot-_iter_100000' --iterselection='full'
+ 2433  matlab -nodesktop
+ 2434  clear 
+ 2435  clear
+ 2436  matlab -nodesktop
+ 2437  python metric/avg_metric.py 
+ 2438  python metric/avg_metric.py --metricdir='../metric-matlab'
+ 2439  python test_image.py --testset='mit1003' --modelname='train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000' --iterselection='full'
+ 2440  matlab -nodesktop
+ 2441  top
+ 2442  nvidia-smi
+ 2443  top
+ 2444  free -h
+ 2445  cd pwd/saliency_on_videoset/
+ 2446  ls
+ 2447  cd Train/
+ 2448  ls
+ 2449  git clone https://github.com/chuckcho/video-caffe.git
+ 2450  cd video-caffe/
+ 2451  ls
+ 2452  cp Makefile.config.example Makefile.config
+ 2453  make -j4
+ 2454  ls /usr/lib/
+ 2455  make clean
+ 2456  mkdir build && cd build
+ 2457  cmake ..
+ 2458  cd ..
+ 2459  clear
+ 2460  make -j4
+ 2461  cd examples/c3d_ucf101/
+ 2462  ls
+ 2463  unrar
+ 2464  clear
+ 2465  cd /data/sunnycia/UCF101
+ 2466  unrar x UCF101.rar 
+ 2467  cd -
+ 2468  ls
+ 2469  clear
+ 2470  export CUDA_VISIBLE_DEVICES=7
+ 2471  nvidia-smi
+ 2472  bash extract_UCF-101_frames.sh 
+ 2473  cd /data/sunnycia/UCF-101/PlayingFlute/v_PlayingFlute_g18_c03
+ 2474  ls
+ 2475  cd -
+ 2476  cd /data/sunnycia/UCF-101/PlayingFlute/
+ 2477  ls
+ 2478  cd ..
+ 2479  cd -
+ 2480  rmdir 
+ 2481  rmdir --help
+ 2482  rmdir .
+ 2483  rmdir -p ./
+ 2484  pwd
+ 2485  cd /data/sunnycia/saliency_on_videoset/Train/video-caffe/examples/c3d_ucf101
+ 2486  bash extract_UCF-101_frames.sh 
+ 2487  top
+ 2488  nvidia-smi
+ 2489  top
+ 2490  topq
+ 2491  top
+ 2492  nvidia-smi
+ 2493  free -h
+ 2494  clear
+ 2495  cd pwd/saliency_on_videoset/Train/
+ 2496  cd scripts/
+ 2497  matlab -nodesktop
+ 2498  ls
+ 2499  python metric/metric.py --dsname='mit1003' --modelname='cb-train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000'
+ 2500  python metric/avg_metric.py 
+ 2501  cd ../..
+ 2502  cd _Utils/metric_code/
+ 2503  matlab -nodesktop
+ 2504  pwd
+ 2505  cd ../..
+ 2506  cd Train/scripts/
+ 2507  cd utils/
+ 2508  ls
+ 2509  git clone https://github.com/cvzoya/saliency.git
+ 2510  ls
+ 2511  cd ..
+ 2512  ls
+ 2513  matlab
+ 2514  matlab -nodesktop
+ 2515  clear
+ 2516  matlab -nodekstop
+ 2517  clear
+ 2518  matlab -nodesktop
+ 2519  clear
+ 2520  matlab -nodesktop
+ 2521  clear
+ 2522  matlab -nodesktop
+ 2523  clear
+ 2524  matlab -nodesktop
+ 2525  clear
+ 2526  matlab -nodesktop
+ 2527  clear
+ 2528  matlab -nodesktop
+ 2529  clear
+ 2530  matlab -nodesktop
+ 2531  clear
+ 2532  python test_image.py --
+ 2533  nvidia-smi
+ 2534  export CUDA_VISIBLE_DEVICES=7
+ 2535  python test_image.py --train_prorotxt='train_kldloss.prototxt' --updatesolverdict={'lr_policy':'"step"','stepsize':'100000','gamma':'0.1'} --extrainfodict={'dataset':'bigunion'} --use_snapshot='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.solverstate' --batch=1 --dsname='bigunion' 
+ 2536  python test_image.py --train_prorotxt='train_kldloss.prototxt' --updatesolverdict='{'lr_policy':'"step"','stepsize':'100000','gamma':'0.1'}' --extrainfodict='{'dataset':'bigunion'}' --use_snapshot='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.solverstate' --batch=1 --dsname='bigunion' 
+ 2537  python test_image.py --train_prorotxt='train_kldloss.prototxt' --use_snapshot='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.solverstate' --batch=1 --dsname='bigunion' 
+ 2538  python test_image.py --train_prototxt='train_kldloss.prototxt' --use_snapshot='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.solverstate' --batch=1 --dsname='bigunion' 
+ 2539  python training_image.py --train_prototxt='train_kldloss.prototxt' --use_snapshot='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.solverstate' --batch=1 --dsname='bigunion' 
+ 2540  python training_image.py --train_prototxt='prototxt/train_kldloss.prototxt' --use_snapshot='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.solverstate' --batch=1 --dsname='bigunion' 
+ 2541  source set_env.sh 
+ 2542  export CUDA_VISIBLE_DEVICES=7
+ 2543  clear
+ 2544  python training_image.py --train_prototxt='prototxt/train_kldloss.prototxt' --use_snapshot='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.solverstate' --batch=1 --dsname='bigunion' 
+ 2545  python training_image.py --train_prototxt='prototxt/train_kldloss.prototxt' --use_snapshot='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.solverstate' --batch=1 --dsname='bigunion' --debug=1
+ 2546  clear
+ 2547  top
+ 2548  nvidia-smi
+ 2549  python metric/avg_metric.py 
+ 2550  python metric/avg_metric.py --metricdir='../metric-matlab'
+ 2551  df -h
+ 2552  top
+ 2553  nvidia-smi
+ 2554  clear
+ 2555  cd /data//sunnycia/SaliencyDataset/Video/MSU/
+ 2556  ls
+ 2557  cd frames_allinone/
+ 2558  ls F*
+ 2559  ls A*
+ 2560  ls a*
+ 2561  ls
+ 2562  clear
+ 2563  cp * /data/sunnycia/SaliencyDataset/Image/Combine_salicon_msu_nus_cat2000_videoset/Image/
+ 2564  cd /data/sunnycia/SaliencyDataset/Image/SALICON/DATA
+ 2565  ls
+ 2566  cd images
+ 2567  ls *
+ 2568  clear
+ 2569  cp * /data/sunnycia/SaliencyDataset/Image/Combine_salicon_msu_nus_cat2000_videoset/Image
+ 2570  cd ..
+ 2571  ls
+ 2572  cd train_val/
+ 2573  ls
+ 2574  cd train2014/
+ 2575  ls
+ 2576  pwd
+ 2577  ls
+ 2578  cd images/
+ 2579  cp * /data/sunnycia/SaliencyDataset/Image/Combine_salicon_msu_nus_cat2000_videoset/Image/
+ 2580  cd ../..
+ 2581  ls
+ 2582  cd val2014/
+ 2583  ls
+ 2584  cd images/
+ 2585  cp * /data/sunnycia/SaliencyDataset/Image/Combine_salicon_msu_nus_cat2000_videoset/Image
+ 2586  cd ..
+ 2587  ls
+ 2588  cd density/
+ 2589  cp * /
+ 2590  cp * /data/sunnycia/SaliencyDataset/Image/Combine_salicon_msu_nus_cat2000_videoset/Density
+ 2591  pwd
+ 2592  cd ../../train2014/density/
+ 2593  cp * /data/sunnycia/SaliencyDataset/Image/Combine_salicon_msu_nus_cat2000_videoset/Density
+ 2594  cd ..
+ 2595  cd /home/sunnycia/pwd/saliency_on_videoset/Train/scripts
+ 2596  ls
+ 2597  clear
+ 2598  claer
+ 2599  source set_env.sh 
+ 2600  nvidia-smi
+ 2601  export CUDA_VISIBLE_DEVICES=6
+ 2602  history > history.txt 
+ 2603  python training_image.py --train_prototxt='prototxt/train_kldloss.prototxt' --use_snapshot='../training_output/alicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.solverstate' --batch=8 --dsname='bigunion' --debug=True
+ 2604  python training_image.py --train_prototxt='prototxt/train_kldloss.prototxt' --use_snapshot='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.solverstate' --batch=8 --dsname='bigunion' --debug=True
+ 2605  python training_image.py --train_prototxt='prototxt/train_kldloss.prototxt' --use_snapshot='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.solverstate' --batch=8 --dsname='bigunion'
+ 2606  cd pwd/saliency_on_videoset/Train/scripts/
+ 2607  ls
+ 2608  history > history
+ 2609  python test_image.py 
+ 2610  clear
+ 2611  top
+ 2612  python test_image.py --modelname='train_kldloss-dataset-bigunion-batch-8_1511876736_usesnapshot_1509584263_snapshot-_iter_100000' 
+ 2613  python test_image.py --modelname='train_kldloss-dataset-bigunion-batch-8_1511876736_usesnapshot_1509584263_snapshot-_iter_100000'  --testset='mit1003'
+ 2614  nvidia-smi
+ 2615  export CUDA_VISIBLE_DEVICES=7
+ 2616  python test_image.py --modelname='train_kldloss-dataset-bigunion-batch-8_1511876736_usesnapshot_1509584263_snapshot-_iter_100000'  --testset='mit1003'
+ 2617  ls
+ 2618  pwd
+ 2619  matlab
+ 2620  matlab -nodesktop
+ 2621  clear
+ 2622  ls -l /data/sunnycia/SaliencyDataset/Image/MIT1003/saliency
+ 2623  cd metric/
+ 2624  matlab -nodesktop
+ 2625  clear
+ 2626  cd pwd/saliency_on_videoset/Train/
+ 2627  ls
+ 2628  cd scripts/
+ 2629  history >history

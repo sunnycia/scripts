@@ -4,7 +4,6 @@ matlabpool 8
 metricsFolder = 'saliency/code_forMetrics'
 addpath(genpath(metricsFolder))
 
-
 frame_cut=10;
 dsname='videoset';
 
@@ -22,7 +21,7 @@ end
 % model_list = {'MOTION';'MSFUSION';'UNCERTAINTY';'SAM';'XU';'SALICON';'ITKO';'GBVS';'PQFT';'SUN';'ISEEL';'MDB';'FANG2';'DENSITY';};
 % model_list = {'MOTION';'MSFUSION';'UNCERTAINTY';};
 % model_list = {'v1';'v3';};
-model_list = {'SAM';'train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000';'MOTION';'MSFUSION';'UNCERTAINTY';'SAM';'XU';'SALICON';'ITKO';'GBVS';'PQFT';'SUN';'ISEEL';'MDB';'FANG2';'DENSITY';'xu_dupext40';};
+model_list = {'FANG2';'DENSITY';'xu_dupext40';'SAM';'train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000';'MOTION';'MSFUSION';'UNCERTAINTY';'SAM';'XU';'SALICON';'ITKO';'GBVS';'PQFT';'SUN';'ISEEL';'MDB';};
 
 cc_msk  = 1;
 sim_msk = 1;
@@ -53,6 +52,12 @@ for m = 1 : length(model_list)
     for i = 3 : length(sal_subdir_list) %% skip . & .. , so start from 3
         disp('hey2')
         % save_dir = fullfile(save_mod_dir, sal_subdir_list(i).name);
+        save_name = strcat(sal_subdir_list(i).name, '-', model_name, '.mat');
+        save_path = fullfile(save_mod_dir, save_name);
+        if exist(save_path)
+            fprintf('%s exists. Skip~\n', save_path);
+            continue
+        end
 
         %%%% assert sal_subdir_list(i).name equals dens_subdir_list(i).name
         cur_sal_dir = fullfile(sal_dir, sal_subdir_list(i).name);
@@ -89,6 +94,7 @@ for m = 1 : length(model_list)
         t1=clock;
         % parfor j = 1+frame_cut : LengthFiles-frame_cut
         % for j = 1 : 2
+        
         parfor j=1:true_length
             smap_path = char(fullfile(cur_sal_dir,saliencymap_path_list(j+frame_cut)));
             density_path = char(fullfile(cur_dens_dir,densitymap_path_list(j+frame_cut)));
@@ -187,12 +193,7 @@ for m = 1 : length(model_list)
         t2=clock;
         time_cost=etime(t2,t1);
 
-        save_name = strcat(sal_subdir_list(i).name, '-', model_name, '.mat');
-        save_path = fullfile(save_mod_dir, save_name);
-        if exist(save_path)
-            fprintf('%s exists. Skip~\n', save_path);
-            continue
-        end
+
         save(save_path, 'saliency_score','time_cost');
         fprintf('%s saved\n',save_path);
     end
