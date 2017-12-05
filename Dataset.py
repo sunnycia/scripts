@@ -203,6 +203,7 @@ class VideoDataset():
     def get_frame_stack(self):
         if not self.index_in_epoch >= self.num_examples:
             tup = self.tuple_list[self.index_in_epoch]
+            self.index_in_epoch += 1
         else:
             print "One epoch finished, shuffling data..."
 
