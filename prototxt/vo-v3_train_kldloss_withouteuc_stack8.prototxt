@@ -6,7 +6,7 @@ layer {
   python_param {
     module: "CustomData"
     layer: "CustomData"
-    param_str: "1,48,288,480"
+    param_str: "1,24,288,480"
   }
 }
 layer {
@@ -16,7 +16,7 @@ layer {
   python_param {
     module: "CustomData"
     layer: "CustomData"
-    param_str: "1,16,288,480"
+    param_str: "1,8,288,480"
   }
 }
 layer {
@@ -2338,7 +2338,7 @@ layer {
     decay_mult: 0.0
   }
   convolution_param {
-    num_output: 5
+    num_output: 8
     bias_term: false
     pad: 1
     kernel_size: 4
@@ -2357,11 +2357,17 @@ layer {
   top: "saliency_map_3"
   top: "saliency_map_4"
   top: "saliency_map_5"
+  top: "saliency_map_6"
+  top: "saliency_map_7"
+  top: "saliency_map_8"
   slice_param {
     slice_point: 1
     slice_point: 2
     slice_point: 3
     slice_point: 4
+    slice_point: 5
+    slice_point: 6
+    slice_point: 7
     axis: 1
   }
 }
@@ -2374,11 +2380,17 @@ layer {
   top: "ground_truth_3"
   top: "ground_truth_4"
   top: "ground_truth_5"
+  top: "ground_truth_6"
+  top: "ground_truth_7"
+  top: "ground_truth_8"
   slice_param {
     slice_point: 1
     slice_point: 2
     slice_point: 3
     slice_point: 4
+    slice_point: 5
+    slice_point: 6
+    slice_point: 7
     axis: 1
   }
 }
@@ -2416,4 +2428,25 @@ layer {
   bottom: "saliency_map_5"
   bottom: "ground_truth_5"
   top: "loss5"
+}
+layer {
+  name: "loss6"
+  type: "KLDivLoss"
+  bottom: "saliency_map_6"
+  bottom: "ground_truth_6"
+  top: "loss6"
+}
+layer {
+  name: "loss7"
+  type: "KLDivLoss"
+  bottom: "saliency_map_7"
+  bottom: "ground_truth_7"
+  top: "loss7"
+}
+layer {
+  name: "loss8"
+  type: "KLDivLoss"
+  bottom: "saliency_map_8"
+  bottom: "ground_truth_8"
+  top: "loss8"
 }

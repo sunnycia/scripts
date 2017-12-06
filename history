@@ -2627,3 +2627,120 @@
  2627  ls
  2628  cd scripts/
  2629  history >history
+ 2630  cd /data/sunnycia/saliency_on_videoset/Train/scripts/utils/OpticalFlowToolkit/data/example/Middlebury
+ 2631  matlab
+ 2632  cd pwd/saliency_on_videoset/Train/scripts/
+ 2633  source set_env.sh 
+ 2634  nvidia-smi
+ 2635  export CUDA_VISIBLE_DEVICES=6
+ 2636  clear
+ 2637  python training_video.py --train_prototxt='prototxt/vo-v1_train_kldloss_withouteuc.prototxt' --use_model='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.caffemodel'
+ 2638  python training_video_c3d_based.py --train_prototxt='prototxt/vo-v1_train_kldloss_withouteuc.prototxt' --use_model='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.caffemodel'
+ 2639  top
+ 2640  nvidia-smi
+ 2641  clear
+ 2642  pwd
+ 2643  cd ..
+ 2644  ls
+ 2645  git clone https://github.com/facebook/C3D.git
+ 2646  cd C3D/
+ 2647  ls
+ 2648  cd C3D-v1.1/
+ 2649  ls
+ 2650  cd examples/
+ 2651  ls
+ 2652  cd c3d_ucf101_finetuning/
+ 2653  ls
+ 2654  vim finetuning_ucf101.sh 
+ 2655  pwd
+ 2656  cd ../..
+ 2657  ls
+ 2658  cp Makefile.config.example Makefile.config
+ 2659  make -j8 all
+ 2660  make pycaffe
+ 2661  cd -
+ 2662  ls
+ 2663  clear
+ 2664  ls
+ 2665  bash finetuning_ucf101.sh 
+ 2666  clear
+ 2667  top
+ 2668  nvidia-smi
+ 2669  cd pwd/saliency_on_videoset/Train/scripts/
+ 2670  source set_env.sh 
+ 2671  export CUDA_VISIBLE_DEVICES=6
+ 2672  python training_video_framestack_based.py --train_prototxt='prototxt/vo-v3_train_kldloss_withouteuc.prototxt' --use_model='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.caffemodel'
+ 2673  clear
+ 2674  top
+ 2675  nvidia-smi
+ 2676  cd pwd/saliency_on_videoset/Train/
+ 2677  cd video-caffe/
+ 2678  tools/extra/plot_training_loss.sh 
+ 2679  tools/extra/plot_training_loss.sh examples/c3d_ucf101/c3d_ucf101_train.log 
+ 2680  top
+ 2681  nvidia-smi
+ 2682  cd ..
+ 2683  cd scripts/
+ 2684  python training_video_framestack_based.py --train_prototxt='prototxt/vo-v3_train_kldloss_withouteuc.prototxt' --use_model='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.caffemodel' 
+ 2685  export CUDA_VISIBLE_DEVICES=6
+ 2686  python training_video_framestack_based.py --train_prototxt='prototxt/vo-v3_train_kldloss_withouteuc.prototxt' --use_model='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.caffemodel' 
+ 2687  source set_env.sh 
+ 2688  export CUDA_VISIBLE_DEVICES=6
+ 2689  python training_video_framestack_based.py --train_prototxt='prototxt/vo-v3_train_kldloss_withouteuc.prototxt' --use_model='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.caffemodel' 
+ 2690  clear
+ 2691  clear
+ 2692  cd pwd/saliency_on_videoset/Train/scripts/
+ 2693  source set_env.sh 
+ 2694  nvidia-smi
+ 2695  top
+ 2696  export CUDA_VISIBLE_DEVICES=6
+ 2697  pwd
+ 2698  python training_video_framestack_based.py --train_prototxt='prototxt/vo-v3_train_kldloss_withouteuc.prototxt' --use_model='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.caffemodel' 
+ 2699  export CUDA_VISIBLE_DEVICES=6
+ 2700  clear
+ 2701  python training_video_framestack_based.py --train_prototxt='prototxt/vo-v3_train_kldloss_withouteuc.prototxt' --use_model='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.caffemodel' 
+ 2702  top
+ 2703  nvidia-smi
+ 2704  top
+ 2705  nvidia-smi
+ 2706  top
+ 2707  clear
+ 2708  cd /data/sunnycia/SaliencyDataset/Video/LEDOV/LEDOV
+ 2709  matlab 
+ 2710  top
+ 2711  nvidia-smi
+ 2712  cd pwd/saliency_on_videoset/_Train/
+ 2713  ls
+ 2714  cd ../Train/
+ 2715  ls
+ 2716  cd video-caffe/
+ 2717  ls
+ 2718  make -j4
+ 2719  make pycaffe
+ 2720  ls
+ 2721  cd examples/
+ 2722  ls
+ 2723  cd c3d_ucf101/
+ 2724  ls
+ 2725  pwd
+ 2726  export CUDA_VISIBLE_DEVICES=7
+ 2727  cd ../..
+ 2728  examples/c3d_ucf101/train_ucf101.sh
+ 2729  ./build/tools/caffe
+ 2730  ./build/tools/caffe   train   --solver=examples/c3d_ucf101/c3d_ucf101_solver.prototxt   $@   2>&1 | tee examples/c3d_ucf101/c3d_ucf101_train.log
+ 2731  make clean
+ 2732  top
+ 2733  nvidia-smi
+ 2734  make -j8 all
+ 2735  ./build/tools/caffe   train   --solver=examples/c3d_ucf101/c3d_ucf101_solver.prototxt   $@   2>&1 | tee examples/c3d_ucf101/c3d_ucf101_train.log
+ 2736  cd /data/sunnycia/saliency_on_videoset/Train/scripts/prototxt
+ 2737  ls
+ 2738  cd .
+ 2739  cd ..
+ 2740  clear
+ 2741  git status
+ 2742  git add --all
+ 2743  git status
+ 2744  git commit -m "FIX BUG:V3 model bug"
+ 2745  git push -u origin master
+ 2746  history > history

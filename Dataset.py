@@ -74,10 +74,10 @@ class VideoDataset():
         self.MEAN_VALUE = MEAN_VALUE[None, None, ...]
         self.img_size = img_size
         self.dataset_dict={}
-        self.T = key_frame_interval
+        self.key_frame_interval = key_frame_interval
         self.step = 1
-        self.stack = stack
-        assert self.step < self.T
+        # self.stack = stack
+        assert self.step < self.key_frame_interval
         self.frame_basedir = frame_basedir
         self.density_basedir = density_basedir
         self.video_dir_list = glob.glob(os.path.join(self.frame_basedir, "*"))
@@ -98,7 +98,7 @@ class VideoDataset():
             total_frame = len(frame_list)
 
             for j in range(total_frame):
-                ceil = j + self.T
+                ceil = j + self.key_frame_interval
                 if ceil > total_frame:
                     break
                 ## random pick self.step frame in this interval
@@ -128,10 +128,10 @@ class VideoDataset():
                 total_frame = len(frame_list)
 
                 for j in range(total_frame):
-                    ceil = j + (self.stack-1) * self.step
-                    if ceil > total_frame:
+                    ceil = j + (self.key_frame_interval-1)
+                    if ceil >= total_frame:
                         break
-                    tup = tuple([k for k in range(j, j+self.step*self.stack, self.step)])
+                    tup = tuple([k for k in range(j+1, j+1+self.key_frame_interval)])
                     self.tuple_list.append((i,tup)) #video index & frame stack index
                 # print self.tuple_list
 
@@ -221,6 +221,7 @@ class VideoDataset():
         density_stack = []
         for i in range(len(frame_stack_tuple)):
             index = frame_stack_tuple[i]
+            # print index,os.path.join(video_dir, frame_wildcard % index)
             frame_path = glob.glob(os.path.join(video_dir, frame_wildcard % index))[0]
             frame = cv2.resize(cv2.imread(frame_path), dsize=self.img_size)
             frame_stack.append(frame)

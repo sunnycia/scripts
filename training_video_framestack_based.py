@@ -28,7 +28,9 @@ def get_arguments():
     parser.add_argument('--visualization', type=bool, default=False, help='visualization option')
     parser.add_argument('--batch', type=int, default=1, help='training mini batch')
     parser.add_argument('--flownet_code', type=str, default='0')
-    parser.add_argument('--image_size', type=tuple, default=(480,288))
+    parser.add_argument('--imagesize', type=tuple, default=(480,288))
+    parser.add_argument('--keyframeinterv', type=int, default=5)
+    # parser.add_argument('--stack', type=int, default=5)
     return parser.parse_args()
 print "Parsing arguments..."
 args = get_arguments()
@@ -36,6 +38,9 @@ args = get_arguments()
 pretrained_model_path= args.use_model
 debug_mode = args.debug
 snapshot_path = args.use_snapshot
+img_size = args.imagesize
+key_frame_interval = args.keyframeinterv
+
 #Check if snapshot exists
 if snapshot_path is not '':
     if not os.path.isfile(snapshot_path):
@@ -61,6 +66,9 @@ if snapshot_path is not '':
 # ║ ║├─┘ ││├─┤ │ ├┤   │││├┤  │ ││││ │├┬┘├┴┐  ├─┘├┬┘│ │ │ │ │ │ ┌┴┬┘ │ 
 # ╚═╝┴  ─┴┘┴ ┴ ┴ └─┘  ┘└┘└─┘ ┴ └┴┘└─┘┴└─┴ ┴  ┴  ┴└─└─┘ ┴ └─┘ ┴ ┴ └─ ┴ 
 batch = args.batch
+img_stack = key_frame_interval*3 ##assert rgb input
+gt_stack = key_frame_interval ##assert rgb input
+
 training_protopath = args.train_prototxt
 net = caffe_pb2.NetParameter()
 with open(training_protopath) as f:
@@ -68,11 +76,12 @@ with open(training_protopath) as f:
     txtf.Merge(s, net)
 layerNames = [l.name for l in net.layer]
 
+# print net.layer[layerNames.index('slice_ground_truth')].slice_param.slice_point;exit()
 ''' A1B: update data layer'''
 data_layer = net.layer[layerNames.index('data')]
 old_paramstr = data_layer.python_param.param_str
 pslist = old_paramstr.split(',')
-pslist[0]= str(batch)
+pslist[0]= str(batch);pslist[1]=str(img_stack);pslist[2]=str(img_size[1]);pslist[3]=str(img_size[0])
 new_paramstr = (',').join(pslist)
 data_layer.python_param.param_str = new_paramstr
 '''End of A1B'''
@@ -81,7 +90,7 @@ data_layer.python_param.param_str = new_paramstr
 gt_layer = net.layer[layerNames.index('ground_truth')]
 old_paramstr = gt_layer.python_param.param_str
 pslist = old_paramstr.split(',')
-pslist[0]= str(batch)
+pslist[0]= str(batch);pslist[1]=str(gt_stack);pslist[2]=str(img_size[1]);pslist[3]=str(img_size[0])
 new_paramstr = (',').join(pslist)
 gt_layer.python_param.param_str = new_paramstr
 '''End of A1C'''
@@ -96,7 +105,6 @@ with open(training_protopath, 'w') as f:
 # ║ ║├─┘ ││├─┤ │ ├┤   └─┐│ ││  └┐┌┘├┤ ├┬┘  ├─┘├┬┘│ │ │ │ │ │ ┌┴┬┘ │ 
 # ╚═╝┴  ─┴┘┴ ┴ ┴ └─┘  └─┘└─┘┴─┘ └┘ └─┘┴└─  ┴  ┴└─└─┘ ┴ └─┘ ┴ ┴ └─ ┴ 
 update_solver_dict = {
-'base_lr':'0.0001'
 # 'solver_type':'SGD'
 }
 extrainfo_dict = {
@@ -144,7 +152,8 @@ train_frame_basedir = '/data/sunnycia/SaliencyDataset/Video/MSU/frames'
 train_density_basedir = '/data/sunnycia/SaliencyDataset/Video/MSU/density/sigma32'
 validation_frame_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/images'
 validation_density_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/density'
-tranining_dataset = VideoDataset(train_frame_basedir, train_density_basedir)
+
+tranining_dataset = VideoDataset(train_frame_basedir, train_density_basedir, img_size=img_size, key_frame_interval=key_frame_interval)
 tranining_dataset.setup_video_dataset_stack()
 # validation_dataset = StaticDataset(train_frame_basedir, train_density_basedir, debug=debug_mode)
 
