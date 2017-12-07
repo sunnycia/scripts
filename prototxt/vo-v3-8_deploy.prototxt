@@ -6,7 +6,7 @@ layer {
   python_param {
     module: "CustomData"
     layer: "CustomData"
-    param_str: "1,15,288,480"
+    param_str: "1,24,288,480"
   }
 }
 layer {
@@ -16,7 +16,7 @@ layer {
   python_param {
     module: "CustomData"
     layer: "CustomData"
-    param_str: "1,5,288,480"
+    param_str: "1,8,288,480"
   }
 }
 layer {
@@ -30,7 +30,9 @@ layer {
     pad: 3
     kernel_size: 7
     stride: 2
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -79,7 +81,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -111,7 +115,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -149,7 +155,9 @@ layer {
     pad: 1
     kernel_size: 3
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -187,7 +195,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -235,7 +245,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -273,7 +285,9 @@ layer {
     pad: 1
     kernel_size: 3
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -311,7 +325,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -359,7 +375,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -397,7 +415,9 @@ layer {
     pad: 1
     kernel_size: 3
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -435,7 +455,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -483,7 +505,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 2
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -515,7 +539,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 2
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -553,7 +579,9 @@ layer {
     pad: 1
     kernel_size: 3
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -591,7 +619,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -639,7 +669,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -677,7 +709,9 @@ layer {
     pad: 1
     kernel_size: 3
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -715,7 +749,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -763,7 +799,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -801,7 +839,9 @@ layer {
     pad: 1
     kernel_size: 3
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -839,7 +879,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -887,7 +929,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -925,7 +969,9 @@ layer {
     pad: 1
     kernel_size: 3
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -963,7 +1009,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -1011,7 +1059,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 2
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -1043,7 +1093,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 2
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -1081,7 +1133,9 @@ layer {
     pad: 1
     kernel_size: 3
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -1119,7 +1173,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -1167,7 +1223,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -1205,7 +1263,9 @@ layer {
     pad: 1
     kernel_size: 3
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -1243,7 +1303,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -1291,7 +1353,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -1329,7 +1393,9 @@ layer {
     pad: 1
     kernel_size: 3
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -1367,7 +1433,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -1415,7 +1483,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -1453,7 +1523,9 @@ layer {
     pad: 1
     kernel_size: 3
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -1491,7 +1563,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -1539,7 +1613,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -1577,7 +1653,9 @@ layer {
     pad: 1
     kernel_size: 3
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -1615,7 +1693,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -1663,7 +1743,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -1701,7 +1783,9 @@ layer {
     pad: 1
     kernel_size: 3
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -1739,7 +1823,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -1787,7 +1873,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 2
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -1819,7 +1907,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 2
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -1857,7 +1947,9 @@ layer {
     pad: 1
     kernel_size: 3
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -1895,7 +1987,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -1943,7 +2037,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -1981,7 +2077,9 @@ layer {
     pad: 1
     kernel_size: 3
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -2019,7 +2117,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -2067,7 +2167,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -2105,7 +2207,9 @@ layer {
     pad: 1
     kernel_size: 3
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -2143,7 +2247,9 @@ layer {
     pad: 0
     kernel_size: 1
     stride: 1
-
+    weight_filler {
+      type: "msra"
+    }
   }
 }
 layer {
@@ -2196,7 +2302,9 @@ layer {
     kernel_size: 8
     group: 512
     stride: 4
-
+    weight_filler {
+      type: "bilinear"
+    }
   }
 }
 layer {
@@ -2215,7 +2323,9 @@ layer {
     kernel_size: 8
     group: 64
     stride: 4
-
+    weight_filler {
+      type: "bilinear"
+    }
   }
 }
 layer {
@@ -2228,11 +2338,13 @@ layer {
     decay_mult: 0.0
   }
   convolution_param {
-    num_output: 5
+    num_output: 8
     bias_term: false
     pad: 1
     kernel_size: 4
     stride: 2
-
+    weight_filler {
+      type: "bilinear"
+    }
   }
 }

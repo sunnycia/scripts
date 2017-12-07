@@ -170,7 +170,7 @@ class FlowbasedVideoSaliencyNet:
             output_path = os.path.join(output_directory, outputname)
         print "Done for", output_directory
 
-class ConsframebasedVideoSaliencyNet:
+class FramestackbasedVideoSaliencyNet:
     def __init__(self, video_deploy_proto, video_caffe_model, stack_size=5):
         self.std_wid = 480
         self.std_hei = 288
@@ -249,22 +249,43 @@ class ConsframebasedVideoSaliencyNet:
             return
         self.predictions = []
         for i in range(0, len(self.frames)-1, self.stack_size):
+            if i + self.stack_size > len(self.frames)-1:
+                resd_frame_num = len(self.frames)-(i)
+                frame_stack = self.frames[len(self.frames)-1-self.stack_size:len(self.frames)-1]
+                raw_predictions = self.predict_frame_stack(frame_stack)
+                tmp_predictions = []
+                for raw_prediction in raw_predictions:
+                    prediction = self.postprocess_saliency_map(raw_prediction)
+                    tmp_predictions.append(prediction)
+                for i in range(resd_frame_num):
+                    index = self.stack_size-1-(resd_frame_num-1-i)
+                    print index
+                    self.predictions.append(tmp_predictions[index])
+                break
             frame_stack = []
             print "Processing",
             for j in range(i, i + self.stack_size):
                 print j,
                 frame_stack.append(self.frames[j])
             print ""
-            frame_stack = np.dstack(frame_stack)
+            # frame_stack = np.dstack(frame_stack)
+            # self.video_net.blobs['data'].data[...] = np.transpose(frame_stack, (2,0,1))[None, ...]
+            # self.video_net.forward()
+            # sal_maps = self.video_net.blobs['saliency_map_stack'].data[0, ...]
+            raw_predictions = self.predict_frame_stack(frame_stack)
+            for raw_prediction in raw_predictions:
+                prediction = self.postprocess_saliency_map(raw_prediction)
+                self.predictions.append(prediction)
+        print len(self.predictions),len(self.frames)
+        assert len(self.predictions) == len(self.frames)
 
-            self.video_net.blobs['data'].data[...] = np.transpose(frame_stack, (2,0,1))[None, ...]
-            self.video_net.forward()
-            sal_maps = self.video_net.blobs['saliency_map_stack'].data[0, ...]
-            for sal_map in sal_maps:
-                sal_map = self.postprocess_saliency_map(sal_map)
-                self.predictions.append(sal_map)
-        
-    def dump_predictions_as_video(self, output_path, fps):
+    def predict_frame_stack(self, frame_stack):
+        frame_stack = np.dstack(frame_stack)
+        self.video_net.blobs['data'].data[...] = np.transpose(frame_stack, (2,0,1))[None, ...]
+        self.video_net.forward()
+        return self.video_net.blobs['saliency_map_stack'].data[0, ...]
+
+    def dump_predictions_as_video(self , output_path, fps):
         if self.predictions is None:
             print "create video saliency first"
             return
