@@ -69,15 +69,17 @@ class StaticDataset():
         return self.data[start:end], self.labels[start:end]
 
 class VideoDataset():
-    def __init__(self, frame_basedir, density_basedir, img_size=(480,288), key_frame_interval=16, stack=5):
-        MEAN_VALUE = np.array([103.939, 116.779, 123.68], dtype=np.float32)   # B G R/ use opensalicon's mean_value
+    def __init__(self, frame_basedir, density_basedir, img_size=(480,288), video_length=16, stack=5, bgr_mean_list=[103.939, 116.779, 123.68],sort='bgr'):
+        MEAN_VALUE = np.array(bgr_mean_list, dtype=np.float32)   # B G R/ use opensalicon's mean_value
+        if sort=='rgb':
+            MEAN_VALUE= MEAN_VALUE[::-1]
         self.MEAN_VALUE = MEAN_VALUE[None, None, ...]
         self.img_size = img_size
         self.dataset_dict={}
-        self.key_frame_interval = key_frame_interval
+        self.video_length = video_length
         self.step = 1
         # self.stack = stack
-        assert self.step < self.key_frame_interval
+        assert self.step < self.video_length
         self.frame_basedir = frame_basedir
         self.density_basedir = density_basedir
         self.video_dir_list = glob.glob(os.path.join(self.frame_basedir, "*"))
@@ -98,7 +100,7 @@ class VideoDataset():
             total_frame = len(frame_list)
 
             for j in range(total_frame):
-                ceil = j + self.key_frame_interval
+                ceil = j + self.video_length
                 if ceil > total_frame:
                     break
                 ## random pick self.step frame in this interval
@@ -128,10 +130,10 @@ class VideoDataset():
                 total_frame = len(frame_list)
 
                 for j in range(total_frame):
-                    ceil = j + (self.key_frame_interval-1)
+                    ceil = j + (self.video_length-1)
                     if ceil >= total_frame:
                         break
-                    tup = tuple([k for k in range(j+1, j+1+self.key_frame_interval)])
+                    tup = tuple([k for k in range(j+1, j+1+self.video_length)])
                     self.tuple_list.append((i,tup)) #video index & frame stack index
                 # print self.tuple_list
 
@@ -151,8 +153,8 @@ class VideoDataset():
             frame_list = glob.glob(os.path.join(video_dir,'*.*'))
             total_frame = len(frame_list)
 
-            for j in range(0, total_frame, self.T):
-                if j + self.T > total_frame:
+            for j in range(0, total_frame, self.video_length):
+                if j + self.video_length > total_frame:
                     break
                 tup = (i,j) # video index and first frame index
                 self.tuple_list.append(tup)
@@ -234,8 +236,10 @@ class VideoDataset():
         return np.dstack(frame_stack), np.dstack(density_stack)
 
     def get_frame_c3d(self, mini_batch=16):
+        frame_wildcard = "frame_%d.*"
         if not self.index_in_epoch >= self.num_examples:
             tup_batch = self.tuple_list[self.index_in_epoch:self.index_in_epoch+mini_batch]
+            self.index_in_epoch +=1
         else:
             print "One epoch finished, shuffling data..."
 
@@ -244,40 +248,49 @@ class VideoDataset():
             self.num_epoch += 1
             tup_batch = self.tuple_list[self.index_in_epoch:self.index_in_epoch+mini_batch]
             self.index_in_epoch += 1
-        
+        # print tup_batch;exit()
         density_batch = []
         frame_batch = []
         for tup in tup_batch:
+            # print tup
+            current_frame_list = []
+            current_density_list = []
+
             video_index, start_frame_index=tup
-            end_frame_index = start_frame_index + self.T
+            end_frame_index = start_frame_index + self.video_length
             video_dir = self.video_dir_list[video_index]
             video_name = os.path.basename(video_dir)
-            frame_wildcard = "frame%d.*"
+            density_dir = os.path.join(self.density_basedir, video_name)
 
-        frame_stack = []
-        density_stack = []
-        for i in range(len(frame_stack_tuple)):
-            index = frame_stack_tuple[i]
-            frame_path = glob.glob(os.path.join(video_dir, frame_wildcard % index))[0]
-            frame = cv2.resize(cv2.imread(frame_path), dsize=self.img_size)
-            frame_stack.append(frame)
+            for i in range(start_frame_index, end_frame_index):
+                frame_index = i + 1
+                frame_name = frame_wildcard % frame_index
+                # print frame_name
+                frame_path=  glob.glob(os.path.join(video_dir, frame_name))[0]
+                density_path = glob.glob(os.path.join(density_dir, frame_name))[0]
+                # frame = cv2.resize(cv2.imread(frame_path), dsize=self.img_size)
+                # density = cv2.resize(cv2.imread(density_path),dsize=self.img_size)
+                frame = self.pre_process_img(cv2.imread(frame_path))
+                density = self.pre_process_img(cv2.imread(density_path, 0),True)
 
-            density_path = glob.glob(os.path.join(self.density_basedir, video_name, frame_wildcard % index))[0]
-            density = cv2.resize(cv2.imread(density_path, 0), dsize=self.img_size)
-            density_stack.append(density)
-        
-        # print len(frame_stack), frame_stack[0].shape;#exit()
-        return np.dstack(frame_stack), np.dstack(density_stack)
+                current_frame_list.append(frame)
+                current_density_list.append(density)
+
+            frame_batch.append(np.array(current_frame_list))
+            density_batch.append(np.array(current_density_list))
+        # print np.array(frame_batch).shape,np.array(density_batch).shape;#(50, 16, 112, 112, 3)
+
+        return np.transpose(np.array(frame_batch),(0,4,1,2,3)),np.transpose(np.array(density_batch),(0,4,1,2,3))
 
     def pre_process_img(self, image, greyscale=False):
         if greyscale==False:
             image = image-self.MEAN_VALUE
             image = cv2.resize(image, dsize = self.img_size)
-            image = np.transpose(image, (2, 0, 1))
-            image = image[None, ...]
+            # image = np.transpose(image, (2, 0, 1))
+            # image = image[None, ...]
             image = image / 255.
         else:
             image = cv2.resize(image, dsize = self.img_size)
-            image = image[None, None, ...]
+            image = image[...,None]
             image = image / 255.
         return image

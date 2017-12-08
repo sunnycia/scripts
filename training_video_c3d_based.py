@@ -16,19 +16,17 @@ import google.protobuf.text_format as txtf
 import utils.OpticalFlowToolkit.lib.flowlib as flib
 
 caffe.set_mode_gpu()
-
 def get_arguments():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--train_prototxt', type=str, default='prototxt/train.prototxt', help='the network prototxt')
+    parser.add_argument('--train_prototxt', type=str, required=True, help='the network prototxt')
     parser.add_argument('--solver_prototxt', type=str, default='prototxt/solver.prototxt', help='the network prototxt')
     parser.add_argument('--use_snapshot', type=str, default='', help='Snapshot path.')
-    parser.add_argument('--use_model', type=str, default='../pretrained_model/ResNet-50-model.caffemodel', help='Pretrained model')
-    parser.add_argument('--size', type=int, default=1000, help='Dataset length.Show/Cut')
+    parser.add_argument('--use_model', type=str, default='../pretrained_model/c3d_ucf101_iter_40000.caffemodel', help='Pretrained model')
     parser.add_argument('--debug', type=bool, default=False, help='If debug is ture, a mini set will run into training.Or a complete set will.')
-    parser.add_argument('--visualization', type=bool, default=False, help='visualization option')
-    parser.add_argument('--batch', type=int, default=1, help='training mini batch')
-    parser.add_argument('--flownet_code', type=str, default='0')
-    parser.add_argument('--image_size', type=tuple, default=(480,288))
+    parser.add_argument('--batch', type=int, default=50, help='training mini batch')
+    parser.add_argument('--trainingbase',type=str, default='msu', help='training dataset.')
+    parser.add_argument('--videolength',type=int,default=16, help='length of video')
+    parser.add_argument('--imagesize', type=tuple, default=(112,112))
     return parser.parse_args()
 print "Parsing arguments..."
 args = get_arguments()
@@ -62,6 +60,9 @@ if snapshot_path is not '':
 # ╚═╝┴  ─┴┘┴ ┴ ┴ └─┘  ┘└┘└─┘ ┴ └┴┘└─┘┴└─┴ ┴  ┴  ┴└─└─┘ ┴ └─┘ ┴ ┴ └─ ┴ 
 batch = args.batch
 training_protopath = args.train_prototxt
+training_base = args.trainingbase
+video_length=args.videolength
+image_size = args.imagesize
 net = caffe_pb2.NetParameter()
 with open(training_protopath) as f:
     s = f.read()
@@ -72,7 +73,7 @@ layerNames = [l.name for l in net.layer]
 data_layer = net.layer[layerNames.index('data')]
 old_paramstr = data_layer.python_param.param_str
 pslist = old_paramstr.split(',')
-pslist[0]= str(batch)
+pslist[0]= str(batch);pslist[2]=str(video_length);pslist[3]=str(image_size[1]);pslist[4]=str(image_size[0])
 new_paramstr = (',').join(pslist)
 data_layer.python_param.param_str = new_paramstr
 '''End of A1B'''
@@ -81,10 +82,13 @@ data_layer.python_param.param_str = new_paramstr
 gt_layer = net.layer[layerNames.index('ground_truth')]
 old_paramstr = gt_layer.python_param.param_str
 pslist = old_paramstr.split(',')
-pslist[0]= str(batch)
+pslist[0]= str(batch);pslist[2]=str(video_length);pslist[3]=str(image_size[1]);pslist[4]=str(image_size[0])
 new_paramstr = (',').join(pslist)
 gt_layer.python_param.param_str = new_paramstr
 '''End of A1C'''
+
+fc_layer = net.layer[layerNames.index('fc8_new')]
+fc_layer.inner_product_param.num_output=video_length*image_size[0]*image_size[1]
 
 print 'writing', training_protopath
 with open(training_protopath, 'w') as f:
@@ -96,8 +100,8 @@ with open(training_protopath, 'w') as f:
 # ║ ║├─┘ ││├─┤ │ ├┤   └─┐│ ││  └┐┌┘├┤ ├┬┘  ├─┘├┬┘│ │ │ │ │ │ ┌┴┬┘ │ 
 # ╚═╝┴  ─┴┘┴ ┴ ┴ └─┘  └─┘└─┘┴─┘ └┘ └─┘┴└─  ┴  ┴└─└─┘ ┴ └─┘ ┴ ┴ └─ ┴ 
 update_solver_dict = {
-'base_lr':'0.0001'
 # 'solver_type':'SGD'
+'display':'1'
 }
 extrainfo_dict = {
 }
@@ -140,13 +144,12 @@ else:
 # ╚═╗├┤  │ │ │├─┘   ││├─┤ │ ├─┤└─┐├┤  │ 
 # ╚═╝└─┘ ┴ └─┘┴    ─┴┘┴ ┴ ┴ ┴ ┴└─┘└─┘ ┴ 
 print "Loading data..."
-train_frame_basedir = '/data/sunnycia/SaliencyDataset/Video/MSU/frames'
-train_density_basedir = '/data/sunnycia/SaliencyDataset/Video/MSU/density/sigma32'
-validation_frame_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/images'
-validation_density_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/density'
-tranining_dataset = VideoDataset(train_frame_basedir, train_density_basedir)
+if training_base=='msu':
+    train_frame_basedir = '/data/sunnycia/SaliencyDataset/Video/MSU/frames'
+    train_density_basedir = '/data/sunnycia/SaliencyDataset/Video/MSU/density/sigma32'
+
+tranining_dataset = VideoDataset(train_frame_basedir, train_density_basedir, img_size=(112,112), bgr_mean_list=[98,102,90], sort='rgb')
 tranining_dataset.setup_video_dataset_c3d()
-# validation_dataset = StaticDataset(train_frame_basedir, train_density_basedir, debug=debug_mode)
 
 # ╔╦╗╦╔═╗╔═╗
 # ║║║║╚═╗║  
@@ -164,12 +167,12 @@ print "Loss figure will be save to", plot_figure_dir
 #   | |   )|   )| |   )| |   )|   )#
 #   | |    |__/|| |  / | |  / |__/ #
 ##############################__/###
-tart_time = time.time()
+start_time = time.time()
 
 max_iter = 5000000
 validation_iter = 1000
-plot_iter = 500
-epoch=10
+plot_iter = 1
+epoch=20
 idx_counter = 0
 
 x=[]
@@ -177,38 +180,28 @@ y1=[]
 y2=[]
 z=[] # validation
 
-plt.plot(x, y1, x, y2)
+plt.plot(x, y1)
 _step=0
 while _step < max_iter:
     if _step%validation_iter==0:
         ##do validation
         pass
-    # tranining_dataset.get_frame_pair()
-    frame_stack, density_stack = tranining_dataset.get_frame_stack()
+    frame_data, density_data = tranining_dataset.get_frame_c3d(mini_batch=batch)
 
-    frame_stack = np.transpose(frame_stack, (2, 0, 1))[None, ...]
-    density_stack = np.transpose(density_stack, (2, 0, 1))[None, ...]
-
-    # print frame_stack.shape, density_stack.shape;exit()
-    
-    # print frame_minibatch.shape;exit()
-    solver.net.blobs['data'].data[...] = frame_stack
-    solver.net.blobs['ground_truth'].data[...] = density_stack
+    solver.net.blobs['data'].data[...] = frame_data
+    solver.net.blobs['ground_truth'].data[...] = density_data
     solver.step(1)
 
     x.append(_step)
-    y1.append(solver.net.blobs['loss1'].data[...].tolist())
-    y2.append(solver.net.blobs['loss5'].data[...].tolist())
+    y1.append(solver.net.blobs['loss'].data[...].tolist())
+    # y2.append(solver.net.blobs['loss5'].data[...].tolist())
 
-    plt.plot(x, y1, x, y2)
+    plt.plot(x, y1)
     if _step%plot_iter==0:
         plt.xlabel('Iter')
         plt.ylabel('loss')
         plt.savefig(os.path.join(plot_figure_dir, "plot"+str(_step)+".png"))
         plt.clf()
-    if args.visualization:
-        plt.show()
-
     _step+=1
 
 pkl.dump(x, open(os.path.join(plot_figure_dir, "x.pkl"), 'wb'))
