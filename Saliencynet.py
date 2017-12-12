@@ -82,7 +82,6 @@ class FlowbasedVideoSaliencyNet:
         img_arr = img_arr / 255. # convert to float precision
         return img_arr
 
-
     def postprocess_saliency_map(self, sal_map):
         sal_map = sal_map - np.amin(sal_map)
         sal_map = sal_map / np.amax(sal_map)
@@ -171,28 +170,24 @@ class FlowbasedVideoSaliencyNet:
         print "Done for", output_directory
 
 class FramestackbasedVideoSaliencyNet:
-    def __init__(self, video_deploy_proto, video_caffe_model, stack_size=5):
+    def __init__(self, video_deploy_proto, video_caffe_model, stack_size=5,bgr_mean_value=[103.939, 116.779, 123.68]):
         self.std_wid = 480
         self.std_hei = 288
         self.stack_size=stack_size
         self.video_net = caffe.Net(video_deploy_proto, video_caffe_model, caffe.TEST)
-        self.MEAN_VALUE = np.array([103.939, 116.779, 123.68])   # BGR
-        self.MEAN_VALUE = self.MEAN_VALUE[:,None, None]
+        self.BGR_MEAN_VALUE = np.array(bgr_mean_value)   # BGR
+        self.BGR_MEAN_VALUE = self.BGR_MEAN_VALUE[None, None, ...]
 
-    def preprocess_image(self, img_arr, sub_mean=True):
+    def preprocess_image(self, img_arr):
         img_arr = img_arr.astype(np.float32)
         h, w, c = img_arr.shape
         # subtract mean
-        if sub_mean:
-            img_arr[:, :, 0] -= self.MEAN_VALUE[0] # B
-            img_arr[:, :, 1] -= self.MEAN_VALUE[1] # G
-            img_arr[:, :, 2] -= self.MEAN_VALUE[2] # R
+        img_arr = img_arr - self.BGR_MEAN_VALUE
 
         ## this version simply resize the test image
         img_arr = cv2.resize(img_arr, dsize=(self.std_wid, self.std_hei))
         # put channel dimension first
         img_arr = np.transpose(img_arr, (2,0,1))
-        img_arr = img_arr[None, :]
         img_arr = img_arr / 255. # convert to float precision
         return img_arr
 
@@ -207,7 +202,7 @@ class FramestackbasedVideoSaliencyNet:
         img_arr = cv2.imread(image_path)
         self.h, self.w, self.c = img_arr.shape # store the image's original height and width
         img_arr = self.preprocess_image(img_arr, False)
-
+    
         # print img_arr.shape
         assert img_arr.shape == (1, 3, self.std_hei, self.std_wid)
 
@@ -218,7 +213,6 @@ class FramestackbasedVideoSaliencyNet:
         saliency_map = self.postprocess_saliency_maps(sal_map)
         return saliency_map
     '''
-
     def compute_frame_saliency(self, processd_key_frame_arr, processed_non_key_frame_arr):
         pass
 
@@ -240,7 +234,8 @@ class FramestackbasedVideoSaliencyNet:
         self.video_meta_data = video_reader.get_meta_data()
         self.frames = []
         for frame_idx, frame in enumerate(video_reader):
-            self.frames.append(cv2.resize(frame, dsize=(self.std_wid, self.std_hei)))
+            # self.frames.append(cv2.resize(frame, dsize=(self.std_wid, self.std_hei)))
+            self.frames.append(self.preprocess_image(frame))
         # self.ori_size = 
 
     def create_saliency_video(self):
@@ -280,8 +275,9 @@ class FramestackbasedVideoSaliencyNet:
         assert len(self.predictions) == len(self.frames)
 
     def predict_frame_stack(self, frame_stack):
-        frame_stack = np.dstack(frame_stack)
-        self.video_net.blobs['data'].data[...] = np.transpose(frame_stack, (2,0,1))[None, ...]
+        print frame_stack[0].shape, frame_stack[1].shape
+        frame_stack = np.vstack(frame_stack)
+        self.video_net.blobs['data'].data[...] = frame_stack
         self.video_net.forward()
         return self.video_net.blobs['saliency_map_stack'].data[0, ...]
 
@@ -316,3 +312,91 @@ class FramestackbasedVideoSaliencyNet:
             cv2.imwrite(output_path, saliency_map)
             index += 1
         print "Done for", output_directory
+
+class C3DbasedVideoSaliencyNet:
+    def __init__(self, video_deploy_proto, video_caffe_model, video_length, video_size, rgb_mean_value):
+        self.std_wid = video_size[0]
+        self.std_hei = video_size[1]
+        self.video_length = video_length
+        self.RGB_MEAN_VALUE = np.array(rgb_mean_value)[None,None, ...]
+        self.video_net = caffe.Net(video_deploy_proto, video_caffe_model, caffe.TEST)
+
+    def setup_video(self,video_path):
+        if not os.path.isfile(video_path):
+            print video_path, "not exists, abort."
+            return
+        print "Setting up", video_path
+        try_time = 5
+        video_reader = ''
+        for i in range(try_time):
+            try:    
+                video_reader = imageio.get_reader(video_path)
+            except:
+                print "Catch exception, retry..."
+                time.sleep(0.5)
+            if not video_reader == '':
+                break
+        self.video_meta_data = video_reader.get_meta_data()
+        # print self.video_meta_data;exit()
+        self.frames = []
+        for frame_idx, frame in enumerate(video_reader):
+            self.frames.append(self.preprocess_image(frame, channel_order='rgb'))
+
+    def preprocess_image(self,image, channel_order='bgr'):
+        image = cv2.resize(image, dsize=(self.std_wid, self.std_hei))
+        image = image - self.RGB_MEAN_VALUE
+        image = image/255.
+        if channel_order == 'rgb':
+            image= image[:, :, ::-1]
+        return image
+    def postprocess_saliency(self, raw_prediction):
+        raw_prediction = (raw_prediction - raw_prediction.min())/raw_prediction.max()
+        prediction = raw_prediction*255
+        prediction = cv2.resize(prediction, dsize=self.video_meta_data['size'])
+        return prediction
+
+    def create_saliency_video(self):
+        ## generate tuple list first
+        self.prediction_list = []
+        for i in range(0, len(self.frames), self.video_length):
+            if i + self.video_length >= len(self.frames):
+                end_frame_index = len(self.frames)-1;start_frame_index = end_frame_index - self.video_length+1
+                input_data = np.transpose(np.array(self.frames[start_frame_index:end_frame_index+1])[None, ...], (0,4,1,2,3))
+                print input_data.shape;
+                self.video_net.blobs['data'].data[...] = input_data
+                self.video_net.forward()
+                raw_prediction_list = self.video_net.blobs['output'].data[0, 0,...]
+                # output = flat_output
+                assert len(raw_prediction_list) == self.video_length
+                # print i
+                for j in range(len(self.frames)-i, self.video_length):
+                    # print j
+                    prediction = self.postprocess_saliency(raw_prediction_list[j])
+                    self.prediction_list.append(prediction)      
+                break
+            start_frame_index = i;end_frame_index = i + self.video_length - 1
+            input_data = np.transpose(np.array(self.frames[start_frame_index:end_frame_index+1])[None, ...], (0,4,1,2,3))
+            # print input_data
+            print input_data.shape;
+            self.video_net.blobs['data'].data[...] = input_data
+            self.video_net.forward()
+            raw_prediction_list = self.video_net.blobs['output'].data[0,0,...]
+            # output = flat_output
+            assert len(raw_prediction_list) == self.video_length, str(len(raw_prediction_list))+'is not equal to '+str(self.video_length)
+            for raw_prediction in raw_prediction_list:
+                self.prediction_list.append(self.postprocess_saliency(raw_prediction))
+        assert len(self.prediction_list) == len(self.frames),"Prediction not complete."+str(len(self.prediction_list))+' not equal to '+str(len(self.frames))
+
+    def dump_predictions_as_video(self,output_path, fps):
+        if self.prediction_list is None:
+            print "create video saliency first"
+            return
+        video_writer = imageio.get_writer(output_path, fps=fps)
+
+        for saliency_map in self.prediction_list:
+            # print saliency_map.shape;
+            video_writer.append_data(saliency_map)
+        video_writer.close()
+
+    def dum_predictions_as_images(self,output_directory, video_name, allinone):
+        pass

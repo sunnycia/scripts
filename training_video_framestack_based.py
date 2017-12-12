@@ -27,9 +27,9 @@ def get_arguments():
     parser.add_argument('--debug', type=bool, default=False, help='If debug is ture, a mini set will run into training.Or a complete set will.')
     parser.add_argument('--visualization', type=bool, default=False, help='visualization option')
     parser.add_argument('--batch', type=int, default=1, help='training mini batch')
-    parser.add_argument('--flownet_code', type=str, default='0')
     parser.add_argument('--imagesize', type=tuple, default=(480,288))
     parser.add_argument('--keyframeinterv', type=int, default=5)
+    parser.add_argument('--version', type=int,default=1)
     # parser.add_argument('--stack', type=int, default=5)
     return parser.parse_args()
 print "Parsing arguments..."
@@ -60,14 +60,16 @@ if snapshot_path is not '':
 # |__/ |__/||__  |__/|     |__/ |    |__  |__/ |__/||    |__/||__  | |__/ |  / #
 ###########################|##############|#####################################
 
-
 """A1: Update network prototxt"""
 # ╦ ╦┌─┐┌┬┐┌─┐┌┬┐┌─┐  ┌┐┌┌─┐┌┬┐┬ ┬┌─┐┬─┐┬┌─  ┌─┐┬─┐┌─┐┌┬┐┌─┐┌┬┐─┐ ┬┌┬┐
 # ║ ║├─┘ ││├─┤ │ ├┤   │││├┤  │ ││││ │├┬┘├┴┐  ├─┘├┬┘│ │ │ │ │ │ ┌┴┬┘ │ 
 # ╚═╝┴  ─┴┘┴ ┴ ┴ └─┘  ┘└┘└─┘ ┴ └┴┘└─┘┴└─┴ ┴  ┴  ┴└─└─┘ ┴ └─┘ ┴ ┴ └─ ┴ 
 batch = args.batch
 img_stack = key_frame_interval*3 ##assert rgb input
-gt_stack = key_frame_interval ##assert rgb input
+if args.version==1:
+    gt_stack = key_frame_interval ##assert rgb input
+elif args.version==2:
+    gt_stack = 1 ## muilti input, one output
 
 training_protopath = args.train_prototxt
 net = caffe_pb2.NetParameter()
@@ -153,7 +155,7 @@ train_density_basedir = '/data/sunnycia/SaliencyDataset/Video/MSU/density/sigma3
 validation_frame_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/images'
 validation_density_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/density'
 
-tranining_dataset = VideoDataset(train_frame_basedir, train_density_basedir, img_size=img_size, key_frame_interval=key_frame_interval)
+tranining_dataset = VideoDataset(train_frame_basedir, train_density_basedir, img_size=img_size, video_length=key_frame_interval)
 tranining_dataset.setup_video_dataset_stack()
 # validation_dataset = StaticDataset(train_frame_basedir, train_density_basedir, debug=debug_mode)
 
@@ -193,7 +195,7 @@ while _step < max_iter:
         ##do validation
         pass
     # tranining_dataset.get_frame_pair()
-    frame_stack, density_stack = tranining_dataset.get_frame_stack()
+    frame_stack, density_stack = tranining_dataset.get_frame_stack(version=args.version)
 
     frame_stack = np.transpose(frame_stack, (2, 0, 1))[None, ...]
     density_stack = np.transpose(density_stack, (2, 0, 1))[None, ...]
@@ -206,10 +208,11 @@ while _step < max_iter:
     solver.step(1)
 
     x.append(_step)
-    y1.append(solver.net.blobs['loss1'].data[...].tolist())
-    y2.append(solver.net.blobs['loss5'].data[...].tolist())
+    y1.append(solver.net.blobs['loss'].data[...].tolist())
+    # y2.append(solver.net.blobs['loss5'].data[...].tolist())
 
-    plt.plot(x, y1, x, y2)
+    plt.plot(x, y1)
+    # plt.plot(x, y1, x, y2)
     if _step%plot_iter==0:
         plt.xlabel('Iter')
         plt.ylabel('loss')
@@ -217,7 +220,6 @@ while _step < max_iter:
         plt.clf()
     if args.visualization:
         plt.show()
-
     _step+=1
 
 pkl.dump(x, open(os.path.join(plot_figure_dir, "x.pkl"), 'wb'))

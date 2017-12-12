@@ -1,14 +1,14 @@
 base_lr: 0.01
 delta: 1e-6
-display: 1
+display: 100
 gamma: 0.0001
 iter_size: 1
 lr_policy: "inv"
 momentum: 0.9
 power: 0.75
 snapshot: 50000
-snapshot_prefix: "../training_output/salicon/vo-v4-display-1-batch-25_1512735354/snapshot-"
+snapshot_prefix: "../training_output/salicon/vo-v3-2_train_kldloss_withouteuc-batch-1_1513080977/snapshot-"
 solver_mode: GPU
 solver_type: ADADELTA
-train_net: "prototxt/vo-v4.prototxt"
+train_net: "prototxt/vo-v3-2_train_kldloss_withouteuc.prototxt"
 weight_decay: 0.0005

@@ -117,7 +117,7 @@ class VideoDataset():
         self.num_epoch = 0
         self.index_in_epoch = 0
 
-    def setup_video_dataset_stack(self, random=False):
+    def setup_video_dataset_stack(self, random=False, overlap=1./3):
         self.tuple_list = []
 
         if random:
@@ -129,9 +129,10 @@ class VideoDataset():
 
                 total_frame = len(frame_list)
 
-                for j in range(total_frame):
-                    ceil = j + (self.video_length-1)
-                    if ceil >= total_frame:
+                # print  self.video_length*overlap,self.video_length,overlap
+                for j in range(0, total_frame, int(self.video_length*overlap)):
+                    ceil = j + self.video_length
+                    if ceil > total_frame-1:
                         break
                     tup = tuple([k for k in range(j+1, j+1+self.video_length)])
                     self.tuple_list.append((i,tup)) #video index & frame stack index
@@ -144,7 +145,7 @@ class VideoDataset():
         self.num_epoch = 0
         self.index_in_epoch = 0
 
-    def setup_video_dataset_c3d(self):
+    def setup_video_dataset_c3d(self, overlap=1/2):
         # pass
         self.tuple_list = []
 
@@ -153,7 +154,7 @@ class VideoDataset():
             frame_list = glob.glob(os.path.join(video_dir,'*.*'))
             total_frame = len(frame_list)
 
-            for j in range(0, total_frame, self.video_length):
+            for j in range(0, total_frame, self.video_length*overlap): ## div 2, so 1/2 of the video_length is overlapped
                 if j + self.video_length > total_frame:
                     break
                 tup = (i,j) # video index and first frame index
@@ -202,7 +203,7 @@ class VideoDataset():
 
         return key_frame, cur_frame, cur_frame_gt
     
-    def get_frame_stack(self):
+    def get_frame_stack(self, version=1):
         if not self.index_in_epoch >= self.num_examples:
             tup = self.tuple_list[self.index_in_epoch]
             self.index_in_epoch += 1
@@ -225,21 +226,28 @@ class VideoDataset():
             index = frame_stack_tuple[i]
             # print index,os.path.join(video_dir, frame_wildcard % index)
             frame_path = glob.glob(os.path.join(video_dir, frame_wildcard % index))[0]
-            frame = cv2.resize(cv2.imread(frame_path), dsize=self.img_size)
-            frame_stack.append(frame)
-
             density_path = glob.glob(os.path.join(self.density_basedir, video_name, frame_wildcard % index))[0]
-            density = cv2.resize(cv2.imread(density_path, 0), dsize=self.img_size)
-            density_stack.append(density)
-        
+
+            # frame = cv2.resize(cv2.imread(frame_path), dsize=self.img_size)
+            # density = cv2.resize(cv2.imread(density_path, 0), dsize=self.img_size)
+            
+            frame = self.pre_process_img(cv2.imread(frame_path))
+            density = self.pre_process_img(cv2.imread(density_path,0), True)
+
+            frame_stack.append(frame)
+            if version==1:
+                density_stack.append(density)
+            elif version==2:
+                if i == len(frame_stack_tuple)-1:
+                    density_stack.append(density)
         # print len(frame_stack), frame_stack[0].shape;#exit()
         return np.dstack(frame_stack), np.dstack(density_stack)
 
     def get_frame_c3d(self, mini_batch=16):
         frame_wildcard = "frame_%d.*"
-        if not self.index_in_epoch >= self.num_examples:
+        if not self.index_in_epoch >= self.num_examples - mini_batch:
             tup_batch = self.tuple_list[self.index_in_epoch:self.index_in_epoch+mini_batch]
-            self.index_in_epoch +=1
+            self.index_in_epoch +=mini_batch
         else:
             print "One epoch finished, shuffling data..."
 
@@ -247,7 +255,7 @@ class VideoDataset():
             self.index_in_epoch = 0
             self.num_epoch += 1
             tup_batch = self.tuple_list[self.index_in_epoch:self.index_in_epoch+mini_batch]
-            self.index_in_epoch += 1
+            self.index_in_epoch += mini_batch
         # print tup_batch;exit()
         density_batch = []
         frame_batch = []
@@ -270,7 +278,7 @@ class VideoDataset():
                 density_path = glob.glob(os.path.join(density_dir, frame_name))[0]
                 # frame = cv2.resize(cv2.imread(frame_path), dsize=self.img_size)
                 # density = cv2.resize(cv2.imread(density_path),dsize=self.img_size)
-                frame = self.pre_process_img(cv2.imread(frame_path))
+                frame = self.pre_process_img(cv2.imread(frame_path),sort='rgb')
                 density = self.pre_process_img(cv2.imread(density_path, 0),True)
 
                 current_frame_list.append(frame)
@@ -282,8 +290,10 @@ class VideoDataset():
 
         return np.transpose(np.array(frame_batch),(0,4,1,2,3)),np.transpose(np.array(density_batch),(0,4,1,2,3))
 
-    def pre_process_img(self, image, greyscale=False):
+    def pre_process_img(self, image, greyscale=False, sort='rgb'):
         if greyscale==False:
+            if sort=='rgb':
+                image = image[:, :, ::-1]
             image = image-self.MEAN_VALUE
             image = cv2.resize(image, dsize = self.img_size)
             # image = np.transpose(image, (2, 0, 1))

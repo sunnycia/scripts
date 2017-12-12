@@ -1,0 +1,13 @@
+base_lr: 0.01
+display: 1
+gamma: 0.1
+lr_policy: "step"
+stepsize: 450
+momentum: 0.9
+power: 0.75
+snapshot: 999999
+snapshot_prefix: "../training_output/vo-v4-1-static/snapshot-"
+solver_mode: GPU
+solver_type: SGD
+train_net: "prototxt/vo-v4-1.prototxt"
+weight_decay: 0.0005

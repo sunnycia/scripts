@@ -2,7 +2,7 @@ import imghdr, imageio
 from math import floor
 import glob, cv2, os, numpy as np, sys, caffe
 from utils.common import tic, toc
-from Saliencynet import FlowbasedVideoSaliencyNet, FramestackbasedVideoSaliencyNet
+from Saliencynet import FlowbasedVideoSaliencyNet, FramestackbasedVideoSaliencyNet, C3DbasedVideoSaliencyNet
 import argparse
 caffe.set_mode_gpu()
 caffe.set_device(0)
@@ -13,7 +13,7 @@ def get_arguments():
     parser.add_argument('--flownet_caffe_model', type=str, default="utils/flownet2/models/FlowNet2/FlowNet2_weights.caffemodel.h5", help='flownet caffe model')
     parser.add_argument('--output_type', type=str, required=True, help='Output saliency (video) or (image)')
     parser.add_argument('--allinone', type=bool, default=False)
-    parser.add_argument('--video_base', type=str, required=True)
+    # parser.add_argument('--video_base', type=str, required=True)
     parser.add_argument('--test_base', type=str, required=True)
 
     # parser.add_argument('--output_dir', type=str, required=True)
@@ -41,6 +41,9 @@ if __name__ =='__main__':
     if args.model_code=='v3':
         # video_deploy_path = "./prototxt/vo-v3_deploy.prototxt"
         # video_model_path = "../training_output/salicon/vo-v3_train_kldloss_withouteuc-batch-1_1510229829/snapshot-_iter_400000.caffemodel"
+        video_deploy_path = args.video_deploy_path
+        video_model_path = args.video_model_path
+    if args.model_code=='v4':
         video_deploy_path = args.video_deploy_path
         video_model_path = args.video_model_path
 
@@ -74,6 +77,11 @@ if __name__ =='__main__':
         vs = FramestackbasedVideoSaliencyNet(video_deploy_path, video_model_path,stack_size=args.framestack)
         # vs = FramestackbasedVideoSaliencyNet(video_deploy_path, video_model_path)
 
+    ## v4 
+    if args.model_code=='v4':
+        vs = C3DbasedVideoSaliencyNet(video_deploy_path,video_model_path,video_length=16,video_size=(112,112),rgb_mean_value=[90,98,102])
+
+
     for video_path in video_path_list:
         if args.output_type=="image":
             video_name = os.path.basename(video_path).split('.')[0].split('_')[0]
@@ -99,4 +107,5 @@ if __name__ =='__main__':
             vs.create_saliency_video()
             fps = vs.video_meta_data['fps']
             vs.dump_predictions_as_video(saliency_video_path, fps)
-        print "Done for video", video_path
+
+        print "Done for video", video_path;#exit()

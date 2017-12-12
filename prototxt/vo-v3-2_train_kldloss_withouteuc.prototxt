@@ -6,7 +6,7 @@ layer {
   python_param {
     module: "CustomData"
     layer: "CustomData"
-    param_str: "8,3,288,480"
+    param_str: "1,27,288,480"
   }
 }
 layer {
@@ -16,11 +16,11 @@ layer {
   python_param {
     module: "CustomData"
     layer: "CustomData"
-    param_str: "8,1,288,480"
+    param_str: "1,1,288,480"
   }
 }
 layer {
-  name: "conv1"
+  name: "conv1_new"
   type: "Convolution"
   bottom: "data"
   top: "conv1"
@@ -2342,7 +2342,6 @@ layer {
     bias_term: false
     pad: 1
     kernel_size: 4
-    group: 1
     stride: 2
     weight_filler {
       type: "bilinear"
@@ -2350,18 +2349,9 @@ layer {
   }
 }
 layer {
-  name: "eucloss"
-  type: "EuclideanLoss"
-  bottom: "saliency_map"
-  bottom: "ground_truth"
-  top: "eucloss"
-  loss_weight: 1.0
-}
-layer {
-  name: "kldloss"
+  name: "loss"
   type: "KLDivLoss"
   bottom: "saliency_map"
   bottom: "ground_truth"
-  top: "kldloss"
-  loss_weight: 100.0
+  top: "loss"
 }

@@ -23,10 +23,10 @@ def get_arguments():
     parser.add_argument('--use_snapshot', type=str, default='', help='Snapshot path.')
     parser.add_argument('--use_model', type=str, default='../pretrained_model/c3d_ucf101_iter_40000.caffemodel', help='Pretrained model')
     parser.add_argument('--debug', type=bool, default=False, help='If debug is ture, a mini set will run into training.Or a complete set will.')
-    parser.add_argument('--batch', type=int, default=50, help='training mini batch')
     parser.add_argument('--plotiter', type=int, default=50, help='training mini batch')
     parser.add_argument('--trainingbase',type=str, default='msu', help='training dataset.')
     parser.add_argument('--videolength',type=int,default=16, help='length of video')
+    parser.add_argument('--batch',type=int,default=25, help='length of video')
     parser.add_argument('--imagesize', type=tuple, default=(112,112))
     parser.add_argument('--lastlayer', type=str, default='fc8_new')
     parser.add_argument('--staticsolver',type=bool,default=False)
@@ -36,7 +36,6 @@ args = get_arguments()
 
 
 pretrained_model_path= args.use_model
-debug_mode = args.debug
 snapshot_path = args.use_snapshot
 #Check if snapshot exists
 if snapshot_path is not '':
@@ -67,37 +66,6 @@ training_protopath = args.train_prototxt
 training_base = args.trainingbase
 video_length=args.videolength
 image_size = args.imagesize
-net = caffe_pb2.NetParameter()
-with open(training_protopath) as f:
-    s = f.read()
-    txtf.Merge(s, net)
-layerNames = [l.name for l in net.layer]
-
-''' A1B: update data layer'''
-data_layer = net.layer[layerNames.index('data')]
-old_paramstr = data_layer.python_param.param_str
-pslist = old_paramstr.split(',')
-pslist[0]= str(batch);pslist[2]=str(video_length);pslist[3]=str(image_size[1]);pslist[4]=str(image_size[0])
-new_paramstr = (',').join(pslist)
-data_layer.python_param.param_str = new_paramstr
-'''End of A1B'''
-
-''' A1C: update ground truth layer'''
-gt_layer = net.layer[layerNames.index('ground_truth')]
-old_paramstr = gt_layer.python_param.param_str
-pslist = old_paramstr.split(',')
-pslist[0]= str(batch);pslist[2]=str(video_length);pslist[3]=str(image_size[1]);pslist[4]=str(image_size[0])
-new_paramstr = (',').join(pslist)
-gt_layer.python_param.param_str = new_paramstr
-'''End of A1C'''
-
-fc_layer = net.layer[layerNames.index(args.lastlayer)]
-fc_layer.inner_product_param.num_output=video_length*image_size[0]*image_size[1]
-
-print 'writing', training_protopath
-with open(training_protopath, 'w') as f:
-    f.write(str(net))
-"""End of A1"""
 
 """A2: Update solver prototxt"""
 # ╦ ╦┌─┐┌┬┐┌─┐┌┬┐┌─┐  ┌─┐┌─┐┬  ┬  ┬┌─┐┬─┐  ┌─┐┬─┐┌─┐┌┬┐┌─┐┌┬┐─┐ ┬┌┬┐
@@ -108,18 +76,13 @@ update_solver_dict = {
 'display':'1',
 # 'lr_policy':'step',
 # 'stepsize':'200',
-'snapshot':'999999'
-
-# 'base_lr':'0.1'
-
-
+'snapshot':'1000'
 }
 extrainfo_dict = {
 }
 solver_path = args.solver_prototxt
 solverproto = CaffeSolver(trainnet_prototxt_path=training_protopath)
 solverproto.update_solver(dict(update_solver_dict, **extrainfo_dict))
-
 
 '''A2B: Add postfix to identify a model version'''
 merge_dict = dict(update_solver_dict, **extrainfo_dict)
@@ -143,7 +106,6 @@ if args.staticsolver is True:
     pass
 else:
     solverproto.write(solver_path);
-
 
 # load the solver
 if 'solver_type' in update_solver_dict:
