@@ -1,3 +1,9 @@
+# IIIII NN   NN FFFFFFF EEEEEEE RRRRRR  EEEEEEE NN   NN  CCCCC  EEEEEEE 
+#  III  NNN  NN FF      EE      RR   RR EE      NNN  NN CC    C EE      
+#  III  NN N NN FFFF    EEEEE   RRRRRR  EEEEE   NN N NN CC      EEEEE   
+#  III  NN  NNN FF      EE      RR  RR  EE      NN  NNN CC    C EE      
+# IIIII NN   NN FF      EEEEEEE RR   RR EEEEEEE NN   NN  CCCCC  EEEEEEE 
+                                                                      
 import imghdr, imageio
 from math import floor
 import glob, cv2, os, numpy as np, sys, caffe
@@ -18,7 +24,7 @@ def get_arguments():
 
     # parser.add_argument('--output_dir', type=str, required=True)
     # parser.add_argument('--model_code', type=str, required=True)
-    parser.add_argument('--model_code', type=str, default='v3')
+    parser.add_argument('--model_code', type=str, required=True)
     parser.add_argument('--videolength', type=int, default=5)
     parser.add_argument('--video_deploy_path',type=str,default='./prototxt/vo-v3_deploy.prototxt')
     parser.add_argument('--video_model_path',type=str,default='../training_output/salicon/vo-v3_train_kldloss_withouteuc-batch-1_1510229829/snapshot-_iter_400000.caffemodel')
@@ -85,16 +91,15 @@ if __name__ =='__main__':
     for video_path in video_path_list:
         if args.output_type=="image":
             video_name = os.path.basename(video_path).split('.')[0].split('_')[0]
-            if len(glob.glob(os.path.join(saliency_video_dir, video_name+'*'))) != 0:
+            if len(glob.glob(os.path.join(saliency_map_dir, video_name+'*'))) != 0:
                 print video_name, "already done, pass."
                 continue
             else:
-                print len(glob.glob(os.path.join(saliency_video_dir, video_name+'*')))
+                print len(glob.glob(os.path.join(saliency_map_dir, video_name+'*')))
                 print "Handling",video_name
-            # output_dir = os.path.join(saliency_video_dir, args.model_code)
             vs.setup_video(video_path)
             vs.create_saliency_video()
-            vs.dump_predictions_as_images(output_dir, video_name, args.allinone)
+            vs.dump_predictions_as_images(saliency_map_dir, video_name, args.allinone)
 
         if args.output_type=="video":
             saliency_video_path = os.path.join(saliency_video_dir, os.path.basename(video_path))

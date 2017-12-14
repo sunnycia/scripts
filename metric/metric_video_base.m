@@ -15,13 +15,17 @@ if strcmp(dsname,'videoset')==1
     fixa_dir = strcat('/data/sunnycia/SaliencyDataset/Video/VideoSet/ImageSet/Seperate/fixation');
     all_in_one_fixation_directory = '/data/sunnycia/SaliencyDataset/Video/VideoSet/ImageSet/All_in_one/fixation'; % for computing sauc metric
 end
+if strcmp(dsname,'ledov')==1
+    
+end
 
 % model_list = {'DENSITY';'SAM';'FANG8';'XU';'SALICON';'ITKO';'GBVS';'PQFT';'SUN';'ISEEL';'MDB';};
 % model_list = {'DENSITY';'SAM';'XU';'SALICON';'ITKO';'GBVS';'PQFT';'SUN';'ISEEL';'MDB';'FANG2';};
 % model_list = {'MOTION';'MSFUSION';'UNCERTAINTY';'SAM';'XU';'SALICON';'ITKO';'GBVS';'PQFT';'SUN';'ISEEL';'MDB';'FANG2';'DENSITY';};
 % model_list = {'MOTION';'MSFUSION';'UNCERTAINTY';};
 % model_list = {'v1';'v3';};
-model_list = {'FANG2';'DENSITY';'xu_dupext40';'SAM';'train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000';'MOTION';'MSFUSION';'UNCERTAINTY';'SAM';'XU';'SALICON';'ITKO';'GBVS';'PQFT';'SUN';'ISEEL';'MDB';};
+% model_list = {'FANG2';'DENSITY';'xu_dupext40';'SAM';'train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000';'MOTION';'MSFUSION';'UNCERTAINTY';'SAM';'XU';'SALICON';'ITKO';'GBVS';'PQFT';'SUN';'ISEEL';'MDB';};
+model_list = {'vo-v3-2_train_kldloss_withouteuc-batch-1_1513084718_snapshot-_iter_150000'};
 
 cc_msk  = 1;
 sim_msk = 1;
