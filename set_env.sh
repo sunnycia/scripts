@@ -1,7 +1,8 @@
 #!/bin/bash 
-export CUDA_VISIBLE_DEVICES=7
 # CAFFE_DIR=../caffe-flownet
 CAFFE_DIR=$1
+GPU_ID=$2
+export CUDA_VISIBLE_DEVICES=$GPU_ID
 export PYTHONPATH=$CAFFE_DIR/python:$PYTHONPATH
 
 RELEASE_PATH="$CAFFE_DIR/build" 

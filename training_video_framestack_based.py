@@ -28,7 +28,8 @@ def get_arguments():
     parser.add_argument('--visualization', type=bool, default=False, help='visualization option')
     parser.add_argument('--batch', type=int, default=1, help='training mini batch')
     parser.add_argument('--imagesize', type=tuple, default=(480,288))
-    parser.add_argument('--keyframeinterv', type=int, default=5)
+    parser.add_argument('--keyframeinterv', type=int, required=True)
+    parser.add_argument('--overlap', type=int, required=True)
     parser.add_argument('--version', type=int,default=1)
     # parser.add_argument('--stack', type=int, default=5)
     return parser.parse_args()
@@ -156,7 +157,7 @@ validation_frame_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/tr
 validation_density_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/density'
 
 tranining_dataset = VideoDataset(train_frame_basedir, train_density_basedir, img_size=img_size, video_length=key_frame_interval)
-tranining_dataset.setup_video_dataset_stack()
+tranining_dataset.setup_video_dataset_stack(overlap=args.overlap)
 # validation_dataset = StaticDataset(train_frame_basedir, train_density_basedir, debug=debug_mode)
 
 # ╔╦╗╦╔═╗╔═╗

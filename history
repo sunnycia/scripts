@@ -3311,7 +3311,42 @@
  3311  ls
  3312  cd src/caffe/layers/
  3313  ls
- 3314  cd pwd/saliency_on_videoset/
+ 3314  pwd
  3315  ls
- 3316  cd Train/scripts/
- 3317  history > history
+ 3316  top
+ 3317  cd pwd/saliency_on_videoset/
+ 3318  ls
+ 3319  cd pwd/autocrop/
+ 3320  cd src/
+ 3321  mkdir build
+ 3322  cd build/
+ 3323  cmake ..
+ 3324  ls
+ 3325  cd ..
+ 3326  cd build/
+ 3327  ls
+ 3328  make install
+ 3329  make
+ 3330  make clean
+ 3331  cd ..
+ 3332  ls
+ 3333  rm -rf build/
+ 3334  cd ..
+ 3335  ls
+ 3336  rm -rf build/
+ 3337  cd ..
+ 3338  tar -czf autocrop/ autocrop.tar.gz
+ 3339  tar -czf autocrop.tar.gz autocrop/
+ 3340  top
+ 3341  nvidia-smi
+ 3342  clear
+ 3343  nvidia-smi
+ 3344  watch -n 2 nvidia-smi
+ 3345  top
+ 3346  nvidia-smi
+ 3347  cd saliency_on_videoset/Train/scripts/
+ 3348  source set_env.sh ../C3D-v1.1/ 4
+ 3349  nvidia-smi
+ 3350  source set_env.sh ../C3D-v1.1/ 6
+ 3351  clear
+ 3352  history > history 

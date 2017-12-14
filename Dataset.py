@@ -117,7 +117,7 @@ class VideoDataset():
         self.num_epoch = 0
         self.index_in_epoch = 0
 
-    def setup_video_dataset_stack(self, random=False, overlap=1./3):
+    def setup_video_dataset_stack(self, random=False, overlap=0):
         self.tuple_list = []
 
         if random:
@@ -130,7 +130,9 @@ class VideoDataset():
                 total_frame = len(frame_list)
 
                 # print  self.video_length*overlap,self.video_length,overlap
-                for j in range(0, total_frame, int(self.video_length*overlap)):
+                assert overlap < self.video_length, "overlap should smaller than videolength."
+                step = self.video_length - overlap
+                for j in range(0, total_frame, step):
                     ceil = j + self.video_length
                     if ceil > total_frame-1:
                         break
@@ -145,16 +147,17 @@ class VideoDataset():
         self.num_epoch = 0
         self.index_in_epoch = 0
 
-    def setup_video_dataset_c3d(self, overlap=1/2):
+    def setup_video_dataset_c3d(self, overlap=0):
         # pass
         self.tuple_list = []
-
+        assert overlap < self.video_length, "overlap should smaller than videolength."
+        step = self.video_length - overlap
         for i in range(len(self.video_dir_list)):
             video_dir = self.video_dir_list[i]
             frame_list = glob.glob(os.path.join(video_dir,'*.*'))
             total_frame = len(frame_list)
-
-            for j in range(0, total_frame, self.video_length*overlap): ## div 2, so 1/2 of the video_length is overlapped
+            
+            for j in range(0, total_frame, step): ## div 2, so 1/2 of the video_length is overlapped
                 if j + self.video_length > total_frame:
                     break
                 tup = (i,j) # video index and first frame index

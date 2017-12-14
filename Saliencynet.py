@@ -170,13 +170,14 @@ class FlowbasedVideoSaliencyNet:
         print "Done for", output_directory
 
 class FramestackbasedVideoSaliencyNet:
-    def __init__(self, video_deploy_proto, video_caffe_model, stack_size=5,bgr_mean_value=[103.939, 116.779, 123.68]):
+    def __init__(self, video_deploy_proto, video_caffe_model, video_length=5,bgr_mean_value=[103.939, 116.779, 123.68], infer_type='slice'):
         self.std_wid = 480
         self.std_hei = 288
-        self.stack_size=stack_size
+        self.video_length=video_length
         self.video_net = caffe.Net(video_deploy_proto, video_caffe_model, caffe.TEST)
         self.BGR_MEAN_VALUE = np.array(bgr_mean_value)   # BGR
         self.BGR_MEAN_VALUE = self.BGR_MEAN_VALUE[None, None, ...]
+        self.infer_type = infer_type
 
     def preprocess_image(self, img_arr):
         img_arr = img_arr.astype(np.float32)
@@ -216,7 +217,7 @@ class FramestackbasedVideoSaliencyNet:
     def compute_frame_saliency(self, processd_key_frame_arr, processed_non_key_frame_arr):
         pass
 
-    def setup_video(self, video_path):
+    def setup_video(self, video_path): ## slice or slide
         if not os.path.isfile(video_path):
             print video_path, "not exists, abort."
             return
@@ -243,23 +244,28 @@ class FramestackbasedVideoSaliencyNet:
             print "setup video first!"
             return
         self.predictions = []
-        for i in range(0, len(self.frames)-1, self.stack_size):
-            if i + self.stack_size > len(self.frames)-1:
-                resd_frame_num = len(self.frames)-(i)
-                frame_stack = self.frames[len(self.frames)-1-self.stack_size:len(self.frames)-1]
-                raw_predictions = self.predict_frame_stack(frame_stack)
-                tmp_predictions = []
-                for raw_prediction in raw_predictions:
-                    prediction = self.postprocess_saliency_map(raw_prediction)
-                    tmp_predictions.append(prediction)
-                for i in range(resd_frame_num):
-                    index = self.stack_size-1-(resd_frame_num-1-i)
-                    print index
-                    self.predictions.append(tmp_predictions[index])
+        if self.infer_type=='slice':
+            step = self.video_length
+        elif self.infer_type=='slide':
+            step = 1
+        for i in range(0, len(self.frames)-1, step):
+            if i + self.video_length > len(self.frames)-1:
+                if self.infer_type=='slice':
+                    resd_frame_num = len(self.frames)-(i)
+                    frame_stack = self.frames[len(self.frames)-1-self.video_length:len(self.frames)-1]
+                    raw_predictions = self.predict_frame_stack(frame_stack)
+                    tmp_predictions = []
+                    for raw_prediction in raw_predictions:
+                        prediction = self.postprocess_saliency_map(raw_prediction)
+                        tmp_predictions.append(prediction)
+                    for i in range(resd_frame_num):
+                        index = self.video_length-1-(resd_frame_num-1-i)
+                        print index
+                        self.predictions.append(tmp_predictions[index])
                 break
             frame_stack = []
             print "Processing",
-            for j in range(i, i + self.stack_size):
+            for j in range(i, i + self.video_length):
                 print j,
                 frame_stack.append(self.frames[j])
             print ""
@@ -271,15 +277,23 @@ class FramestackbasedVideoSaliencyNet:
             for raw_prediction in raw_predictions:
                 prediction = self.postprocess_saliency_map(raw_prediction)
                 self.predictions.append(prediction)
+        if self.infer_type=='slide':
+            first_sal = self.predictions[0]
+            head_list = [first_sal for i in range(self.video_length)]
+            self.predictions = head_list+self.predictions
         print len(self.predictions),len(self.frames)
         assert len(self.predictions) == len(self.frames)
 
     def predict_frame_stack(self, frame_stack):
+        if self.infer_type=='slice':
+            output_blob_name= 'saliency_map_stack'
+        elif self.infer_type=='slide':
+            output_blob_name='saliency_map'
         print frame_stack[0].shape, frame_stack[1].shape
         frame_stack = np.vstack(frame_stack)
         self.video_net.blobs['data'].data[...] = frame_stack
         self.video_net.forward()
-        return self.video_net.blobs['saliency_map_stack'].data[0, ...]
+        return self.video_net.blobs[output_blob_name].data[0, ...]
 
     def dump_predictions_as_video(self , output_path, fps):
         if self.predictions is None:

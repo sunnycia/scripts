@@ -2,12 +2,12 @@ base_lr: 0.01
 display: 1
 gamma: 0.1
 lr_policy: "step"
-stepsize: 450
+stepsize: 2000
 momentum: 0.9
 power: 0.75
 snapshot: 999999
-snapshot_prefix: "../training_output/vo-v4-1-static/snapshot-"
+snapshot_prefix: "../training_output/vo-v4-2-static/snapshot-"
 solver_mode: GPU
-solver_type: SGD
-train_net: "prototxt/vo-v4-1.prototxt"
+solver_type: ADADELTA
+train_net: "prototxt/vo-v4-2.prototxt"
 weight_decay: 0.0005

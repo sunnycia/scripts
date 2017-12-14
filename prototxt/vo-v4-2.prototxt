@@ -5,7 +5,7 @@ layer {
   python_param {
     module: "CustomData"
     layer: "CustomData"
-    param_str: "25,3,16,112,112"
+    param_str: "8,3,16,112,112"
   }
 }
 layer {
@@ -15,7 +15,7 @@ layer {
   python_param {
     module: "CustomData"
     layer: "CustomData"
-    param_str: "25,1,16,112,112"
+    param_str: "8,1,16,112,112"
   }
 }
 # ----------- 1st layer group ---------------
@@ -81,7 +81,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 1
+      value: 0
     }
   }
 }
@@ -126,7 +126,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 1
+      value: 0
     }
   }
 }
@@ -157,7 +157,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 1
+      value: 0
     }
   }
 }
@@ -203,7 +203,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 1
+      value: 0
     }
   }
 }
@@ -234,7 +234,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 1
+      value: 0
     }
   }
 }
@@ -280,7 +280,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 1
+      value: 0
     }
   }
 }
@@ -290,37 +290,7 @@ layer {
   bottom: "conv5a"
   top: "conv5a"
 }
-layer {
-  name: "conv5b"
-  type: "Convolution3D"
-  bottom: "conv5a"
-  top: "conv5b"
-  
-  
-  
-  
-  convolution3d_param {
-    num_output: 512
-    kernel_size: 3
-    kernel_depth: 3
-    pad: 1
-    temporal_pad: 1
-    weight_filler {
-      type: "gaussian"
-      std: 0.01
-    }
-    bias_filler {
-      type: "constant"
-      value: 1
-    }
-  }
-}
-layer {
-  name: "relu5b"
-  type: "ReLU"
-  bottom: "conv5b"
-  top: "conv5b"
-}
+
 # ---- upsampling layer ----
 layer {
   name: "deconv5b"
@@ -345,7 +315,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 1
+      value: 0
     }
   }
 }
@@ -376,7 +346,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 1
+      value: 0
     }
   }
 }
@@ -413,7 +383,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 1
+      value: 0
     }
   }
 }
@@ -444,7 +414,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 1
+      value: 0
     }
   }
 }
@@ -481,7 +451,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 1
+      value: 0
     }
   }
 }
@@ -501,7 +471,7 @@ layer {
   
   
   convolution3d_param {
-    num_output: 8
+    num_output: 1
     kernel_size: 3
     kernel_depth: 3
     pad: 1
@@ -512,13 +482,13 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 1
+      value: 0
     }
   }
 }
 layer {
   name: "loss"
-  type: "VOXEL_SOFTMAX_LOSS"
+  type: "EuclideanLoss"
   bottom: "predict"
   bottom: "ground_truth"
   top: "loss"

@@ -16,6 +16,7 @@ import google.protobuf.text_format as txtf
 import utils.OpticalFlowToolkit.lib.flowlib as flib
 
 caffe.set_mode_gpu()
+# caffe.set_device(0)
 def get_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument('--train_prototxt', type=str, required=True, help='the network prototxt')
@@ -26,6 +27,7 @@ def get_arguments():
     parser.add_argument('--plotiter', type=int, default=50, help='training mini batch')
     parser.add_argument('--trainingbase',type=str, default='msu', help='training dataset.')
     parser.add_argument('--videolength',type=int,default=16, help='length of video')
+    parser.add_argument('--overlap',type=int,default=15, help='dataset overlap')
     parser.add_argument('--batch',type=int,default=25, help='length of video')
     parser.add_argument('--imagesize', type=tuple, default=(112,112))
     parser.add_argument('--lastlayer', type=str, default='fc8_new')
@@ -66,17 +68,18 @@ training_protopath = args.train_prototxt
 training_base = args.trainingbase
 video_length=args.videolength
 image_size = args.imagesize
-
 """A2: Update solver prototxt"""
 # ╦ ╦┌─┐┌┬┐┌─┐┌┬┐┌─┐  ┌─┐┌─┐┬  ┬  ┬┌─┐┬─┐  ┌─┐┬─┐┌─┐┌┬┐┌─┐┌┬┐─┐ ┬┌┬┐
 # ║ ║├─┘ ││├─┤ │ ├┤   └─┐│ ││  └┐┌┘├┤ ├┬┘  ├─┘├┬┘│ │ │ │ │ │ ┌┴┬┘ │ 
 # ╚═╝┴  ─┴┘┴ ┴ ┴ └─┘  └─┘└─┘┴─┘ └┘ └─┘┴└─  ┴  ┴└─└─┘ ┴ └─┘ ┴ ┴ └─ ┴ 
 update_solver_dict = {
-# 'solver_type':'SGD'
+# 'solver_type':'RMSPROP',
 'display':'1',
-# 'lr_policy':'step',
-# 'stepsize':'200',
-'snapshot':'1000'
+'base_lr': '0.01',
+
+'lr_policy':'"step"',
+'stepsize':'500',
+'snapshot':'20000'
 }
 extrainfo_dict = {
 }
@@ -128,7 +131,7 @@ if training_base=='msu':
     train_density_basedir = '/data/sunnycia/SaliencyDataset/Video/MSU/density/sigma32'
 
 tranining_dataset = VideoDataset(train_frame_basedir, train_density_basedir, img_size=(112,112), bgr_mean_list=[98,102,90], sort='rgb')
-tranining_dataset.setup_video_dataset_c3d()
+tranining_dataset.setup_video_dataset_c3d(overlap=args.overlap)
 
 # ╔╦╗╦╔═╗╔═╗
 # ║║║║╚═╗║  
@@ -165,16 +168,18 @@ while _step < max_iter:
     if _step%validation_iter==0:
         ##do validation
         pass
+    # print _step, 1
     frame_data, density_data = tranining_dataset.get_frame_c3d(mini_batch=batch)
+    # print _step, 2
 
     solver.net.blobs['data'].data[...] = frame_data
     solver.net.blobs['ground_truth'].data[...] = density_data
     solver.step(1)
+    # print _step, 3
 
     x.append(_step)
     y1.append(solver.net.blobs['loss'].data[...].tolist())
     # y2.append(solver.net.blobs['loss5'].data[...].tolist())
-
     plt.plot(x, y1)
     if _step%plot_iter==0:
         plt.xlabel('Iter')

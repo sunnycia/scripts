@@ -19,9 +19,10 @@ def get_arguments():
     # parser.add_argument('--output_dir', type=str, required=True)
     # parser.add_argument('--model_code', type=str, required=True)
     parser.add_argument('--model_code', type=str, default='v3')
-    parser.add_argument('--framestack', type=int, default=5)
+    parser.add_argument('--videolength', type=int, default=5)
     parser.add_argument('--video_deploy_path',type=str,default='./prototxt/vo-v3_deploy.prototxt')
     parser.add_argument('--video_model_path',type=str,default='../training_output/salicon/vo-v3_train_kldloss_withouteuc-batch-1_1510229829/snapshot-_iter_400000.caffemodel')
+    parser.add_argument('--infertype', type=str,default='slice')
     return parser.parse_args()
 print "Parsing arguments..."
 args = get_arguments()
@@ -74,13 +75,12 @@ if __name__ =='__main__':
 
     ## V3
     if args.model_code=='v3':
-        vs = FramestackbasedVideoSaliencyNet(video_deploy_path, video_model_path,stack_size=args.framestack)
+        vs = FramestackbasedVideoSaliencyNet(video_deploy_path, video_model_path,video_length=args.videolength, infer_type=args.infertype)
         # vs = FramestackbasedVideoSaliencyNet(video_deploy_path, video_model_path)
 
     ## v4 
     if args.model_code=='v4':
         vs = C3DbasedVideoSaliencyNet(video_deploy_path,video_model_path,video_length=16,video_size=(112,112),rgb_mean_value=[90,98,102])
-
 
     for video_path in video_path_list:
         if args.output_type=="image":
