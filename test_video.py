@@ -3,12 +3,12 @@
 #  III  NN N NN FFFF    EEEEE   RRRRRR  EEEEE   NN N NN CC      EEEEE   
 #  III  NN  NNN FF      EE      RR  RR  EE      NN  NNN CC    C EE      
 # IIIII NN   NN FF      EEEEEEE RR   RR EEEEEEE NN   NN  CCCCC  EEEEEEE 
-                                                                      
+
 import imghdr, imageio
 from math import floor
 import glob, cv2, os, numpy as np, sys, caffe
 from utils.common import tic, toc
-from Saliencynet import FlowbasedVideoSaliencyNet, FramestackbasedVideoSaliencyNet, C3DbasedVideoSaliencyNet
+from Saliencynet import FlowbasedVideoSaliencyNet, FramestackbasedVideoSaliencyNet, C3DbasedVideoSaliencyNet,VoxelbasedVideoSaliencyNet
 import argparse
 caffe.set_mode_gpu()
 caffe.set_device(0)
@@ -45,12 +45,9 @@ if __name__ =='__main__':
     if args.model_code=='v1':
         video_deploy_path = "./prototxt/vo-v1_deploy.prototxt"
         video_model_path = "../training_output/salicon/vo-v1_train_kldloss_withouteuc-batch-1_1510204874/snapshot-_iter_450000.caffemodel"
-    if args.model_code=='v3':
+    else:
         # video_deploy_path = "./prototxt/vo-v3_deploy.prototxt"
         # video_model_path = "../training_output/salicon/vo-v3_train_kldloss_withouteuc-batch-1_1510229829/snapshot-_iter_400000.caffemodel"
-        video_deploy_path = args.video_deploy_path
-        video_model_path = args.video_model_path
-    if args.model_code=='v4':
         video_deploy_path = args.video_deploy_path
         video_model_path = args.video_model_path
 
@@ -59,9 +56,11 @@ if __name__ =='__main__':
         video_base = '/data/sunnycia/SaliencyDataset/Video/VideoSet/Videos/videos_origin'
         saliency_video_base = '/data/sunnycia/SaliencyDataset/Video/VideoSet/Results/saliency_video'
         saliency_map_base = '/data/sunnycia/SaliencyDataset/Video/VideoSet/Results/saliency_map'
-    elif test_base == 'msu':
-        pass
-    elif test_base == 'diem':
+    elif args.test_base == 'msu':
+        video_base = '/data/sunnycia/SaliencyDataset/Video/MSU/videos'
+        saliency_video_base = '/data/sunnycia/SaliencyDataset/Video/MSU/saliency_video'
+        saliency_map_base=  '/data/sunnycia/SaliencyDataset/Video/MSU/saliency_map'
+    elif args.test_base == 'diem':
         pass
 
     model_name = os.path.dirname(video_model_path).split('/')[-1] + '_'+ os.path.basename(video_model_path).split('.')[0]
@@ -87,6 +86,8 @@ if __name__ =='__main__':
     ## v4 
     if args.model_code=='v4':
         vs = C3DbasedVideoSaliencyNet(video_deploy_path,video_model_path,video_length=16,video_size=(112,112),rgb_mean_value=[90,98,102])
+    if args.model_code=='v4-2':
+        vs = VoxelbasedVideoSaliencyNet(deploy_proto=video_deploy_path, caffe_model=video_model_path, video_length=16, video_size=(112,112),mean_list=[90, 98,102], infer_type=args.infertype)
 
     for video_path in video_path_list:
         if args.output_type=="image":

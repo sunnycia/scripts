@@ -128,7 +128,6 @@ class VideoDataset():
                 frame_list = glob.glob(os.path.join(video_dir, '*.*'))
 
                 total_frame = len(frame_list)
-
                 # print  self.video_length*overlap,self.video_length,overlap
                 assert overlap < self.video_length, "overlap should smaller than videolength."
                 step = self.video_length - overlap
@@ -147,7 +146,7 @@ class VideoDataset():
         self.num_epoch = 0
         self.index_in_epoch = 0
 
-    def setup_video_dataset_c3d(self, overlap=0):
+    def setup_video_dataset_c3d(self, overlap=0, training_example_props=0.8):
         # pass
         self.tuple_list = []
         assert overlap < self.video_length, "overlap should smaller than videolength."
@@ -164,12 +163,18 @@ class VideoDataset():
                 self.tuple_list.append(tup)
             # print self.tuple_list;exit()
         
-        shuffle(self.tuple_list)
         self.num_examples = len(self.tuple_list)
-        print self.num_examples, "samples generated...";#exit()
+        shuffle(self.tuple_list)
+        self.num_training_examples = int(self.num_examples * training_example_props)
+
+        self.training_tuple_list = self.tuple_list[:self.num_training_examples]
+        self.validation_tuple_list = self.tuple_list[self.num_training_examples:]
+        self.num_validation_examples = len(self.validation_tuple_list)
+        print self.num_examples, "samples generated in total,",self.num_training_examples,"training samples,",self.num_validation_examples,"validation samples";#exit()
 
         self.num_epoch = 0
-        self.index_in_epoch = 0
+        self.index_in_training_epoch = 0
+        self.index_in_validation_epoch = 0
 
     def get_frame_pair(self):
         if not self.index_in_epoch >= self.num_examples:
@@ -246,22 +251,39 @@ class VideoDataset():
         # print len(frame_stack), frame_stack[0].shape;#exit()
         return np.dstack(frame_stack), np.dstack(density_stack)
 
-    def get_frame_c3d(self, mini_batch=16):
+    def get_frame_c3d(self, mini_batch=16, phase='training'):
+        if phase == 'training':
+            tuple_list = self.training_tuple_list
+            index_in_epoch = self.index_in_training_epoch
+            self.index_in_training_epoch += mini_batch
+            num_examples = self.num_training_examples
+
+        elif phase == 'validation':
+            tuple_list = self.validation_tuple_list
+            index_in_epoch = self.index_in_validation_epoch
+            self.index_in_validation_epoch += mini_batch
+            num_examples = self.num_validation_examples
+        
         frame_wildcard = "frame_%d.*"
-        if not self.index_in_epoch >= self.num_examples - mini_batch:
-            tup_batch = self.tuple_list[self.index_in_epoch:self.index_in_epoch+mini_batch]
-            self.index_in_epoch +=mini_batch
+        if not index_in_epoch >= num_examples - mini_batch:
+            tup_batch = tuple_list[index_in_epoch:index_in_epoch+mini_batch]
         else:
+            if phase=='validation':
+                self.index_in_validation_epoch = 0
+                print "Done for validation"
+                return None
+
             print "One epoch finished, shuffling data..."
 
-            shuffle(self.tuple_list)
-            self.index_in_epoch = 0
+            shuffle(self.training_tuple_list)
+            self.index_in_training_epoch = 0
             self.num_epoch += 1
-            tup_batch = self.tuple_list[self.index_in_epoch:self.index_in_epoch+mini_batch]
-            self.index_in_epoch += mini_batch
-        # print tup_batch;exit()
+            tup_batch = self.training_tuple_list[self.index_in_training_epoch:self.index_in_training_epoch+mini_batch]
+            self.index_in_training_epoch += mini_batch
+
         density_batch = []
         frame_batch = []
+        # print tup_batch, len(tup_batch)
         for tup in tup_batch:
             # print tup
             current_frame_list = []
@@ -286,6 +308,7 @@ class VideoDataset():
 
                 current_frame_list.append(frame)
                 current_density_list.append(density)
+
 
             frame_batch.append(np.array(current_frame_list))
             density_batch.append(np.array(current_density_list))

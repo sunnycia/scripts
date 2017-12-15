@@ -25,6 +25,9 @@ def get_arguments():
     parser.add_argument('--use_model', type=str, default='../pretrained_model/c3d_ucf101_iter_40000.caffemodel', help='Pretrained model')
     parser.add_argument('--debug', type=bool, default=False, help='If debug is ture, a mini set will run into training.Or a complete set will.')
     parser.add_argument('--plotiter', type=int, default=50, help='training mini batch')
+    parser.add_argument('--validiter', type=int, default=500, help='training mini batch')
+    parser.add_argument('--savemodeliter', type=int, default=1500, help='training mini batch')
+    parser.add_argument('--trainingexampleprops',type=float, default=0.8, help='training dataset.')
     parser.add_argument('--trainingbase',type=str, default='msu', help='training dataset.')
     parser.add_argument('--videolength',type=int,default=16, help='length of video')
     parser.add_argument('--overlap',type=int,default=15, help='dataset overlap')
@@ -35,7 +38,6 @@ def get_arguments():
     return parser.parse_args()
 print "Parsing arguments..."
 args = get_arguments()
-
 
 pretrained_model_path= args.use_model
 snapshot_path = args.use_snapshot
@@ -76,10 +78,9 @@ update_solver_dict = {
 # 'solver_type':'RMSPROP',
 'display':'1',
 'base_lr': '0.01',
-
-'lr_policy':'"step"',
-'stepsize':'500',
-'snapshot':'20000'
+# 'lr_policy':'"step"',
+# 'stepsize':'500',
+'snapshot':'999999'
 }
 extrainfo_dict = {
 }
@@ -131,7 +132,7 @@ if training_base=='msu':
     train_density_basedir = '/data/sunnycia/SaliencyDataset/Video/MSU/density/sigma32'
 
 tranining_dataset = VideoDataset(train_frame_basedir, train_density_basedir, img_size=(112,112), bgr_mean_list=[98,102,90], sort='rgb')
-tranining_dataset.setup_video_dataset_c3d(overlap=args.overlap)
+tranining_dataset.setup_video_dataset_c3d(overlap=args.overlap, training_example_props=args.trainingexampleprops)
 
 # ╔╦╗╦╔═╗╔═╗
 # ║║║║╚═╗║  
@@ -152,24 +153,30 @@ print "Loss figure will be save to", plot_figure_dir
 start_time = time.time()
 
 max_iter = 5000000
-validation_iter = 1000
+validation_iter = args.validiter
 plot_iter = args.plotiter
 epoch=20
 idx_counter = 0
+save_model_iter = args.savemodeliter
 
 x=[]
+x2 = []
 y1=[]
 y2=[]
 z=[] # validation
 
-plt.plot(x, y1)
+# plt.plot(x, y1, color='red', label='training')
+# plt.plot(x2, y2, color='orange', label='validation')
+# plt.legend()
+plt.plot(x,y1, x2,y2,':')
+# plt.plot(x,y2)
 _step=0
 while _step < max_iter:
     if _step%validation_iter==0:
         ##do validation
         pass
     # print _step, 1
-    frame_data, density_data = tranining_dataset.get_frame_c3d(mini_batch=batch)
+    frame_data, density_data = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='training')
     # print _step, 2
 
     solver.net.blobs['data'].data[...] = frame_data
@@ -180,14 +187,46 @@ while _step < max_iter:
     x.append(_step)
     y1.append(solver.net.blobs['loss'].data[...].tolist())
     # y2.append(solver.net.blobs['loss5'].data[...].tolist())
-    plt.plot(x, y1)
+    if _step%validation_iter==0:
+        print "Doing validation..."
+        data_tuple = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='validation')
+        total_loss = 0
+        total_sample = 0
+        while data_tuple is not None:
+            valid_frame_data, valid_density_data = data_tuple
+            solver.net.blobs['data'].data[...] = valid_frame_data
+            solver.net.blobs['ground_truth'].data[...] = valid_density_data
+            solver.net.forward()
+            loss = solver.net.blobs['loss'].data[...].tolist()
+            total_loss += loss
+            total_sample += len(valid_frame_data)
+            data_tuple = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='validation')
+            # print loss,'\r',
+        valid_loss = total_loss/float(total_sample)
+        print valid_loss
+        x2.append(_step)
+        y2.append(valid_loss)
+    else:
+        # y2.append(np.nan)
+        pass
+    plt.plot(x,y1, x2,y2,':')
+    # plt.plot(x, y1, color='orange', label='training')
+    # plt.plot(x2, y2, color='red', label='validation')
+    # print y2
+    # plt.plot(x,y2)
+
     if _step%plot_iter==0:
         plt.xlabel('Iter')
         plt.ylabel('loss')
+        # plt.legend()
         plt.savefig(os.path.join(plot_figure_dir, "plot"+str(_step)+".png"))
         plt.clf()
-    # bug of saving solverstate, so save manually
-    if _step % 1500 == 0:
+        plot_dict = {'tr_x':x, 'tr_y':y1, 'va_x':x2,'va_y':y2}
+
+        pkl.dump(plot_dict, open(os.path.join(plot_figure_dir, "plot_dict.pkl"), 'wb'))
+        
+    # bug of saving solverstate, so save caffemodel manually here
+    if _step % save_model_iter == 0:
         if not os.path.isdir(os.path.dirname(snapshot_prefix.replace('"',''))):
             os.makedirs(os.path.dirname(snapshot_prefix.replace('"','')))
         snapshot_path = snapshot_prefix.replace('"','') + str(_step)+'.caffemodel'
@@ -195,6 +234,3 @@ while _step < max_iter:
         solver.net.save(snapshot_path)
     _step+=1
 
-pkl.dump(x, open(os.path.join(plot_figure_dir, "x.pkl"), 'wb'))
-pkl.dump(y1, open(os.path.join(plot_figure_dir, "y1.pkl"), 'wb'))
-pkl.dump(y2, open(os.path.join(plot_figure_dir, "y2.pkl"), 'wb'))

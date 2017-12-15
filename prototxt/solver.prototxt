@@ -3,13 +3,12 @@ delta: 1e-6
 display: 1
 gamma: 0.0001
 iter_size: 1
-lr_policy: "step"
+lr_policy: "inv"
 momentum: 0.9
 power: 0.75
-snapshot: 20000
-snapshot_prefix: "../training_output/salicon/vo-v4-2-stepsize-500-lr_policy-"step"-base_lr-0.01-snapshot-20000-display-1-batch-2_1513220943/snapshot-"
+snapshot: 999999
+snapshot_prefix: "../training_output/salicon/vo-v4-2-base_lr-0.01-snapshot-999999-display-1-batch-8_1513352849/snapshot-"
 solver_mode: GPU
 solver_type: ADADELTA
-stepsize: 500
 train_net: "prototxt/vo-v4-2.prototxt"
 weight_decay: 0.0005

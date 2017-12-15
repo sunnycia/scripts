@@ -22,6 +22,7 @@ for metric_mat in metric_mat_list:
         print >> w_f, metric_list[i], '\t\t',
     print >> w_f, ''
     metric = scio.loadmat(metric_mat)
+    # print metric;exit()
     saliency_score = metric['saliency_score'];
     for line in saliency_score:
         line = np.array(line)
