@@ -39,6 +39,7 @@ def get_arguments():
     parser.add_argument('--staticsolver',type=bool,default=False)
     parser.add_argument('--debug', type=bool, default=False, help='If debug is ture, a mini set will run into training.Or a complete set will.')
 
+    parser.add_argument('--extramodinfo', type=str, default='', help="add extra model information")
     return parser.parse_args()
 
 print "Parsing arguments..."
@@ -98,6 +99,7 @@ merge_dict = dict(update_solver_dict, **extrainfo_dict)
 postfix_str=os.path.basename(training_protopath).split('.')[0]
 for key in merge_dict:
     postfix_str += '-'+key+ '-'+ merge_dict[key]
+postfix_str += '-'+args.extramodinfo
 postfix_str += '-'+'batch'+'-'+str(batch)
 postfix_str += '_'+str(int(time.time()))
 if not args.use_snapshot == '':

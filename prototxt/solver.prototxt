@@ -7,8 +7,8 @@ lr_policy: "inv"
 momentum: 0.9
 power: 0.75
 snapshot: 999999
-snapshot_prefix: "../training_output/salicon/vo-v4-3-1-base_lr-0.01-snapshot-999999-display-1-batch-8_1513401014/snapshot-"
+snapshot_prefix: "../training_output/salicon/vo-v4-2-fixweight+dropout-base_lr-0.01-snapshot-999999-display-1--batch-8_1513416586/snapshot-"
 solver_mode: GPU
 solver_type: ADADELTA
-train_net: "prototxt/vo-v4-3-1.prototxt"
+train_net: "prototxt/vo-v4-2-fixweight+dropout.prototxt"
 weight_decay: 0.0005
