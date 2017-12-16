@@ -251,7 +251,9 @@ class VideoDataset():
         # print len(frame_stack), frame_stack[0].shape;#exit()
         return np.dstack(frame_stack), np.dstack(density_stack)
 
-    def get_frame_c3d(self, mini_batch=16, phase='training'):
+    def get_frame_c3d(self, mini_batch=16, phase='training', density_length='full'):
+        ## 
+        ## density_length : full, half, one
         if phase == 'training':
             tuple_list = self.training_tuple_list
             index_in_epoch = self.index_in_training_epoch
@@ -300,15 +302,22 @@ class VideoDataset():
                 frame_name = frame_wildcard % frame_index
                 # print frame_name
                 frame_path=  glob.glob(os.path.join(video_dir, frame_name))[0]
-                density_path = glob.glob(os.path.join(density_dir, frame_name))[0]
-                # frame = cv2.resize(cv2.imread(frame_path), dsize=self.img_size)
-                # density = cv2.resize(cv2.imread(density_path),dsize=self.img_size)
                 frame = self.pre_process_img(cv2.imread(frame_path),sort='rgb')
-                density = self.pre_process_img(cv2.imread(density_path, 0),True)
-
                 current_frame_list.append(frame)
-                current_density_list.append(density)
 
+            if density_length=='full':
+                for i in range(start_frame_index,end_frame_index):
+                    frame_index = i + 1
+                    frame_name = frame_wildcard % frame_index
+                    
+                    density_path = glob.glob(os.path.join(density_dir, frame_name))[0]
+                    density = self.pre_process_img(cv2.imread(density_path, 0),True)
+                    current_density_list.append(density)                
+            elif density_length=='one':
+                frame_index=end_frame_index
+                frame_name = frame_wildcard%frame_index
+                density = self.pre_process_img(cv2.imread(glob.glob(os.path.join(density_dir, frame_name))[0], 0), True)
+                current_density_list.append(density)
 
             frame_batch.append(np.array(current_frame_list))
             density_batch.append(np.array(current_density_list))

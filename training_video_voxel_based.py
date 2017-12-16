@@ -23,19 +23,24 @@ def get_arguments():
     parser.add_argument('--solver_prototxt', type=str, default='prototxt/solver.prototxt', help='the network prototxt')
     parser.add_argument('--use_snapshot', type=str, default='', help='Snapshot path.')
     parser.add_argument('--use_model', type=str, default='../pretrained_model/c3d_ucf101_iter_40000.caffemodel', help='Pretrained model')
-    parser.add_argument('--debug', type=bool, default=False, help='If debug is ture, a mini set will run into training.Or a complete set will.')
+    
     parser.add_argument('--plotiter', type=int, default=50, help='training mini batch')
     parser.add_argument('--validiter', type=int, default=500, help='training mini batch')
     parser.add_argument('--savemodeliter', type=int, default=1500, help='training mini batch')
+    
     parser.add_argument('--trainingexampleprops',type=float, default=0.8, help='training dataset.')
     parser.add_argument('--trainingbase',type=str, default='msu', help='training dataset.')
     parser.add_argument('--videolength',type=int,default=16, help='length of video')
     parser.add_argument('--overlap',type=int,default=15, help='dataset overlap')
     parser.add_argument('--batch',type=int,default=25, help='length of video')
     parser.add_argument('--imagesize', type=tuple, default=(112,112))
+    
     parser.add_argument('--lastlayer', type=str, default='fc8_new')
     parser.add_argument('--staticsolver',type=bool,default=False)
+    parser.add_argument('--debug', type=bool, default=False, help='If debug is ture, a mini set will run into training.Or a complete set will.')
+
     return parser.parse_args()
+
 print "Parsing arguments..."
 args = get_arguments()
 
@@ -176,7 +181,7 @@ while _step < max_iter:
         ##do validation
         pass
     # print _step, 1
-    frame_data, density_data = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='training')
+    frame_data, density_data = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='training', density_length='one')
     # print _step, 2
 
     solver.net.blobs['data'].data[...] = frame_data
@@ -186,21 +191,35 @@ while _step < max_iter:
 
     x.append(_step)
     y1.append(solver.net.blobs['loss'].data[...].tolist())
+
+    if args.debug==1:
+        #    ___    ____   ___   __  __  _____
+        #   / _ \  / __/  / _ ) / / / / / ___/
+        #  / // / / _/   / _  |/ /_/ / / (_ / 
+        # /____/ /___/  /____/ \____/  \___/  
+        layer_list = ['predict_reshape', 'concat2']
+        for layer in layer_list:
+            data = solver.net.blobs[layer].data[...].tolist()
+            print layer, np.mean(data), np.sum(data)    
+        # exit()
+
     # y2.append(solver.net.blobs['loss5'].data[...].tolist())
     if _step%validation_iter==0:
-        print "Doing validation..."
-        data_tuple = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='validation')
+        print "Doing validation...", tranining_dataset.num_validation_examples, "validation samples in total."
+        data_tuple = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='validation', density_length='one')
         total_loss = 0
         total_sample = 0
         while data_tuple is not None:
+            print "index in validation epoch:", tranining_dataset.index_in_validation_epoch,'\r',
             valid_frame_data, valid_density_data = data_tuple
             solver.net.blobs['data'].data[...] = valid_frame_data
             solver.net.blobs['ground_truth'].data[...] = valid_density_data
             solver.net.forward()
             loss = solver.net.blobs['loss'].data[...].tolist()
+
             total_loss += loss
             total_sample += len(valid_frame_data)
-            data_tuple = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='validation')
+            data_tuple = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='validation', density_length='one')
             # print loss,'\r',
         valid_loss = total_loss/float(total_sample)
         print valid_loss
