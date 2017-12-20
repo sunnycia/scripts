@@ -14,10 +14,10 @@ from utils.file_check import check_path_list
 from caffe.proto import caffe_pb2
 import google.protobuf.text_format as txtf
 from Flownet import Flownet
+from Saliencynet import ImageSaliencyNet
 import utils.OpticalFlowToolkit.lib.flowlib as flib
 
 caffe.set_mode_gpu()
-
 
 def get_arguments():
     parser = argparse.ArgumentParser()
@@ -157,6 +157,12 @@ deploy_proto_path = os.path.join(flow_net_model_base, flownet_dict[flownet_code]
 caffe_model_path = os.path.join(flow_net_model_base, flownet_dict[flownet_code], flownet_dict[flownet_code]+model_postfix)
 flownet = Flownet(deploy_proto_path, caffe_model_path, args.image_size)
 
+# ┌─┐┌─┐┌┬┐┬ ┬┌─┐  ┌─┐┌─┐┬  ┬┌─┐┌┐┌┌─┐┬ ┬  ┌┐┌┌─┐┌┬┐
+# └─┐├┤  │ │ │├─┘  └─┐├─┤│  │├┤ ││││  └┬┘  │││├┤  │ 
+# └─┘└─┘ ┴ └─┘┴    └─┘┴ ┴┴─┘┴└─┘┘└┘└─┘ ┴   ┘└┘└─┘ ┴ 
+saliencynet = ImageSaliencyNet(saliency_deploy_prototxt_path, saliency_caffemodel_path)
+
+
 # ╔═╗┌─┐┌┬┐┬ ┬┌─┐  ┌┬┐┌─┐┌┬┐┌─┐┌─┐┌─┐┌┬┐
 # ╚═╗├┤  │ │ │├─┘   ││├─┤ │ ├─┤└─┐├┤  │ 
 # ╚═╝└─┘ ┴ └─┘┴    ─┴┘┴ ┴ ┴ ┴ ┴└─┘└─┘ ┴ 
@@ -205,6 +211,7 @@ while _step < max_iter:
         pass
     # tranining_dataset.get_frame_pair()
     key_frame,cur_frame, cur_frame_gt= tranining_dataset.get_frame_pair()
+    spatial_saliency = saliencynet.compute_saliency()
     flow = flownet.get_optical_flow(key_frame, cur_frame)
     
     key_frame = np.transpose(key_frame, (2, 0, 1))[None, ...]

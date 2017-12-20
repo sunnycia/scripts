@@ -3316,37 +3316,217 @@
  3316  top
  3317  cd pwd/saliency_on_videoset/
  3318  ls
- 3319  cd pwd/autocrop/
- 3320  cd src/
- 3321  mkdir build
- 3322  cd build/
- 3323  cmake ..
- 3324  ls
- 3325  cd ..
- 3326  cd build/
- 3327  ls
- 3328  make install
- 3329  make
- 3330  make clean
- 3331  cd ..
- 3332  ls
- 3333  rm -rf build/
- 3334  cd ..
- 3335  ls
- 3336  rm -rf build/
- 3337  cd ..
- 3338  tar -czf autocrop/ autocrop.tar.gz
- 3339  tar -czf autocrop.tar.gz autocrop/
- 3340  top
- 3341  nvidia-smi
- 3342  clear
- 3343  nvidia-smi
- 3344  watch -n 2 nvidia-smi
- 3345  top
- 3346  nvidia-smi
- 3347  cd saliency_on_videoset/Train/scripts/
- 3348  source set_env.sh ../C3D-v1.1/ 4
- 3349  nvidia-smi
- 3350  source set_env.sh ../C3D-v1.1/ 6
- 3351  clear
- 3352  history > history 
+ 3319  top
+ 3320  nvidia-smi
+ 3321  top
+ 3322  nvidia-smi
+ 3323  ls
+ 3324  cd pwd/
+ 3325  ls
+ 3326  git clone 
+ 3327  git clone https://github.com/swook/autocrop.git
+ 3328  ls
+ 3329  cd autocrop/
+ 3330  ls
+ 3331  make
+ 3332  mkdir build
+ 3333  cd build/
+ 3334  cmake ..
+ 3335  cd ..
+ 3336  l
+ 3337  ls
+ 3338  make clean
+ 3339  cd ~/pwd/saliency_on_videoset/
+ 3340  ls
+ 3341  cd Train/
+ 3342  ls
+ 3343  clear
+ 3344  ls
+ 3345  cd scripts/
+ 3346  source set_env.sh ../caffe-flownet 4
+ 3347  nvidia-smi
+ 3348  source set_env.sh ../caffe-flownet 4
+ 3349  clear
+ 3350  python test_video.py --output_type="video" --test_base='videoset' --model_code='v3' --infertype='slide' --video_deploy_path='prototxt/vo-v3-2_deploy.prototxt' --video_model_path='../training_output/salicon/vo-v3-2_train_kldloss_withouteuc-batch-1_1513084718/snapshot-_iter_50000.caffemodel'
+ 3351  python test_video.py --output_type="video" --test_base='videoset' --model_code='v3' --infertype='slide' --video_deploy_path='prototxt/vo-v3-2_deploy.prototxt' --video_model_path='../training_output/salicon/vo-v3-2_train_kldloss_withouteuc-batch-1_1513084718/snapshot-_iter_50000.caffemodel' --videolength=16
+ 3352  nvidia-smi
+ 3353  clear
+ 3354  cd ..
+ 3355  ls
+ 3356  cd C3D/
+ 3357  ls
+ 3358  cd C3D-v1.0/
+ 3359  ls
+ 3360  cp Makefile.config.example Makefile.config
+ 3361  vim Makefile.config
+ 3362  make -j8 all
+ 3363  make pycaffe
+ 3364  ls
+ 3365  cd python/
+ 3366  ls
+ 3367  python
+ 3368  cd ..
+ 3369  make pycaffe
+ 3370  export CPLUS_INCLUDE_PATH=/usr/include/python2.7
+ 3371  make pycaffe
+ 3372  python
+ 3373  cd python/
+ 3374  import caffe
+ 3375  python
+ 3376  cd ..
+ 3377  cd..
+ 3378  cd ..
+ 3379  cp C3D-v1.0/ ../
+ 3380  cp -R C3D-v1.0/ ../
+ 3381  cd ..
+ 3382  ls -l
+ 3383  ls -ls
+ 3384  cd scripts/
+ 3385  source set_env.sh ../C3D-v1.0/
+ 3386  nvidia-smi
+ 3387  source set_env.sh ../C3D-v1.0/ 4
+ 3388  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2.prototxt' --use_model='../pretrained_model/conv3d_deepnetA_sport1m_iter_1900000' --trainingbase='msu'
+ 3389  python
+ 3390  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2.prototxt' --use_model='../pretrained_model/conv3d_deepnetA_sport1m_iter_1900000' --trainingbase='msu' --solver_prototxt='prototxt/solver-static.prototxt' --staticsolver=1 
+ 3391  cd ..
+ 3392  git clone https://github.com/AustinVan/IC.git
+ 3393  cd IC/
+ 3394  la
+ 3395  python
+ 3396  cd python/
+ 3397  python
+ 3398  cd ..
+ 3399  vim Makefile.config
+ 3400  make clean
+ 3401  make -j8 all
+ 3402  cd ..
+ 3403   rm -rf IC/ 
+ 3404  clear
+ 3405  ls
+ 3406  cd C3D-v1.1/
+ 3407  ls
+ 3408  cd python/
+ 3409  python
+ 3410  cd ..
+ 3411  make pycaffe
+ 3412  make clean
+ 3413  make -j16 all && make -j8 pycaffe
+ 3414  cd ..
+ 3415  rm -rf C3D-v1.0/ C3D-v1.1/
+ 3416  ls
+ 3417  cp C3D/C3D-v1.1/ ./
+ 3418  cp -R C3D/C3D-v1.1/ ./
+ 3419  cd C3D-v1.1/
+ 3420  ls
+ 3421  cd python/
+ 3422  python
+ 3423  cd ..
+ 3424  make clean
+ 3425  cp Makefile.config.example Makefile.config
+ 3426  vim Makefile.config
+ 3427  make -j8 all && make pycaffe
+ 3428  cd python/
+ 3429  python
+ 3430  clear
+ 3431  cd ..
+ 3432  cd scripts/
+ 3433  source set_env.sh ../C3D-v1.1/
+ 3434  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2.prototxt' --use_model='../pretrained_model/conv3d_deepnetA_sport1m_iter_1900000' --trainingbase='msu'
+ 3435  source set_env.sh ../C3D-v1.1/ 4
+ 3436  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2.prototxt' --use_model='../pretrained_model/conv3d_deepnetA_sport1m_iter_1900000' --trainingbase='msu'
+ 3437  cd ..
+ 3438  cd C3D-v1.1/
+ 3439  ls
+ 3440  make clean
+ 3441  make all && make pycaffe
+ 3442  make clean
+ 3443  make all && make pycaffe
+ 3444  cd -
+ 3445  cd scripts/
+ 3446  ls
+ 3447  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2.prototxt' --use_model='../pretrained_model/conv3d_deepnetA_sport1m_iter_1900000' --trainingbase='msu'
+ 3448  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2.prototxt' --trainingbase='msu'
+ 3449  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2.prototxt' --use_model='../pretrained_model/conv3d_deepnetA_sport1m_iter_1900000' --trainingbase='msu'
+ 3450  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2.prototxt' --use_model='../pretrained_model/conv3d_deepnetA_sport1m_iter_1900000_v1.1.caffemodel' --trainingbase='msu'
+ 3451  cd pwd/saliency_on_videoset/
+ 3452  ls
+ 3453  cd Train/scripts/
+ 3454  history > history
+ 3455  source set_env.sh ../caffe-flownet/
+ 3456  pwd
+ 3457  python training_image.py --train_prototxt='prototxt/train_kldloss.prototxt' --use_snapshot='../training_output/salicon/
+ 3458  export CUDA_VISIBLE_DEVICES=6
+ 3459  python training_image.py --train_prototxt='prototxt/train_kldloss.prototxt' --use_snapshot='../training_output/salicon/
+ 3460  python training_image.py --train_prototxt='prototxt/train_kldloss.prototxt' --use_snapshot='../training_output/salicon/'
+ 3461  python training_image.py --train_prototxt='prototxt/train_kldloss.prototxt' --use_snapshot='../training_output/salicon/train_kldloss_withouteuc-batch-8_1509584263/snapshot-_iter_100000.solverstate' --batch=8 --dsname='bigunion'
+ 3462  cd pwd/autocrop/
+ 3463  cd src/
+ 3464  mkdir build
+ 3465  cd build/
+ 3466  cmake ..
+ 3467  ls
+ 3468  cd ..
+ 3469  cd build/
+ 3470  ls
+ 3471  make install
+ 3472  make
+ 3473  make clean
+ 3474  cd ..
+ 3475  ls
+ 3476  rm -rf build/
+ 3477  cd ..
+ 3478  ls
+ 3479  rm -rf build/
+ 3480  cd ..
+ 3481  tar -czf autocrop/ autocrop.tar.gz
+ 3482  tar -czf autocrop.tar.gz autocrop/
+ 3483  top
+ 3484  nvidia-smi
+ 3485  clear
+ 3486  nvidia-smi
+ 3487  watch -n 2 nvidia-smi
+ 3488  top
+ 3489  nvidia-smi
+ 3490  cd saliency_on_videoset/Train/scripts/
+ 3491  source set_env.sh ../C3D-v1.1/ 4
+ 3492  nvidia-smi
+ 3493  source set_env.sh ../C3D-v1.1/ 6
+ 3494  clear
+ 3495  history > history 
+ 3496  cd /data/sunnycia/saliency_on_videoset/Train/C3D-v1.1/examples/c3d_ucf101_finetuning
+ 3497  bash testing_ucf101.sh 
+ 3498  clear
+ 3499  cd -
+ 3500  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet.prototxt' --use_model='../pretrained_model/c3d_resnet18_sports1m_r2_iter_2800000.caffemodel' --trainingbase='msu'
+ 3501  nvidi-asmi
+ 3502  nvidia-smi
+ 3503  top
+ 3504  nvidia-smi
+ 3505  cd pwd/saliency_on_videoset/Train/scripts/
+ 3506  pwd
+ 3507  clear
+ 3508  source set_env.sh ../caffe-flownet/ 3
+ 3509  python test_video.py --output_type='image' --test_base='videoset' --model_code='v3' video_deploy_path='prototxt/vo-v3-2_deploy.prototxt' --video_model_path='../training_output/salicon/vo-v3-2_train_kldloss_withouteuc-batch-1_1513084718/snapshot-_iter_150000.caffemodel' --infertype='slide' --output_type='image'
+ 3510  python test_video.py --output_type='image' --test_base='videoset' --model_code='v3' --video_deploy_path='prototxt/vo-v3-2_deploy.prototxt' --video_model_path='../training_output/salicon/vo-v3-2_train_kldloss_withouteuc-batch-1_1513084718/snapshot-_iter_150000.caffemodel' --infertype='slide' --output_type='image'
+ 3511  python test_video.py --output_type='image' --test_base='videoset' --model_code='v3' --video_deploy_path='prototxt/vo-v3-2_deploy.prototxt' --video_model_path='../training_output/salicon/vo-v3-2_train_kldloss_withouteuc-batch-1_1513084718/snapshot-_iter_150000.caffemodel' --infertype='slide' --output_type='image' --videolength=16
+ 3512  top
+ 3513  nvidia-smi
+ 3514  git status
+ 3515  git add -all
+ 3516  git add --all
+ 3517  git commit -m "Modify Saliencynet.py, abstract class VideoSaliencyNet'
+'
+ 3518  git commit -m "Modify Saliencynet.py, abstract class VideoSaliencyNet"
+ 3519  git push -u origin master
+ 3520  source set_env.sh ../C3D-v1.1/ 3
+ 3521  nvidia-smi
+ 3522  clear
+ 3523  python test_video.py --video_deploy_path='prototxt/vo-v4-2-deploy.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-base_lr-0.01-snapshot-20000-display-1-batch-8_1513218849/snapshot-13500.caffemodel' --infertype='slice' --output_type='image' --test_base='videoset' --model_code='v4-2' --videolength=16
+ 3524  python test_video.py --video_deploy_path='prototxt/vo-v4-2-deploy.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-base_lr-0.01-snapshot-20000-display-1-batch-8_1513218849/snapshot-6000.caffemodel' --infertype='slice' --output_type='image' --test_base='videoset' --model_code='v4-2' --videolength=16
+ 3525  python test_video.py --video_deploy_path='prototxt/vo-v4-2-deploy.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-base_lr-0.01-snapshot-20000-display-1-batch-8_1513218849/snapshot-6000.caffemodel' --infertype='slice' --output_type='video' --test_base='videoset' --model_code='v4-2' --videolength=16
+ 3526  python test_video.py --video_deploy_path='prototxt/vo-v4-2-deploy.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-base_lr-0.01-snapshot-20000-display-1-batch-8_1513218849/snapshot-2000.caffemodel' --infertype='slice' --output_type='video' --test_base='videoset' --model_code='v4-2' --videolength=16
+ 3527  python test_video.py --video_deploy_path='prototxt/vo-v4-2-deploy.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-base_lr-0.01-snapshot-20000-display-1-batch-8_1513218849/snapshot-3000.caffemodel' --infertype='slice' --output_type='video' --test_base='videoset' --model_code='v4-2' --videolength=16
+ 3528  python test_video.py --video_deploy_path='prototxt/vo-v4-2-deploy.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-base_lr-0.01-snapshot-20000-display-1-batch-8_1513218849/snapshot-3000.caffemodel' --infertype='slice' --output_type='image' --test_base='videoset' --model_code='v4-2' --videolength=16
+ 3529  top
+ 3530  nvidia-smi
+ 3531  history > history

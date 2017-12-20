@@ -89,14 +89,15 @@ with open(training_protopath, 'w') as f:
 # update_solver_dict=args.updatesolverdict
 # extrainfo_dict=args.extrainfodict
 update_solver_dict = {
+# 'base_lr': "0.000001", 
+# 'weight_decay': '0.000005', 
+# 'momentum': '0.95'
 # 'lr_policy':'"step"',
 # 'stepsize':'100000',
 # 'gamma':'0.1',
 # 'solver_type':'SGD'
 }
 extrainfo_dict = {
-'dataset':'bigunion',
-'lrpolicy':'step1e601'
 }
 solver_path = args.solver_prototxt
 solverproto = CaffeSolver(trainnet_prototxt_path=training_protopath)
@@ -162,7 +163,7 @@ elif args.dsname == 'bigunion':
     # validation_frame_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/images'
     # validation_density_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/density'
 
-tranining_dataset = StaticDataset(train_frame_basedir, train_density_basedir, debug=debug_mode)
+tranining_dataset = StaticDataset(frame_basedir=train_frame_basedir, density_basedir=train_density_basedir, debug=debug_mode)
 # validation_dataset = StaticDataset(train_frame_basedir, train_density_basedir, debug=debug_mode)
 
 

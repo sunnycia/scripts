@@ -29,10 +29,13 @@ def get_arguments():
     parser.add_argument('--video_deploy_path',type=str,default='./prototxt/vo-v3_deploy.prototxt')
     parser.add_argument('--video_model_path',type=str,default='../training_output/salicon/vo-v3_train_kldloss_withouteuc-batch-1_1510229829/snapshot-_iter_400000.caffemodel')
     parser.add_argument('--infertype', type=str,default='slice')
+    parser.add_argument('--threshold', type=float, default=0)
+
     return parser.parse_args()
 print "Parsing arguments..."
 args = get_arguments()
 output_type = args.output_type
+threshold = args.threshold
 
 if __name__ =='__main__':
     # model_base = '../training_output/salicon'
@@ -63,7 +66,7 @@ if __name__ =='__main__':
     elif args.test_base == 'diem':
         pass
 
-    model_name = os.path.dirname(video_model_path).split('/')[-1] + '_'+ os.path.basename(video_model_path).split('.')[0]
+    model_name = os.path.dirname(video_model_path).split('/')[-1] + '_'+ os.path.basename(video_model_path).split('.')[0] + '_threshold'+str(threshold)
     video_path_list = glob.glob(os.path.join(video_base, "*.*"))
     saliency_video_dir = os.path.join(saliency_video_base, model_name)
     saliency_map_dir = os.path.join(saliency_map_base, model_name)
@@ -99,7 +102,7 @@ if __name__ =='__main__':
                 print len(glob.glob(os.path.join(saliency_map_dir, video_name+'*')))
                 print "Handling",video_name
             vs.setup_video(video_path)
-            vs.create_saliency_video()
+            vs.create_saliency_video(threshold=threshold)
             vs.dump_predictions_as_images(saliency_map_dir, video_name, args.allinone)
 
         if args.output_type=="video":
@@ -110,7 +113,7 @@ if __name__ =='__main__':
                 print saliency_video_path, "exists, pass..."
                 continue
             vs.setup_video(video_path)
-            vs.create_saliency_video()
+            vs.create_saliency_video(threshold=threshold)
             fps = vs.video_meta_data['fps']
             vs.dump_predictions_as_video(saliency_video_path, fps)
 

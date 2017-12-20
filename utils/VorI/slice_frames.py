@@ -44,15 +44,31 @@ for video_path in video_path_list:
     save_dir = os.path.join(output_base, video_name)
     if not os.path.isdir(save_dir):
         os.makedirs(save_dir)
-    video_reader = imageio.get_reader(video_path)
-    for frame_idx, frame in enumerate(video_reader):
-        frame = frame[:, :, ::-1] #switch channel to BGR
+
+    video_capture = cv2.VideoCapture(video_path)
+
+    status, frame = video_capture.read()
+    frame_idx = 1
+    while status:
         frame_name = imgwildcard % (str(frame_idx+1), imgfmt)
         frame_path = os.path.join(save_dir, frame_name)
         if args.verbose:
             print "Handling",video_name, str(frame_idx)
             print "\tSave as", frame_path
         cv2.imwrite(frame_path, frame)
+        status, frame = video_capture.read()
+        frame_idx += 1
 
-    video_reader.close()
+    video_capture.release()
+
+    # video_reader = imageio.get_reader(video_path)
+    # for frame_idx, frame in enumerate(video_reader):
+    #     frame = frame[:, :, ::-1] #switch channel to BGR
+    #     frame_name = imgwildcard % (str(frame_idx+1), imgfmt)
+    #     frame_path = os.path.join(save_dir, frame_name)
+    #     if args.verbose:
+    #         print "Handling",video_name, str(frame_idx)
+    #         print "\tSave as", frame_path
+    #     cv2.imwrite(frame_path, frame)
+    # video_reader.close()
 

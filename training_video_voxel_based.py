@@ -83,7 +83,9 @@ image_size = args.imagesize
 update_solver_dict = {
 # 'solver_type':'RMSPROP',
 'display':'1',
-'base_lr': '0.01',
+# 'base_lr': '0.00001',
+# 'weight_decay': '0.000005',
+# 'momentum': '0.95',
 # 'lr_policy':'"step"',
 # 'stepsize':'500',
 'snapshot':'999999'
@@ -137,6 +139,10 @@ print "Loading data..."
 if training_base=='msu':
     train_frame_basedir = '/data/sunnycia/SaliencyDataset/Video/MSU/frames'
     train_density_basedir = '/data/sunnycia/SaliencyDataset/Video/MSU/density/sigma32'
+elif training_base=='ledov':
+    train_frame_basedir = '/data/sunnycia/SaliencyDataset/Video/LEDOV/frames'
+    train_density_basedir = '/data/sunnycia/SaliencyDataset/Video/LEDOV/density/sigma32'
+
 
 tranining_dataset = VideoDataset(train_frame_basedir, train_density_basedir, img_size=(112,112), bgr_mean_list=[98,102,90], sort='rgb')
 tranining_dataset.setup_video_dataset_c3d(overlap=args.overlap, training_example_props=args.trainingexampleprops)

@@ -26,7 +26,9 @@ end
 % model_list = {'v1';'v3';};
 % model_list = {'FANG2';'DENSITY';'xu_dupext40';'SAM';'train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000';'MOTION';'MSFUSION';'UNCERTAINTY';'SAM';'XU';'SALICON';'ITKO';'GBVS';'PQFT';'SUN';'ISEEL';'MDB';};
 % model_list = {'vo-v3-2_train_kldloss_withouteuc-batch-1_1513084718_snapshot-_iter_150000'};
-model_list = {'vo-v4-2-base_lr-0.01-snapshot-20000-display-1-batch-8_1513218849_snapshot-3000'};
+% model_list = {'vo-v4-2-base_lr-0.01-snapshot-20000-display-1-batch-8_1513218849_snapshot-3000'};
+% model_list = {'vo-v4-2-base_lr-0.01-snapshot-20000-display-1-batch-8_1513218849_snapshot-13500_threshold0.75'};
+model_list = {'vo-v4-2-base_lr-0.01-snapshot-20000-display-1-batch-8_1513218849_snapshot-13500_threshold0.75_rangesmooth'}
 
 cc_msk  = 1;
 sim_msk = 1;

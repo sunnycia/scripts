@@ -363,15 +363,15 @@ layer {
 
 
 layer {
-  name: "deconv5b-relu"
+  name: "relu5b-de"
   type: "ReLU"
   bottom: "deconv5b"
-  top: "deconv5b-relu"
+  top: "deconv5b"
 }
 layer {
   name: "deconv5b-dropout"
   type: "Dropout"
-  bottom: "deconv5b-relu"
+  bottom: "deconv5b"
   top: "deconv5b-dropout"
   dropout_param {
     dropout_ratio: 0.5
@@ -450,16 +450,16 @@ layer {
   }
 }
 layer {
-  name: "deconv4b-relu"
+  name: "relu4b-de"
   type: "ReLU"
   bottom: "deconv4b"
-  top: "deconv4b-relu"
+  top: "deconv4b"
 }
 layer {
-  name: "deconv4b-dropout"
+  name: "deconv4b"
   type: "Dropout"
-  bottom: "deconv4b-relu"
-  top: "deconv4b-dropout"
+  bottom: "deconv4b"
+  top: "deconv4b"
   dropout_param {
     dropout_ratio: 0.5
   }
@@ -497,7 +497,7 @@ layer {
 layer {
   name: "concat2"
   type: "Concat"
-  bottom: "deconv4b-dropout"
+  bottom: "deconv4b"
   bottom: "predict3b"
   top: "concat2"
   concat_param {
@@ -537,16 +537,16 @@ layer {
   }
 }
 layer {
-  name: "deconv3b-relu"
+  name: "relu3b-de"
   type: "ReLU"
   bottom: "deconv3b"
-  top: "deconv3b-relu"
+  top: "deconv3b"
 }
 layer {
-  name: "deconv3b-dropout"
+  name: "deconv3b"
   type: "Dropout"
-  bottom: "deconv3b-relu"
-  top: "deconv3b-dropout"
+  bottom: "deconv3b"
+  top: "deconv3b"
   dropout_param {
     dropout_ratio: 0.5
   }
@@ -554,7 +554,7 @@ layer {
 layer {
   name: "predict"
   type: "Convolution3D"
-  bottom: "deconv3b-dropout"
+  bottom: "deconv3b"
   top: "predict"
   
   param{

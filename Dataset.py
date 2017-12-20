@@ -301,6 +301,7 @@ class VideoDataset():
                 frame_index = i + 1
                 frame_name = frame_wildcard % frame_index
                 # print frame_name
+                # print os.path.join(video_dir, frame_name)
                 frame_path=  glob.glob(os.path.join(video_dir, frame_name))[0]
                 frame = self.pre_process_img(cv2.imread(frame_path),sort='rgb')
                 current_frame_list.append(frame)

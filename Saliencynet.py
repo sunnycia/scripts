@@ -364,13 +364,24 @@ class C3DbasedVideoSaliencyNet:
         if channel_order == 'rgb':
             image= image[:, :, ::-1]
         return image
-    def postprocess_saliency(self, raw_prediction):
+    def postprocess_saliency(self, raw_prediction, threshold, gaussian=True):
+        # threshold is between 1 to 0
         raw_prediction = (raw_prediction - raw_prediction.min())/raw_prediction.max()
         prediction = raw_prediction*255
+
+        # ret1,th1 = cv2.threshold(img,127,255,cv2.THRESH_BINARY)
+        ##threshold image result
+        scaled_threshold = threshold * 255
+        prediction[np.where(prediction < threshold)] = 0
+
+        if gaussian==True:
+            ## do gaussian blur to smooth the thresholded contour
+            prediction = cv2.GaussianBlur(prediction,(5,5),0)
+            # pass
         prediction = cv2.resize(prediction, dsize=self.video_meta_data['size'])
         return prediction
 
-    def create_saliency_video(self):
+    def create_saliency_video(self, threshold):
         ## generate tuple list first
         self.prediction_list = []
         for i in range(0, len(self.frames), self.video_length):
@@ -386,7 +397,7 @@ class C3DbasedVideoSaliencyNet:
                 # print i
                 for j in range(len(self.frames)-i, self.video_length):
                     # print j
-                    prediction = self.postprocess_saliency(raw_prediction_list[j])
+                    prediction = self.postprocess_saliency(raw_prediction_list[j], threshold)
                     self.prediction_list.append(prediction)      
                 break
             start_frame_index = i;end_frame_index = i + self.video_length - 1
@@ -399,7 +410,7 @@ class C3DbasedVideoSaliencyNet:
             # output = flat_output
             assert len(raw_prediction_list) == self.video_length, str(len(raw_prediction_list))+'is not equal to '+str(self.video_length)
             for raw_prediction in raw_prediction_list:
-                self.prediction_list.append(self.postprocess_saliency(raw_prediction))
+                self.prediction_list.append(self.postprocess_saliency(raw_prediction, threshold))
         assert len(self.prediction_list) == len(self.frames),"Prediction not complete."+str(len(self.prediction_list))+' not equal to '+str(len(self.frames))
 
     def dump_predictions_as_video(self,output_path, fps):
@@ -415,7 +426,6 @@ class C3DbasedVideoSaliencyNet:
 
     def dum_predictions_as_images(self,output_directory, video_name, allinone):
         pass
-
 
 class VoxelbasedVideoSaliencyNet:
     def __init__(self, deploy_proto, caffe_model, video_size, video_length, mean_list, infer_type):
@@ -440,10 +450,32 @@ class VoxelbasedVideoSaliencyNet:
         img_arr = img_arr / 255. # normalization to 1
         # print img_arr.shape
         return img_arr    
-    def postprocess_saliency_map(self, sal_map):
-        sal_map = sal_map - np.amin(sal_map);sal_map = sal_map / np.amax(sal_map);sal_map *= 255
-        sal_map = cv2.resize(sal_map, dsize=self.video_meta_data['size'])
-        return sal_map
+    # def postprocess_saliency_map(self, sal_map):
+    #     sal_map = sal_map - np.amin(sal_map);sal_map = sal_map / np.amax(sal_map);sal_map *= 255
+    #     sal_map = cv2.resize(sal_map, dsize=self.video_meta_data['size'])
+    #     return sal_map
+    def postprocess_saliency_map(self, raw_prediction, threshold=0, gaussian=False, range_smooth=False):
+        # threshold is between 1 to 0
+        raw_prediction = (raw_prediction - raw_prediction.min())/raw_prediction.max()
+        prediction = raw_prediction*255
+
+        # ret1,th1 = cv2.threshold(img,127,255,cv2.THRESH_BINARY)
+        ##threshold image result
+        scaled_threshold = int(threshold * 255)
+        prediction[np.where(prediction < scaled_threshold)] = 0
+        if gaussian==True:
+            ## do gaussian blur to smooth the thresholded contour
+            prediction = cv2.GaussianBlur(prediction,(5,5),0)
+        if range_smooth==True:
+            prediction = prediction - scaled_threshold
+
+            prediction = prediction / prediction.max()
+            prediction = prediction * 255
+            prediction[np.where(prediction<0)]=0
+
+            # pass
+        prediction = cv2.resize(prediction, dsize=self.video_meta_data['size'])
+        return prediction
 
     def setup_video(self, video_path):
         if not os.path.isfile(video_path):
@@ -472,7 +504,7 @@ class VoxelbasedVideoSaliencyNet:
         #     prefix_frames = [self.frames[0] for i in range(self.video_length)]
         #     self.frames = prefix_frames + self.frames
 
-    def create_saliency_video(self,overlap=15):
+    def create_saliency_video(self,overlap=15, threshold=0):
         self.prediction_list = []
         assert overlap < self.video_length, "overlap should not greater than video_length"
         step = self.video_length - overlap
@@ -493,11 +525,11 @@ class VoxelbasedVideoSaliencyNet:
 
             if i == 0:
                 for raw_prediction in raw_prediction_list:
-                    self.prediction_list.append(self.postprocess_saliency_map(raw_prediction))
+                    self.prediction_list.append(self.postprocess_saliency_map(raw_prediction, threshold))
             else:
                 for k in range(self.video_length-step,self.video_length):
                     raw_prediction = raw_prediction_list[k]
-                    self.prediction_list.append(self.postprocess_saliency_map(raw_prediction))
+                    self.prediction_list.append(self.postprocess_saliency_map(raw_prediction, threshold))
 
         assert len(self.prediction_list) == len(self.frames),"Prediction not complete."+str(len(self.prediction_list))+' not equal to '+str(len(self.frames))
 
