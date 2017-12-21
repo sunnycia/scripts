@@ -27,6 +27,7 @@ def get_arguments():
     parser.add_argument('--plotiter', type=int, default=50, help='training mini batch')
     parser.add_argument('--validiter', type=int, default=500, help='training mini batch')
     parser.add_argument('--savemodeliter', type=int, default=1500, help='training mini batch')
+    parser.add_argument('--snapshotincode', type=bool, default=False, help='save snapshot in code')
     
     parser.add_argument('--trainingexampleprops',type=float, default=0.8, help='training dataset.')
     parser.add_argument('--trainingbase',type=str, default='msu', help='training dataset.')
@@ -88,7 +89,7 @@ update_solver_dict = {
 # 'momentum': '0.95',
 # 'lr_policy':'"step"',
 # 'stepsize':'500',
-'snapshot':'999999'
+'snapshot':str(args.savemodeliter)
 }
 extrainfo_dict = {
 }
@@ -253,7 +254,7 @@ while _step < max_iter:
         pkl.dump(plot_dict, open(os.path.join(plot_figure_dir, "plot_dict.pkl"), 'wb'))
         
     # bug of saving solverstate, so save caffemodel manually here
-    if _step % save_model_iter == 0:
+    if _step % save_model_iter == 0 and args.snapshotincode == True:
         if not os.path.isdir(os.path.dirname(snapshot_prefix.replace('"',''))):
             os.makedirs(os.path.dirname(snapshot_prefix.replace('"','')))
         snapshot_path = snapshot_prefix.replace('"','') + str(_step)+'.caffemodel'

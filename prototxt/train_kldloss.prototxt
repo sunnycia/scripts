@@ -2303,7 +2303,7 @@ layer {
     group: 512
     stride: 4
     weight_filler {
-      type: "bilinear"
+      type: "msra"
     }
   }
 }
@@ -2324,7 +2324,7 @@ layer {
     group: 64
     stride: 4
     weight_filler {
-      type: "bilinear"
+      type: "msra"
     }
   }
 }
@@ -2345,10 +2345,17 @@ layer {
     group: 1
     stride: 2
     weight_filler {
-      type: "bilinear"
+      type: "msra"
     }
   }
 }
+layer {
+  name: "salmap-relu"
+  type: "ReLU"
+  bottom: "saliency_map"
+  top: "saliency_map"
+}
+
 layer {
   name: "eucloss"
   type: "EuclideanLoss"

@@ -29,7 +29,7 @@ end
 % model_list = {'xu_dupext40', 'SAM', 'train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000'}
 % model_list = {'vo-v4-2-base_lr-0.01-snapshot-20000-display-1-batch-8_1513218849_snapshot-13500'};
 % model_list = {'vo-v4-2-base_lr-0.01-snapshot-20000-display-1-batch-8_1513218849_snapshot-13500_threshold0.75_rangesmooth'}
-model_list = {'vo-v4-2-base_lr-0.01-snapshot-20000-display-1-batch-8_1513218849_snapshot-13500_threshold0.75_rangesmooth'}
+model_list = {'mit1003_train_kldloss-leaky-batch-8_1513739634_usesnapshot_1509584263_snapshot-_iter_100000snapshot-_iter_200000'}
 % model_list = {'vo-v3-2_train_kldloss_withouteuc-batch-1_1513084718_snapshot-_iter_150000'};
 % model_list = {'DENSITY';'MOTION';'MSFUSION';'UNCERTAINTY';'FANG2';'SUN';'MDB';'ISEEL';'SAM';'SALICON';'ITKO';'GBVS';'PQFT';'XU'};
 % model_list={'MSFUSION';'UNCERTAINTY';};
@@ -102,6 +102,7 @@ for i=1:length(model_list)
     resultpath = fullfile(result_base_dir, resultname);
     save(resultpath, 'result','frame_count','met_sum');
     fprintf('%s saved!\n',resultpath);
+    % result'
     
     % break;
 end

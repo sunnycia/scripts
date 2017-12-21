@@ -1,5 +1,5 @@
  delete(gcp);
-matlabpool 8
+matlabpool 4
 
 metricsFolder = 'saliency/code_forMetrics'
 addpath(genpath(metricsFolder))
@@ -10,14 +10,19 @@ if ~isdir(save_base)
     mkdir(save_base);
 end
 % model_list = {'cb-train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000';'train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000';}
-model_list={
-    'train_kldloss-dataset-bigunion-batch-8_1511876736_usesnapshot_1509584263_snapshot-_iter_100000snapshot-_iter_150000';
-    'train_kldloss-dataset-bigunion-batch-8_1511876736_usesnapshot_1509584263_snapshot-_iter_100000snapshot-_iter_200000';
-    'train_kldloss-dataset-bigunion-batch-8_1511876736_usesnapshot_1509584263_snapshot-_iter_100000snapshot-_iter_250000';
-    'train_kldloss-dataset-bigunion-batch-8_1511876736_usesnapshot_1509584263_snapshot-_iter_100000snapshot-_iter_300000';
-    'train_kldloss-dataset-bigunion-batch-8_1511876736_usesnapshot_1509584263_snapshot-_iter_100000snapshot-_iter_350000';
-    'train_kldloss-dataset-bigunion-batch-8_1511876736_usesnapshot_1509584263_snapshot-_iter_100000snapshot-_iter_400000';
-}
+% model_list={
+%     'train_kldloss-dataset-bigunion-batch-8_1511876736_usesnapshot_1509584263_snapshot-_iter_100000snapshot-_iter_150000';
+%     'train_kldloss-dataset-bigunion-batch-8_1511876736_usesnapshot_1509584263_snapshot-_iter_100000snapshot-_iter_200000';
+%     'train_kldloss-dataset-bigunion-batch-8_1511876736_usesnapshot_1509584263_snapshot-_iter_100000snapshot-_iter_250000';
+%     'train_kldloss-dataset-bigunion-batch-8_1511876736_usesnapshot_1509584263_snapshot-_iter_100000snapshot-_iter_300000';
+%     'train_kldloss-dataset-bigunion-batch-8_1511876736_usesnapshot_1509584263_snapshot-_iter_100000snapshot-_iter_350000';
+%     'train_kldloss-dataset-bigunion-batch-8_1511876736_usesnapshot_1509584263_snapshot-_iter_100000snapshot-_iter_400000';
+% }
+model_list = {
+    'train_kldloss-base_lr-0snapshot-_iter_200000';
+    'train_kldloss-leaky-batch-8_1513739634_usesnapshot_1509584263_snapshot-_iter_100000snapshot-_iter_200000'
+};
+
 
 if strcmp(dsname,'mit1003')==1
     sal_base = '/data/sunnycia/SaliencyDataset/Image/MIT1003/saliency';

@@ -31,9 +31,8 @@ layer {
     pad: 1
     temporal_pad: 1
     weight_filler {
-      type: "gaussian"
-      std: 0.01
-    }
+      type: "msra"
+      }
     bias_filler {
       type: "constant"
       value: 0
@@ -76,9 +75,8 @@ layer {
     pad: 1
     temporal_pad: 1
     weight_filler {
-      type: "gaussian"
-      std: 0.01
-    }
+      type: "msra"
+      }
     bias_filler {
       type: "constant"
       value: 0
@@ -121,9 +119,8 @@ layer {
     pad: 1
     temporal_pad: 1
     weight_filler {
-      type: "gaussian"
-      std: 0.01
-    }
+      type: "msra"
+      }
     bias_filler {
       type: "constant"
       value: 0
@@ -152,9 +149,8 @@ layer {
     pad: 1
     temporal_pad: 1
     weight_filler {
-      type: "gaussian"
-      std: 0.01
-    }
+      type: "msra"
+      }
     bias_filler {
       type: "constant"
       value: 0
@@ -198,9 +194,8 @@ layer {
     pad: 1
     temporal_pad: 1
     weight_filler {
-      type: "gaussian"
-      std: 0.01
-    }
+      type: "msra"
+      }
     bias_filler {
       type: "constant"
       value: 0
@@ -229,9 +224,8 @@ layer {
     pad: 1
     temporal_pad: 1
     weight_filler {
-      type: "gaussian"
-      std: 0.01
-    }
+      type: "msra"
+      }
     bias_filler {
       type: "constant"
       value: 0
@@ -275,9 +269,8 @@ layer {
     pad: 1
     temporal_pad: 1
     weight_filler {
-      type: "gaussian"
-      std: 0.01
-    }
+      type: "msra"
+      }
     bias_filler {
       type: "constant"
       value: 0
@@ -310,9 +303,8 @@ layer {
     stride: 2
     temporal_stride: 2
     weight_filler {
-      type: "gaussian"
-      std: 0.01
-    }
+      type: "msra"
+      }
     bias_filler {
       type: "constant"
       value: 0
@@ -341,9 +333,8 @@ layer {
     pad: 1
     temporal_pad: 1
     weight_filler {
-      type: "gaussian"
-      std: 0.01
-    }
+      type: "msra"
+      }
     bias_filler {
       type: "constant"
       value: 0
@@ -378,9 +369,8 @@ layer {
     stride: 2
     temporal_stride: 2
     weight_filler {
-      type: "gaussian"
-      std: 0.01
-    }
+      type: "msra"
+      }
     bias_filler {
       type: "constant"
       value: 0
@@ -406,9 +396,8 @@ layer {
     pad: 1
     temporal_pad: 1
     weight_filler {
-      type: "gaussian"
-      std: 0.01
-    }
+      type: "msra"
+      }
     bias_filler {
       type: "constant"
       value: 0
@@ -443,9 +432,8 @@ layer {
     stride: 4
     temporal_stride: 2
     weight_filler {
-      type: "gaussian"
-      std: 0.01
-    }
+      type: "msra"
+      }
     bias_filler {
       type: "constant"
       value: 0

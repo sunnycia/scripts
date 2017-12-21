@@ -9,10 +9,12 @@ caffe.set_device(0)
 
 def get_arguments():
     parser = argparse.ArgumentParser()
+    parser.add_argument('--modelpath', type=str, required=True)
     parser.add_argument('--modelbase',type=str,default='../training_output/salicon')
     parser.add_argument('--modelname', type=str, default=None, help='the network prototxt')
     parser.add_argument('--testset', type=str, default=None, help='the network prototxt')
-    parser.add_argument('--iterselection',type=str, default='full',help='(full) or (half) or (newest)')
+    parser.add_argument('--iterselection',type=str, default='newest',help='(full) or (half) or (newest)')
+    parser.add_argument('--versionpostfix',type=str, default='',help='manual added model version postfix')
     return parser.parse_args()
 print "Parsing arguments..."
 args = get_arguments()
@@ -31,6 +33,40 @@ test_img_dir_dict={
 }
 
 if __name__ =='__main__':
+    model_path = args.modelpath
+    version_postfix = args.versionpostfix
+    model_version = model_path.split('/')[-2].split('.')[0]+model_path.split('/')[-1].split('.')[0]+version_postfix;
+    if '5layer' in model_path:
+        sn = ImageSaliencyNet('prototxt/deploy_5layer_deconv.prototxt', model_path)
+    else:
+        sn = ImageSaliencyNet('prototxt/deploy_3layer_deconv.prototxt', model_path)
+
+    test_img_dir = test_img_dir_dict[test_set]
+    test_img_path_list = glob.glob(os.path.join(test_img_dir, '*.*'))
+    test_output_dir = os.path.join(os.path.dirname(test_img_dir), 'saliency', model_version)
+
+    if not os.path.isdir(test_output_dir):
+        os.makedirs(test_output_dir)
+    elif len(glob.glob(os.path.join(test_output_dir,'*.*'))) == 0:
+        pass
+    else:
+        print test_output_dir, 'exists, pass.'
+        exit()
+
+    for test_img_path in test_img_path_list:
+        img_name = test_img_path.split('/')[-1]
+        start_time = tic()
+        ## Check if test_img_path is a valid image file
+        if imghdr.what(test_img_path) is None:
+            print test_img_path, "is not an image file"
+            exit()
+        saliency_map = sn.compute_saliency(test_img_path)
+        output_path = os.path.join(test_output_dir, img_name)
+        cv2.imwrite(output_path, saliency_map)
+        duration = toc()
+        print output_path, "saved. %s passed" % duration 
+
+'''
     model_base = args.modelbase
     subdirs = [name for name in os.listdir(model_base) if os.path.isdir(os.path.join(model_base, name))]
 
@@ -101,3 +137,4 @@ if __name__ =='__main__':
         if args.modelname is not None:
             print "done for",args.modelname
             break
+'''
