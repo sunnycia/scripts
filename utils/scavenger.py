@@ -41,7 +41,7 @@ if args.snapshot:
 if args.figure:
   for figure_folder in figure_folder_list:
       path = os.path.join(figure_basedir, figure_folder)
-      if os.listdir(path) == []:
+      if os.listdir(path) == [] or len(os.listdir(path)) < 10:
           print figure_folder, "will be deleted"
           shutil.rmtree(path)
           print "\tDone!"

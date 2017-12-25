@@ -14,6 +14,9 @@ from utils.caffe_tools import CaffeSolver
 from caffe.proto import caffe_pb2
 import google.protobuf.text_format as txtf
 import utils.OpticalFlowToolkit.lib.flowlib as flib
+# from validation import MetricValidation
+from utils.pymetric.metrics import CC, SIM, KLdiv
+
 
 caffe.set_mode_gpu()
 # caffe.set_device(0)
@@ -173,24 +176,45 @@ epoch=20
 idx_counter = 0
 save_model_iter = args.savemodeliter
 
-x=[]
-x2 = []
-y1=[]
-y2=[]
-z=[] # validation
+
+plot_dict = {
+'x':[], 
+'x_valid':[], 
+
+'y_loss':[], 
+'y_cc':[], 
+'y_sim':[], 
+'y_kld':[]
+}
 
 # plt.plot(x, y1, color='red', label='training')
 # plt.plot(x2, y2, color='orange', label='validation')
 # plt.legend()
-plt.plot(x,y1, x2,y2,':')
+# plt.plot(x,y1, x2,y2,':')
 # plt.plot(x,y2)
+plt.subplot(4, 1, 1)
+plt.plot(plot_dict['x'], plot_dict['y_loss'])
+plt.ylabel('loss')
+plt.subplot(4, 1, 2)
+plt.plot(plot_dict['x_valid'], plot_dict['y_cc'])
+plt.ylabel('cc metric')
+plt.subplot(4, 1, 3)
+plt.plot(plot_dict['x_valid'], plot_dict['y_sim'])
+plt.ylabel('sim metric')
+plt.subplot(4, 1, 4)
+plt.plot(plot_dict['x_valid'], plot_dict['y_kld'])
+plt.xlabel('iter')
+plt.ylabel('kld metric')
+
 _step=0
 while _step < max_iter:
     if _step%validation_iter==0:
         ##do validation
         pass
     # print _step, 1
-    frame_data, density_data = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='training', density_length='one')
+    # frame_data, density_data = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='training', density_length='one')
+    frame_data, density_data = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='training', density_length='full')
+
     # print _step, 2
 
     solver.net.blobs['data'].data[...] = frame_data
@@ -198,8 +222,8 @@ while _step < max_iter:
     solver.step(1)
     # print _step, 3
 
-    x.append(_step)
-    y1.append(solver.net.blobs['loss'].data[...].tolist())
+    plot_dict['x'].append(_step)
+    plot_dict['y_loss'].append(solver.net.blobs['loss'].data[...].tolist())
 
     if args.debug==1:
         #    ___    ____   ___   __  __  _____
@@ -209,47 +233,93 @@ while _step < max_iter:
         layer_list = ['predict_reshape', 'concat2']
         for layer in layer_list:
             data = solver.net.blobs[layer].data[...].tolist()
-            print layer, np.mean(data), np.sum(data)    
+            print layer, np.mean(data), np.sum(data)
         # exit()
 
     # y2.append(solver.net.blobs['loss5'].data[...].tolist())
-    if _step%validation_iter==0:
+
+
+    # if _step%validation_iter==0:
+    #     print "Doing validation...", tranining_dataset.num_validation_examples, "validation samples in total."
+
+    #     data_tuple = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='validation', density_length='one')
+    #     total_loss = 0
+    #     total_sample = 0
+    #     while data_tuple is not None:
+    #         print "index in validation epoch:", tranining_dataset.index_in_validation_epoch,'\r',
+    #         valid_frame_data, valid_density_data = data_tuple
+    #         solver.net.blobs['data'].data[...] = valid_frame_data
+    #         solver.net.blobs['ground_truth'].data[...] = valid_density_data
+    #         solver.net.forward()
+    #         loss = solver.net.blobs['loss'].data[...].tolist()
+
+    #         total_loss += loss
+    #         total_sample += len(valid_frame_data)
+    #         data_tuple = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='validation', density_length='one')
+    #         # print loss,'\r',
+    #     valid_loss = total_loss/float(total_sample)
+    #     print valid_loss
+    #     x2.append(_step)
+    #     y2.append(valid_loss)
+
+    if _step % validation_iter==0:
         print "Doing validation...", tranining_dataset.num_validation_examples, "validation samples in total."
+        tmp_cc = []; tmp_sim = []; tmp_kld = []
         data_tuple = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='validation', density_length='one')
-        total_loss = 0
-        total_sample = 0
         while data_tuple is not None:
-            print "index in validation epoch:", tranining_dataset.index_in_validation_epoch,'\r',
             valid_frame_data, valid_density_data = data_tuple
             solver.net.blobs['data'].data[...] = valid_frame_data
             solver.net.blobs['ground_truth'].data[...] = valid_density_data
             solver.net.forward()
-            loss = solver.net.blobs['loss'].data[...].tolist()
+            predictions = solver.net.blobs['predict'].data[...].tolist() # shape like this "8,1,16,112,112"
 
-            total_loss += loss
-            total_sample += len(valid_frame_data)
+            ##Calculating metric
+            
+            for (prediction, ground_truth) in zip(predictions, valid_density_data):
+                ## shape like this "1, 16, 112, 112"
+                prediction = np.array(prediction[0]);ground_truth = np.array(ground_truth[0])
+                for (pred, gt) in zip(prediction, ground_truth):
+                    # print CC(pred, gt), SIM(pred, gt), KLdiv(pred, gt)
+                    tmp_cc.append(CC(pred, gt))
+                    tmp_sim.append(SIM(pred, gt))
+                    tmp_kld.append(KLdiv(pred, gt))
             data_tuple = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='validation', density_length='one')
-            # print loss,'\r',
-        valid_loss = total_loss/float(total_sample)
-        print valid_loss
-        x2.append(_step)
-        y2.append(valid_loss)
-    else:
-        # y2.append(np.nan)
-        pass
-    plt.plot(x,y1, x2,y2,':')
+
+        # print np.mean(tmp_cc), np.mean(tmp_sim), np.mean(tmp_kld);exit()
+        plot_dict['x_valid'].append(_step)
+        plot_dict['y_cc'].append(np.mean(tmp_cc))
+        plot_dict['y_sim'].append(np.mean(tmp_sim))
+        plot_dict['y_kld'].append(np.mean(tmp_kld))
+
+
+    # plt.plot(x, y1, x2, y2, ':')
     # plt.plot(x, y1, color='orange', label='training')
     # plt.plot(x2, y2, color='red', label='validation')
     # print y2
     # plt.plot(x,y2)
 
     if _step%plot_iter==0:
-        plt.xlabel('Iter')
+        plot_xlength=500
+        plt.subplot(4, 1, 1)
+        plt.plot(plot_dict['x'][-plot_xlength:], plot_dict['y_loss'][-plot_xlength:])
         plt.ylabel('loss')
+        plt.subplot(4, 1, 2)
+        plt.plot(plot_dict['x_valid'][-plot_xlength:], plot_dict['y_cc'][-plot_xlength:])
+        plt.ylabel('cc metric')
+        plt.subplot(4, 1, 3)
+        plt.plot(plot_dict['x_valid'][-plot_xlength:], plot_dict['y_sim'][-plot_xlength:])
+        plt.ylabel('sim metric')
+        plt.subplot(4, 1, 4)
+        plt.plot(plot_dict['x_valid'][-plot_xlength:], plot_dict['y_kld'][-plot_xlength:])
+        plt.xlabel('iter')
+        plt.ylabel('kld metric')
+        # plt.xlabel('Iter')
+        # plt.ylabel('loss')
         # plt.legend()
         plt.savefig(os.path.join(plot_figure_dir, "plot"+str(_step)+".png"))
         plt.clf()
-        plot_dict = {'tr_x':x, 'tr_y':y1, 'va_x':x2,'va_y':y2}
+
+        # plot_dict = {'tr_x':x, 'tr_y':y1, 'va_x':x2,'va_y':y2}
 
         pkl.dump(plot_dict, open(os.path.join(plot_figure_dir, "plot_dict.pkl"), 'wb'))
         

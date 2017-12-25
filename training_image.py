@@ -10,6 +10,7 @@ from random import shuffle
 from utils.caffe_tools import CaffeSolver
 from caffe.proto import caffe_pb2
 import google.protobuf.text_format as txtf
+from validation import MetricValidation
 
 caffe.set_mode_gpu()
 
@@ -23,6 +24,7 @@ def get_arguments():
     parser.add_argument('--debug', type=bool, default=False, help='If debug is ture, a mini set will run into training.Or a complete set will.')
     parser.add_argument('--visualization', type=bool, default=False, help='visualization training loss option')
     parser.add_argument('--batch', type=int, default=1, help='training mini batch')
+    parser.add_argument('--trainingexampleprops', type=float, default=0.8, help="")
     # parser.add_argument('--updatesolverdict', type=dict, default={}, help='update solver prototxt')
     # parser.add_argument('--extrainfodict', type=dict, default={}, help='Extra information to add on the model name')
     return parser.parse_args()
@@ -163,8 +165,10 @@ elif args.dsname == 'bigunion':
     # validation_frame_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/images'
     # validation_density_basedir = '/data/sunnycia/SaliencyDataset/Image/SALICON/DATA/train_val/val2014/density'
 
+# tranining_dataset = StaticDataset(frame_basedir=train_frame_basedir, density_basedir=train_density_basedir, debug=debug_mode)
 tranining_dataset = StaticDataset(frame_basedir=train_frame_basedir, density_basedir=train_density_basedir, debug=debug_mode)
-# validation_dataset = StaticDataset(train_frame_basedir, train_density_basedir, debug=debug_mode)
+
+# tranining_dataset, validation_dataset = StaticDataset(frame_basedir=train_frame_basedir, density_basedir=train_density_basedir, debug=debug_mode)
 
 
 #######                            
@@ -211,6 +215,13 @@ while _step * batch < max_iter:
         plt.clf()
     if args.visualization:
         plt.show()
+
+    if _step%valid_iter==0:
+        # do validation for validation set, and plot average 
+        # metric(cc, sim, auc, kld, nss) performance dictionary
+        pass
+        # metric_dict = MetricValidation()
+
 
     _step+=1
 

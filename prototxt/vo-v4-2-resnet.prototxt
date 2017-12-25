@@ -1595,8 +1595,8 @@ layer {
 
 layer {
   bottom: "deconv2"
-  top: "saliency_map"
-  name: "saliency_map"
+  top: "predict"
+  name: "predict"
   type: "Deconvolution3D"
   param {
     lr_mult: 1
@@ -1624,7 +1624,7 @@ layer {
 layer {
   name: "loss"
   type: "EuclideanLoss"
-  bottom: "saliency_map"
+  bottom: "predict"
   bottom: "ground_truth"
   top: "loss"
 }

@@ -1,3 +1,4 @@
+from math import ceil
 from Flownet import Flownet
 import os, imageio
 import caffe
@@ -483,22 +484,38 @@ class VoxelbasedVideoSaliencyNet:
             return
         print "Setting up", video_path
         try_time = 5 
-        video_reader = ''
-        for i in range(try_time):
-            try:    
-                video_reader = imageio.get_reader(video_path)
-            except:
-                print "Catch exception, retry..."
-                time.sleep(0.5)
-            if not video_reader == '':
-                break
-        self.video_meta_data = video_reader.get_meta_data()
-        # print self.video_meta_data;exit()
+
+        video_capture = cv2.VideoCapture(video_path)
+        video_size = (int(video_capture.get(cv2.CAP_PROP_FRAME_WIDTH)), int(video_capture.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+        fps = int(ceil(video_capture.get(cv2.CAP_PROP_FPS)))
+        frame_count = video_capture.get(cv2.CAP_PROP_FRAME_COUNT)
+        self.video_meta_data = {
+            'size': video_size,
+            'fps': fps,
+            'frame_count': frame_count
+        }
         self.frames = []
-        for frame_idx, frame in enumerate(video_reader):
-            processed_frame = self.preprocess_image(frame)
-            # print processed_frame.shape;
-            self.frames.append(processed_frame)
+        status, frame = video_capture.read()
+        while status:
+            self.frames.append(self.preprocess_image(frame))
+            status, frame = video_capture.read()
+
+        # video_reader = ''
+        # for i in range(try_time):
+        #     try:
+        #         video_reader = imageio.get_reader(video_path)
+        #     except:
+        #         print "Catch exception, retry..."
+        #         time.sleep(0.5)
+        #     if not video_reader == '':
+        #         break
+        # self.video_meta_data = video_reader.get_meta_data()
+        # print self.video_meta_data;exit()
+        # self.frames = []
+        # for frame_idx, frame in enumerate(video_reader):
+        #     processed_frame = self.preprocess_image(frame)
+        #     # print processed_frame.shape;
+        #     self.frames.append(processed_frame)
         # print len(self.frames), self.frames[0]
         # if self.infer_type=='slide':
         #     prefix_frames = [self.frames[0] for i in range(self.video_length)]

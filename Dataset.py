@@ -3,7 +3,7 @@ import random
 from random import shuffle
 
 class StaticDataset():
-    def __init__(self, frame_basedir, density_basedir, debug, img_size=(480, 288)):
+    def __init__(self, frame_basedir, density_basedir, debug, img_size=(480, 288), training_example_props=0.8):
         MEAN_VALUE = np.array([103.939, 116.779, 123.68], dtype=np.float32)   # B G R/ use opensalicon's mean_value
         self.MEAN_VALUE = MEAN_VALUE[None, None, ...]
         self.img_size = img_size
@@ -146,7 +146,7 @@ class VideoDataset():
         self.num_epoch = 0
         self.index_in_epoch = 0
 
-    def setup_video_dataset_c3d(self, overlap=0, training_example_props=0.8):
+    def setup_video_dataset_c3d(self, overlap=0, training_example_props=0.8, skip_head=10): ## skip those bad data in the previous of a video
         # pass
         self.tuple_list = []
         assert overlap < self.video_length, "overlap should smaller than videolength."
@@ -156,7 +156,7 @@ class VideoDataset():
             frame_list = glob.glob(os.path.join(video_dir,'*.*'))
             total_frame = len(frame_list)
             
-            for j in range(0, total_frame, step): ## div 2, so 1/2 of the video_length is overlapped
+            for j in range(skip_head, total_frame, step): ## div 2, so 1/2 of the video_length is overlapped
                 if j + self.video_length > total_frame:
                     break
                 tup = (i,j) # video index and first frame index
@@ -310,7 +310,7 @@ class VideoDataset():
                 for i in range(start_frame_index,end_frame_index):
                     frame_index = i + 1
                     frame_name = frame_wildcard % frame_index
-                    
+                    # print os.path.join(density_dir, frame_name)
                     density_path = glob.glob(os.path.join(density_dir, frame_name))[0]
                     density = self.pre_process_img(cv2.imread(density_path, 0),True)
                     current_density_list.append(density)                

@@ -6,8 +6,8 @@ iter_size: 1
 lr_policy: "inv"
 momentum: 0.9
 power: 0.75
-snapshot: 2500
-snapshot_prefix: "../training_output/salicon/vo-v4-2-resnet-snapshot-2500-display-1--batch-2_1513846600/snapshot-"
+snapshot: 2000
+snapshot_prefix: "../training_output/salicon/vo-v4-2-resnet-snapshot-2000-display-1-fulldens-batch-2_1514129205/snapshot-"
 solver_mode: GPU
 solver_type: ADADELTA
 train_net: "prototxt/vo-v4-2-resnet.prototxt"

@@ -15,7 +15,7 @@ layer {
   python_param {
     module: "CustomData"
     layer: "CustomData"
-    param_str: "8,1,1,112,112"
+    param_str: "8,1,16,112,112"
   }
 }
 # ----------- 1st layer group ---------------
@@ -31,8 +31,9 @@ layer {
     pad: 1
     temporal_pad: 1
     weight_filler {
-      type: "msra"
-      }
+      type: "gaussian"
+      std: 0.01
+    }
     bias_filler {
       type: "constant"
       value: 0
@@ -75,8 +76,9 @@ layer {
     pad: 1
     temporal_pad: 1
     weight_filler {
-      type: "msra"
-      }
+      type: "gaussian"
+      std: 0.01
+    }
     bias_filler {
       type: "constant"
       value: 0
@@ -119,8 +121,9 @@ layer {
     pad: 1
     temporal_pad: 1
     weight_filler {
-      type: "msra"
-      }
+      type: "gaussian"
+      std: 0.01
+    }
     bias_filler {
       type: "constant"
       value: 0
@@ -149,8 +152,9 @@ layer {
     pad: 1
     temporal_pad: 1
     weight_filler {
-      type: "msra"
-      }
+      type: "gaussian"
+      std: 0.01
+    }
     bias_filler {
       type: "constant"
       value: 0
@@ -194,8 +198,9 @@ layer {
     pad: 1
     temporal_pad: 1
     weight_filler {
-      type: "msra"
-      }
+      type: "gaussian"
+      std: 0.01
+    }
     bias_filler {
       type: "constant"
       value: 0
@@ -224,8 +229,9 @@ layer {
     pad: 1
     temporal_pad: 1
     weight_filler {
-      type: "msra"
-      }
+      type: "gaussian"
+      std: 0.01
+    }
     bias_filler {
       type: "constant"
       value: 0
@@ -269,8 +275,9 @@ layer {
     pad: 1
     temporal_pad: 1
     weight_filler {
-      type: "msra"
-      }
+      type: "gaussian"
+      std: 0.01
+    }
     bias_filler {
       type: "constant"
       value: 0
@@ -303,8 +310,9 @@ layer {
     stride: 2
     temporal_stride: 2
     weight_filler {
-      type: "msra"
-      }
+      type: "gaussian"
+      std: 0.01
+    }
     bias_filler {
       type: "constant"
       value: 0
@@ -333,8 +341,9 @@ layer {
     pad: 1
     temporal_pad: 1
     weight_filler {
-      type: "msra"
-      }
+      type: "gaussian"
+      std: 0.01
+    }
     bias_filler {
       type: "constant"
       value: 0
@@ -369,8 +378,9 @@ layer {
     stride: 2
     temporal_stride: 2
     weight_filler {
-      type: "msra"
-      }
+      type: "gaussian"
+      std: 0.01
+    }
     bias_filler {
       type: "constant"
       value: 0
@@ -389,6 +399,9 @@ layer {
   bottom: "conv3b"
   top: "predict3b"
   
+  
+  
+  
   convolution3d_param {
     num_output: 64
     kernel_size: 3
@@ -396,8 +409,9 @@ layer {
     pad: 1
     temporal_pad: 1
     weight_filler {
-      type: "msra"
-      }
+      type: "gaussian"
+      std: 0.01
+    }
     bias_filler {
       type: "constant"
       value: 0
@@ -432,8 +446,9 @@ layer {
     stride: 4
     temporal_stride: 2
     weight_filler {
-      type: "msra"
-      }
+      type: "gaussian"
+      std: 0.01
+    }
     bias_filler {
       type: "constant"
       value: 0
@@ -446,74 +461,46 @@ layer {
   bottom: "deconv3b"
   top: "deconv3b"
 }
-
 layer {
   name: "predict"
   type: "Convolution3D"
   bottom: "deconv3b"
-  top: "predict"  
+  top: "predict"
+  
+  
+  
   
   convolution3d_param {
     num_output: 1
     kernel_size: 3
-    kernel_depth: 16
+    kernel_depth: 3
     pad: 1
-    temporal_pad: 0
+    temporal_pad: 1
     weight_filler {
-      type: "msra"
-      }
+      type: "gaussian"
+      std: 0.01
+    }
     bias_filler {
       type: "constant"
       value: 0
     }
   }
 }
+
+## Add softmax layer
 layer {
-  name: "predict_relu"
-  type: "ReLU"
+  name: "predict-softmax"
+  type: "Softmax"
   bottom: "predict"
-  top: "predict_relu"
+  top: "predict-softmax"
+
 }
 
-#layer {
-  #name: "predict_relu"
-  #type: "AbsVal"
-  #bottom: "predict"
-  #top: "predict_relu"
-#}
 
 layer {
-  name: "predict_reshape"
-  type: "Reshape"
-  bottom: "predict_relu"
-  reshape_param {
-  shape {
-    dim: 0
-    dim: 1
-    dim: 112
-    dim: 112
-    } 
-  }
-  top: "predict_reshape"
-}
-layer {
-  name: "ground_truth_reshape"
-  type: "Reshape"
+  name: "loss"
+  type: "EuclideanLoss"
+  bottom: "predict-softmax"
   bottom: "ground_truth"
-  reshape_param {
-  shape {
-    dim: 0
-    dim: 1
-    dim: 112
-    dim: 112
-    }
-  }
-  top: "ground_truth_reshape"
-}
-layer { 
-  name: 'loss'
-  type: 'KLDivLoss'
-  bottom: "predict_reshape"
-  bottom: "ground_truth_reshape"
   top: "loss"
 }

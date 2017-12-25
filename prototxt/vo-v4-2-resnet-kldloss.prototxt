@@ -1537,120 +1537,9 @@ layer {
   type: "ReLU"
 }
 
-
-#---feature normalization & concat---
-
-layer {
-  bottom: "res4b"
-  top: "res4b_featnorm1"
-  name: "res4b_featnorm1"
-  type: "Convolution3D"
-  convolution3d_param {
-    num_output: 128
-    kernel_size: 1
-    kernel_depth: 1
-    pad: 0
-    temporal_pad: 0
-    stride: 1
-    temporal_stride: 1
-    weight_filler {
-      type: "msra"
-      variance_norm: FAN_OUT
-    }
-  }
-}
-layer {
-  bottom: "res4b_featnorm1"
-  top: "res4b_featnorm2"
-  name: "res4b_featnorm2"
-  type: "Deconvolution3D"
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  convolution3d_param {
-    num_output: 128
-    kernel_size: 4
-    kernel_depth: 4
-    pad: 1
-    temporal_pad: 1
-    stride: 2
-    temporal_stride: 2
-
-    weight_filler {
-      type: "msra"
-      variance_norm: FAN_OUT
-    }
-  }
-}
-
-layer {
-  bottom: "res5b"
-  top: "res5b_featnorm1"
-  name: "res5b_featnorm1"
-  type: "Convolution3D"
-  convolution3d_param {
-    num_output: 128
-    kernel_size: 1
-    kernel_depth: 1
-    pad: 0
-    temporal_pad: 0
-    stride: 1
-    temporal_stride: 1
-    weight_filler {
-      type: "msra"
-      variance_norm: FAN_OUT
-    }
-  }
-}
-layer {
-  bottom: "res5b_featnorm1"
-  top: "res5b_featnorm2"
-  name: "res5b_featnorm2"
-  type: "Deconvolution3D"
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  convolution3d_param {
-    num_output: 128
-    kernel_size: 8
-    kernel_depth: 8
-    pad: 2
-    temporal_pad: 2
-    stride: 4
-    temporal_stride: 4
-    weight_filler {
-      type: "msra"
-      variance_norm: FAN_OUT
-    }
-  }
-}
-
-layer {
-  name: "catfeat"
-  bottom: "res3b"
-  bottom: "res4b_featnorm2"
-  bottom: "res5b_featnorm2"
-  top: "catfeat"
-  type: "Concat"
-  concat_param {
-    axis: 1
-  }
-}
-
-
 # ----- upsampling layers -----
 layer {
-  bottom: "catfeat"
+  bottom: "res5b"
   top: "deconv1"
   name: "deconv1"
   type: "Deconvolution3D"
@@ -1664,15 +1553,15 @@ layer {
   }
   convolution3d_param {
     num_output: 128
-    kernel_size: 4
-    kernel_depth: 1
-    pad: 1
-    temporal_pad: 0
-    stride: 2
-    temporal_stride: 1
+    kernel_size: 8
+    kernel_depth: 4
+    pad: 2
+    temporal_pad: 1
+    stride: 4
+    temporal_stride: 2
+    bias_term: false
     weight_filler {
       type: "msra"
-      variance_norm: FAN_OUT
     }
   }
 }
@@ -1692,14 +1581,14 @@ layer {
   convolution3d_param {
     num_output: 32
     kernel_size: 4
-    kernel_depth: 1
+    kernel_depth: 4
     pad: 1
-    temporal_pad: 0
+    temporal_pad: 1
     stride: 2
-    temporal_stride: 1
+    temporal_stride: 2
+    bias_term: false
     weight_filler {
       type: "msra"
-      variance_norm: FAN_OUT
     }
   }
 }
@@ -1719,16 +1608,15 @@ layer {
   }
   convolution3d_param {
     num_output: 1
-    kernel_size: 1
+    kernel_size: 4
     kernel_depth: 4
-    pad: 0
+    pad: 1
     temporal_pad: 1
-    stride: 1
+    stride: 2
     temporal_stride: 2
-    
+    bias_term: false
     weight_filler {
       type: "msra"
-      variance_norm: FAN_OUT
     }
   }
 }
@@ -1741,3 +1629,713 @@ layer {
   top: "loss"
 }
 
+layer {
+  name: "predict_relu"
+  type: "ReLU"
+  bottom: "predict"
+  top: "predict_relu"
+}
+
+## KL-Div Loss
+layer {
+  name: "slice_ground_truth"
+  type: "Slice"
+  bottom: "ground_truth"
+  top: "ground_truth1"
+  top: "ground_truth2"
+  top: "ground_truth3"
+  top: "ground_truth4"
+  top: "ground_truth5"
+  top: "ground_truth6"
+  top: "ground_truth7"
+  top: "ground_truth8"
+  top: "ground_truth9"
+  top: "ground_truth10"
+  top: "ground_truth11"
+  top: "ground_truth12"
+  top: "ground_truth13"
+  top: "ground_truth14"
+  top: "ground_truth15"
+  top: "ground_truth16"
+  slice_param {
+    axis: 2
+    slice_point: 1
+    slice_point: 2
+    slice_point: 3
+    slice_point: 4
+    slice_point: 5
+    slice_point: 6
+    slice_point: 7
+    slice_point: 8
+    slice_point: 9
+    slice_point: 10
+    slice_point: 11
+    slice_point: 12
+    slice_point: 13
+    slice_point: 14
+    slice_point: 15
+  }
+}
+layer {
+  name: "slice_predict"
+  type: "Slice"
+  bottom: "predict_relu"
+  top: "predict1"
+  top: "predict2"
+  top: "predict3"
+  top: "predict4"
+  top: "predict5"
+  top: "predict6"
+  top: "predict7"
+  top: "predict8"
+  top: "predict9"
+  top: "predict10"
+  top: "predict11"
+  top: "predict12"
+  top: "predict13"
+  top: "predict14"
+  top: "predict15"
+  top: "predict16"
+  slice_param {
+    axis: 2
+    slice_point: 1
+    slice_point: 2
+    slice_point: 3
+    slice_point: 4
+    slice_point: 5
+    slice_point: 6
+    slice_point: 7
+    slice_point: 8
+    slice_point: 9
+    slice_point: 10
+    slice_point: 11
+    slice_point: 12
+    slice_point: 13
+    slice_point: 14
+    slice_point: 15
+  }
+}
+
+## --frame 1
+layer {
+  name: "predict1_reshape"
+  type: "Reshape"
+  bottom: "predict1"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "predict1_reshape"
+}
+layer {
+  name: "ground_truth1_reshape"
+  type: "Reshape"
+  bottom: "ground_truth1"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "ground_truth1_reshape"
+}
+
+## -- frame 2
+layer {
+  name: "predict1_reshape"
+  type: "Reshape"
+  bottom: "predict2"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "predict2_reshape"
+}
+layer {
+  name: "ground_truth2_reshape"
+  type: "Reshape"
+  bottom: "ground_truth2"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "ground_truth2_reshape"
+}
+
+## -- frame 3
+layer {
+  name: "predict3_reshape"
+  type: "Reshape"
+  bottom: "predict3"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "predict3_reshape"
+}
+layer {
+  name: "ground_truth3_reshape"
+  type: "Reshape"
+  bottom: "ground_truth3"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "ground_truth3_reshape"
+}
+
+## -- frame 4
+layer {
+  name: "predict4_reshape"
+  type: "Reshape"
+  bottom: "predict4"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "predict4_reshape"
+}
+layer {
+  name: "ground_truth4_reshape"
+  type: "Reshape"
+  bottom: "ground_truth4"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "ground_truth4_reshape"
+}
+
+## -- frame 5
+layer {
+  name: "predict5_reshape"
+  type: "Reshape"
+  bottom: "predict5"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "predict5_reshape"
+}
+layer {
+  name: "ground_truth5_reshape"
+  type: "Reshape"
+  bottom: "ground_truth5"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "ground_truth5_reshape"
+}
+
+## -- frame 6
+layer {
+  name: "predict6_reshape"
+  type: "Reshape"
+  bottom: "predict6"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "predict6_reshape"
+}
+layer {
+  name: "ground_truth6_reshape"
+  type: "Reshape"
+  bottom: "ground_truth6"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "ground_truth6_reshape"
+}
+
+## -- frame 7
+layer {
+  name: "predict7_reshape"
+  type: "Reshape"
+  bottom: "predict7"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "predict7_reshape"
+}
+layer {
+  name: "ground_truth7_reshape"
+  type: "Reshape"
+  bottom: "ground_truth7"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "ground_truth7_reshape"
+}
+
+## -- frame 8
+layer {
+  name: "predict8_reshape"
+  type: "Reshape"
+  bottom: "predict8"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "predict8_reshape"
+}
+layer {
+  name: "ground_truth8_reshape"
+  type: "Reshape"
+  bottom: "ground_truth8"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "ground_truth8_reshape"
+}
+
+## -- frame 9
+layer {
+  name: "predict9_reshape"
+  type: "Reshape"
+  bottom: "predict9"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "predict9_reshape"
+}
+layer {
+  name: "ground_truth9_reshape"
+  type: "Reshape"
+  bottom: "ground_truth9"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "ground_truth9_reshape"
+}
+
+## -- frame 10
+layer {
+  name: "predict10_reshape"
+  type: "Reshape"
+  bottom: "predict10"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "predict10_reshape"
+}
+layer {
+  name: "ground_truth10_reshape"
+  type: "Reshape"
+  bottom: "ground_truth10"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "ground_truth10_reshape"
+}
+
+## -- frame 11
+layer {
+  name: "predict11_reshape"
+  type: "Reshape"
+  bottom: "predict11"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "predict11_reshape"
+}
+layer {
+  name: "ground_truth11_reshape"
+  type: "Reshape"
+  bottom: "ground_truth11"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "ground_truth11_reshape"
+}
+
+## -- frame 12
+layer {
+  name: "predict12_reshape"
+  type: "Reshape"
+  bottom: "predict12"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "predict12_reshape"
+}
+layer {
+  name: "ground_truth12_reshape"
+  type: "Reshape"
+  bottom: "ground_truth12"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "ground_truth12_reshape"
+}
+
+## -- frame 13
+layer {
+  name: "predict13_reshape"
+  type: "Reshape"
+  bottom: "predict13"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "predict13_reshape"
+}
+layer {
+  name: "ground_truth13_reshape"
+  type: "Reshape"
+  bottom: "ground_truth13"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "ground_truth13_reshape"
+}
+
+## -- frame 14
+layer {
+  name: "predict14_reshape"
+  type: "Reshape"
+  bottom: "predict14"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "predict14_reshape"
+}
+layer {
+  name: "ground_truth14_reshape"
+  type: "Reshape"
+  bottom: "ground_truth14"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "ground_truth14_reshape"
+}
+
+## -- frame 15
+layer {
+  name: "predict15_reshape"
+  type: "Reshape"
+  bottom: "predict15"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "predict15_reshape"
+}
+layer {
+  name: "ground_truth15_reshape"
+  type: "Reshape"
+  bottom: "ground_truth15"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "ground_truth15_reshape"
+}
+
+## -- frame 16
+layer {
+  name: "predict16_reshape"
+  type: "Reshape"
+  bottom: "predict16"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "predict16_reshape"
+}
+layer {
+  name: "ground_truth16_reshape"
+  type: "Reshape"
+  bottom: "ground_truth16"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1
+    dim: 112
+    dim: 112
+    }
+  }
+  top: "ground_truth16_reshape"
+}
+
+layer {
+  name: 'kldloss1'
+  type: 'KLDivLoss'
+  loss_weight: 1000
+  bottom: "predict1_reshape"
+  bottom: "ground_truth1_reshape"
+  top: "kldloss1"
+}
+
+layer { 
+  name: 'kldloss2'
+  type: 'KLDivLoss'
+  loss_weight: 1000
+  bottom: "predict2_reshape"
+  bottom: "ground_truth2_reshape"
+  top: "kldloss2"
+}
+
+layer { 
+  name: 'kldloss3'
+  type: 'KLDivLoss'
+  loss_weight: 1000
+  bottom: "predict3_reshape"
+  bottom: "ground_truth3_reshape"
+  top: "kldloss3"
+}
+
+layer { 
+  name: 'kldloss4'
+  type: 'KLDivLoss'
+  loss_weight: 1000
+  bottom: "predict4_reshape"
+  bottom: "ground_truth4_reshape"
+  top: "kldloss4"
+}
+
+layer { 
+  name: 'kldloss5'
+  type: 'KLDivLoss'
+  loss_weight: 1000
+  bottom: "predict5_reshape"
+  bottom: "ground_truth5_reshape"
+  top: "kldloss5"
+}
+
+layer { 
+  name: 'kldloss6'
+  type: 'KLDivLoss'
+  loss_weight: 1000
+  bottom: "predict6_reshape"
+  bottom: "ground_truth6_reshape"
+  top: "kldloss6"
+}
+
+layer { 
+  name: 'kldloss7'
+  type: 'KLDivLoss'
+  loss_weight: 1000
+  bottom: "predict7_reshape"
+  bottom: "ground_truth7_reshape"
+  top: "kldloss7"
+}
+
+layer { 
+  name: 'kldloss8'
+  type: 'KLDivLoss'
+  loss_weight: 1000
+  bottom: "predict8_reshape"
+  bottom: "ground_truth8_reshape"
+  top: "kldloss8"
+}
+
+layer { 
+  name: 'kldloss9'
+  type: 'KLDivLoss'
+  loss_weight: 1000
+  bottom: "predict9_reshape"
+  bottom: "ground_truth9_reshape"
+  top: "kldloss9"
+}
+
+layer { 
+  name: 'kldloss10'
+  type: 'KLDivLoss'
+  loss_weight: 1000
+  bottom: "predict10_reshape"
+  bottom: "ground_truth10_reshape"
+  top: "kldloss10"
+}
+
+layer { 
+  name: 'kldloss11'
+  type: 'KLDivLoss'
+  loss_weight: 1000
+  bottom: "predict11_reshape"
+  bottom: "ground_truth11_reshape"
+  top: "kldloss11"
+}
+
+layer { 
+  name: 'kldloss12'
+  type: 'KLDivLoss'
+  loss_weight: 1000
+  bottom: "predict12_reshape"
+  bottom: "ground_truth12_reshape"
+  top: "kldloss12"
+}
+
+layer { 
+  name: 'kldloss13'
+  type: 'KLDivLoss'
+  loss_weight: 1000
+  bottom: "predict13_reshape"
+  bottom: "ground_truth13_reshape"
+  top: "kldloss13"
+}
+
+layer { 
+  name: 'kldloss14'
+  type: 'KLDivLoss'
+  loss_weight: 1000
+  bottom: "predict14_reshape"
+  bottom: "ground_truth14_reshape"
+  top: "kldloss14"
+}
+
+layer { 
+  name: 'kldloss15'
+  type: 'KLDivLoss'
+  loss_weight: 1000
+  bottom: "predict15_reshape"
+  bottom: "ground_truth15_reshape"
+  top: "kldloss15"
+}
+
+layer { 
+  name: 'kldloss16'
+  type: 'KLDivLoss'
+  loss_weight: 1000
+  bottom: "predict16_reshape"
+  bottom: "ground_truth16_reshape"
+  top: "kldloss16"
+}
