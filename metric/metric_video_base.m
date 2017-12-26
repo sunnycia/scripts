@@ -31,9 +31,9 @@ end
 % model_list = {'vo-v4-2-base_lr-0.01-snapshot-20000-display-1-batch-8_1513218849_snapshot-13500_threshold0.75'};
 % model_list = {'vo-v4-2-base_lr-0.01-snapshot-20000-display-1-batch-8_1513218849_snapshot-13500_threshold0.75_rangesmooth'}
 % model_list = {'vo-v4-2-snapshot-999999-display-1-ledovSet-batch-8_1513764025_snapshot-11250_threshold0'};
-model_list = {'vo-v4-2-resnet-snapshot-2000-display-1--batch-2_1514034705_snapshot-_iter_72000_threshold0';
-'vo-v4-2-snapshot-2000-display-1--batch-8_1514033989_snapshot-_iter_20000_threshold0';};
-
+% model_list = {'vo-v4-2-resnet-snapshot-2000-display-1--batch-2_1514034705_snapshot-_iter_72000_threshold0';
+% 'vo-v4-2-snapshot-2000-display-1--batch-8_1514033989_snapshot-_iter_20000_threshold0';};
+model_list = {'vo-v4-2-resnet-catfeat-snapshot-2000-display-1--batch-2_1514034491_snapshot-_iter_72000_threshold0'}
 cc_msk  = 1;
 sim_msk = 1;
 jud_msk = 1;

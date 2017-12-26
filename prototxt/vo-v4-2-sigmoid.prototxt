@@ -487,12 +487,12 @@ layer {
   }
 }
 
-## Add softmax layer
+## Add sigmoid layer
 layer {
-  name: "predict-softmax"
-  type: "Softmax"
+  name: "predict-sigmoid"
+  type: "Sigmoid"
   bottom: "predict"
-  top: "predict-softmax"
+  top: "predict-sigmoid"
 
 }
 
@@ -500,7 +500,7 @@ layer {
 layer {
   name: "loss"
   type: "EuclideanLoss"
-  bottom: "predict-softmax"
+  bottom: "predict-sigmoid"
   bottom: "ground_truth"
   top: "loss"
 }

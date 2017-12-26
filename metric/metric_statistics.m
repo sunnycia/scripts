@@ -29,10 +29,14 @@ end
 % model_list = {'xu_dupext40', 'SAM', 'train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000'}
 % model_list = {'vo-v4-2-base_lr-0.01-snapshot-20000-display-1-batch-8_1513218849_snapshot-13500'};
 % model_list = {'vo-v4-2-base_lr-0.01-snapshot-20000-display-1-batch-8_1513218849_snapshot-13500_threshold0.75_rangesmooth'}
-model_list = {'vo-v4-2-snapshot-999999-display-1-ledovSet-batch-8_1513764025_snapshot-11250_threshold0'}
+% model_list = {'vo-v4-2-snapshot-999999-display-1-ledovSet-batch-8_1513764025_snapshot-11250_threshold0'}
 % model_list = {'vo-v3-2_train_kldloss_withouteuc-batch-1_1513084718_snapshot-_iter_150000'};
 % model_list = {'DENSITY';'MOTION';'MSFUSION';'UNCERTAINTY';'FANG2';'SUN';'MDB';'ISEEL';'SAM';'SALICON';'ITKO';'GBVS';'PQFT';'XU'};
 % model_list={'MSFUSION';'UNCERTAINTY';};
+% model_list = {'vo-v4-2-resnet-snapshot-2000-display-1--batch-2_1514034705_snapshot-_iter_72000_threshold0';
+% 'vo-v4-2-snapshot-2000-display-1--batch-8_1514033989_snapshot-_iter_20000_threshold0';};
+model_list = {'vo-v4-2-resnet-catfeat-snapshot-2000-display-1--batch-2_1514034491_snapshot-_iter_72000_threshold0'};
+
 %{
     metric index reference
     1    2    3    4    5*   6*   7    8   
