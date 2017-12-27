@@ -3,7 +3,7 @@
 
 (training) model after modify to full density
     vo-v4-2-resnet-snapshot-2000-display-1-fulldens-batch-2_1514129205
-    vo-v4-2-snapshot-2000-display-1-fulldens-batch-8_1514129167
+    (tested) vo-v4-2-snapshot-2000-display-1-fulldens-batch-8_1514129167
     vo-v4-2-resnet-catfeat-snapshot-2000-display-1-fulldens-batch-2_1514129183
 
 (tested) model before modified to full density, only grab last frame of 16 frames

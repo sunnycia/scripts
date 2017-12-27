@@ -486,3 +486,10 @@ layer {
     }
   }
 }
+
+layer {
+  name: "predict-softmax"
+  type: "Sigmoid"
+  bottom: "predict"
+  top: "predict-softmax"
+}

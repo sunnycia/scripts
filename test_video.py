@@ -29,6 +29,7 @@ def get_arguments():
     parser.add_argument('--video_deploy_path',type=str,default='./prototxt/vo-v3_deploy.prototxt')
     parser.add_argument('--video_model_path',type=str,default='../training_output/salicon/vo-v3_train_kldloss_withouteuc-batch-1_1510229829/snapshot-_iter_400000.caffemodel')
     parser.add_argument('--infertype', type=str,default='slice')
+    parser.add_argument('--inferoverlap', type=int,default='15')
     parser.add_argument('--threshold', type=float, default=0)
 
     return parser.parse_args()
@@ -93,6 +94,8 @@ if __name__ =='__main__':
         vs = VoxelbasedVideoSaliencyNet(deploy_proto=video_deploy_path, caffe_model=video_model_path, video_length=16, video_size=(112,112),mean_list=[90, 98,102], infer_type=args.infertype)
 
     for video_path in video_path_list:
+        vs.setup_video(video_path)
+        vs.create_saliency_video(threshold=threshold, overlap=args.inferoverlap)
         if args.output_type=="image":
             video_name = os.path.basename(video_path).split('.')[0].split('_')[0]
             if len(glob.glob(os.path.join(saliency_map_dir, video_name+'*'))) != 0:
@@ -101,8 +104,6 @@ if __name__ =='__main__':
             else:
                 print len(glob.glob(os.path.join(saliency_map_dir, video_name+'*')))
                 print "Handling",video_name
-            vs.setup_video(video_path)
-            vs.create_saliency_video(threshold=threshold)
             vs.dump_predictions_as_images(saliency_map_dir, video_name, args.allinone)
 
         if args.output_type=="video":
@@ -112,8 +113,6 @@ if __name__ =='__main__':
             if os.path.isfile(saliency_video_path):
                 print saliency_video_path, "exists, pass..."
                 continue
-            vs.setup_video(video_path)
-            vs.create_saliency_video(threshold=threshold)
             fps = vs.video_meta_data['fps']
             vs.dump_predictions_as_video(saliency_video_path, fps)
 

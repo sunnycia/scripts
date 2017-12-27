@@ -156,7 +156,6 @@ class FlowbasedVideoSaliencyNet:
             video_writer.append_data(saliency_map)
         video_writer.close()
 
-
     def dump_predictions_as_images(self, output_directory):
         if self.predictions is None:
             print "create video saliency first"

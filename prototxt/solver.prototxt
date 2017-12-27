@@ -7,8 +7,8 @@ lr_policy: "inv"
 momentum: 0.9
 power: 0.75
 snapshot: 2000
-snapshot_prefix: "../training_output/salicon/vo-v4-2-resnet-base_lr-0.01-snapshot-2000-display-1--batch-2_1514260519_usesnapshot_1514034705_snapshot-_iter_72000/snapshot-"
+snapshot_prefix: "../training_output/salicon/vo-v4-2-softmaxloss-snapshot-2000-display-1--batch-2_1514272200/snapshot-"
 solver_mode: GPU
 solver_type: ADADELTA
-train_net: "prototxt/vo-v4-2-resnet.prototxt"
+train_net: "prototxt/vo-v4-2-softmaxloss.prototxt"
 weight_decay: 0.0005

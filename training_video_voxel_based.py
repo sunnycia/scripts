@@ -17,7 +17,6 @@ import utils.OpticalFlowToolkit.lib.flowlib as flib
 # from validation import MetricValidation
 from utils.pymetric.metrics import CC, SIM, KLdiv
 
-
 caffe.set_mode_gpu()
 # caffe.set_device(0)
 def get_arguments():
@@ -87,7 +86,7 @@ image_size = args.imagesize
 update_solver_dict = {
 # 'solver_type':'RMSPROP',
 'display':'1',
-'base_lr': '0.01',
+# 'base_lr': '0.01',
 # 'weight_decay': '0.000005',
 # 'momentum': '0.95',
 # 'lr_policy':'"step"',

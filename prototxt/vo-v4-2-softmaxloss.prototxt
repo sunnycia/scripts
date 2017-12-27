@@ -5,7 +5,7 @@ layer {
   python_param {
     module: "CustomData"
     layer: "CustomData"
-    param_str: "8,3,16,112,112"
+    param_str: "2,3,16,112,112"
   }
 }
 layer {
@@ -15,7 +15,7 @@ layer {
   python_param {
     module: "CustomData"
     layer: "CustomData"
-    param_str: "8,1,16,112,112"
+    param_str: "2,1,16,112,112"
   }
 }
 # ----------- 1st layer group ---------------
@@ -487,20 +487,11 @@ layer {
   }
 }
 
-## Add sigmoid layer
-layer {
-  name: "predict-sigmoid"
-  type: "Sigmoid"
-  bottom: "predict"
-  top: "predict-sigmoid"
-
-}
-
-
+## Add softmax loss layer
 layer {
   name: "loss"
-  type: "EuclideanLoss"
-  bottom: "predict-sigmoid"
+  type: "SoftmaxWithLoss"
+  bottom: "predict"
   bottom: "ground_truth"
   top: "loss"
 }
