@@ -1,12 +1,12 @@
 delete(gcp)
-matlabpool 4
+matlabpool 12
 clc;
 clear;
 metricsFolder = 'saliency/code_forMetrics'
 addpath(genpath(metricsFolder))
 
-frame_cut=10;
-dsname='gazecom';
+frame_cut=30;
+dsname='diem';
 
 save_base_dir = fullfile('/data/sunnycia/saliency_on_videoset/Train/metric-matlab', dsname);
 mkdir(save_base_dir);
@@ -22,13 +22,19 @@ if strcmp(dsname,'ledov')==1
     base_dir='/data/sunnycia/saliency_on_videoset/Train/metric-matlab/ledov'; % for the usage of metric_statistics
     
 end
+
+if strcmp(dsname,'ledov')==1
+    base_dir='/data/sunnycia/saliency_on_videoset/Train/metric-matlab/ledov'; % for the usage of metric_statistics
+    
+end
+
 if strcmp(dsname, 'diem')==1
     base_dir='/data/sunnycia/saliency_on_videoset/Train/metric-matlab/diem'; % for the usage of metric_statistics
 
-    base_sal_dir = '/data/sunnycia/SaliencyDataset/Video/DIEM/Results/saliency_map';
+    base_sal_dir = '/data/sunnycia/SaliencyDataset/Video/DIEM/saliency_map';
     dens_dir = strcat('/data/sunnycia/SaliencyDataset/Video/DIEM/density/image/sigma32');
     fixa_dir = strcat('/data/sunnycia/SaliencyDataset/Video/DIEM/fixation_map/image');
-    all_in_one_fixation_directory = '/data/sunnycia/SaliencyDataset/Video/DIEM/All_in_one/fixation'; % for computing sauc metric
+    all_in_one_fixation_directory = '/data/sunnycia/SaliencyDataset/Video/DIEM/fixation_map/All_in_one'; % for computing sauc metric
 end
 if strcmp(dsname, 'gazecom')==1
     base_dir='/data/sunnycia/saliency_on_videoset/Train/metric-matlab/gazecom'; % for the usage of metric_statistics
@@ -61,10 +67,11 @@ end
 % }
 % model_list = {'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0'}
 % model_list = {'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_50000_threshold0'}
-model_list = {%'xu_lstm';
-'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_100000_threshold0';
-'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_50000_threshold0';
+model_list = {
 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0';
+'xu_lstm';
+% 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_100000_threshold0';
+% 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_50000_threshold0';
 }
 
 
@@ -141,9 +148,9 @@ for m = 1 : length(model_list)
         % for j = 1 : 2
         parfor j=1:true_length
 
-            smap_path = char(fullfile(cur_sal_dir,saliencymap_path_list(j+frame_cut)));
-            density_path = char(fullfile(cur_dens_dir,densitymap_path_list(j+frame_cut)));
-            fixation_path = char(fullfile(cur_fixa_dir, fixationmap_path_list(j+frame_cut)));
+            smap_path = char(fullfile(cur_sal_dir,saliencymap_path_list(j+frame_cut)))
+            density_path = char(fullfile(cur_dens_dir,densitymap_path_list(j+frame_cut)))
+            fixation_path = char(fullfile(cur_fixa_dir, fixationmap_path_list(j+frame_cut)))
             % jj = j-frame_cut;
             fprintf('Handling %s\n', smap_path);
 
