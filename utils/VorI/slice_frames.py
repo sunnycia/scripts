@@ -48,17 +48,17 @@ for video_path in video_path_list:
     video_capture = cv2.VideoCapture(video_path)
 
     status, frame = video_capture.read()
-    frame_idx = 1
+    frame_idx = 0
     while status:
         frame_name = imgwildcard % (str(frame_idx+1), imgfmt)
         frame_path = os.path.join(save_dir, frame_name)
         if args.verbose:
-            print "Handling",video_name, str(frame_idx)
-            print "\tSave as", frame_path
+            print "Handling",video_name, str(frame_idx), '\r',
+            # print "\tSave as", frame_path
         cv2.imwrite(frame_path, frame)
         status, frame = video_capture.read()
         frame_idx += 1
-
+    print ''
     video_capture.release()
 
     # video_reader = imageio.get_reader(video_path)

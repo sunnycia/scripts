@@ -10,7 +10,7 @@
 % result_base_dir=strcat(base_dir, num2str(dvi));
 
 % 
-base_dir='/data/sunnycia/saliency_on_videoset/Train/metric-matlab/videoset';
+% base_dir='/data/sunnycia/saliency_on_videoset/Train/metric-matlab/videoset';
 % base_dir='/data/sunnycia/saliency_on_videoset/_Metric_results/nopar/final/_Result_1_fc_6';
 % base_dir='/home/sunnycia/pwd/saliency_on_videoset/vt_result/_Result_1';
 % base_dir='/home/sunnycia/pwd/saliency_on_videoset/novt_result/_Result_8';
@@ -36,7 +36,21 @@ end
 % model_list = {'vo-v4-2-resnet-snapshot-2000-display-1--batch-2_1514034705_snapshot-_iter_72000_threshold0';
 % 'vo-v4-2-snapshot-2000-display-1--batch-8_1514033989_snapshot-_iter_20000_threshold0';};
 % model_list = {'vo-v4-2-resnet-catfeat-snapshot-2000-display-1--batch-2_1514034491_snapshot-_iter_72000_threshold0'};
-model_list = {'vo-v4-2-snapshot-2000-display-1-fulldens-batch-8_1514129167_snapshot-_iter_28000_threshold0'}
+% model_list = {'vo-v4-2-snapshot-2000-display-1-fulldens-batch-8_1514129167_snapshot-_iter_28000_threshold0'}
+% model_list = {'vo-v4-2-resnet-base_lr-0.01-snapshot-2000-display-1--batch-2_1514260519_usesnapshot_1514034705_snapshot-_iter_72000_snapshot-_iter_96000_threshold0'}
+
+% model_list = {  'vo-v4-2-resnet-base_lr-0.01-snapshot-2000-display-1--batch-2_1514260519_usesnapshot_1514034705_snapshot-_iter_72000_snapshot-_iter_454000_threshold0';
+%                 'vo-v4-2-resnet-snapshot-2000-display-1-fulldens-batch-2_1514129205_snapshot-_iter_474000_threshold0';
+%                 'vo-v4-2-resnet-catfeat-snapshot-2000-display-1-fulldens-batch-2_1514129183_snapshot-_iter_468000_threshold0';
+% }
+% model_list = {'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0'}
+% model_list = {%'xu_lstm';
+% 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_100000_threshold0';
+% 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_50000_threshold0';
+% 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0';
+% }
+
+
 
 
 %{

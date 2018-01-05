@@ -175,7 +175,6 @@ epoch=20
 idx_counter = 0
 save_model_iter = args.savemodeliter
 
-
 plot_dict = {
 'x':[], 
 'x_valid':[], 

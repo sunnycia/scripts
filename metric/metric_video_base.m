@@ -1,23 +1,42 @@
 delete(gcp)
-matlabpool 8
+matlabpool 4
 clc;
 clear;
 metricsFolder = 'saliency/code_forMetrics'
 addpath(genpath(metricsFolder))
 
 frame_cut=10;
-dsname='videoset';
+dsname='gazecom';
 
 save_base_dir = fullfile('/data/sunnycia/saliency_on_videoset/Train/metric-matlab', dsname);
 mkdir(save_base_dir);
 if strcmp(dsname,'videoset')==1
+    base_dir='/data/sunnycia/saliency_on_videoset/Train/metric-matlab/videoset'; % for the usage of metric_statistics
+
     base_sal_dir = '/data/sunnycia/SaliencyDataset/Video/VideoSet/Results/saliency_map';
     dens_dir = strcat('/data/sunnycia/SaliencyDataset/Video/VideoSet/ImageSet/Seperate/density_fc/density-6');
     fixa_dir = strcat('/data/sunnycia/SaliencyDataset/Video/VideoSet/ImageSet/Seperate/fixation');
     all_in_one_fixation_directory = '/data/sunnycia/SaliencyDataset/Video/VideoSet/ImageSet/All_in_one/fixation'; % for computing sauc metric
 end
 if strcmp(dsname,'ledov')==1
+    base_dir='/data/sunnycia/saliency_on_videoset/Train/metric-matlab/ledov'; % for the usage of metric_statistics
     
+end
+if strcmp(dsname, 'diem')==1
+    base_dir='/data/sunnycia/saliency_on_videoset/Train/metric-matlab/diem'; % for the usage of metric_statistics
+
+    base_sal_dir = '/data/sunnycia/SaliencyDataset/Video/DIEM/Results/saliency_map';
+    dens_dir = strcat('/data/sunnycia/SaliencyDataset/Video/DIEM/density/image/sigma32');
+    fixa_dir = strcat('/data/sunnycia/SaliencyDataset/Video/DIEM/fixation_map/image');
+    all_in_one_fixation_directory = '/data/sunnycia/SaliencyDataset/Video/DIEM/All_in_one/fixation'; % for computing sauc metric
+end
+if strcmp(dsname, 'gazecom')==1
+    base_dir='/data/sunnycia/saliency_on_videoset/Train/metric-matlab/gazecom'; % for the usage of metric_statistics
+
+    base_sal_dir = '/data/sunnycia/SaliencyDataset/Video/GAZECOM/saliency_map';
+    dens_dir = strcat('/data/sunnycia/SaliencyDataset/Video/GAZECOM/density/sigma32');
+    fixa_dir = strcat('/data/sunnycia/SaliencyDataset/Video/GAZECOM/fixations');
+    all_in_one_fixation_directory = '/data/sunnycia/SaliencyDataset/Video/GAZECOM/All_in_one/fixations'; % for computing sauc metric
 end
 
 % model_list = {'DENSITY';'SAM';'FANG8';'XU';'SALICON';'ITKO';'GBVS';'PQFT';'SUN';'ISEEL';'MDB';};
@@ -35,12 +54,25 @@ end
 % 'vo-v4-2-snapshot-2000-display-1--batch-8_1514033989_snapshot-_iter_20000_threshold0';};
 % model_list = {'vo-v4-2-snapshot-2000-display-1-fulldens-batch-8_1514129167_snapshot-_iter_28000_threshold0'}
 % model_list = {'vo-v4-2-resnet-catfeat-snapshot-2000-display-1--batch-2_1514034491_snapshot-_iter_72000_threshold0'}
-model_list = {'vo-v4-2-resnet-base_lr-0.01-snapshot-2000-display-1--batch-2_1514260519_usesnapshot_1514034705_snapshot-_iter_72000_snapshot-_iter_96000_threshold0'}
+% model_list = {'vo-v4-2-resnet-base_lr-0.01-snapshot-2000-display-1--batch-2_1514260519_usesnapshot_1514034705_snapshot-_iter_72000_snapshot-_iter_96000_threshold0'}
+% model_list = {  'vo-v4-2-resnet-base_lr-0.01-snapshot-2000-display-1--batch-2_1514260519_usesnapshot_1514034705_snapshot-_iter_72000_snapshot-_iter_454000_threshold0';
+%                 'vo-v4-2-resnet-snapshot-2000-display-1-fulldens-batch-2_1514129205_snapshot-_iter_474000_threshold0';
+%                 'vo-v4-2-resnet-catfeat-snapshot-2000-display-1-fulldens-batch-2_1514129183_snapshot-_iter_468000_threshold0';
+% }
+% model_list = {'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0'}
+% model_list = {'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_50000_threshold0'}
+model_list = {%'xu_lstm';
+'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_100000_threshold0';
+'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_50000_threshold0';
+'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0';
+}
+
+
 cc_msk  = 1;
 sim_msk = 1;
 jud_msk = 1;
 bor_msk = 1;
-sauc_msk= 1;
+sauc_msk= 0;
 emd_msk = 0;
 kl_msk  = 1;
 nss_msk = 1;
@@ -107,8 +139,8 @@ for m = 1 : length(model_list)
         t1=clock;
         % parfor j = 1+frame_cut : LengthFiles-frame_cut
         % for j = 1 : 2
-        
         parfor j=1:true_length
+
             smap_path = char(fullfile(cur_sal_dir,saliencymap_path_list(j+frame_cut)));
             density_path = char(fullfile(cur_dens_dir,densitymap_path_list(j+frame_cut)));
             fixation_path = char(fullfile(cur_fixa_dir, fixationmap_path_list(j+frame_cut)));
@@ -211,4 +243,67 @@ for m = 1 : length(model_list)
         fprintf('%s saved\n',save_path);
     end
     fprintf('Done for %s',model_name);
+end
+
+
+%  _______  _______  _______  _______  ___   _______  _______  ___   _______  _______ 
+% |       ||       ||   _   ||       ||   | |       ||       ||   | |       ||       |
+% |  _____||_     _||  |_|  ||_     _||   | |  _____||_     _||   | |       ||  _____|
+% | |_____   |   |  |       |  |   |  |   | | |_____   |   |  |   | |       || |_____ 
+% |_____  |  |   |  |       |  |   |  |   | |_____  |  |   |  |   | |      _||_____  |
+%  _____| |  |   |  |   _   |  |   |  |   |  _____| |  |   |  |   | |     |_  _____| |
+% |_______|  |___|  |__| |__|  |___|  |___| |_______|  |___|  |___| |_______||_______|
+model_base_dir=base_dir;
+result_base_dir=base_dir;
+
+if ~isdir(result_base_dir)
+    mkdir(result_base_dir);
+end
+
+
+met_count = 7;
+
+for i=1:length(model_list)
+    modelname=char(model_list(i));
+    % disp(modelname);
+    modeldir=fullfile(model_base_dir, modelname);
+    
+    vomat_list = dir(fullfile(modeldir, '*.mat*'));
+    met_sum=zeros(met_count,1);
+    frame_count=zeros(met_count,1);
+
+    % cc=[];
+    % sim=[];
+    % jud=[];
+    % bor=[];
+    % kl=[];
+    % nss=[];
+    % total_metric=[cc;sim;jud;bor;kl;nss]
+    for j=1:length(vomat_list)
+        vomat_path=fullfile(modeldir, vomat_list(j).name);
+        load(vomat_path);
+        saliency_score([6], :) = []; % delete row 5&6, namely emd
+
+        for k=1:met_count
+            metric=saliency_score(k, :);
+
+            [m,n]=find(isnan(metric)==1);
+            % metric(:,m)=[]; % delete all nan
+            metric(m,:)=[]; % delete all nan
+
+            
+            met_sum(k) = met_sum(k) + sum(metric(:));
+            frame_count(k) = frame_count(k) + length(metric);
+        end
+    end
+    
+    result=zeros(met_count,1);
+    for k=1:met_count
+        result(k)=met_sum(k)/frame_count(k);
+    end
+    resultname=strcat(modelname,  '-result.mat');
+    resultpath = fullfile(result_base_dir, resultname);
+    save(resultpath, 'result','frame_count','met_sum');
+    fprintf('%s saved!\n',resultpath);
+    result'
 end

@@ -1,9 +1,10 @@
-# IIIII NN   NN FFFFFFF EEEEEEE RRRRRR  EEEEEEE NN   NN  CCCCC  EEEEEEE 
-#  III  NNN  NN FF      EE      RR   RR EE      NNN  NN CC    C EE      
-#  III  NN N NN FFFF    EEEEE   RRRRRR  EEEEE   NN N NN CC      EEEEE   
-#  III  NN  NNN FF      EE      RR  RR  EE      NN  NNN CC    C EE      
-# IIIII NN   NN FF      EEEEEEE RR   RR EEEEEEE NN   NN  CCCCC  EEEEEEE 
-
+ #   _____    _____   _____   _   _   ______   ______   _____  
+ #  / ____|  / ____| |_   _| | \ | | |  ____| |  ____| |  __ \ 
+ # | (___   | (___     | |   |  \| | | |__    | |__    | |__) |
+ #  \___ \   \___ \    | |   | . ` | |  __|   |  __|   |  _  / 
+ #  ____) |  ____) |  _| |_  | |\  | | |      | |____  | | \ \ 
+ # |_____/  |_____/  |_____| |_| \_| |_|      |______| |_|  \_\
+                                                             
 import imghdr, imageio
 from math import floor
 import glob, cv2, os, numpy as np, sys, caffe
@@ -29,7 +30,7 @@ def get_arguments():
     parser.add_argument('--video_deploy_path',type=str,default='./prototxt/vo-v3_deploy.prototxt')
     parser.add_argument('--video_model_path',type=str,default='../training_output/salicon/vo-v3_train_kldloss_withouteuc-batch-1_1510229829/snapshot-_iter_400000.caffemodel')
     parser.add_argument('--infertype', type=str,default='slice')
-    parser.add_argument('--inferoverlap', type=int,default='15')
+    parser.add_argument('--inferoverlap', type=int,default=15)
     parser.add_argument('--threshold', type=float, default=0)
 
     return parser.parse_args()
@@ -64,8 +65,18 @@ if __name__ =='__main__':
         video_base = '/data/sunnycia/SaliencyDataset/Video/MSU/videos'
         saliency_video_base = '/data/sunnycia/SaliencyDataset/Video/MSU/saliency_video'
         saliency_map_base=  '/data/sunnycia/SaliencyDataset/Video/MSU/saliency_map'
+    elif args.test_base == 'ledov':
+        video_base = '/data/sunnycia/SaliencyDataset/Video/LEDOV/videos'
+        saliency_video_base = '/data/sunnycia/SaliencyDataset/Video/LEDOV/saliency_video'
+        saliency_map_base = '/data/sunnycia/SaliencyDataset/Video/LEDOV/saliency_map'
     elif args.test_base == 'diem':
-        pass
+        video_base = '/data/sunnycia/SaliencyDataset/Video/DIEM/videos'
+        saliency_video_base = '/data/sunnycia/SaliencyDataset/Video/DIEM/saliency_video'
+        saliency_map_base = '/data/sunnycia/SaliencyDataset/Video/DIEM/saliency_map'
+    elif args.test_base == 'gazecom':
+        video_base = '/data/sunnycia/SaliencyDataset/Video/GAZECOM/videos'
+        saliency_video_base = '/data/sunnycia/SaliencyDataset/Video/GAZECOM/saliency_video'
+        saliency_map_base = '/data/sunnycia/SaliencyDataset/Video/GAZECOM/saliency_map'
 
     model_name = os.path.dirname(video_model_path).split('/')[-1] + '_'+ os.path.basename(video_model_path).split('.')[0] + '_threshold'+str(threshold)
     video_path_list = glob.glob(os.path.join(video_base, "*.*"))
@@ -97,7 +108,8 @@ if __name__ =='__main__':
         vs.setup_video(video_path)
         vs.create_saliency_video(threshold=threshold, overlap=args.inferoverlap)
         if args.output_type=="image":
-            video_name = os.path.basename(video_path).split('.')[0].split('_')[0]
+            # video_name = os.path.basename(video_path).split('.')[0].split('_')[0]
+            video_name = os.path.basename(video_path).split('.')[0]
             if len(glob.glob(os.path.join(saliency_map_dir, video_name+'*'))) != 0:
                 print video_name, "already done, pass."
                 continue

@@ -29,6 +29,9 @@ for video_name in video_name_list:
     for fixation_path in fixation_path_list:
         prefix = os.path.basename(fixation_path).split('.')[0]
         output_path = os.path.join(density_dir, prefix+'.jpg')
+        if os.path.isfile(output_path):
+            print output_path, "exists, pass"
+            continue
         if args.fixationtype =='mat':
             fixation = sio.loadmat(fixation_path)['fixation'].astype(np.float32)
         elif args.fixationtype == 'image':
