@@ -19,7 +19,7 @@ if not os.path.isdir(mat_dir):
 if not os.path.isdir(img_dir):
     os.makedirs(img_dir)
 
-mat_path_list = glob.glob(os.path.join(mat_dir, '*', '*.mat'))
+mat_path_list = glob.glob(os.path.join(mat_dir,  '*.mat'))
 
 for mat_path in mat_path_list:
     video_dir = mat_path.split('/')[-2]

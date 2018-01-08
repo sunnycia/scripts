@@ -85,12 +85,12 @@ image_size = args.imagesize
 # ╚═╝┴  ─┴┘┴ ┴ ┴ └─┘  └─┘└─┘┴─┘ └┘ └─┘┴└─  ┴  ┴└─└─┘ ┴ └─┘ ┴ ┴ └─ ┴ 
 update_solver_dict = {
 # 'solver_type':'RMSPROP',
-'display':'1',
-# 'base_lr': '0.01',
+# 'display':'1',
+# 'base_lr': '0.0001',
 # 'weight_decay': '0.000005',
 # 'momentum': '0.95',
-# 'lr_policy':'"step"',
-# 'stepsize':'500',
+'lr_policy':'"step"',
+'stepsize':'100000',
 'snapshot':str(args.savemodeliter)
 }
 extrainfo_dict = {

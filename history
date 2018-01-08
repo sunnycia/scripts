@@ -4072,6 +4072,516 @@
  4072  top
  4073  nvidia-smi
  4074  cd pwd/saliency_on_videoset/Train/scripts/
- 4075  ls
- 4076  source set_env.sh ../C3D-v1.1 7
- 4077  history > history
+ 4075  source set_env.sh ../C3D-v1.1 4
+ 4076  python utils/scavenger.py 
+ 4077  python utils/scavenger.py --snapshot
+ 4078  python utils/scavenger.py --snapshot=1
+ 4079  top
+ 4080  nvidia-smi
+ 4081  cd pwd/saliency_on_videoset/Train/scripts/
+ 4082  ls
+ 4083  source set_env.sh ../C3D-v1.1 7
+ 4084  history > history
+ 4085  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2.prototxt' --use_model='../pretrained_model/conv3d_deepnetA_sport1m_iter_1900000_v1.1.caffemodel' --trainingbase='ledov' --batch=2 --validiter=2500 --savemodeliter=2500 --trainingexampleprops=0.95 
+ 4086  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2.prototxt' --use_model='../pretrained_model/conv3d_deepnetA_sport1m_iter_1900000_v1.1.caffemodel' --trainingbase='ledov' --batch=8 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.95 --plotiter=50
+ 4087  clear
+ 4088  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2.prototxt' --use_model='../pretrained_model/conv3d_deepnetA_sport1m_iter_1900000_v1.1.caffemodel' --trainingbase='ledov' --batch=8 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50
+ 4089  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2.prototxt' --use_model='../pretrained_model/conv3d_deepnetA_sport1m_iter_1900000_v1.1.caffemodel' --trainingbase='ledov' --batch=8 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50 --extramodinfo='fulldens'
+ 4090  clear && clear
+ 4091  nvidia-smi
+ 4092  cd pwd/saliency_on_videoset/Train/scripts/
+ 4093  source set_env.sh ../C3D-v1.1 6
+ 4094  clear
+ 4095  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet-catfeat.prototxt' --use_model='../pretrained_model/c3d_resnet18_sports1m_r2_iter_2800000.caffemodel' --trainingbase='ledov' --batch=8 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50
+ 4096  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet-catfeat.prototxt' --use_model='../pretrained_model/c3d_resnet18_sports1m_r2_iter_2800000.caffemodel' --trainingbase='ledov' --batch=2 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50
+ 4097  clear
+ 4098  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet-catfeat.prototxt' --use_model='../pretrained_model/c3d_resnet18_sports1m_r2_iter_2800000.caffemodel' --trainingbase='ledov' --batch=2 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50
+ 4099  clear
+ 4100  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet-catfeat.prototxt' --use_model='../pretrained_model/c3d_resnet18_sports1m_r2_iter_2800000.caffemodel' --trainingbase='ledov' --batch=2 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50
+ 4101  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet-catfeat.prototxt' --use_model='../pretrained_model/c3d_resnet18_sports1m_r2_iter_2800000.caffemodel' --trainingbase='ledov' --batch=2 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50 --extramodinfo='fulldens'
+ 4102  nvidia-smi
+ 4103  clear
+ 4104  cd pwd/saliency_on_videoset/Train/scripts/metric/
+ 4105  ls
+ 4106  matlab -nodesktop
+ 4107  clear && clear
+ 4108  cd ..
+ 4109  python test_video.py --video_deploy_path='prototxt/vo-v4-2-deploy.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-snapshot-2000-display-1-fulldens-batch-8_1514129167/snapshot-_iter_28000.caffemodel' --infertype='slide' --output_type='video' --test_base='videoset' --model_code='v4-2' --videolength=16
+ 4110  source set_env.sh ../C3D-v1.1 5
+ 4111  python test_video.py --video_deploy_path='prototxt/vo-v4-2-deploy.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-snapshot-2000-display-1-fulldens-batch-8_1514129167/snapshot-_iter_28000.caffemodel' --infertype='slide' --output_type='video' --test_base='videoset' --model_code='v4-2' --videolength=16
+ 4112  nvidia-smi
+ 4113  top
+ 4114  python utils/VorI/slice_frames.py 
+ 4115  python utils/VorI/slice_frames.py --videobase='/data/sunnycia/SaliencyDataset/Video/DIEM/video'
+ 4116  python utils/VorI/slice_frames.py --videobase='/data/sunnycia/SaliencyDataset/Video/DIEM/video' --outputbase='/data/sunnycia/SaliencyDataset/Video/DIEM/frames'
+ 4117  matlab -nodesktop
+ 4118  top
+ 4119  nvidia-smi
+ 4120  top
+ 4121  nvidia-smi
+ 4122  top
+ 4123  nvidia-smi
+ 4124  top
+ 4125  locate ChairsSDHom.tar.gz
+ 4126  rlocate
+ 4127  op
+ 4128  top
+ 4129  nvidia-smi
+ 4130  clear
+ 4131  python test_video.py --output_type='image' --test_base='videoset' --model_code='v4-2' --videolength=16 --video_deploy_path='prototxt/vo-v4-2-resnet.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-resnet-snapshot-2000-display-1-fulldens-batch-2_1514129205/snapshot-_iter_474000.caffemodel' --infertype='slide'
+ 4132  top
+ 4133  nvidia-smi
+ 4134  top
+ 4135  cd pwd/saliency_on_videoset/Train/scripts/
+ 4136  source set_env.sh ../C3D-v1.1 5
+ 4137  nvidia-si
+ 4138  nvidia-smi
+ 4139  clear
+ 4140  python test_video.py --video_deploy_path='prototxt/vo-v4-2-resnet.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-resnet-snapshot-2000-display-1--batch-2_1514034705/snapshot-_iter_72000.caffemodel' --output_type='image' --model_code='v4-2' --videolength=16 --infertype='slide' --test_base='videoset' && python test_video.py --video_deploy_path='prototxt/vo-v4-2-resnet-catfeat.prototxt.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-resnet-catfeat-snapshot-2000-display-1--batch-2_1514034491/snapshot-_iter_72000.caffemodel' --output_type='image' --model_code='v4-2' --videolength=16 --infertype='slide' --test_base='videoset'
+ 4141  python test_video.py --video_deploy_path='prototxt/vo-v4-2-resnet-catfeat.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-resnet-catfeat-snapshot-2000-display-1--batch-2_1514034491/snapshot-_iter_72000.caffemodel' --output_type='image' --model_code='v4-2' --videolength=16 --infertype='slide' --test_base='videoset'
+ 4142  cd utils/
+ 4143  ls
+ 4144  touch gen_lmdb.py
+ 4145  vim gen_lmdb.py 
+ 4146  cd ..
+ 4147  top
+ 4148  nvidia-smi
+ 4149  clear
+ 4150  source set_env.sh ../C3D-v1.1 4
+ 4151  nvidia-smi
+ 4152  clear
+ 4153  python test_video.py --video_deploy_path='prototxt/vo-v4-2.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-snapshot-2000-display-1-fulldens-batch-8_1514129167/snapshot-_iter_28000.caffemodel' --infertype='slide' --output_type='video' --test_base='videoset' --model_code='v4-2' --videolength=16
+ 4154  python test_video.py --video_deploy_path='prototxt/vo-v4-2.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-snapshot-2000-display-1-fulldens-batch-8_1514129167/snapshot-_iter_28000.caffemodel' --infertype='slide' --output_type='image' --test_base='videoset' --model_code='v4-2' --videolength=16
+ 4155  python test_video.py --video_deploy_path='prototxt/vo-v4-2.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-resnet-base_lr-0.01-snapshot-2000-display-1--batch-2_1514260519_usesnapshot_1514034705_snapshot-_iter_72000/snapshot-_iter_96000.caffemodel' --infertype='slide' --output_type='image' --test_base='videoset' --model_code='v4-2' --videolength=16
+ 4156  python test_video.py --video_deploy_path='prototxt/vo-v4-2-resnet.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-resnet-base_lr-0.01-snapshot-2000-display-1--batch-2_1514260519_usesnapshot_1514034705_snapshot-_iter_72000/snapshot-_iter_96000.caffemodel' --infertype='slide' --output_type='image' --test_base='videoset' --model_code='v4-2' --videolength=16
+ 4157  matlab -nodesktop
+ 4158  clear
+ 4159  source set_env.sh ../C3D-v1.1 6
+ 4160  python test_video.py --output_type='image' --test_base='videoset' --model_code='v4-2' --videolength=16 --video_deploy_path='prototxt/vo-v4-2-resnet.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-resnet-catfeat-snapshot-2000-display-1-fulldens-batch-2_1514129183/snapshot-_iter_468000.caffemodel' --infertype='slide'
+ 4161  python test_video.py --output_type='image' --test_base='videoset' --model_code='v4-2' --videolength=16 --video_deploy_path='prototxt/vo-v4-2-resnet-catfeat.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-resnet-catfeat-snapshot-2000-display-1-fulldens-batch-2_1514129183/snapshot-_iter_468000.caffemodel' --infertype='slide'
+ 4162  clear
+ 4163  python test_video.py --output_type='image' --test_base='videoset' --model_code='v4-2' --videolength=16 --video_deploy_path='prototxt/vo-v4-2-resnet-catfeat.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-resnet-catfeat-snapshot-2000-display-1-fulldens-batch-2_1514129183/snapshot-_iter_468000.caffemodel' --infertype='slide'
+ 4164  clear
+ 4165  cd pwd/saliency_on_videoset/Train/scripts/
+ 4166  source set_env.sh ../C3D-v1.1 5
+ 4167  nvidia-smi
+ 4168  source set_env.sh ../C3D-v1.1 4
+ 4169  clear
+ 4170  python test_video.py --output_type='video' --video_deploy_path='prototxt/vo-v4-2-resnet-catfeat.prototxt' --video_model_path='' --infertype='slide' ----test_base='videoset' --model_code='v4-2' --videolength=16 
+ 4171  python test_video.py --output_type='video' --video_deploy_path='prototxt/vo-v4-2-resnet-catfeat.prototxt' --video_model_path='../training_output/vo-v4-2-resnet-catfeat-snapshot-2000-display-1--batch-2_1514034491/snapshot-_iter_48000.caffemodel' --infertype='slide' --test_base='videoset' --model_code='v4-2' --videolength=16 
+ 4172  python test_video.py --output_type='video' --video_deploy_path='prototxt/vo-v4-2-resnet-catfeat.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-resnet-catfeat-snapshot-2000-display-1--batch-2_1514034491/snapshot-_iter_48000.caffemodel' --infertype='slide' --test_base='videoset' --model_code='v4-2' --videolength=16 
+ 4173  python test_video.py --output_type='video' --video_deploy_path='prototxt/vo-v4-2-resnet-catfeat.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-resnet-catfeat-snapshot-2000-display-1--batch-2_1514034491/snapshot-_iter_48000.caffemodel' --infertype='slice' --test_base='videoset' --model_code='v4-2' --videolength=16 
+ 4174  python test_video.py --output_type='video' --video_deploy_path='prototxt/vo-v4-2-resnet.prototxt' --video_model_path='vo-v4-2-resnet-snapshot-2000-display-1--batch-2_1514034705/snapshot-_iter_48000.caffemodel' --infertype='slice' --test_base='videoset' --model_code='v4-2' --videolength=16 
+ 4175  python test_video.py --output_type='video' --video_deploy_path='prototxt/vo-v4-2-resnet.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-resnet-snapshot-2000-display-1--batch-2_1514034705/snapshot-_iter_48000.caffemodel' --infertype='slice' --test_base='videoset' --model_code='v4-2' --videolength=16 
+ 4176  clear
+ 4177  python test_video.py --output_type='video' --video_deploy_path='prototxt/vo-v4-2-resnet.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-resnet-snapshot-2000-display-1--batch-2_1514034705/snapshot-_iter_48000.caffemodel' --infertype='slice' --test_base='videoset' --model_code='v4-2' --videolength=16 
+ 4178  clear
+ 4179  python test_video.py --output_type='video' --video_deploy_path='prototxt/vo-v4-2.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-snapshot-2000-display-1--batch-8_1514033989/snapshot-_iter_14000.caffemodel' --infertype='slice' --test_base='videoset' --model_code='v4-2' --videolength=16 
+ 4180  clear
+ 4181  python test_video.py --output_type='video' --video_deploy_path='prototxt/vo-v4-2-resnet.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-resnet-snapshot-2000-display-1--batch-2_1514034705/snapshot-_iter_48000.caffemodel' --infertype='slice' --test_base='videoset' --model_code='v4-2' --videolength=16 
+ 4182  clear
+ 4183  vim utils/scavenger.py 
+ 4184  python utils/scavenger.py 
+ 4185  vim utils/scavenger.py 
+ 4186  python utils/scavenger.py 
+ 4187  nvidia-smi
+ 4188  source set_env.sh ../C3D-v1.1 4
+ 4189  python test_video.py --video_deploy_path='prototxt/vo-v4-2.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-snapshot-2000-display-1--batch-8_1514033989/snapshot-_iter_20000.caffemodel' --output_type='image' --model_code='v4-2' --videoength=16 infertype='slide' 
+ 4190  python test_video.py --video_deploy_path='prototxt/vo-v4-2.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-snapshot-2000-display-1--batch-8_1514033989/snapshot-_iter_20000.caffemodel' --output_type='image' --model_code='v4-2' --videoength=16 infertype='slide' --test_base='videoset'
+ 4191  python test_video.py --video_deploy_path='prototxt/vo-v4-2.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-snapshot-2000-display-1--batch-8_1514033989/snapshot-_iter_20000.caffemodel' --output_type='image' --model_code='v4-2' --videoength=16 --infertype='slide' --test_base='videoset'
+ 4192  python test_video.py --video_deploy_path='prototxt/vo-v4-2.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-snapshot-2000-display-1--batch-8_1514033989/snapshot-_iter_20000.caffemodel' --output_type='image' --model_code='v4-2' --videolength=16 --infertype='slide' --test_base='videoset'
+ 4193  python test_video.py --video_deploy_path='prototxt/vo-v4-2.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-snapshot-2000-display-1--batch-8_1514033989/snapshot-_iter_20000.caffemodel' --output_type='image' --model_code='v4-2' --videolength=16 --infertype='slide' --test_base='videoset' 
+ 4194  top
+ 4195  clear && clear
+ 4196  top
+ 4197  nvidia-smi
+ 4198  top
+ 4199  nvidia-smi
+ 4200  clear
+ 4201  git status
+ 4202  git add --all
+ 4203  git commit -m "Done for training v4-2 v4-2-resnet and v4-2-resnet-catfeat, add v4-2-softmax"
+ 4204  git push -u origin master
+ 4205  clear
+ 4206  nvidia-smi
+ 4207  clear
+ 4208  top
+ 4209  nvidia-smi
+ 4210  clear && clear
+ 4211  git status
+ 4212  git add --all
+ 4213  git commit -m "Tried v4-2-sigmoid, not good. Add generate lmdb util"
+ 4214  git push -u origin master
+ 4215  cd /data/sunnycia/saliency_on_videoset/Train/figure/vo-v4-2-resnet-base_lr-0.01-snapshot-2000-display-1--batch-2_1514260519_usesnapshot_1514034705_snapshot-_iter_72000
+ 4216  python
+ 4217  nvidia-smi
+ 4218  cd ~
+ 4219  cd /data/sunnycia/saliency_on_videoset/Train/figure/vo-v4-2-resnet-snapshot-2000-display-1-fulldens-batch-2_1514129205
+ 4220  python
+ 4221  top
+ 4222  nvidia-smi
+ 4223  top
+ 4224  nvidia-smi
+ 4225  top
+ 4226  nvidia-smi
+ 4227  python
+ 4228  top
+ 4229  clear && clear
+ 4230  cd ..
+ 4231  cd ../scripts/
+ 4232  python utils/visualize_plotdict.py --plot_dict_path='/data/sunnycia/saliency_on_videoset/Train/figure/vo-v4-2-resnet-catfeat-snapshot-2000-display-1-fulldens-batch-2_1514129183/plot_dict.pkl'
+ 4233  python utils/visualize_plotdict.py --plot_dict_path='/data/sunnycia/saliency_on_videoset/Train/figure/vo-v4-2-resnet-snapshot-2000-display-1-fulldens-batch-2_1514129205/plot_dict.pkl'
+ 4234  python utils/visualize_plotdict.py --plot_dict_path='/data/sunnycia/saliency_on_videoset/Train/figure/vo-v4-2-resnet-base_lr-0.01-snapshot-2000-display-1--batch-2_1514260519_usesnapshot_1514034705_snapshot-_iter_72000/plot_dict.pkl'
+ 4235  python utils/visualize_plotdict.py --plot_dict_path='/data/sunnycia/saliency_on_videoset/Train/figure/vo-v4-2-snapshot-2000-display-1-fulldens-batch-8_1514129167/plot_dict.pkl'
+ 4236  clear
+ 4237  python metric/find_best_and_worst.py --metricdir='/data/sunnycia/saliency_on_videoset/Train/metric-matlab/videoset/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000'
+ 4238  top
+ 4239  nvidia-smi
+ 4240  python metric/find_best_and_worst.py --metricdir='/data/sunnycia/saliency_on_videoset/Train/metric-matlab/videoset/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000'
+ 4241  clear && clear
+ 4242  python metric/find_best_and_worst.py --metricdir='/data/sunnycia/saliency_on_videoset/Train/metric-matlab/videoset/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000'
+ 4243  python metric/find_best_and_worst.py --metricdir='/data/sunnycia/saliency_on_videoset/Train/metric-matlab/videoset/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000' --metricindex=0
+ 4244  python metric/find_best_and_worst.py --metricdir='/data/sunnycia/saliency_on_videoset/Train/metric-matlab/videoset/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000' --metricindex=0 --examples=20
+ 4245  python metric/find_best_and_worst.py --metricdir='/data/sunnycia/saliency_on_videoset/Train/metric-matlab/videoset/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000' --metricindex=2 --examples=10
+ 4246  git status
+ 4247  git add --all
+ 4248  git commit -m "add utils: visualize plotdict & find best and worst performance of a metric"
+ 4249  git push -u origin master
+ 4250  python metric/find_best_and_worst.py --metricdir='/data/sunnycia/saliency_on_videoset/Train/metric-matlab/videoset/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000' --metricindex=2 --examples=10
+ 4251  python metric/find_best_and_worst.py --metricdir='/data/sunnycia/saliency_on_videoset/Train/metric-matlab/videoset/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000' --metricindex=3 --examples=10
+ 4252  python metric/find_best_and_worst.py --metricdir='/data/sunnycia/saliency_on_videoset/Train/metric-matlab/videoset/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000' --metricindex=3 --examples=3
+ 4253  python metric/find_best_and_worst.py --metricdir='/data/sunnycia/saliency_on_videoset/Train/metric-matlab/videoset/train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000' --metricindex=0 --examples=3
+ 4254  touch metric/findBW.sh
+ 4255  vim metric/findBW.sh 
+ 4256  bash metric/findBW.sh 
+ 4257  python utils/visualize_plotdict.py --plot_dict_path='/data/sunnycia/saliency_on_videoset/Train/figure/vo-v4-2-snapshot-2000-display-1-fulldens-batch-8_1514129167/plot_dict.pkl'
+ 4258  python utils/visualize_plotdict.py --plot_dict_path='/data/sunnycia/saliency_on_videoset/Train/figure/vo-v4-2-resnet-base_lr-0.01-snapshot-2000-display-1--batch-2_1514260519_usesnapshot_1514034705_snapshot-_iter_72000/plot_dict.pkl'
+ 4259  python utils/visualize_plotdict.py --plot_dict_path='/data/sunnycia/saliency_on_videoset/Train/figure/vo-v4-2-resnet-snapshot-2000-display-1-fulldens-batch-2_1514129205/plot_dict.pkl'
+ 4260  df -h
+ 4261  python utils/visualize_plotdict.py --plot_dict_path='/data/sunnycia/saliency_on_videoset/Train/figure/vo-v4-2-resnet-base_lr-0.01-snapshot-2000-display-1--batch-2_1514260519_usesnapshot_1514034705_snapshot-_iter_72000/plot_dict.pkl'
+ 4262  python utils/visualize_plotdict.py --plot_dict_path='/data/sunnycia/saliency_on_videoset/Train/figure/vo-v4-2-resnet-snapshot-2000-display-1-fulldens-batch-2_1514129205/plot_dict.pkl'
+ 4263  python utils/visualize_plotdict.py --plot_dict_path='/data/sunnycia/saliency_on_videoset/Train/figure/vo-v4-2-snapshot-2000-display-1-fulldens-batch-8_1514129167/plot_dict.pkl'
+ 4264  python ss_test_video.py 
+ 4265  python
+ 4266  python ss_test_video.py 
+ 4267  python
+ 4268  python ss_test_video.py 
+ 4269  clear
+ 4270  python ss_test_video.py 
+ 4271  top
+ 4272  python ss_test_video.py 
+ 4273  python test_video.py --output_type='image' --test_base='videoset' --model_code='v4-2' --videolength=16 --video_deploy_path='prototxt/vo-v4-2-resnet.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-resnet-base_lr-0.01-snapshot-2000-display-1--batch-2_1514260519_usesnapshot_1514034705_snapshot-_iter_72000/snapshot-_iter_454000.caffemodel' --infertype='slide' 
+ 4274  matlab -nodesktop
+ 4275  cd pwd/saliency_on_videoset/Train/scripts/
+ 4276  source set_env.sh ../C3D-v1.1-kldloss/ 4
+ 4277  nvidia-smi
+ 4278  cler
+ 4279  clear
+ 4280  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet-kldloss.prototxt' --use_model='../pretrained_model/c3d_resnet18_sports1m_r2_iter_2800000.caffemodel' --trainingbase='ledov' --batch=2 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50
+ 4281  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet-kldloss.prototxt' --use_model='../pretrained_model/c3d_resnet18_sports1m_r2_iter_2800000.caffemodel' --trainingbase='ledov' --batch=2 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.99995 --plotiter=50
+ 4282  clear
+ 4283  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet-kldloss.prototxt' --use_model='../pretrained_model/c3d_resnet18_sports1m_r2_iter_2800000.caffemodel' --trainingbase='ledov' --batch=2 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.99995 --plotiter=50
+ 4284  clear
+ 4285  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet-kldloss.prototxt' --use_model='../pretrained_model/c3d_resnet18_sports1m_r2_iter_2800000.caffemodel' --trainingbase='ledov' --batch=2 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50
+ 4286  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet-kldloss.prototxt' --use_model='../pretrained_model/c3d_resnet18_sports1m_r2_iter_2800000.caffemodel' --trainingbase='ledov' --batch=2 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.99995 --plotiter=50
+ 4287  clear
+ 4288  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet-kldloss.prototxt' --use_model='../pretrained_model/c3d_resnet18_sports1m_r2_iter_2800000.caffemodel' --trainingbase='ledov' --batch=2 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.99995 --plotiter=50
+ 4289  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet-kldloss.prototxt' --use_model='../pretrained_model/c3d_resnet18_sports1m_r2_iter_2800000.caffemodel' --trainingbase='ledov' --batch=2 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50
+ 4290  clear
+ 4291  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet-kldloss.prototxt' --use_model='../pretrained_model/c3d_resnet18_sports1m_r2_iter_2800000.caffemodel' --trainingbase='ledov' --batch=2 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50
+ 4292  cd   /data/sunnycia/SaliencyDataset/Video/LEDOV
+ 4293  python check_density.py 
+ 4294  clear
+ 4295  clearw
+ 4296  clear
+ 4297  cd -
+ 4298  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet-kldloss.prototxt' --use_model='../pretrained_model/c3d_resnet18_sports1m_r2_iter_2800000.caffemodel' --trainingbase='ledov' --batch=2 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50
+ 4299  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-softmax.prototxt' --use_model='../pretrained_model/conv3d_deepnetA_sport1m_iter_1900000_v1.1.caffemodel' --trainingbase='ledov' --batch=8 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50
+ 4300  clear
+ 4301  python utils/scavenger.py 
+ 4302  python utils/scavenger.py --snapshot=1
+ 4303  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-softmax.prototxt' --use_model='../pretrained_model/conv3d_deepnetA_sport1m_iter_1900000_v1.1.caffemodel' --trainingbase='ledov' --batch=8 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50
+ 4304  python utils/scavenger.py 
+ 4305  python utils/scavenger.py --snapshot=1
+ 4306  clear
+ 4307  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-softmax.prototxt' --use_model='../pretrained_model/conv3d_deepnetA_sport1m_iter_1900000_v1.1.caffemodel' --trainingbase='ledov' --batch=8 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50
+ 4308  clear
+ 4309  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-sigmoid.prototxt' --use_model='../pretrained_model/conv3d_deepnetA_sport1m_iter_1900000_v1.1.caffemodel' --trainingbase='ledov' --batch=8 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50
+ 4310  clear
+ 4311  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet.prototxt' --usesnapshot='../training_output/salicon/vo-v4-2-resnet-snapshot-2000-display-1--batch-2_1514034705/snapshot-_iter_72000.solverstate' --trainingbase='ledov' --batch=8 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50
+ 4312  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet.prototxt' --use_snapshot='../training_output/salicon/vo-v4-2-resnet-snapshot-2000-display-1--batch-2_1514034705/snapshot-_iter_72000.solverstate' --trainingbase='ledov' --batch=8 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50
+ 4313  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet.prototxt' --use_snapshot='../training_output/salicon/vo-v4-2-resnet-snapshot-2000-display-1--batch-2_1514034705/snapshot-_iter_72000.solverstate' --trainingbase='ledov' --batch=2 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50
+ 4314  clear
+ 4315  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet.prototxt' --use_snapshot='../training_output/salicon/vo-v4-2-resnet-snapshot-2000-display-1--batch-2_1514034705/snapshot-_iter_72000.solverstate' --trainingbase='ledov' --batch=2 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50
+ 4316  clear
+ 4317  claer
+ 4318  clear
+ 4319  python utils/scavenger.py 
+ 4320  clear
+ 4321  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet.prototxt' --use_snapshot='../training_output/salicon/vo-v4-2-resnet-snapshot-2000-display-1--batch-2_1514034705/snapshot-_iter_72000.solverstate' --trainingbase='ledov' --batch=2 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50
+ 4322  clear
+ 4323  matlab -nodesktop
+ 4324  cd /data/sunnycia/SaliencyDataset/Video/Hollywood2
+ 4325  ls
+ 4326  tar xf Hollywood2-actions.tar.gz 
+ 4327  tar xf Hollywood2-scenes.tar.gz
+ 4328  cd ../Coutort1/
+ 4329  unzip ERB3_Stimuli.zip 
+ 4330  cd /data/sunnycia/saliency_on_videoset/Train/scripts/metric
+ 4331  cd ..
+ 4332  python metric/metric_distribution.py --metricdir='' --outputdir='' --metricname='cc'
+ 4333  python metric/metric_distribution.py --metricdir='../metric-matlab/videoset/vo-v4-2-resnet-base_lr-0.01-snapshot-2000-display-1--batch-2_1514260519_usesnapshot_1514034705_snapshot-_iter_72000_snapshot-_iter_454000_threshold0' --outputdir='../metric_distribution' --metricname='cc'
+ 4334  python metric/metric_distribution.py --metricdir='../metric-matlab/videoset/vo-v4-2-resnet-base_lr-0.01-snapshot-2000-display-1--batch-2_1514260519_usesnapshot_1514034705_snapshot-_iter_72000_snapshot-_iter_454000_threshold0' --outputdir='../metric_distribution' --metricname='sauc'
+ 4335  python metric/metric_distribution.py --metricdir='../metric-matlab/videoset/vo-v4-2-resnet-base_lr-0.01-snapshot-2000-display-1--batch-2_1514260519_usesnapshot_1514034705_snapshot-_iter_72000_snapshot-_iter_454000_threshold0' --outputdir='../metric_distribution' --metricname='auc_jud'
+ 4336  top
+ 4337  nvidia-smi
+ 4338  python metric/metric_distribution.py --metricdir='../metric-matlab/videoset/vo-v4-2-resnet-base_lr-0.01-snapshot-2000-display-1--batch-2_1514260519_usesnapshot_1514034705_snapshot-_iter_72000_snapshot-_iter_454000_threshold0' --outputdir='../metric_distribution' --metricname='auc_jud'
+ 4339  bash metric/metric_distribution.sh vo-v4-2-resnet-base_lr-0.01-snapshot-2000-display-1--batch-2_1514260519_usesnapshot_1514034705_snapshot-_iter_72000_snapshot-_iter_454000_threshold0
+ 4340  vim metric/metric_distribution.sh 
+ 4341  bash metric/metric_distribution.sh vo-v4-2-resnet-base_lr-0.01-snapshot-2000-display-1--batch-2_1514260519_usesnapshot_1514034705_snapshot-_iter_72000_snapshot-_iter_454000_threshold0
+ 4342  vim metric/metric_distribution.sh 
+ 4343  bash metric/metric_distribution.sh vo-v4-2-resnet-base_lr-0.01-snapshot-2000-display-1--batch-2_1514260519_usesnapshot_1514034705_snapshot-_iter_72000_snapshot-_iter_454000_threshold0
+ 4344  bash metric/metric_distribution.sh ../metric-matlab/videoset/vo-v4-2-resnet-base_lr-0.01-snapshot-2000-display-1--batch-2_1514260519_usesnapshot_1514034705_snapshot-_iter_72000_snapshot-_iter_454000_threshold0
+ 4345  bash metric/metric_distribution.sh ../metric-matlab/videoset/vo-v4-2-resnet-base_lr-0.01-snapshot-2000-display-1--batch-2_1514260519_usesnapshot_1514034705_snapshot-_iter_72000_snapshot-_iter_96000_threshold0
+ 4346  bash metric/metric_distribution.sh ../metric-matlab/videoset/vo-v4-2-snapshot-2000-display-1-fulldens-batch-8_1514129167_snapshot-_iter_28000_threshold0 && bash metric/metric_distribution.sh ../metric-matlab/videoset/vo-v4-2-snapshot-2000-display-1-fulldens-batch-8_1514129167 &&  bash metric/metric_distribution.sh ../metric-matlab/videoset/vo-v4-2-resnet-catfeat-snapshot-2000-display-1--batch-2_1514034491_snapshot-_iter_72000_threshold0 && bash metric/metric_distribution.sh ../metric-matlab/videoset/vo-v4-2-snapshot-999999-display-1-ledovSet-batch-8_1513764025_snapshot-11250_threshold0
+ 4347  nvidia-smi
+ 4348  top
+ 4349  python ss_test_video.py
+ 4350  source set_env.sh ../C3D-v1.1-kldloss/ 6
+ 4351  nvidia-smi
+ 4352  python ss_test_video.py
+ 4353  clear
+ 4354  python ss_test_video.py
+ 4355  df -h
+ 4356  cd /data/sunnycia/SaliencyDataset/Video
+ 4357  cd GAZECOM/
+ 4358  ls
+ 4359  unzip movies-m2t.zip 
+ 4360  mkdir movies && mv *m2t movies
+ 4361  mkdir gaze && cd gaze && unzip ../gaze.zip
+ 4362  mkdir images && cd images && unzip ../static-images.zip 
+ 4363  cd ..
+ 4364  cd /data/sunnycia/SaliencyDataset/Video/GAZECOM
+ 4365  mkdir images && cd images && unzip ../static-images.zip 
+ 4366  top
+ 4367  nvidia-smi
+ 4368  top
+ 4369  nvidia-smi
+ 4370  top
+ 4371  cd /data/sunnycia/saliency_on_videoset/Train/scripts
+ 4372  nvidia-smi
+ 4373  source set_env.sh ../C3D-v1.1 0
+ 4374  python ss_test_video.py 
+ 4375  top
+ 4376  nvidia-smi
+ 4377  top
+ 4378  nvidia-smi
+ 4379  top
+ 4380  nvidi-asmi
+ 4381  cd pwd/saliency_on_videoset/Train/scripts
+ 4382  python utils/gen_density.py --sigma=32 --fixation_base='/data/sunnycia/SaliencyDataset/Video/DIEM/fixation_map/image' --density_base='/data/sunnycia/SaliencyDataset/Video/DIEM/density/image' --fixationtype='image'
+ 4383  cd pwd/saliency_on_videoset/_Train/
+ 4384  ls
+ 4385  git clone https://github.com/ZhaofanQiu/pseudo-3d-residual-networks.git
+ 4386  cd ../Train/scripts/
+ 4387  ls
+ 4388  cd ..
+ 4389  ls
+ 4390  cp /data/sunnycia/saliency_on_videoset/_Train/pseudo-3d-residual-networks/caffe_add_layers/src/*.cpp caffe-master/src/caffe/layers/
+ 4391  cp /data/sunnycia/saliency_on_videoset/_Train/pseudo-3d-residual-networks/caffe_add_layers/src/*.cu caffe-master/src/caffe/layers/
+ 4392  cp /data/sunnycia/saliency_on_videoset/_Train/pseudo-3d-residual-networks/caffe_add_layers/include/*.hpp caffe-master/include/caffe/layers/
+ 4393  cd caffe-master/
+ 4394  ls
+ 4395  make clean
+ 4396  cp /data/sunnycia/saliency_on_videoset/_Train/pseudo-3d-residual-networks/caffe_add_layers/caffe.proto src/caffe/proto/
+ 4397  make clean && make -j8 all && make pycaffe
+ 4398  make clean
+ 4399  make clean && make -j2 all && make pycaffe
+ 4400  make clean && make -j8 all && make pycaffe
+ 4401  vim Makefile.config
+ 4402  make clean && make -j8 all && make pycaffe
+ 4403  make -j8 pycaffe
+ 4404  make clean && make -j8 all && make -j8 pycaffe
+ 4405  cd ..
+ 4406  rm -rf caffe-master/
+ 4407  git clone https://github.com/BVLC/caffe.git
+ 4408  ls
+ 4409  cd caffe
+ 4410  make -j8 all
+ 4411  make clean
+ 4412  cd ..
+ 4413  rm -rf caffe
+ 4414  git clone https://github.com/BVLC/caffe.git
+ 4415  ls
+ 4416  unzip caffe-master.zip 
+ 4417  cd caffe-master/
+ 4418  cp Makefile.config.example Makefile.config
+ 4419  vim Makefile.config
+ 4420  make -j8 pycaffe
+ 4421  make -j8 all
+ 4422  vim Makefile.config
+ 4423  make -j8 all
+ 4424  make clean
+ 4425  make -j8 all
+ 4426  make -j8 pycaffe
+ 4427  clear
+ 4428  make clean
+ 4429  make -j16 all
+ 4430  make clean
+ 4431  make -j2 all && make -j2 pycaffe
+ 4432  make clean
+ 4433  make -j4 all && make -j4 pycaffe
+ 4434  top
+ 4435  nvidia-smi
+ 4436  top
+ 4437  ls
+ 4438  clear
+ 4439  source set_env.sh ../C3D-v1.1 4
+ 4440  nvidia-smi
+ 4441  clear
+ 4442  top
+ 4443  nvidia-smi
+ 4444  clear
+ 4445  nvidia-smi
+ 4446  clear
+ 4447  top
+ 4448  nvidia-smi
+ 4449  clear
+ 4450  source set_env.sh ../C3D-v1.1 4
+ 4451  clear
+ 4452  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-softmaxloss.prototxt' --use_model='../pretrained_model/conv3d_deepnetA_sport1m_iter_1900000_v1.1.caffemodel' --trainingbase='ledov' --batch=4 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50
+ 4453  clear && clear
+ 4454  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-softmaxloss.prototxt' --use_model='../pretrained_model/conv3d_deepnetA_sport1m_iter_1900000_v1.1.caffemodel' --trainingbase='ledov' --batch=4 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50
+ 4455  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-softmaxloss.prototxt' --use_model='../pretrained_model/conv3d_deepnetA_sport1m_iter_1900000_v1.1.caffemodel' --trainingbase='ledov' --batch=2 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50
+ 4456  clear && clear
+ 4457  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-softmaxloss.prototxt' --use_model='../pretrained_model/conv3d_deepnetA_sport1m_iter_1900000_v1.1.caffemodel' --trainingbase='ledov' --batch=2 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50
+ 4458  clear
+ 4459  top
+ 4460  nvidia-smi
+ 4461  python test_video.py --video_deploy_path='prototxt/vo-v4-2-resnet.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_26000.caffemodel' --infertype='slide' --output_type='image' --test_base='videoset' --model_code='v4-2' --videolength=16 
+ 4462  nvidia-smi
+ 4463  source set_env.sh ../C3D-v1.1 6
+ 4464  python test_video.py --video_deploy_path='prototxt/vo-v4-2-resnet.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_26000.caffemodel' --infertype='slide' --output_type='image' --test_base='videoset' --model_code='v4-2' --videolength=16 
+ 4465  matlab -nodesktop
+ 4466  cd metric/
+ 4467  matlab -nodesktop -nodisplay -nosplash -r "run("metric_video_base.m")
+ 4468  matlab -nodesktop -nodisplay -nosplash -r "run("metric_video_base.m")"
+ 4469  matlab -nodesktop -nodisplay -nosplash -r "metric_video_base.m"
+ 4470  matlab -nodesktop -nodisplay -nosplash -r "run("metric_video_base")"
+ 4471  matlab -nodesktop -nodisplay -nosplash -r "metric_video_base;exit()"
+ 4472  matlab -nodesktop -nodisplay -nosplash -r "metric_statistics;exit()"
+ 4473  matlab -nodesktop -nodisplay -nosplash
+ 4474  cd pwd/saliency_on_videoset/Train/scripts
+ 4475  source set_env.sh ../C3D-v1.1 5
+ 4476  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet.prototxt' --use_model='../pretrained_model/c3d_resnet18_sports1m_r2_iter_2800000.caffemodel' --trainingbase='ledov' --batch=2 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50
+ 4477  clear
+ 4478  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet.prototxt' --use_model='../pretrained_model/c3d_resnet18_sports1m_r2_iter_2800000.caffemodel' --trainingbase='ledov' --batch=2 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50
+ 4479  clear
+ 4480  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet.prototxt' --use_model='../pretrained_model/c3d_resnet18_sports1m_r2_iter_2800000.caffemodel' --trainingbase='ledov' --batch=2 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50
+ 4481  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet.prototxt' --use_model='../pretrained_model/c3d_resnet18_sports1m_r2_iter_2800000.caffemodel' --trainingbase='ledov' --batch=2 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50 --extramodinfo='fulldens'
+ 4482  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet-dropout.prototxto' --use_model='../pretrained_model/c3d_resnet18_sports1m_r2_iter_2800000.caffemodel' --trainingbase='ledov' --batch=2 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50 --extramodinfo='dropout_fulldens'
+ 4483  clear && clear
+ 4484  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet-dropout.prototxto' --use_model='../pretrained_model/c3d_resnet18_sports1m_r2_iter_2800000.caffemodel' --trainingbase='ledov' --batch=2 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50 --extramodinfo='dropout_fulldens'
+ 4485  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet-dropout.prototxt' --use_model='../pretrained_model/c3d_resnet18_sports1m_r2_iter_2800000.caffemodel' --trainingbase='ledov' --batch=2 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50 --extramodinfo='dropout_fulldens'
+ 4486  clear && clear
+ 4487  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet-dropout.prototxt' --use_model='../pretrained_model/c3d_resnet18_sports1m_r2_iter_2800000.caffemodel' --trainingbase='ledov' --batch=2 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50 --extramodinfo='dropout_fulldens'
+ 4488  clear && clear
+ 4489  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet-dropout.prototxt' --use_model='../pretrained_model/c3d_resnet18_sports1m_r2_iter_2800000.caffemodel' --trainingbase='ledov' --batch=2 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50 --extramodinfo='dropout_fulldens'
+ 4490  clear && clear
+ 4491  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet-dropout.prototxt' --use_model='../pretrained_model/c3d_resnet18_sports1m_r2_iter_2800000.caffemodel' --trainingbase='ledov' --batch=2 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50 --extramodinfo='dropout_fulldens'
+ 4492  python test_video.py --output_type='image' --test_base='gazecom' --model_code'v4-2' --videolength=16 --video_model_path='../training_output/salicon/vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_26000.caffemodel' --video_deploy_path='prototxt/vo-v4-2-resnet.prototxt' --infertype='slide' 
+ 4493  python test_video.py --output_type='image' --test_base='gazecom' --model_code='v4-2' --videolength=16 --video_model_path='../training_output/salicon/vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_26000.caffemodel' --video_deploy_path='prototxt/vo-v4-2-resnet.prototxt' --infertype='slide' 
+ 4494  python test_video.py --output_type='image' --test_base='gazecom' --model_code='v4-2' --videolength=16 --video_model_path='../training_output/salicon/vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_26000.caffemodel' --video_deploy_path='prototxt/vo-v4-2-resnet.prototxt' --infertype='slide' && python test_video.py --output_type='image' --test_base='gazecom' --model_code='v4-2' --videolength=16 --video_model_path='../training_output/salicon/vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_50000.caffemodel' --video_deploy_path='prototxt/vo-v4-2-resnet.prototxt' --infertype='slide' && python test_video.py --output_type='image' --test_base='gazecom' --model_code='v4-2' --videolength=16 --video_model_path='../training_output/salicon/vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_100000.caffemodel' --video_deploy_path='prototxt/vo-v4-2-resnet.prototxt' --infertype='slide'
+ 4495  nvidia-smi
+ 4496  top
+ 4497  nvidia-smi
+ 4498  top
+ 4499  nvidia-smi
+ 4500  top
+ 4501  cd pwd/saliency_on_videoset/Train/scripts/
+ 4502  python test_video.py --output_type='image' --test_base='diem' --model_code='v4-2' --videolength=16 --video_deploy_path='prototxt/vo-v4-2-resnet.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_26000.caffemodel' --infertype='slide' --inferoverlap=15
+ 4503  source set_env.sh ../C3D-v1.1 7
+ 4504  nvidia-smi
+ 4505  source set_env.sh ../C3D-v1.1 4
+ 4506  python test_video.py --output_type='image' --test_base='diem' --model_code='v4-2' --videolength=16 --video_deploy_path='prototxt/vo-v4-2-resnet.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_26000.caffemodel' --infertype='slide' --inferoverlap=15
+ 4507  clear && clear
+ 4508  python test_video.py --output_type='image' --test_base='diem' --model_code='v4-2' --videolength=16 --video_deploy_path='prototxt/vo-v4-2-resnet.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_26000.caffemodel' --infertype='slide' --inferoverlap=15
+ 4509  cd /data/sunnycia/SaliencyDataset/Video/MSU/videos
+ 4510  mv *_right.avi ../right_videos/
+ 4511  cd ../saliency_map/vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0/
+ 4512  rm -rf *_right
+ 4513  cd ../..
+ 4514  python gen_fixation.py 
+ 4515  top
+ 4516  cd /data/sunnycia/saliency_on_videoset/_Model
+ 4517  clear
+ 4518  matlab -nodesktop -nodisplay -nosplash
+ 4519  nvidia-smi
+ 4520  cd pwd/saliency_on_videoset/Train/
+ 4521  cd scripts/
+ 4522  source set_env.sh ../C3D-v1.1 3
+ 4523  clear
+ 4524  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet-dropout01.prototxt' --use_model='../pretrained_model/c3d_resnet18_sports1m_r2_iter_2800000.caffemodel' --trainingbase='ledov' --batch=2 --validiter=2000 --savemodeliter=2000 --trainingexampleprops=0.995 --plotiter=50 --extramodinfo='01dropout_fulldens'
+ 4525  python training_video_voxel_based.py --train_prototxt='prototxt/vo-v4-2-resnet-dropout.prototxt' --use_model='../pretrained_model/c3d_resnet18_sports1m_r2_iter_2800000.caffemodel' --trainingbase='ledov' --batch=2 --validiter=4000 --savemodeliter=4000 --trainingexampleprops=0.99 --plotiter=200 --extramodinfo='lowbaselr_05dropout_fulldens'
+ 4526  top
+ 4527  nvidia-smi
+ 4528  top
+ 4529  nvidia-smi
+ 4530  cd pwd/saliency_on_videoset/Train/scripts/
+ 4531  cd metric/
+ 4532  matlab -nodesktop -nodisplay
+ 4533  cd ..
+ 4534  python ss_test_video.py 
+ 4535  source set_env.sh ../C3D-v1.1
+ 4536  source set_env.sh ../C3D-v1.1 6
+ 4537  python ss_test_video.py 
+ 4538  clear && clear
+ 4539  python ss_test_video.py 
+ 4540  clear && clear
+ 4541  python ss_test_video.py 
+ 4542  nvidia-smi
+ 4543  export CUDA_VISIBLE_DEVICES=6
+ 4544  python ss_test_video.py 
+ 4545  python test_video.py --video_deploy_path='prototxt/vo-v4-2-resnet.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-resnet-dropout01-snapshot-2000-display-1-01dropout_fulldens-batch-2_1514964788/snapshot-_iter_100000.caffemodel' --infertype='slide' --output_type='image' --test_base='videoset' --model_code='v4-2' --videolength=16  
+ 4546  source set_env.sh ../C3D-v1.1 6
+ 4547  python test_video.py --video_deploy_path='prototxt/vo-v4-2-resnet.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-resnet-dropout01-snapshot-2000-display-1-01dropout_fulldens-batch-2_1514964788/snapshot-_iter_100000.caffemodel' --infertype='slide' --output_type='image' --test_base='videoset' --model_code='v4-2' --videolength=16  
+ 4548  nvidia-smi
+ 4549  python test_video.py --video_deploy_path='prototxt/vo-v4-2-resnet.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_26000.caffemodel' --infertype='slide' --output_type='image' --test_base='ledov' --model_code='v4-2' --videolength=16
+ 4550  cd pwd/saliency_on_videoset/Train/scripts/
+ 4551  source set_env.sh ../C3D-v1.1 0
+ 4552  python test_video.py --video_deploy_path='prototxt/vo-v4-2-resnet.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_26000.caffemodel' --infertype='slide' --output_type='image' --test_base='ledov' --model_code='v4-2' --videolength=16
+ 4553  python test_video.py --video_deploy_path='prototxt/vo-v4-2-resnet.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_26000.caffemodel' --infertype='slide' --output_type='image' --test_base='msu' --model_code='v4-2' --videolength=16
+ 4554  python ss_test_video.py 
+ 4555  clear && clear
+ 4556  python ss_test_video.py 
+ 4557  top
+ 4558  nvidia-smi
+ 4559  top
+ 4560  nvidia-smi
+ 4561  df -h
+ 4562  nvidia-smi
+ 4563  top
+ 4564  nvidia-smi
+ 4565  cd /data/sunnycia/SaliencyDataset/Video/GAZECOM
+ 4566  python gen_fixation.py 
+ 4567  clear && clear
+ 4568  cd -
+ 4569  python utils/gen_density.py --sigma=32 --fixation_base='/data/sunnycia/SaliencyDataset/Video/GAZECOM/fixations' --density_base='/data/sunnycia/SaliencyDataset/Video/GAZECOM/density' --fixationtype='image'
+ 4570  python utils/VorI/one2all.py --videodirbase='/data/sunnycia/SaliencyDataset/Video/GAZECOM/fixations' --alldir='/data/sunnycia/SaliencyDataset/Video/GAZECOM/All_in_one/fixations'
+ 4571  clear && clear
+ 4572  git status
+ 4573  git add --all
+ 4574  git commit -m "find best & worst batch script; metric_distribution script; small scale test script; add dropout prototxt;"
+ 4575  git push -u origin master
+ 4576  clear && clear
+ 4577  matlab -nodesktop -nosplash -nodisplay
+ 4578  cd pwd/saliency_on_videoset/Train/scripts/
+ 4579  source set_env.sh ../C3D-v1.1 7
+ 4580  python ss_test_video.py 
+ 4581  ssh qiudan@172.31.234.205
+ 4582  source set_env.sh ../C3D-v1.1 7
+ 4583  python test_video.py --video_deploy_path='prototxt/vo-v4-2-resnet.prototxt' --video_model_path='../training_output/salicon/vo-v4-2-resnet-dropout01-snapshot-2000-display-1-01dropout_fulldens-batch-2_1514964788/snapshot-_iter_150000.caffemodel' --infertype='slide' --output_type='image' --test_base='videoset' --model_code='v4-2' --videolength=16
+ 4584  cd pwd/saliency_on_videoset/Train/scripts/
+ 4585  nvidia-smi
+ 4586  source set_env.sh ../C3D-v1.1 6
+ 4587  history > history

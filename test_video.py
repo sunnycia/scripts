@@ -38,7 +38,7 @@ print "Parsing arguments..."
 args = get_arguments()
 output_type = args.output_type
 threshold = args.threshold
-
+overlap = args.inferoverlap
 if __name__ =='__main__':
     # model_base = '../training_output/salicon'
     # subdirs = [name for name in os.listdir(model_base) if os.path.isdir(os.path.join(model_base, name))]
@@ -78,8 +78,9 @@ if __name__ =='__main__':
         saliency_video_base = '/data/sunnycia/SaliencyDataset/Video/GAZECOM/saliency_video'
         saliency_map_base = '/data/sunnycia/SaliencyDataset/Video/GAZECOM/saliency_map'
 
-    model_name = os.path.dirname(video_model_path).split('/')[-1] + '_'+ os.path.basename(video_model_path).split('.')[0] + '_threshold'+str(threshold)
+    model_name = os.path.dirname(video_model_path).split('/')[-1] + '_'+ os.path.basename(video_model_path).split('.')[0] + '_threshold'+str(threshold) + '_overlap'+str(overlap)
     video_path_list = glob.glob(os.path.join(video_base, "*.*"))
+    video_path_list.sort()
     saliency_video_dir = os.path.join(saliency_video_base, model_name)
     saliency_map_dir = os.path.join(saliency_map_base, model_name)
     if output_type=='video':
@@ -106,7 +107,7 @@ if __name__ =='__main__':
 
     for video_path in video_path_list:
         vs.setup_video(video_path)
-        vs.create_saliency_video(threshold=threshold, overlap=args.inferoverlap)
+        vs.create_saliency_video(threshold=threshold, overlap=overlap)
         if args.output_type=="image":
             # video_name = os.path.basename(video_path).split('.')[0].split('_')[0]
             video_name = os.path.basename(video_path).split('.')[0]

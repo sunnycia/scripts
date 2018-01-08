@@ -15,6 +15,8 @@ def get_arguments():
     parser.add_argument('--allinone', type=bool, default=False)
     # parser.add_argument('--video_base', type=str, required=True)
     parser.add_argument('--test_base', type=str, default='videoset')
+    parser.add_argument('--modelname', type=str, default=None)
+    parser.add_argument('--protocode', type=int, default=1)
 
     parser.add_argument('--video_deploy_path',type=str,default='./prototxt/vo-v4-2-resnet.prototxt')
     parser.add_argument('--video_model_dir',type=str,default='../training_output/salicon/')
@@ -40,30 +42,56 @@ prototxt_list = [
 'prototxt/vo-v4-2.prototxt','prototxt/vo-v4-2-resnet.prototxt','prototxt/vo-v4-2-resnet-catfeat.prototxt'
 ]
 
-model_list = [
-# (1, 'vo-v4-2-resnet-snapshot-2000-display-1--batch-2_1514034705/snapshot-_iter_72000.caffemodel'),
-# (1, 'vo-v4-2-resnet-base_lr-0.01-snapshot-2000-display-1--batch-2_1514260519_usesnapshot_1514034705_snapshot-_iter_72000/snapshot-_iter_96000.caffemodel'),
-# (1, 'vo-v4-2-resnet-base_lr-0.01-snapshot-2000-display-1--batch-2_1514260519_usesnapshot_1514034705_snapshot-_iter_72000/snapshot-_iter_150000.caffemodel'),
-# (1, 'vo-v4-2-resnet-snapshot-2000-display-1-fulldens-batch-2_1514129205/snapshot-_iter_170000.caffemodel'),
-# (2, 'vo-v4-2-resnet-catfeat-snapshot-2000-display-1-fulldens-batch-2_1514129183/snapshot-_iter_168000.caffemodel'),
+model_list = []
+model_name = args.modelname
+proto_code = args.protocode
 
-# (1, 'vo-v4-2-resnet-base_lr-0.01-snapshot-2000-display-1--batch-2_1514260519_usesnapshot_1514034705_snapshot-_iter_72000/snapshot-_iter_436000.caffemodel'),
-# (1, 'vo-v4-2-resnet-snapshot-2000-display-1-fulldens-batch-2_1514129205/snapshot-_iter_454000.caffemodel'),
-# (2, 'vo-v4-2-resnet-catfeat-snapshot-2000-display-1-fulldens-batch-2_1514129183/snapshot-_iter_450000.caffemodel'),
-# (1, 'vo-v4-2-resnet-kldloss-snapshot-2000-display-1--batch-2_1514116065/snapshot-_iter_26000.caffemodel'),
-# (1, 'vo-v4-2-resnet-kldloss-snapshot-2000-display-1--batch-2_1514116065/snapshot-_iter_50000.caffemodel'),
-# (1, 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_26000.caffemodel')
-# (1, 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_20000.caffemodel'), 
-# (1, 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_30000.caffemodel'), 
-# (1, 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_80000.caffemodel'), 
-# (1, 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_100000.caffemodel')
-# (1, 'vo-v4-2-resnet-dropout01-snapshot-2000-display-1-01dropout_fulldens-batch-2_1514964788/snapshot-_iter_20000.caffemodel'), 
-# (1, 'vo-v4-2-resnet-dropout01-snapshot-2000-display-1-01dropout_fulldens-batch-2_1514964788/snapshot-_iter_26000.caffemodel'), 
-# (1, 'vo-v4-2-resnet-dropout01-snapshot-2000-display-1-01dropout_fulldens-batch-2_1514964788/snapshot-_iter_30000.caffemodel'),
-# (1, 'vo-v4-2-resnet-dropout01-snapshot-2000-display-1-01dropout_fulldens-batch-2_1514964788/snapshot-_iter_40000.caffemodel')
-# (1, 'vo-v4-2-resnet-dropout01-snapshot-2000-display-1-01dropout_fulldens-batch-2_1514964788/snapshot-_iter_50000.caffemodel')
-(1, 'vo-v4-2-resnet-dropout01-snapshot-2000-display-1-01dropout_fulldens-batch-2_1514964788/snapshot-_iter_60000.caffemodel')
+if model_name is None:
+    model_list = [
+    # (1, 'vo-v4-2-resnet-snapshot-2000-display-1--batch-2_1514034705/snapshot-_iter_72000.caffemodel'),
+    # (1, 'vo-v4-2-resnet-base_lr-0.01-snapshot-2000-display-1--batch-2_1514260519_usesnapshot_1514034705_snapshot-_iter_72000/snapshot-_iter_96000.caffemodel'),
+    # (1, 'vo-v4-2-resnet-base_lr-0.01-snapshot-2000-display-1--batch-2_1514260519_usesnapshot_1514034705_snapshot-_iter_72000/snapshot-_iter_150000.caffemodel'),
+    # (1, 'vo-v4-2-resnet-snapshot-2000-display-1-fulldens-batch-2_1514129205/snapshot-_iter_170000.caffemodel'),
+    # (2, 'vo-v4-2-resnet-catfeat-snapshot-2000-display-1-fulldens-batch-2_1514129183/snapshot-_iter_168000.caffemodel'),
+
+    # (1, 'vo-v4-2-resnet-base_lr-0.01-snapshot-2000-display-1--batch-2_1514260519_usesnapshot_1514034705_snapshot-_iter_72000/snapshot-_iter_436000.caffemodel'),
+    # (1, 'vo-v4-2-resnet-snapshot-2000-display-1-fulldens-batch-2_1514129205/snapshot-_iter_454000.caffemodel'),
+    # (2, 'vo-v4-2-resnet-catfeat-snapshot-2000-display-1-fulldens-batch-2_1514129183/snapshot-_iter_450000.caffemodel'),
+    # (1, 'vo-v4-2-resnet-kldloss-snapshot-2000-display-1--batch-2_1514116065/snapshot-_iter_26000.caffemodel'),
+    # (1, 'vo-v4-2-resnet-kldloss-snapshot-2000-display-1--batch-2_1514116065/snapshot-_iter_50000.caffemodel'),
+    # (1, 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_20000.caffemodel'), 
+    # (1, 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_26000.caffemodel')
+    # (1, 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_30000.caffemodel'), 
+    # (1, 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_40000.caffemodel'), 
+    # (1, 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_50000.caffemodel'), 
+    # (1, 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_60000.caffemodel'), 
+    # (1, 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_22000.caffemodel'), 
+    # (1, 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_24000.caffemodel'), 
+    # (1, 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_28000.caffemodel'), 
+    # (1, 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_70000.caffemodel'), 
+    # (1, 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_80000.caffemodel'), 
+    # (1, 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_90000.caffemodel'), 
+    # (1, 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_100000.caffemodel')
+    # (1, 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_110000.caffemodel'), 
+    # (1, 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787/snapshot-_iter_120000.caffemodel'), 
+    # (1, 'vo-v4-2-resnet-dropout01-snapshot-2000-display-1-01dropout_fulldens-batch-2_1514964788/snapshot-_iter_20000.caffemodel'), 
+    # (1, 'vo-v4-2-resnet-dropout01-snapshot-2000-display-1-01dropout_fulldens-batch-2_1514964788/snapshot-_iter_26000.caffemodel'), 
+    # (1, 'vo-v4-2-resnet-dropout01-snapshot-2000-display-1-01dropout_fulldens-batch-2_1514964788/snapshot-_iter_30000.caffemodel'),
+    # (1, 'vo-v4-2-resnet-dropout01-snapshot-2000-display-1-01dropout_fulldens-batch-2_1514964788/snapshot-_iter_40000.caffemodel')
+    # (1, 'vo-v4-2-resnet-dropout01-snapshot-2000-display-1-01dropout_fulldens-batch-2_1514964788/snapshot-_iter_50000.caffemodel')
+    # (1, 'vo-v4-2-resnet-dropout01-snapshot-2000-display-1-01dropout_fulldens-batch-2_1514964788/snapshot-_iter_60000.caffemodel')
+    # (1, 'vo-v4-2-resnet-dropout01-snapshot-2000-display-1-01dropout_fulldens-batch-2_1514964788/snapshot-_iter_70000.caffemodel'),
+    # (1, 'vo-v4-2-resnet-dropout01-snapshot-2000-display-1-01dropout_fulldens-batch-2_1514964788/snapshot-_iter_80000.caffemodel'),
+    # (1, 'vo-v4-2-resnet-dropout01-snapshot-2000-display-1-01dropout_fulldens-batch-2_1514964788/snapshot-_iter_90000.caffemodel'),
+    # (1, 'vo-v4-2-resnet-dropout01-snapshot-2000-display-1-01dropout_fulldens-batch-2_1514964788/snapshot-_iter_100000.caffemodel'),
+    # (1, 'vo-v4-2-resnet-dropout01-snapshot-2000-display-1-01dropout_fulldens-batch-2_1514964788/snapshot-_iter_110000.caffemodel')
+    # (1, 'vo-v4-2-resnet-dropout01-snapshot-2000-display-1-01dropout_fulldens-batch-2_1514964788/snapshot-_iter_120000.caffemodel'),
+    # (1, 'vo-v4-2-resnet-dropout01-snapshot-2000-display-1-01dropout_fulldens-batch-2_1514964788/snapshot-_iter_130000.caffemodel'),
+    # (1, 'vo-v4-2-resnet-dropout01-snapshot-2000-display-1-01dropout_fulldens-batch-2_1514964788/snapshot-_iter_140000.caffemodel'),
+    # (1, 'vo-v4-2-resnet-dropout01-snapshot-2000-display-1-01dropout_fulldens-batch-2_1514964788/snapshot-_iter_150000.caffemodel')
 ]
+else:
+    model_list.append((proto_code, model_name))
 
 # video_deploy_path = args.video_deploy_path
 

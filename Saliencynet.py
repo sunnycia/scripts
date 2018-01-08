@@ -538,7 +538,6 @@ class VoxelbasedVideoSaliencyNet:
             # output = flat_output
             assert len(raw_prediction_list) == self.video_length, str(len(raw_prediction_list))+'is not equal to '+str(self.video_length)
             
-
             if i == 0:
                 for raw_prediction in raw_prediction_list:
                     self.prediction_list.append(self.postprocess_saliency_map(raw_prediction, threshold))
@@ -546,6 +545,17 @@ class VoxelbasedVideoSaliencyNet:
                 for k in range(self.video_length-step,self.video_length):
                     raw_prediction = raw_prediction_list[k]
                     self.prediction_list.append(self.postprocess_saliency_map(raw_prediction, threshold))
+        
+        if len(self.prediction_list) != len(self.frames):
+            resd_frame_num = len(self.frames) - len(self.prediction_list)
+            cur_frame = np.array(self.frames[len(self.frames)-self.video_length:len(self.frames)])
+            input_data = np.transpose(cur_frame[None, ...], (0, 2, 1, 3 ,4))
+            self.video_net.blobs['data'].data[...] = input_data
+            self.video_net.forward()
+            raw_prediction_list = self.video_net.blobs['predict'].data[0,0,...]
+            for k in range(self.video_length-resd_frame_num, self.video_length):
+                raw_prediction = raw_prediction_list[k]
+                self.prediction_list.append(self.postprocess_saliency_map(raw_prediction))
 
         assert len(self.prediction_list) == len(self.frames),"Prediction not complete."+str(len(self.prediction_list))+' not equal to '+str(len(self.frames))
 

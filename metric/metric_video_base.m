@@ -1,5 +1,5 @@
 delete(gcp)
-matlabpool 12
+matlabpool 4
 clc;
 clear;
 metricsFolder = 'saliency/code_forMetrics'
@@ -23,9 +23,13 @@ if strcmp(dsname,'ledov')==1
     
 end
 
-if strcmp(dsname,'ledov')==1
-    base_dir='/data/sunnycia/saliency_on_videoset/Train/metric-matlab/ledov'; % for the usage of metric_statistics
+if strcmp(dsname,'msu')==1
+    base_dir='/data/sunnycia/saliency_on_videoset/Train/metric-matlab/msu'; % for the usage of metric_statistics
     
+    base_sal_dir = '/data/sunnycia/SaliencyDataset/Video/MSU/saliency_map';
+    dens_dir = strcat('/data/sunnycia/SaliencyDataset/Video/MSU/density/sigma32');
+    fixa_dir = strcat('/data/sunnycia/SaliencyDataset/Video/MSU/fixation/image');
+    all_in_one_fixation_directory = '/data/sunnycia/SaliencyDataset/Video/MSU/fixation/image_allinone';  
 end
 
 if strcmp(dsname, 'diem')==1
@@ -44,6 +48,7 @@ if strcmp(dsname, 'gazecom')==1
     fixa_dir = strcat('/data/sunnycia/SaliencyDataset/Video/GAZECOM/fixations');
     all_in_one_fixation_directory = '/data/sunnycia/SaliencyDataset/Video/GAZECOM/All_in_one/fixations'; % for computing sauc metric
 end
+
 
 % model_list = {'DENSITY';'SAM';'FANG8';'XU';'SALICON';'ITKO';'GBVS';'PQFT';'SUN';'ISEEL';'MDB';};
 % model_list = {'DENSITY';'SAM';'XU';'SALICON';'ITKO';'GBVS';'PQFT';'SUN';'ISEEL';'MDB';'FANG2';};
@@ -70,6 +75,7 @@ end
 model_list = {
 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0';
 'xu_lstm';
+'pqft';
 % 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_100000_threshold0';
 % 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_50000_threshold0';
 }
@@ -129,7 +135,11 @@ for m = 1 : length(model_list)
         densitymap_path_list = natsortfiles({densitymap_path_list.name});
         fixationmap_path_list = natsortfiles({fixationmap_path_list.name});
 
-        LengthFiles = length(fixationmap_path_list);
+        [pathstr,name,saliency_ext] = fileparts(char(saliencymap_path_list(1)));
+        [pathstr,name,density_ext] = fileparts(char(densitymap_path_list(1)));
+        [pathstr,name,fixation_ext] = fileparts(char(fixationmap_path_list(1)));
+
+        LengthFiles = length(saliencymap_path_list);
         true_length = LengthFiles - 2 * frame_cut
         saliency_score_CC = zeros(1,true_length);
         saliency_score_SIM = zeros(1,true_length);
@@ -147,16 +157,27 @@ for m = 1 : length(model_list)
         % parfor j = 1+frame_cut : LengthFiles-frame_cut
         % for j = 1 : 2
         parfor j=1:true_length
+        % for j=1:true_length
+            frame_name = saliencymap_path_list(j+frame_cut-3)
+            [pathstr, frame_prefix, saliency_ext] = fileparts(char(frame_name));
 
-            smap_path = char(fullfile(cur_sal_dir,saliencymap_path_list(j+frame_cut)))
-            density_path = char(fullfile(cur_dens_dir,densitymap_path_list(j+frame_cut)))
-            fixation_path = char(fullfile(cur_fixa_dir, fixationmap_path_list(j+frame_cut)))
+            smap_path = fullfile(cur_sal_dir,frame_name);
+            density_path = fullfile(cur_dens_dir,[frame_prefix density_ext]);
+            fixation_path = fullfile(cur_fixa_dir, [frame_prefix fixation_ext]);
+            if exist(density_path, 'file') == 0
+                continue
+            end
+            if exist(fixation_path, 'file') == 0
+                continue
+            end
+            % density_path = char(fullfile(cur_dens_dir,densitymap_path_list(j+frame_cut)))
+            % fixation_path = char(fullfile(cur_fixa_dir, fixationmap_path_list(j+frame_cut)))
             % jj = j-frame_cut;
-            fprintf('Handling %s\n', smap_path);
+            fprintf('Handling %s\n', char(smap_path));
 
-            image_saliency = imread(smap_path);
-            image_density = imread(density_path);
-            image_fixation = imread(fixation_path);
+            image_saliency = imread(char(smap_path));
+            image_density = imread(char(density_path));
+            image_fixation = imread(char(fixation_path));
             
             [row,col] = size(image_saliency);
             other_map=zeros(row, col);

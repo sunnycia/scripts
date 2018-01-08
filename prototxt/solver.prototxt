@@ -1,4 +1,4 @@
-base_lr: 0.01
+base_lr: 0.0001
 delta: 1e-6
 display: 1
 gamma: 0.0001
@@ -6,9 +6,9 @@ iter_size: 1
 lr_policy: "inv"
 momentum: 0.9
 power: 0.75
-snapshot: 2000
-snapshot_prefix: "../training_output/salicon/vo-v4-2-resnet-dropout01-snapshot-2000-display-1-01dropout_fulldens-batch-2_1514964788/snapshot-"
+snapshot: 4000
+snapshot_prefix: "../training_output/salicon/vo-v4-2-resnet-dropout-weight_decay-0.000005-base_lr-0.0001-snapshot-4000-display-1--batch-2_1515247477/snapshot-"
 solver_mode: GPU
 solver_type: ADADELTA
-train_net: "prototxt/vo-v4-2-resnet-dropout01.prototxt"
-weight_decay: 0.0005
+train_net: "prototxt/vo-v4-2-resnet-dropout.prototxt"
+weight_decay: 0.000005
