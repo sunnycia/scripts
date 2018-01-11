@@ -19,7 +19,7 @@ for j = 1 : M
     idx = rdm_idx(j);
     % fixation_path = fullfile(map_dir, fixation_list(idx).name)
     % fixationmap = imread(fixation_path)
-    load(fullfile(map_dir, fixation_list(idx).name))
+    fixation = imread(fullfile(map_dir, fixation_list(idx).name));
     fixation = imresize(fixation, size(other_map));
     % size(fixation)
     % size(other_map)

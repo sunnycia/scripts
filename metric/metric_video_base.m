@@ -1,12 +1,12 @@
 delete(gcp)
-matlabpool 4
+matlabpool 8
 clc;
 clear;
 metricsFolder = 'saliency/code_forMetrics'
 addpath(genpath(metricsFolder))
 
 frame_cut=30;
-dsname='diem';
+dsname='msu';
 
 save_base_dir = fullfile('/data/sunnycia/saliency_on_videoset/Train/metric-matlab', dsname);
 mkdir(save_base_dir);
@@ -29,7 +29,7 @@ if strcmp(dsname,'msu')==1
     base_sal_dir = '/data/sunnycia/SaliencyDataset/Video/MSU/saliency_map';
     dens_dir = strcat('/data/sunnycia/SaliencyDataset/Video/MSU/density/sigma32');
     fixa_dir = strcat('/data/sunnycia/SaliencyDataset/Video/MSU/fixation/image');
-    all_in_one_fixation_directory = '/data/sunnycia/SaliencyDataset/Video/MSU/fixation/image_allinone';  
+    all_in_one_fixation_directory = '/data/sunnycia/SaliencyDataset/Video/MSU/fixation/image_allinone/mat_allinone';  
 end
 
 if strcmp(dsname, 'diem')==1
@@ -85,7 +85,7 @@ cc_msk  = 1;
 sim_msk = 1;
 jud_msk = 1;
 bor_msk = 1;
-sauc_msk= 0;
+sauc_msk= 1;
 emd_msk = 0;
 kl_msk  = 1;
 nss_msk = 1;
