@@ -6,7 +6,7 @@ metricsFolder = 'saliency/code_forMetrics'
 addpath(genpath(metricsFolder))
 
 frame_cut=30;
-dsname='msu';
+dsname='diem';
 
 save_base_dir = fullfile('/data/sunnycia/saliency_on_videoset/Train/metric-matlab', dsname);
 mkdir(save_base_dir);
@@ -38,7 +38,7 @@ if strcmp(dsname, 'diem')==1
     base_sal_dir = '/data/sunnycia/SaliencyDataset/Video/DIEM/saliency_map';
     dens_dir = strcat('/data/sunnycia/SaliencyDataset/Video/DIEM/density/image/sigma32');
     fixa_dir = strcat('/data/sunnycia/SaliencyDataset/Video/DIEM/fixation_map/image');
-    all_in_one_fixation_directory = '/data/sunnycia/SaliencyDataset/Video/DIEM/fixation_map/All_in_one'; % for computing sauc metric
+    % all_in_one_fixation_directory = '/data/sunnycia/SaliencyDataset/Video/DIEM/fixation_map/All_in_one'; % for computing sauc metric
 end
 if strcmp(dsname, 'gazecom')==1
     base_dir='/data/sunnycia/saliency_on_videoset/Train/metric-matlab/gazecom'; % for the usage of metric_statistics
@@ -48,7 +48,14 @@ if strcmp(dsname, 'gazecom')==1
     fixa_dir = strcat('/data/sunnycia/SaliencyDataset/Video/GAZECOM/fixations');
     all_in_one_fixation_directory = '/data/sunnycia/SaliencyDataset/Video/GAZECOM/All_in_one/fixations'; % for computing sauc metric
 end
+if strcmp(dsname, 'coutort2')==1
+    base_dir='/data/sunnycia/saliency_on_videoset/Train/metric-matlab/coutort2'; % for the usage of metric_statistics
 
+    base_sal_dir = '/data/sunnycia/SaliencyDataset/Video/Coutort2/saliency_map';
+    dens_dir = strcat('/data/sunnycia/SaliencyDataset/Video/Coutort2/density/sigma32');
+    fixa_dir = strcat('/data/sunnycia/SaliencyDataset/Video/Coutort2/fixations');
+    all_in_one_fixation_directory = '/data/sunnycia/SaliencyDataset/Video/Coutort2/fixation_all'; % for computing sauc metric
+end
 
 % model_list = {'DENSITY';'SAM';'FANG8';'XU';'SALICON';'ITKO';'GBVS';'PQFT';'SUN';'ISEEL';'MDB';};
 % model_list = {'DENSITY';'SAM';'XU';'SALICON';'ITKO';'GBVS';'PQFT';'SUN';'ISEEL';'MDB';'FANG2';};

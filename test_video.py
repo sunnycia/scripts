@@ -77,7 +77,12 @@ if __name__ =='__main__':
         video_base = '/data/sunnycia/SaliencyDataset/Video/GAZECOM/videos'
         saliency_video_base = '/data/sunnycia/SaliencyDataset/Video/GAZECOM/saliency_video'
         saliency_map_base = '/data/sunnycia/SaliencyDataset/Video/GAZECOM/saliency_map'
+    elif args.test_base == 'coutort2':
+        video_base = '/data/sunnycia/SaliencyDataset/Video/Coutort2/videos'
+        saliency_video_base = '/data/sunnycia/SaliencyDataset/Video/Coutort2/saliency_video'
+        saliency_map_base = '/data/sunnycia/SaliencyDataset/Video/Coutort2/saliency_map'
 
+        
     model_name = os.path.dirname(video_model_path).split('/')[-1] + '_'+ os.path.basename(video_model_path).split('.')[0] + '_threshold'+str(threshold) + '_overlap'+str(overlap)
     video_path_list = glob.glob(os.path.join(video_base, "*.*"))
     video_path_list.sort()

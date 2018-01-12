@@ -1565,9 +1565,10 @@ layer {
     }
   }
 }
+
 layer {
   bottom: "deconv1"
-  top: "deconv1"
+  top: "bn_deconv1"
   name: "bn_deconv1"
   type: "BatchNorm"
   batch_norm_param {
@@ -1588,8 +1589,8 @@ layer {
 }
 
 layer {
-  bottom: "deconv1"
-  top: "deconv1"
+  bottom: "bn_deconv1"
+  top: "scale_deconv1"
   name: "scale_deconv1"
   type: "Scale"
   param {
@@ -1606,7 +1607,14 @@ layer {
 }
 
 layer {
-  bottom: "deconv1"
+  bottom: "scale_deconv1"
+  top: "deconv1_relu"
+  name: "deconv1_relu"
+  type: "ReLU"
+}
+
+layer {
+  bottom: "deconv1_relu"
   top: "deconv2"
   name: "deconv2"
   type: "Deconvolution3D"
@@ -1635,7 +1643,7 @@ layer {
 
 layer {
   bottom: "deconv2"
-  top: "deconv2"
+  top: "bn_deconv2"
   name: "bn_deconv2"
   type: "BatchNorm"
   batch_norm_param {
@@ -1656,8 +1664,8 @@ layer {
 }
 
 layer {
-  bottom: "deconv1"
-  top: "deconv1"
+  bottom: "bn_deconv2"
+  top: "scale_deconv2"
   name: "scale_deconv2"
   type: "Scale"
   param {
@@ -1674,7 +1682,14 @@ layer {
 }
 
 layer {
-  bottom: "deconv2"
+  bottom: "scale_deconv2"
+  top: "deconv2_relu"
+  name: "deconv2_relu"
+  type: "ReLU"
+}
+
+layer {
+  bottom: "deconv2_relu"
   top: "predict"
   name: "predict"
   type: "Deconvolution3D"

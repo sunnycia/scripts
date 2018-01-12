@@ -18,8 +18,8 @@
 % base_dir='/home/sunnycia/pwd/saliency_on_videoset/novt_result/BF_dropout/_Result_8';
 % base_dir='/home/sunnycia/pwd/saliency_on_videoset/vt_result/_Result_Threshold8';
 
-base_dir = '/data/sunnycia/saliency_on_videoset/Train/metric-matlab/diem';
-model_list = {'pqft';'xu_dupext40';'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0';}
+base_dir = '/data/sunnycia/saliency_on_videoset/Train/metric-matlab/coutort2';
+model_list = {'pqft';'xu_lstm';'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0';}
 
 model_base_dir=base_dir;
 result_base_dir=base_dir;
@@ -126,7 +126,7 @@ for i=1:length(model_list)
     resultpath = fullfile(result_base_dir, resultname);
     save(resultpath, 'result','frame_count','met_sum');
     fprintf('%s saved!\n',resultpath);
-    % result'
+    result'
     
     % break;
 end

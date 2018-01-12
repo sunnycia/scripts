@@ -86,11 +86,11 @@ image_size = args.imagesize
 update_solver_dict = {
 # 'solver_type':'RMSPROP',
 # 'display':'1',
-# 'base_lr': '0.0001',
+'base_lr': '0.0001',
 # 'weight_decay': '0.000005',
 # 'momentum': '0.95',
-'lr_policy':'"step"',
-'stepsize':'100000',
+# 'lr_policy':'"step"',
+# 'stepsize':'100000',
 'snapshot':str(args.savemodeliter)
 }
 extrainfo_dict = {
@@ -206,9 +206,6 @@ plt.ylabel('kld metric')
 
 _step=0
 while _step < max_iter:
-    if _step%validation_iter==0:
-        ##do validation
-        pass
     # print _step, 1
     # frame_data, density_data = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='training', density_length='one')
     frame_data, density_data = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='training', density_length='full')
@@ -264,7 +261,11 @@ while _step < max_iter:
         print "Doing validation...", tranining_dataset.num_validation_examples, "validation samples in total."
         tmp_cc = []; tmp_sim = []; tmp_kld = []
         data_tuple = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='validation', density_length='one')
+        index = 0
         while data_tuple is not None:
+            print index,'\r',
+            sys.stdout.flush()
+            index += 1
             valid_frame_data, valid_density_data = data_tuple
             solver.net.blobs['data'].data[...] = valid_frame_data
             solver.net.blobs['ground_truth'].data[...] = valid_density_data
@@ -284,6 +285,9 @@ while _step < max_iter:
             data_tuple = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='validation', density_length='one')
 
         # print np.mean(tmp_cc), np.mean(tmp_sim), np.mean(tmp_kld);exit()
+        tmp_cc = np.array(tmp_cc)[~np.isnan(tmp_cc)]
+        tmp_sim = np.array(tmp_sim)[~np.isnan(tmp_sim)]
+        tmp_kld = np.array(tmp_kld)[~np.isnan(tmp_kld)]
         plot_dict['x_valid'].append(_step)
         plot_dict['y_cc'].append(np.mean(tmp_cc))
         plot_dict['y_sim'].append(np.mean(tmp_sim))

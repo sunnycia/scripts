@@ -11,7 +11,7 @@ arg = parser.parse_args()
 videodir_base = arg.videodirbase
 all_dir = arg.alldir
 if not os.path.isdir(all_dir):
-    os.path.makedirs(all_dir)
+    os.makedirs(all_dir)
 
 
 frame_path_list = glob.glob(os.path.join(videodir_base, '*', '*.*'))

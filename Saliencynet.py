@@ -520,6 +520,15 @@ class VoxelbasedVideoSaliencyNet:
         #     prefix_frames = [self.frames[0] for i in range(self.video_length)]
         #     self.frames = prefix_frames + self.frames
 
+    def get_feature_map(self, layer_name):
+        cur_frame = np.array(self.frames[0:self.video_length])
+        input_data = np.transpose(cur_frame[None, ...], (0, 2, 1, 3, 4))
+        self.video_net.blobs['data'].data[...] = input_data
+        self.video_net.forward()
+
+        feature_map = self.video_net.blobs[layer_name].data[0, ...]
+        return feature_map
+
     def create_saliency_video(self,overlap=15, threshold=0):
         self.prediction_list = []
         assert overlap < self.video_length, "overlap should not greater than video_length"
