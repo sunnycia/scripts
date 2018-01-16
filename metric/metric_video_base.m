@@ -1,5 +1,5 @@
 delete(gcp)
-matlabpool 8
+matlabpool 4
 clc;
 clear;
 metricsFolder = 'saliency/code_forMetrics'
@@ -79,20 +79,28 @@ end
 % }
 % model_list = {'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0'}
 % model_list = {'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_50000_threshold0'}
+% model_list = {
+% 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0';
+% 'xu_lstm';
+% 'pqft';
+% % 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_100000_threshold0';
+% % 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_50000_threshold0';
+% }
 model_list = {
-'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0';
-'xu_lstm';
-'pqft';
-% 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_100000_threshold0';
-% 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_50000_threshold0';
-}
+    % 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0_overlap14';
+    % 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0_overlap12';
+    % 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0_overlap8';
+'pqft'
+'GBVS';
+% 'SALICON';
+};
 
 
 cc_msk  = 1;
 sim_msk = 1;
 jud_msk = 1;
 bor_msk = 1;
-sauc_msk= 1;
+sauc_msk= 0;
 emd_msk = 0;
 kl_msk  = 1;
 nss_msk = 1;
@@ -163,8 +171,8 @@ for m = 1 : length(model_list)
         t1=clock;
         % parfor j = 1+frame_cut : LengthFiles-frame_cut
         % for j = 1 : 2
+        % parfor j=1:true_length
         parfor j=1:true_length
-        % for j=1:true_length
             frame_name = saliencymap_path_list(j+frame_cut-3)
             [pathstr, frame_prefix, saliency_ext] = fileparts(char(frame_name));
 

@@ -62,7 +62,8 @@ for layer_name in layer_list:
         frames = feature_maps[channel]
         channel_index = str(channel)
 
-        for i in range(len(frames)):
+        # for i in range(len(frames)):
+        for i in range(1):
             frame = frames[i]
             # print np.min(frame), np.max(frame),
             frame = frame - np.min(frame)
@@ -77,5 +78,7 @@ for layer_name in layer_list:
             cv2.imwrite(frame_path, frame) 
 
     outputpath = os.path.join(outputdir, video_prefix + '.jpg')
-    jigsaw(imageDir=cur_dir, output_path=outputpath, stdsize=vo_size, padding=2, rdm_portion=1, arrange=(channel_num, frame_len))    
+
+
+    jigsaw(imageDir=cur_dir, output_path=outputpath, stdsize=vo_size, padding=2)    
 

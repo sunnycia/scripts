@@ -1,0 +1,93 @@
+/data/sunnycia/SaliencyDataset/Video/DIEM/saliency_map
+vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0
+duration_in_seconds: 20729.6085455
+total saliencymap: 240452
+fps: 11.5994472096
+ 
+pqft
+duration_in_seconds: 48139.8372672
+total saliencymap: 240284
+fps: 4.99137541048
+ 
+xu_lstm
+duration_in_seconds: 71930.8348937
+total saliencymap: 237920
+fps: 3.30762183355
+ 
+SALICON
+duration_in_seconds: 256901.955763
+total saliencymap: 217256
+fps: 0.845676707111
+ 
+GBVS
+duration_in_seconds: 187844.012945
+total saliencymap: 238638
+fps: 1.27040514232
+ 
+/data/sunnycia/SaliencyDataset/Video/GAZECOM/saliency_map
+vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0
+duration_in_seconds: 929.470024347
+total saliencymap: 10773
+fps: 11.5904759893
+ 
+vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_50000_threshold0
+duration_in_seconds: 939.437024593
+total saliencymap: 10773
+fps: 11.4675063022
+ 
+xu_lstm
+duration_in_seconds: 1682.19504428
+total saliencymap: 10336
+fps: 6.14435290078
+ 
+vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_100000_threshold0
+duration_in_seconds: 964.386025429
+total saliencymap: 10773
+fps: 11.1708379383
+ 
+pqft
+duration_in_seconds: 14259.8953753
+total saliencymap: 10737
+fps: 0.752950825897
+ 
+vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0_overlap8
+duration_in_seconds: 197.382005215
+total saliencymap: 6000
+fps: 30.3979078208
+ 
+SALICON
+duration_in_seconds: 16489.5954342
+total saliencymap: 10773
+fps: 0.653321061938
+ 
+GBVS
+duration_in_seconds: 3750.94209886
+total saliencymap: 10773
+fps: 2.87207845818
+ 
+/data/sunnycia/SaliencyDataset/Video/MSU/saliency_map
+vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0
+duration_in_seconds: 26315.8136928
+total saliencymap: 18360
+fps: 0.697679357907
+ 
+xu_lstm
+duration_in_seconds: 7428.0871954
+total saliencymap: 17008
+fps: 2.28968771537
+ 
+pqft
+duration_in_seconds: 33848.858891
+total saliencymap: 18278
+fps: 0.539988661327
+ 
+GBVS
+duration_in_seconds: 88684.1983345
+total saliencymap: 18340
+fps: 0.206801215374
+ 
+SALICON
+duration_in_seconds: 22728.9295983
+total saliencymap: 18360
+fps: 0.807781110878
+ 
