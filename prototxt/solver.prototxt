@@ -1,4 +1,4 @@
-base_lr: 0.0001
+base_lr: 0.01
 delta: 1e-6
 display: 100
 gamma: 0.0001
@@ -7,8 +7,8 @@ lr_policy: "inv"
 momentum: 0.9
 power: 0.75
 snapshot: 4000
-snapshot_prefix: "../training_output/salicon/vo-v4-2-resnet-fixc2-drop-weight_decay-0.000005-base_lr-0.0001-snapshot-4000-finetunefrom26k-batch-2_1515819089/snapshot-"
+snapshot_prefix: "../training_output/salicon/vo-v4-2-resnet-catfeat-highlr-snapshot-4000--batch-2_1516278046/snapshot-"
 solver_mode: GPU
 solver_type: ADADELTA
-train_net: "prototxt/vo-v4-2-resnet-fixc2-drop.prototxt"
-weight_decay: 0.000005
+train_net: "prototxt/vo-v4-2-resnet-catfeat-highlr.prototxt"
+weight_decay: 0.0005

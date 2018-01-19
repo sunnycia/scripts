@@ -1544,11 +1544,11 @@ layer {
   name: "res2b_upsample"
   type: "Deconvolution3D"
   param {
-    lr_mult: 1
+    lr_mult: 20
     decay_mult: 1
   }
   param {
-    lr_mult: 1
+    lr_mult: 10
     decay_mult: 1
   }
   convolution3d_param {
@@ -1572,11 +1572,11 @@ layer {
   name: "res3b_upsample"
   type: "Deconvolution3D"
   param {
-    lr_mult: 1
+    lr_mult: 20
     decay_mult: 1
   }
   param {
-    lr_mult: 1
+    lr_mult: 10
     decay_mult: 1
   }
   convolution3d_param {
@@ -1600,11 +1600,11 @@ layer {
   name: "res4b_upsample"
   type: "Deconvolution3D"
   param {
-    lr_mult: 1
+    lr_mult: 20
     decay_mult: 1
   }
   param {
-    lr_mult: 1
+    lr_mult: 10
     decay_mult: 1
   }
   convolution3d_param {
@@ -1629,11 +1629,11 @@ layer {
   name: "deconv1"
   type: "Deconvolution3D"
   param {
-    lr_mult: 1
+    lr_mult: 20
     decay_mult: 1
   }
   param {
-    lr_mult: 1
+    lr_mult: 10
     decay_mult: 1
   }
   convolution3d_param {
@@ -1678,11 +1678,11 @@ layer {
   name: "deconv2"
   type: "Deconvolution3D"
   param {
-    lr_mult: 1
+    lr_mult: 20
     decay_mult: 1
   }
   param {
-    lr_mult: 1
+    lr_mult: 10
     decay_mult: 1
   }
   convolution3d_param {
@@ -1728,11 +1728,11 @@ layer {
   name: "deconv3"
   type: "Deconvolution3D"
   param {
-    lr_mult: 1
+    lr_mult: 20
     decay_mult: 1
   }
   param {
-    lr_mult: 1
+    lr_mult: 10
     decay_mult: 1
   }
   convolution3d_param {
@@ -1778,11 +1778,11 @@ layer {
   name: "predict"
   type: "Deconvolution3D"
   param {
-    lr_mult: 1
+    lr_mult: 20
     decay_mult: 1
   }
   param {
-    lr_mult: 1
+    lr_mult: 10
     decay_mult: 1
   }
   convolution3d_param {

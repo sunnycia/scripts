@@ -91,3 +91,214 @@ duration_in_seconds: 22728.9295983
 total saliencymap: 18360
 fps: 0.807781110878
  
+/data/sunnycia/SaliencyDataset/Video/VideoSet/Results/saliency_map
+vo-v4-2-resnet-snapshot-2000-display-1-fulldens-batch-2_1514129205_snapshot-_iter_474000_threshold0
+duration_in_seconds: 15187.7413998
+total saliencymap: 29850
+fps: 1.96540085944
+ 
+train_kldloss-kld_weight-1000-batch-1_1509785323_usesnapshot_1509584263_snapshot-_iter_100000
+duration_in_seconds: 1379.94003654
+total saliencymap: 29850
+fps: 21.6313747045
+ 
+train_kldloss-kld_weight-10-batch-1_1509785172_usesnapshot_1509584263_snapshot-_iter_100000
+duration_in_seconds: 1419.8590374
+total saliencymap: 29850
+fps: 21.0232137232
+ 
+train_kldloss_withouteuc-batch-8_1509767391_usesnapshot_snapshot-_iter_100000
+duration_in_seconds: 1463.3180387
+total saliencymap: 29850
+fps: 20.3988464644
+ 
+train_kldloss_withouteuc-batch-8_1509584263
+duration_in_seconds: 1434.00503778
+total saliencymap: 29850
+fps: 20.8158264535
+ 
+train_kldloss_withouteuc_1509411442
+duration_in_seconds: 1436.27603769
+total saliencymap: 29850
+fps: 20.782913045
+ 
+train_kldloss-kld_weight-100-batch-1_1510102029_usesnapshot_1509584263_snapshot-_iter_100000
+duration_in_seconds: 1378.60103631
+total saliencymap: 29850
+fps: 21.6523847102
+ 
+MSFUSION
+duration_in_seconds: 4118.25410843
+total saliencymap: 29850
+fps: 7.24821713621
+ 
+uncertainty
+duration_in_seconds: 2449.20006442
+total saliencymap: 29850
+fps: 12.1876527907
+ 
+UNCERTAINTY
+duration_in_seconds: 2449.20006442
+total saliencymap: 29850
+fps: 12.1876527907
+ 
+SALICON
+duration_in_seconds: 2312951.50424
+total saliencymap: 29850
+fps: 0.0129055883555
+ 
+ITKO
+duration_in_seconds: 5466.42714405
+total saliencymap: 29850
+fps: 5.46060511069
+ 
+GBVS
+duration_in_seconds: 7894.31720781
+total saliencymap: 29850
+fps: 3.78120098474
+ 
+PQFT
+duration_in_seconds: 28133.2997406
+total saliencymap: 29410
+fps: 1.04538039516
+ 
+SAM
+duration_in_seconds: 1204254.0
+total saliencymap: 29850
+fps: 0.0247871296255
+ 
+ISEEL
+duration_in_seconds: 3510445.5817
+total saliencymap: 29850
+fps: 0.00850319405479
+ 
+MDB
+duration_in_seconds: 1077811.60937
+total saliencymap: 29582
+fps: 0.0274463549499
+ 
+SUN
+duration_in_seconds: 4552944.87515
+total saliencymap: 29850
+fps: 0.00655619622433
+ 
+xu
+duration_in_seconds: 2747.56707239
+total saliencymap: 7152
+fps: 2.60303017599
+ 
+vo-v1_train_kldloss_withouteuc-batch-1_1510155205
+duration_in_seconds: 1350.60503554
+total saliencymap: 29850
+fps: 22.1012059147
+ 
+vo-v3_train_kldloss_withouteuc-batch-1_1510229829
+duration_in_seconds: 1445.60203791
+total saliencymap: 29850
+fps: 20.6488364137
+ 
+vo-v1_train_kldloss_withouteuc-batch-1_1510204874
+duration_in_seconds: 1367.08303595
+total saliencymap: 29850
+fps: 21.8348112113
+ 
+vo-v2_train_kldloss_withouteuc-batch-1_1510210109
+duration_in_seconds: 1513.21404004
+total saliencymap: 29850
+fps: 19.7262245856
+ 
+v1
+duration_in_seconds: 34029.2328959
+total saliencymap: 29850
+fps: 0.877186978953
+ 
+v3
+duration_in_seconds: 16590.3324368
+total saliencymap: 29850
+fps: 1.79924061882
+ 
+FANG2
+duration_in_seconds: 489.139012814
+total saliencymap: 29850
+fps: 61.025596442
+ 
+FANG2_origin
+duration_in_seconds: 849549.128244
+total saliencymap: 29850
+fps: 0.0351362846569
+ 
+XU
+duration_in_seconds: 538709.0
+total saliencymap: 29850
+fps: 0.0554102493183
+ 
+FANG4
+duration_in_seconds: 849756.468459
+total saliencymap: 29850
+fps: 0.0351277114185
+ 
+FANG8
+duration_in_seconds: 122890.652235
+total saliencymap: 29850
+fps: 0.242898865431
+ 
+vo-v3-2_train_kldloss_withouteuc-batch-1_1513084718_snapshot-_iter_150000
+duration_in_seconds: 10017.3272636
+total saliencymap: 29850
+fps: 2.9798367583
+ 
+vo-v4-2-base_lr-0.01-snapshot-20000-display-1-batch-8_1513218849_snapshot-3000
+duration_in_seconds: 2680.9780705
+total saliencymap: 29850
+fps: 11.1339963308
+ 
+vo-v4-2-stepsize-500-lr_policy-step-base_lr-0.01-snapshot-20000-display-1-batch-8_1513221679_snapshot-31500
+duration_in_seconds: 12.1230003834
+total saliencymap: 226
+fps: 18.6422496785
+ 
+vo-v4-2-snapshot-999999-display-1-ledovSet-batch-8_1513764025_snapshot-11250_threshold0
+duration_in_seconds: 22119.6715825
+total saliencymap: 29850
+fps: 1.34947754033
+ 
+vo-v4-2-snapshot-2000-display-1--batch-8_1514033989_snapshot-_iter_20000_threshold0
+duration_in_seconds: 9593.04925251
+total saliencymap: 29850
+fps: 3.11162793125
+ 
+vo-v4-2-resnet-snapshot-2000-display-1--batch-2_1514034705_snapshot-_iter_72000_threshold0
+duration_in_seconds: 4261.45911217
+total saliencymap: 29850
+fps: 7.00464306105
+ 
+vo-v4-2-snapshot-2000-display-1-fulldens-batch-8_1514129167_snapshot-_iter_28000_threshold0
+duration_in_seconds: 26300.0336924
+total saliencymap: 29850
+fps: 1.1349795346
+ 
+vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0
+duration_in_seconds: 42878.0411286
+total saliencymap: 29850
+fps: 0.69616053379
+ 
+vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0_overlap12
+duration_in_seconds: 2381.84506273
+total saliencymap: 29850
+fps: 12.532301312
+ 
+xu_lstm
+duration_in_seconds: 9387.44124722
+total saliencymap: 31840
+fps: 3.39176556864
+ 
+vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0_overlap8
+duration_in_seconds: 20564.6705413
+total saliencymap: 29850
+fps: 1.45151851278
+ 
+vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0_overlap14
+duration_in_seconds: 2964.56807804
+total saliencymap: 29850
+fps: 10.0689204006
+ 

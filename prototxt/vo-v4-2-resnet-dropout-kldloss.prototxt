@@ -27,8 +27,8 @@ layer {
   name: "conv1"
   type: "Convolution3D"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   convolution3d_param {
     num_output: 64
@@ -55,16 +55,16 @@ layer {
     use_global_stats: false
   }
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
 }
 
@@ -74,12 +74,12 @@ layer {
   name: "scale_conv1"
   type: "Scale"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   scale_param {
     bias_term: true
@@ -100,8 +100,8 @@ layer {
   name: "res2a_branch1"
   type: "Convolution3D"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   convolution3d_param {
     num_output: 64
@@ -128,16 +128,16 @@ layer {
     use_global_stats: false
   }
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
 }
 
@@ -147,12 +147,12 @@ layer {
   name: "scale2a_branch1"
   type: "Scale"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   scale_param {
     bias_term: true
@@ -165,8 +165,8 @@ layer {
   name: "res2a_branch2a"
   type: "Convolution3D"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   convolution3d_param {
     num_output: 64
@@ -193,16 +193,16 @@ layer {
     use_global_stats: false
   }
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
 }
 
@@ -212,12 +212,12 @@ layer {
   name: "scale2a_branch2a"
   type: "Scale"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   scale_param {
     bias_term: true
@@ -237,8 +237,8 @@ layer {
   name: "res2a_branch2b"
   type: "Convolution3D"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   convolution3d_param {
     num_output: 64
@@ -265,16 +265,16 @@ layer {
     use_global_stats: false
   }
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
 }
 
@@ -284,12 +284,12 @@ layer {
   name: "scale2a_branch2b"
   type: "Scale"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   scale_param {
     bias_term: true
@@ -317,8 +317,8 @@ layer {
   name: "res2b_branch2a"
   type: "Convolution3D"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   convolution3d_param {
     num_output: 64
@@ -345,16 +345,16 @@ layer {
     use_global_stats: false
   }
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
 }
 
@@ -364,12 +364,12 @@ layer {
   name: "scale2b_branch2a"
   type: "Scale"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   scale_param {
     bias_term: true
@@ -389,8 +389,8 @@ layer {
   name: "res2b_branch2b"
   type: "Convolution3D"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   convolution3d_param {
     num_output: 64
@@ -417,16 +417,16 @@ layer {
     use_global_stats: false
   }
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
 }
 
@@ -436,12 +436,12 @@ layer {
   name: "scale2b_branch2b"
   type: "Scale"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   scale_param {
     bias_term: true
@@ -1537,92 +1537,7 @@ layer {
   type: "ReLU"
 }
 
-# ----- early feature upsample layers----
-layer {
-  bottom: "res2b"
-  top: "res2b_upsample"
-  name: "res2b_upsample"
-  type: "Deconvolution3D"
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  convolution3d_param {
-    num_output: 64
-    kernel_size: 4
-    pad: 1
-    stride: 2
-    kernel_depth: 1
-    temporal_pad: 0
-    temporal_stride: 1
-    bias_term: false
-    weight_filler {
-      type: "msra"
-    }
-  }
-}
-
-layer {
-  bottom: "res3b"
-  top: "res3b_upsample"
-  name: "res3b_upsample"
-  type: "Deconvolution3D"
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  convolution3d_param {
-    num_output: 128
-    kernel_size: 4
-    pad: 1
-    stride: 2
-    kernel_depth: 1
-    temporal_pad: 0
-    temporal_stride: 1
-    bias_term: false
-    weight_filler {
-      type: "msra"
-    }
-  }
-}
-
-layer {
-  bottom: "res4b"
-  top: "res4b_upsample"
-  name: "res4b_upsample"
-  type: "Deconvolution3D"
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  convolution3d_param {
-    num_output: 256
-    kernel_size: 4
-    pad: 1
-    stride: 2
-    kernel_depth: 1
-    temporal_pad: 0
-    temporal_stride: 1
-    bias_term: false
-    weight_filler {
-      type: "msra"
-    }
-  }
-}
-
-# ----- 3d deconvolution layers -----
+# ----- upsampling layers -----
 layer {
   bottom: "res5b"
   top: "deconv1"
@@ -1637,12 +1552,12 @@ layer {
     decay_mult: 1
   }
   convolution3d_param {
-    num_output: 256
+    num_output: 128
     kernel_size: 8
-    pad: 2
-    stride: 4
     kernel_depth: 4
+    pad: 2
     temporal_pad: 1
+    stride: 4
     temporal_stride: 2
     bias_term: false
     weight_filler {
@@ -1660,20 +1575,8 @@ layer {
   }
 }
 
-#--concat1
 layer {
-  name: "concat1"
-  type: "Concat"
-  bottom: "res4b_upsample"
   bottom: "deconv1"
-  top: "concat1"
-  concat_param{
-    axis: 1
-  }
-}
-
-layer {
-  bottom: "concat1"
   top: "deconv2"
   name: "deconv2"
   type: "Deconvolution3D"
@@ -1686,7 +1589,7 @@ layer {
     decay_mult: 1
   }
   convolution3d_param {
-    num_output: 128
+    num_output: 32
     kernel_size: 4
     kernel_depth: 4
     pad: 1
@@ -1710,70 +1613,8 @@ layer {
   }
 }
 
-#--concat2
 layer {
-  name: "concat2"
-  type: "Concat"
-  bottom: "res3b_upsample"
   bottom: "deconv2"
-  top: "concat2"
-  concat_param{
-    axis: 1
-  }
-}
-
-layer {
-  bottom: "concat2"
-  top: "deconv3"
-  name: "deconv3"
-  type: "Deconvolution3D"
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  convolution3d_param {
-    num_output: 64
-    kernel_size: 4
-    kernel_depth: 4
-    pad: 1
-    temporal_pad: 1
-    stride: 2
-    temporal_stride: 2
-    bias_term: false
-    weight_filler {
-      type: "msra"
-    }
-  }
-}
-layer {
-  name:"deconv3-dropout"
-  type:"Dropout"
-  bottom:"deconv3"
-  top:"deconv3"
-  dropout_param {
-    dropout_ratio: 0.5
-  }
-}
-
-#--concat3
-layer {
-  name: "concat3"
-  type: "Concat"
-  bottom: "res2b_upsample"
-  bottom: "deconv3"
-  top: "concat3"
-  concat_param{
-    axis: 1
-  }
-}
-
-
-layer {
-  bottom: "concat3"
   top: "predict"
   name: "predict"
   type: "Deconvolution3D"
@@ -1787,23 +1628,29 @@ layer {
   }
   convolution3d_param {
     num_output: 1
-    kernel_size: 1
-    kernel_depth: 1
-    pad: 0
-    temporal_pad: 0
-    stride: 1
-    temporal_stride: 1
+    kernel_size: 4
+    kernel_depth: 4
+    pad: 1
+    temporal_pad: 1
+    stride: 2
+    temporal_stride: 2
     bias_term: false
     weight_filler {
       type: "msra"
     }
   }
 }
+layer {
+  bottom: "predict"
+  top: "predict_relu"
+  name: "predict_relu"
+  type: "ReLU"
+}
 
 layer {
   name: "loss"
-  type: "EuclideanLoss"
-  bottom: "predict"
+  type: "KLDivLoss"
+  bottom: "predict_relu"
   bottom: "ground_truth"
   top: "loss"
 }

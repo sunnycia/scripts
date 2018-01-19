@@ -6,6 +6,7 @@ import glob
 # from PIL import Image
 import imghdr
 import os
+import random
 
 def check_prime(number): 
     # if not type(number)==int:
@@ -37,7 +38,8 @@ def jigsaw(imageDir, output_path=None, stdsize=(30, 30), padding=0, mode=cv2.IMR
     imgs = []
     delta=0
     imageList = os.listdir(imageDir)
-    imageList.sort()
+    random.shuffle(imageList)
+    # imageList.sort()
     
     file_num = len(imageList)
     for filename in imageList:
@@ -52,11 +54,8 @@ def jigsaw(imageDir, output_path=None, stdsize=(30, 30), padding=0, mode=cv2.IMR
         img_arr = cv2.imread(imagePath, mode)
         img_arr = cv2.resize(img_arr, stdsize)
         imgs.append(img_arr)
-    for i in range(delta):
-        imgs.append(patch_img)
-    img = np.concatenate(imgs, 0)
-    # cv2.imwrite("damn.jpg", img);exit()
-    print img.shape
+
+
     
     if arrange==0:
         row, col = explode_number(file_num)
@@ -67,10 +66,16 @@ def jigsaw(imageDir, output_path=None, stdsize=(30, 30), padding=0, mode=cv2.IMR
     if row*col > file_num:
         delta =  row*col - file_num
         if mode == cv2.IMREAD_GRAYSCALE:
-            patch_img = np.zeros(stdsize)
+            patch_img = np.ones(stdsize)
         else:
-            patch_img = np.zeros((stdsize[0], stdsize[1], 3))
-
+            patch_img = np.ones((stdsize[1], stdsize[0], 3))
+        patch_img *= 255
+        for i in range(delta):
+            imgs.append(patch_img)
+    print imgs[0].shape, imgs[-1].shape
+    img = np.concatenate(imgs, 0)
+    # cv2.imwrite("damn.jpg", img);exit()
+    print img.shape
     if mode == cv2.IMREAD_GRAYSCALE:
         img = img.reshape(row, col, stdsize[0], stdsize[1])
         img = img.swapaxes(1, 2).reshape(row*stdsize[0], col*stdsize[1])

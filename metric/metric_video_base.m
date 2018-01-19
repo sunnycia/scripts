@@ -92,9 +92,14 @@ model_list = {
     % 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0_overlap8';
 'pqft'
 'GBVS';
-% 'SALICON';
+'SALICON';
 };
 
+% model_list = {
+%     'overlap14';
+%     'overlap12';
+%     'overlap8';
+% }
 
 cc_msk  = 1;
 sim_msk = 1;
