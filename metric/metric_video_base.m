@@ -6,7 +6,7 @@ metricsFolder = 'saliency/code_forMetrics'
 addpath(genpath(metricsFolder))
 
 frame_cut=30;
-dsname='diem';
+dsname='videoset';
 
 save_base_dir = fullfile('/data/sunnycia/saliency_on_videoset/Train/metric-matlab', dsname);
 mkdir(save_base_dir);
@@ -90,9 +90,10 @@ model_list = {
     % 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0_overlap14';
     % 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0_overlap12';
     % 'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0_overlap8';
-'pqft'
-'GBVS';
-'SALICON';
+% 'pqft'
+% 'GBVS';
+% 'SALICON';
+'vo-v4-2-resnet-fixc2-drop-weight_decay-0.000005-base_lr-0.0001-snapshot-4000-finetunefrom26k-batch-2_1515819089_snapshot-_iter_656000_threshold0_overlap15'
 };
 
 % model_list = {

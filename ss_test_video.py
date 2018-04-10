@@ -39,7 +39,7 @@ ss_list.sort()
 print ss_list, len(ss_list);#exit()
 
 prototxt_list = [
-'prototxt/vo-v4-2.prototxt','prototxt/vo-v4-2-resnet.prototxt','prototxt/vo-v4-2-resnet-catfeat.prototxt'
+'prototxt/vo-v4-2.prototxt','prototxt/vo-v4-2-resnet.prototxt','prototxt/vo-v4-2-resnet-catfeat-bnorm.prototxt'
 ]
 
 model_list = []

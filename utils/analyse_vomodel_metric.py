@@ -289,6 +289,14 @@ for metric_name in metric_index_dict:
         # _, blend_frame = blend_video.read()
         _, metric_frame= metric_video.read()
         _, sal_frame = sal_video.read()
+        if ori_frame == None:
+            print "Cannot read", os.path.join(origin_video_dir, video_name)
+        if dens_frame == None:
+            print "Cannot read", os.path.join(origin_video_dir, video_name)
+        if sal_video == None:
+            print "Cannot read", os.path.join(origin_video_dir, video_name)
+        if metric_video == None:
+            print "Cannot read", os.path.join(origin_video_dir, video_name)
         while status:
             image_list = [cv2.addWeighted(grey2color(dens_frame, 'r'), 0.5, ori_frame, 0.5, 0), cv2.addWeighted(grey2color(dens_frame, 'r'), 0.7, grey2color(sal_frame, 'g'), 0.3, 0), cv2.addWeighted(grey2color(sal_frame, 'g'), 0.5, ori_frame, 0.5, 0), metric_frame]
             jig_frame = jigsaw(image_list)

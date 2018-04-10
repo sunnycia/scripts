@@ -58,29 +58,29 @@ if __name__ =='__main__':
 
     video_base='';saliency_video_base='';saliency_map_base=''
     if args.test_base == 'videoset':
-        video_base = '/data/sunnycia/SaliencyDataset/Video/VideoSet/Videos/videos_origin'
-        saliency_video_base = '/data/sunnycia/SaliencyDataset/Video/VideoSet/Results/saliency_video'
-        saliency_map_base = '/data/sunnycia/SaliencyDataset/Video/VideoSet/Results/saliency_map'
+        video_base = '/data/SaliencyDataset/Video/VideoSet/Videos/videos_origin'
+        saliency_video_base = '/data/SaliencyDataset/Video/VideoSet/Results/saliency_video'
+        saliency_map_base = '/data/SaliencyDataset/Video/VideoSet/Results/saliency_map'
     elif args.test_base == 'msu':
-        video_base = '/data/sunnycia/SaliencyDataset/Video/MSU/videos'
-        saliency_video_base = '/data/sunnycia/SaliencyDataset/Video/MSU/saliency_video'
-        saliency_map_base=  '/data/sunnycia/SaliencyDataset/Video/MSU/saliency_map'
+        video_base = '/data/SaliencyDataset/Video/MSU/videos'
+        saliency_video_base = '/data/SaliencyDataset/Video/MSU/saliency_video'
+        saliency_map_base=  '/data/SaliencyDataset/Video/MSU/saliency_map'
     elif args.test_base == 'ledov':
-        video_base = '/data/sunnycia/SaliencyDataset/Video/LEDOV/videos'
-        saliency_video_base = '/data/sunnycia/SaliencyDataset/Video/LEDOV/saliency_video'
-        saliency_map_base = '/data/sunnycia/SaliencyDataset/Video/LEDOV/saliency_map'
+        video_base = '/data/SaliencyDataset/Video/LEDOV/videos'
+        saliency_video_base = '/data/SaliencyDataset/Video/LEDOV/saliency_video'
+        saliency_map_base = '/data/SaliencyDataset/Video/LEDOV/saliency_map'
     elif args.test_base == 'diem':
-        video_base = '/data/sunnycia/SaliencyDataset/Video/DIEM/videos'
-        saliency_video_base = '/data/sunnycia/SaliencyDataset/Video/DIEM/saliency_video'
-        saliency_map_base = '/data/sunnycia/SaliencyDataset/Video/DIEM/saliency_map'
+        video_base = '/data/SaliencyDataset/Video/DIEM/videos'
+        saliency_video_base = '/data/SaliencyDataset/Video/DIEM/saliency_video'
+        saliency_map_base = '/data/SaliencyDataset/Video/DIEM/saliency_map'
     elif args.test_base == 'gazecom':
-        video_base = '/data/sunnycia/SaliencyDataset/Video/GAZECOM/videos'
-        saliency_video_base = '/data/sunnycia/SaliencyDataset/Video/GAZECOM/saliency_video'
-        saliency_map_base = '/data/sunnycia/SaliencyDataset/Video/GAZECOM/saliency_map'
+        video_base = '/data/SaliencyDataset/Video/GAZECOM/videos'
+        saliency_video_base = '/data/SaliencyDataset/Video/GAZECOM/saliency_video'
+        saliency_map_base = '/data/SaliencyDataset/Video/GAZECOM/saliency_map'
     elif args.test_base == 'coutort2':
-        video_base = '/data/sunnycia/SaliencyDataset/Video/Coutort2/videos'
-        saliency_video_base = '/data/sunnycia/SaliencyDataset/Video/Coutort2/saliency_video'
-        saliency_map_base = '/data/sunnycia/SaliencyDataset/Video/Coutort2/saliency_map'
+        video_base = '/data/SaliencyDataset/Video/Coutort2/videos'
+        saliency_video_base = '/data/SaliencyDataset/Video/Coutort2/saliency_video'
+        saliency_map_base = '/data/SaliencyDataset/Video/Coutort2/saliency_map'
 
         
     model_name = os.path.dirname(video_model_path).split('/')[-1] + '_'+ os.path.basename(video_model_path).split('.')[0] + '_threshold'+str(threshold) + '_overlap'+str(overlap)

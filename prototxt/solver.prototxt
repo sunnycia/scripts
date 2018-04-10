@@ -7,8 +7,8 @@ lr_policy: "inv"
 momentum: 0.9
 power: 0.75
 snapshot: 4000
-snapshot_prefix: "../training_output/salicon/vo-v4-2-resnet-catfeat-highlr-snapshot-4000--batch-2_1516278046/snapshot-"
+snapshot_prefix: "../training_output/salicon/vo-v5-sigmoid-snapshot-4000-sigmoid_activate_function-batch-2_1521887606/snapshot-"
 solver_mode: GPU
 solver_type: ADADELTA
-train_net: "prototxt/vo-v4-2-resnet-catfeat-highlr.prototxt"
+train_net: "prototxt/vo-v5-sigmoid.prototxt"
 weight_decay: 0.0005

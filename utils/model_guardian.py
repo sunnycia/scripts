@@ -4,10 +4,12 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('--modeldir', type=str, required=True)
 parser.add_argument('--modeliter', type=int, required=True)
+parser.add_argument('--protocode', type=int, default=1)
 args = parser.parse_args()
 
 model_dir = args.modeldir
 model_iter = args.modeliter
+protocode = args.protocode
 modelname_wildcard = 'snapshot-_iter_%d.caffemodel'
 
 current_index = model_iter
@@ -23,6 +25,6 @@ while True:
         continue
     print ''
     current_index += model_iter
-    cmd = 'python ss_test_video.py --modelname="%s"' % short_model_path
+    cmd = 'python ss_test_video.py --modelname="%s" --protocode=%d' % (short_model_path, protocode)
     print "Executing", cmd
     os.system(cmd)
