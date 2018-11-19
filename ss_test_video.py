@@ -5,6 +5,7 @@ from math import floor
 import glob, cv2, os, numpy as np, sys, caffe
 from utils.common import tic, toc
 from Saliencynet import FlowbasedVideoSaliencyNet, FramestackbasedVideoSaliencyNet, C3DbasedVideoSaliencyNet,VoxelbasedVideoSaliencyNet
+from Dataset import VideoDataset
 import argparse
 caffe.set_mode_gpu()
 caffe.set_device(0)
@@ -39,7 +40,7 @@ ss_list.sort()
 print ss_list, len(ss_list);#exit()
 
 prototxt_list = [
-'prototxt/vo-v4-2.prototxt','prototxt/vo-v4-2-resnet.prototxt','prototxt/vo-v4-2-resnet-catfeat-bnorm.prototxt'
+'prototxt/vo-v4-2.prototxt','prototxt/vo-v4-2-resnet.prototxt','prototxt/vo-v4-2-resnet-catfeat-bnorm.prototxt', 'prototxt/vo-v4-2-resnet-dropout.prototxt'
 ]
 
 model_list = []
@@ -89,6 +90,10 @@ if model_name is None:
     # (1, 'vo-v4-2-resnet-dropout01-snapshot-2000-display-1-01dropout_fulldens-batch-2_1514964788/snapshot-_iter_130000.caffemodel'),
     # (1, 'vo-v4-2-resnet-dropout01-snapshot-2000-display-1-01dropout_fulldens-batch-2_1514964788/snapshot-_iter_140000.caffemodel'),
     # (1, 'vo-v4-2-resnet-dropout01-snapshot-2000-display-1-01dropout_fulldens-batch-2_1514964788/snapshot-_iter_150000.caffemodel')
+    (3, 'vo-v4-2-resnet-l1loss-dropout-snapshot-4000-data_aug-batch-2_1526869047/snapshot-_iter_100000.caffemodel'),
+    (3, 'vo-v4-2-resnet-l1loss-dropout-snapshot-4000-data_aug-batch-2_1526869047/snapshot-_iter_300000.caffemodel'),
+    (3, 'vo-v4-2-resnet-l1loss-dropout-snapshot-4000-data_aug-batch-2_1526869047/snapshot-_iter_500000.caffemodel'),
+    (3, 'vo-v4-2-resnet-l1loss-dropout-snapshot-4000-data_aug-batch-2_1526869047/snapshot-_iter_700000.caffemodel')
 ]
 else:
     model_list.append((proto_code, model_name))
@@ -101,8 +106,8 @@ for prototxt_index, model in model_list:
 
     video_base='';saliency_map_base=''
     if args.test_base == 'videoset':
-        video_base = '/data/sunnycia/SaliencyDataset/Video/VideoSet/Videos/videos_origin'
-        saliency_map_base = '/data/sunnycia/SaliencyDataset/Video/VideoSet/Results/ss_saliency_map'
+        video_base = '/data/SaliencyDataset/Video/VideoSet/Videos/videos_origin'
+        saliency_map_base = '/data/SaliencyDataset/Video/VideoSet/Results/ss_saliency_map'
 
     model_name = os.path.dirname(video_model_path).split('/')[-1] + '_'+ os.path.basename(video_model_path).split('.')[0] + '_threshold'+str(threshold)
     video_path_list = glob.glob(os.path.join(video_base, "*.*"))
@@ -132,8 +137,9 @@ for prototxt_index, model in model_list:
 
     ## Evaluation
     saliency_directory = os.path.join(saliency_map_base, model_name)
-    density_directory = '/data/sunnycia/SaliencyDataset/Video/VideoSet/ImageSet/Seperate/density_fc/density-6'
-    fixation_directory = '/data/sunnycia/SaliencyDataset/Video/VideoSet/ImageSet/Seperate/fixation'
+    # density_directory = '/data/SaliencyDataset/Video/VideoSet/ImageSet/Seperate/density_fc/density-6'
+    density_directory = '/data/SaliencyDataset/Video/VideoSet/ImageSet/Seperate/density/sigma32'
+    fixation_directory = '/data/SaliencyDataset/Video/VideoSet/ImageSet/Seperate/fixation'
 
     sub_video_list = os.listdir(saliency_directory)
 

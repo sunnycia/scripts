@@ -34,12 +34,14 @@ def explode_number(number):
     if a > b:
         b, a = a, b
     return a, b
-def jigsaw(imageDir, output_path=None, stdsize=(30, 30), padding=0, mode=cv2.IMREAD_COLOR, rdm_portion=1, arrange=0):
+def jigsaw(imageDir, output_path=None, stdsize=(30, 30), padding=0, mode=cv2.IMREAD_COLOR, random=False, rdm_portion=1, arrange=0, tall_img=False):
     imgs = []
     delta=0
     imageList = os.listdir(imageDir)
-    random.shuffle(imageList)
-    # imageList.sort()
+    if random:
+        random.shuffle(imageList)
+    else:
+        imageList.sort()
     
     file_num = len(imageList)
     for filename in imageList:
@@ -55,10 +57,11 @@ def jigsaw(imageDir, output_path=None, stdsize=(30, 30), padding=0, mode=cv2.IMR
         img_arr = cv2.resize(img_arr, stdsize)
         imgs.append(img_arr)
 
-
     
     if arrange==0:
         row, col = explode_number(file_num)
+        if tall_img:
+            t = row;row=col;col=t;
     else:
         row = arrange[0]
         col = arrange[1]

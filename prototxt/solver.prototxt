@@ -7,8 +7,8 @@ lr_policy: "inv"
 momentum: 0.9
 power: 0.75
 snapshot: 4000
-snapshot_prefix: "../training_output/salicon/vo-v5-sigmoid-snapshot-4000-sigmoid_activate_function-batch-2_1521887606/snapshot-"
+snapshot_prefix: "../training_output/salicon/vo-v4-2-resnet-BNdeconv-l1loss-dropout-base_lr-0.01-snapshot-4000-resnet_addBN_2_deconv-batch-2_1529493349/snapshot-"
 solver_mode: GPU
 solver_type: ADADELTA
-train_net: "prototxt/vo-v5-sigmoid.prototxt"
+train_net: "prototxt/vo-v4-2-resnet-BNdeconv-l1loss-dropout.prototxt"
 weight_decay: 0.0005

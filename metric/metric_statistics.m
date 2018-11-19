@@ -10,7 +10,8 @@
 % result_base_dir=strcat(base_dir, num2str(dvi));
 
 % 
-% base_dir='/data/sunnycia/saliency_on_videoset/Train/metric-matlab/videoset';
+base_dir='/data/sunnycia/saliency_on_videoset/Train/metric-matlab/hdreye';
+% base_dir='/data/sunnycia/saliency_on_videoset/Train/metric-matlab/msu';
 % base_dir='/data/sunnycia/saliency_on_videoset/_Metric_results/nopar/final/_Result_1_fc_6';
 % base_dir='/home/sunnycia/pwd/saliency_on_videoset/vt_result/_Result_1';
 % base_dir='/home/sunnycia/pwd/saliency_on_videoset/novt_result/_Result_8';
@@ -18,8 +19,11 @@
 % base_dir='/home/sunnycia/pwd/saliency_on_videoset/novt_result/BF_dropout/_Result_8';
 % base_dir='/home/sunnycia/pwd/saliency_on_videoset/vt_result/_Result_Threshold8';
 
-base_dir = '/data/sunnycia/saliency_on_videoset/Train/metric-matlab/coutort2';
-model_list = {'pqft';'xu_lstm';'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0';}
+% base_dir = '/data/sunnycia/saliency_on_videoset/Train/metric-matlab/coutort2';
+% model_list = {'pqft';'xu_lstm';'vo-v4-2-resnet-dropout-snapshot-2000-display-1-dropout_fulldens-batch-2_1514857787_snapshot-_iter_26000_threshold0';}
+% model_list = {'xu_lstm', 'videoset_1527350421_9_threshold0_overlap15', 'SALICON', 'GBVS', 'uncertainty', 'FANG2', 'PQFT'}
+model_list = {'salicon', 'train_kldloss-base_lr-0snapshot-_iter_300000', 'iseel', 'SUN'}
+
 
 model_base_dir=base_dir;
 result_base_dir=base_dir;

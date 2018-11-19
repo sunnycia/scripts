@@ -15,6 +15,7 @@ def get_arguments():
     parser.add_argument('--vowildcard', type=str, default='*.*', help='Dataset length.Show/Cut')
     parser.add_argument('--imgfmt', type=str, default='jpg')
     parser.add_argument('--imgwildcard', type=str, default='frame_%s.%s', help='wildcard of save image name')
+    parser.add_argument('--zerofill', type=int, default=0, help='left zero')
     parser.add_argument('--debug', type=bool, default=False)
     parser.add_argument('--verbose', type=bool, default='True')
     return parser.parse_args()
@@ -24,6 +25,7 @@ args = get_arguments()
 vowildcard = args.vowildcard
 imgwildcard = args.imgwildcard
 imgfmt = args.imgfmt
+zerofill = args.zerofill
 
 video_base = args.videobase
 if not os.path.isdir(video_base):
@@ -50,7 +52,7 @@ for video_path in video_path_list:
     status, frame = video_capture.read()
     frame_idx = 0
     while status:
-        frame_name = imgwildcard % (str(frame_idx+1), imgfmt)
+        frame_name = imgwildcard % (str(frame_idx+1).zfill(zerofill), imgfmt)
         frame_path = os.path.join(save_dir, frame_name)
         if args.verbose:
             print "Handling",video_name, str(frame_idx), '\r',

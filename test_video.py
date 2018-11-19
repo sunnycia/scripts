@@ -11,6 +11,7 @@ import glob, cv2, os, numpy as np, sys, caffe
 from utils.common import tic, toc
 from Saliencynet import FlowbasedVideoSaliencyNet, FramestackbasedVideoSaliencyNet, C3DbasedVideoSaliencyNet,VoxelbasedVideoSaliencyNet
 import argparse
+import time
 caffe.set_mode_gpu()
 caffe.set_device(0)
 
@@ -18,30 +19,40 @@ def get_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument('--flownet_solver_prototxt', type=str, default="utils/flownet2/models/FlowNet2/FlowNet2_deploy.prototxt.template", help='flownet solver')
     parser.add_argument('--flownet_caffe_model', type=str, default="utils/flownet2/models/FlowNet2/FlowNet2_weights.caffemodel.h5", help='flownet caffe model')
-    parser.add_argument('--output_type', type=str, required=True, help='Output saliency (video) or (image)')
+    parser.add_argument('--output_type', type=str, default='image', help='Output saliency (video) or (image)')
     parser.add_argument('--allinone', type=bool, default=False)
     # parser.add_argument('--video_base', type=str, required=True)
     parser.add_argument('--test_base', type=str, required=True)
 
     # parser.add_argument('--output_dir', type=str, required=True)
     # parser.add_argument('--model_code', type=str, required=True)
-    parser.add_argument('--model_code', type=str, required=True)
-    parser.add_argument('--videolength', type=int, default=5)
-    parser.add_argument('--video_deploy_path',type=str,default='./prototxt/vo-v3_deploy.prototxt')
-    parser.add_argument('--video_model_path',type=str,default='../training_output/salicon/vo-v3_train_kldloss_withouteuc-batch-1_1510229829/snapshot-_iter_400000.caffemodel')
-    parser.add_argument('--infertype', type=str,default='slice')
-    parser.add_argument('--inferoverlap', type=int,default=15)
+    parser.add_argument('--model_code', type=str, default='v4-2')
+    parser.add_argument('--videolength', type=int, default=16)
+
+
+    parser.add_argument('--model_base_dir',type=str,default='')
+    parser.add_argument('--video_deploy_path',type=str,default='')
+    parser.add_argument('--video_model_path',type=str,default='')
+
+    parser.add_argument('--infertype', type=str,default='slide')
+    parser.add_argument('--overlap', type=int,default=8)
     parser.add_argument('--threshold', type=float, default=0)
+    parser.add_argument('--debug', type=bool, default=False)
 
     return parser.parse_args()
 print "Parsing arguments..."
 args = get_arguments()
 output_type = args.output_type
+model_base_dir = args.model_base_dir
 threshold = args.threshold
-overlap = args.inferoverlap
+overlap = args.overlap
+debug = args.debug
+
 if __name__ =='__main__':
-    # model_base = '../training_output/salicon'
+    model_base = '../training_output/salicon'
     # subdirs = [name for name in os.listdir(model_base) if os.path.isdir(os.path.join(model_base, name))]
+    
+
     flownet_deploy_path = args.flownet_solver_prototxt
     flownet_caffe_path = args.flownet_caffe_model
 
@@ -50,6 +61,13 @@ if __name__ =='__main__':
     if args.model_code=='v1':
         video_deploy_path = "./prototxt/vo-v1_deploy.prototxt"
         video_model_path = "../training_output/salicon/vo-v1_train_kldloss_withouteuc-batch-1_1510204874/snapshot-_iter_450000.caffemodel"
+    elif model_base_dir != '':
+        model_dir = os.path.join(model_base, model_base_dir)
+        
+        video_deploy_path= glob.glob(os.path.join(model_dir, 'vo*prototxt'))[0]
+        model_list = glob.glob(os.path.join(model_dir, '*.caffemodel'))
+        newest_model = max(model_list, key=os.path.getctime)
+        video_model_path=newest_model
     else:
         # video_deploy_path = "./prototxt/vo-v3_deploy.prototxt"
         # video_model_path = "../training_output/salicon/vo-v3_train_kldloss_withouteuc-batch-1_1510229829/snapshot-_iter_400000.caffemodel"
@@ -81,8 +99,16 @@ if __name__ =='__main__':
         video_base = '/data/SaliencyDataset/Video/Coutort2/videos'
         saliency_video_base = '/data/SaliencyDataset/Video/Coutort2/saliency_video'
         saliency_map_base = '/data/SaliencyDataset/Video/Coutort2/saliency_map'
-
-        
+    elif args.test_base == 'hollywood':
+        video_base = '/data/SaliencyDataset/Video/ActionInTheEye/Hollywood2/Hollywood2-actions/AVIClips'
+        saliency_video_base = '/data/SaliencyDataset/Video/ActionInTheEye/Hollywood2/saliency_video'
+        saliency_map_base = '/data/SaliencyDataset/Video/ActionInTheEye/Hollywood2/saliency_map'
+    elif args.test_base == 'dhf':
+        video_base = '/data/SaliencyDataset/Video/DHF1K/videos'
+        saliency_video_base = '/data/SaliencyDataset/Video/DHF1K/saliency_video'
+        saliency_map_base = '/data/SaliencyDataset/Video/DHF1K/saliency_map'
+    # else:
+    #     raise 
     model_name = os.path.dirname(video_model_path).split('/')[-1] + '_'+ os.path.basename(video_model_path).split('.')[0] + '_threshold'+str(threshold) + '_overlap'+str(overlap)
     video_path_list = glob.glob(os.path.join(video_base, "*.*"))
     video_path_list.sort()
@@ -110,9 +136,23 @@ if __name__ =='__main__':
     if args.model_code=='v4-2':
         vs = VoxelbasedVideoSaliencyNet(deploy_proto=video_deploy_path, caffe_model=video_model_path, video_length=16, video_size=(112,112),mean_list=[90, 98,102], infer_type=args.infertype)
 
+    total_time = 0
+    if debug:
+        video_path_list = video_path_list[:10]
     for video_path in video_path_list:
         vs.setup_video(video_path)
+        print 'Done for setup'
+        # globals()['tt'] = time.clock()
+        start_time = time.time()
         vs.create_saliency_video(threshold=threshold, overlap=overlap)
+        # interv = time.clock() - globals()['tt']
+        end_time = time.time()
+        interv = end_time - start_time
+        total_time += interv
+        if debug:
+            print interv, 'seconds costs'
+            continue
+
         if args.output_type=="image":
             # video_name = os.path.basename(video_path).split('.')[0].split('_')[0]
             video_name = os.path.basename(video_path).split('.')[0]
@@ -135,3 +175,4 @@ if __name__ =='__main__':
             vs.dump_predictions_as_video(saliency_video_path, fps)
 
         print "Done for video", video_path;#exit()
+    print total_time/len(video_path_list)

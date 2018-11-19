@@ -5,7 +5,7 @@ from Dataset import VideoDataset
 import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
-import argparse, cv2, os, glob, sys, time
+import argparse, cv2, os, glob, sys, time, shutil
 import cPickle as pkl
 import numpy as np
 import caffe
@@ -17,6 +17,8 @@ import utils.OpticalFlowToolkit.lib.flowlib as flib
 # from validation import MetricValidation
 from utils.pymetric.metrics import CC, SIM, KLdiv
 
+from make_caffe_network import trimmed_dense3d_network
+
 caffe.set_mode_gpu()
 # caffe.set_device(0)
 def get_arguments():
@@ -25,6 +27,7 @@ def get_arguments():
     parser.add_argument('--solver_prototxt', type=str, default='prototxt/solver.prototxt', help='the network prototxt')
     parser.add_argument('--use_snapshot', type=str, default='', help='Snapshot path.')
     parser.add_argument('--use_model', type=str, default='../pretrained_model/c3d_ucf101_iter_40000.caffemodel', help='Pretrained model')
+    parser.add_argument('--data_augmentation', type=bool, default=True, help='If use data augmentation techinique')
     
     parser.add_argument('--plotiter', type=int, default=50, help='training mini batch')
     parser.add_argument('--validiter', type=int, default=500, help='training mini batch')
@@ -37,6 +40,7 @@ def get_arguments():
     parser.add_argument('--overlap',type=int,default=15, help='dataset overlap')
     parser.add_argument('--batch',type=int,default=25, help='length of video')
     parser.add_argument('--imagesize', type=tuple, default=(112,112))
+    parser.add_argument('--connection', type=bool, default=False)
     
     parser.add_argument('--lastlayer', type=str, default='fc8_new')
     parser.add_argument('--staticsolver',type=bool,default=False)
@@ -50,6 +54,8 @@ args = get_arguments()
 
 pretrained_model_path= args.use_model
 snapshot_path = args.use_snapshot
+connection = args.connection
+# print connection;exit()
 #Check if snapshot exists
 if snapshot_path is not '':
     if not os.path.isfile(snapshot_path):
@@ -79,6 +85,7 @@ training_protopath = args.train_prototxt
 training_base = args.trainingbase
 video_length=args.videolength
 image_size = args.imagesize
+data_augmentation = args.data_augmentation
 """A2: Update solver prototxt"""
 # ╦ ╦┌─┐┌┬┐┌─┐┌┬┐┌─┐  ┌─┐┌─┐┬  ┬  ┬┌─┐┬─┐  ┌─┐┬─┐┌─┐┌┬┐┌─┐┌┬┐─┐ ┬┌┬┐
 # ║ ║├─┘ ││├─┤ │ ├┤   └─┐│ ││  └┐┌┘├┤ ├┬┘  ├─┘├┬┘│ │ │ │ │ │ ┌┴┬┘ │ 
@@ -86,11 +93,11 @@ image_size = args.imagesize
 update_solver_dict = {
 # 'solver_type':'RMSPROP',
 # 'display':'1',
-# 'base_lr': '0.00001',
+'base_lr': '0.01',
 # 'weight_decay': '0.000005',
 # 'momentum': '0.95',
 # 'lr_policy':'"step"',
-# 'stepsize':'100000',
+# 'stepsize':'200000',
 'snapshot':str(args.savemodeliter)
 }
 extrainfo_dict = {
@@ -118,10 +125,15 @@ snapshot_prefix = '"'+ snapshot_dirname + '/snapshot-"'
 print "snapshot will be save to", snapshot_prefix
 solverproto.sp['snapshot_prefix'] = snapshot_prefix
 
+##copy network and solver to snapshot:
+
 if args.staticsolver is True:
     pass
 else:
     solverproto.write(solver_path);
+
+shutil.copy(training_protopath, os.path.join(snapshot_dirname, os.path.basename(training_protopath)))
+shutil.copy(solver_path, os.path.join(snapshot_dirname, os.path.basename(solver_path)))
 
 # load the solver
 if 'solver_type' in update_solver_dict:
@@ -130,7 +142,10 @@ if 'solver_type' in update_solver_dict:
 else:
     solver = caffe.AdaDeltaSolver(solver_path)
 if args.use_snapshot == '':
-    solver.net.copy_from(pretrained_model_path) # untrained.caffemodel
+    if pretrained_model_path != '':
+        solver.net.copy_from(pretrained_model_path) # untrained.caffemodel
+    else:
+        pass
 else:
     solver.restore(snapshot_path)
 """End of A2"""
@@ -143,8 +158,17 @@ if training_base=='msu':
     train_frame_basedir = '/data/sunnycia/SaliencyDataset/Video/MSU/frames'
     train_density_basedir = '/data/sunnycia/SaliencyDataset/Video/MSU/density/sigma32'
 elif training_base=='ledov':
-    train_frame_basedir = '/data/sunnycia/SaliencyDataset/Video/LEDOV/frames'
-    train_density_basedir = '/data/sunnycia/SaliencyDataset/Video/LEDOV/density/sigma32'
+    train_frame_basedir = '/data/SaliencyDataset/Video/LEDOV/frames'
+    train_density_basedir = '/data/SaliencyDataset/Video/LEDOV/density/sigma32'
+elif training_base=='hollywood':
+    train_frame_basedir = '/data/SaliencyDataset/Video/ActionInTheEye/Hollywood2/frames'
+    train_density_basedir = '/data/SaliencyDataset/Video/ActionInTheEye/Hollywood2/density'
+elif training_base == 'ucf':
+    train_frame_basedir=''
+    train_density_basedir=''
+elif train_frame_basedir =='voc':
+    train_frame_basedir=''
+    train_density_basedir=''
 
 
 tranining_dataset = VideoDataset(train_frame_basedir, train_density_basedir, img_size=(112,112), bgr_mean_list=[98,102,90], sort='rgb')
@@ -208,12 +232,18 @@ _step=0
 while _step < max_iter:
     # print _step, 1
     # frame_data, density_data = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='training', density_length='one')
-    frame_data, density_data = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='training', density_length='full')
+    if connection:
+        frame_data, density_data, reference_density = tranining_dataset.get_frame_connection_c3d(mini_batch=batch, phase='training', density_length='full', data_augmentation=data_augmentation)
+    else:
+        frame_data, density_data = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='training', density_length='full', data_augmentation=data_augmentation)
 
     # print _step, 2
 
     solver.net.blobs['data'].data[...] = frame_data
     solver.net.blobs['ground_truth'].data[...] = density_data
+    if connection:
+        solver.net.blobs['reference_density'].data[...] = reference_density
+
     solver.step(1)
     # print _step, 3
 
@@ -260,7 +290,7 @@ while _step < max_iter:
     if _step % validation_iter==0:
         print "Doing validation...", tranining_dataset.num_validation_examples, "validation samples in total."
         tmp_cc = []; tmp_sim = []; tmp_kld = []
-        data_tuple = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='validation', density_length='one')
+        data_tuple = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='validation', density_length='full')
         index = 0
         while data_tuple is not None:
             print index,'\r',
@@ -282,7 +312,7 @@ while _step < max_iter:
                     tmp_cc.append(CC(pred, gt))
                     tmp_sim.append(SIM(pred, gt))
                     tmp_kld.append(KLdiv(pred, gt))
-            data_tuple = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='validation', density_length='one')
+            data_tuple = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='validation', density_length='full')
 
         # print np.mean(tmp_cc), np.mean(tmp_sim), np.mean(tmp_kld);exit()
         tmp_cc = np.array(tmp_cc)[~np.isnan(tmp_cc)]

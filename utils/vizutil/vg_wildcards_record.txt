@@ -1,0 +1,10 @@
+/data/SaliencyDataset/Video/VideoSet/ImageSet/Seperate/frames, RGB frame
+/data/SaliencyDataset/Video/VideoSet/ImageSet/Seperate/density/sigma32, Ground Truth
+/data/SaliencyDataset/Video/VideoSet/Results/saliency_map/PQFT, PQFT
+/data/SaliencyDataset/Video/VideoSet/Results/saliency_map/GBVS, GBVS
+/data/SaliencyDataset/Video/VideoSet/Results/saliency_map/Surprise, Surprise
+/data/SaliencyDataset/Video/VideoSet/Results/saliency_map/Hou, SR
+/data/SaliencyDataset/Video/VideoSet/Results/saliency_map/FANG2, UNCERTAINTY
+/data/SaliencyDataset/Video/VideoSet/Results/saliency_map/SALICON, SALICON
+/data/SaliencyDataset/Video/VideoSet/Results/saliency_map/xu_lstm, OMCNN-LSTM
+/data/SaliencyDataset/Video/VideoSet/Results/saliency_map/vo-v4-2-resnet-BNdeconv-l1loss-dropout-base_lr-0.01-snapshot-4000-resnet_addBN_2_deconv-batch-2_1529493349_snapshot-_iter_500000_threshold0_overlap8, PROPOSED

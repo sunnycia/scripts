@@ -30,6 +30,12 @@ if strcmp(dsname,'mit1003')==1
     fixa_dir = strcat('/data/sunnycia/SaliencyDataset/Image/MIT1003/fixPts');
     all_in_one_fixation_directory = '/data/sunnycia/SaliencyDataset/Image/MIT1003/fixPts-mat';
 end
+% if strcmp(dsname,'hdreye')==1
+%     sal_base = '/data/sunnycia/SaliencyDataset/Image/MIT1003/saliency';
+%     % dens_dir = strcat('/data/sunnycia/SaliencyDataset/Image/MIT1003/ALLFIXATIONMAPS');
+%     % fixa_dir = strcat('/data/sunnycia/SaliencyDataset/Image/MIT1003/fixPts');
+%     % all_in_one_fixation_directory = '/data/sunnycia/SaliencyDataset/Image/MIT1003/fixPts';
+% end
 if strcmp(dsname,'nus')==1
     % sal_base = '/data/sunnycia/SaliencyDataset/Image/MIT1003/saliency';
     % dens_dir = strcat('/data/sunnycia/SaliencyDataset/Image/MIT1003/ALLFIXATIONMAPS');

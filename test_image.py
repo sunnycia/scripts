@@ -29,7 +29,9 @@ test_img_dir_dict={
     'nctu': '/data/sunnycia/SaliencyDataset/Image/NCTU/AllTestImg/Limages',
     'msu': '/data/sunnycia/SaliencyDataset/Video/MSU/frames_allinone',
     'videoset': '/data/sunnycia/SaliencyDataset/Video/VideoSet/All_in_one/frame',
-    'mit300': '/data/sunnycia/SaliencyDataset/Image/MIT300/BenchmarkIMAGES'
+    'mit300': '/data/sunnycia/SaliencyDataset/Image/MIT300/BenchmarkIMAGES',
+    'hdreye-hdr': '/data/SaliencyDataset/Image/HDREYE/images/HDR', 
+    'hdreye-ldr': '/data/SaliencyDataset/Image/HDREYE/images/LDR-JPG'
 }
 
 if __name__ =='__main__':
@@ -57,11 +59,14 @@ if __name__ =='__main__':
         img_name = test_img_path.split('/')[-1]
         start_time = tic()
         ## Check if test_img_path is a valid image file
-        if imghdr.what(test_img_path) is None:
-            print test_img_path, "is not an image file"
-            exit()
-        saliency_map = sn.compute_saliency(test_img_path)
-        output_path = os.path.join(test_output_dir, img_name)
+        # if imghdr.what(test_img_path) is None or not test_img_path.endswith('.hdr'):
+        #     print test_img_path, "is not an image file"
+        #     exit()
+        try:
+            saliency_map = sn.compute_saliency(test_img_path)
+        except:
+            continue
+        output_path = os.path.join(test_output_dir, img_name.split('.')[0]+'.jpg')
         cv2.imwrite(output_path, saliency_map)
         duration = toc()
         print output_path, "saved. %s passed" % duration 

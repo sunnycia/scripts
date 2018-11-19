@@ -1,0 +1,7 @@
+/data/SaliencyDataset/Video/DIEM/frames, RGB frame
+/data/SaliencyDataset/Video/DIEM/density/sigma32, Ground Truth
+/data/SaliencyDataset/Video/DIEM/saliency_map/GBVS, GBVS
+/data/SaliencyDataset/Video/DIEM/saliency_map/SALICON, SALICON
+/data/SaliencyDataset/Video/DIEM/saliency_map/pqft, PQFT
+/data/SaliencyDataset/Video/DIEM/saliency_map/xu_lstm, OMCNN-LSTM
+/data/SaliencyDataset/Video/DIEM/saliency_map/vo-v4-2-resnet-BNdeconv-l1loss-dropout-base_lr-0.01-snapshot-4000-resnet_addBN_2_deconv-batch-2_1529493349_snapshot-_iter_500000_threshold0_overlap8, PROPOSED

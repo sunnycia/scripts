@@ -1,0 +1,7 @@
+/data/SaliencyDataset/Video/GAZECOM/frames, RGB frame
+/data/SaliencyDataset/Video/GAZECOM/density/sigma32, Ground Truth
+/data/SaliencyDataset/Video/GAZECOM/saliency_map/GBVS, GBVS
+/data/SaliencyDataset/Video/GAZECOM/saliency_map/SALICON, SALICON
+/data/SaliencyDataset/Video/GAZECOM/saliency_map/pqft, PQFT
+/data/SaliencyDataset/Video/GAZECOM/saliency_map/xu_lstm, OMCNN-LSTM
+/data/SaliencyDataset/Video/GAZECOM/saliency_map/videoset_1527350421_9_threshold0_overlap15, PROPOSED

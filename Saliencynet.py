@@ -4,7 +4,7 @@ import os, imageio
 import caffe
 import numpy as np, cv2
 import time
-
+import imageio
 class SaliencyNet:
     pass
 
@@ -34,7 +34,12 @@ class ImageSaliencyNet:
         return img_arr
     
     def compute_saliency(self, image_path):
-        img_arr = cv2.imread(image_path)
+        if image_path.endswith('.hdr'):
+            print 'reading hdr file', os.path.basename(image_path)
+            img_arr= np.array(imageio.imread(image_path))
+        else:
+            print 'reading ldr file', os.path.basename(image_path)
+            img_arr = cv2.imread(image_path)
         self.h, self.w, self.c = img_arr.shape # store the image's original height and width
         img_arr = self.preprocess_image(img_arr, False)
         # print img_arr.shape
