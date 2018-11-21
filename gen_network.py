@@ -11,14 +11,14 @@ from caffe.proto import caffe_pb2
 def vo_v4_2_resnet_BNdeconv_l1loss_dropout():
     pass
 
-def vo_v4_2_connect_resnet_dropout(model_name, batch, height,width,loss, phase='train'):
+def ns_v1_naive(model_name, batch, clip_length, height,width,loss, phase='train'):
     model = caffe_pb2.NetParameter()
     model.name = model_name
     nums=[2,2,2,2]
     layers = []
     data_channel=3
-    data_param_str = str(batch)+','+str(data_channel)+','+str(height)+','+str(width)
-    gt_param_str = str(batch)+',1'+','+str(height)+','+str(width)
+    data_param_str = str(batch)+','+str(data_channel)+','+str(clip_length)+','+str(height)+','+str(width)
+    gt_param_str = str(batch)+',1'+','+str(clip_length)+','+str(height)+','+str(width)
     
     layers.append(Data_python('data', ['data'], param_str=data_param_str))
     if phase=='train':
@@ -29,7 +29,7 @@ def vo_v4_2_connect_resnet_dropout(model_name, batch, height,width,loss, phase='
         raise NotImplementedError
 
     layers.append(Conv3d('conv1', 'data', 64, kernel_size=7, kernel_depth=3, stride=2,temporal_stride=1,pad=3,temporal_pad=1))
-    layers.extend(Bn_Sc('conv1', layers[-1].top[0], True))
+    layers.extend(Bn_Sc('conv1', layers[-1].top[0], False))
     layers.extend(Act('conv1', layers[-1].top[0], act_type='ReLU'))
 
     layers.extend(Res3dLayer('res2', layers[-1].top[0], nums[0], 64, stride=1, temporal_stride=1, layer_type='first'))
@@ -39,30 +39,31 @@ def vo_v4_2_connect_resnet_dropout(model_name, batch, height,width,loss, phase='
 
     ############################# upsample layers
     layers.append(Bilinear_upsample_3d('deconv1', layers[-1].top[0], 128, factor=4, temporal_factor=2))
-    layers.extend(Bn_Sc('deconv1', layers[-1].top[0]))
+    # layers.extend(Bn_Sc('deconv1', layers[-1].top[0]))
     layers.extend(Act('deconv1', layers[-1].top[0]))
     layers.append(Dropout('deconv2', layers[-1].top[0], dropout_ratio=0.5))
     layers.append(Bilinear_upsample_3d('deconv2', layers[-1].top[0], 32, factor=2, temporal_factor=2))
-    layers.extend(Bn_Sc('deconv2', layers[-1].top[0]))
+    # layers.extend(Bn_Sc('deconv2', layers[-1].top[0]))
     layers.extend(Act('deconv2', layers[-1].top[0]))
     layers.append(Dropout('deconv2', layers[-1].top[0], dropout_ratio=0.5))
     layers.append(Bilinear_upsample_3d('predict', layers[-1].top[0], 1, factor=2, temporal_factor=2))
-    layers.extend(Bn_Sc('predict', layers[-1].top[0]))
-    layers.extend(Act('predict', layers[-1].top[0]))
+    # layers.extend(Bn_Sc('predict', layers[-1].top[0]))
+    # layers.extend(Act('predict', layers[-1].top[0]))
 
     if phase=='train':
-        layers.append(Loss_python('loss', ['predict', 'gt'], loss=loss))
+        layers.extend(LossLayer('loss', ['predict', 'gt'], loss_type=loss))
     elif phase=='deploy':
         pass
     else:
         raise NotImplementedError
-
+    print layers
     model.layer.extend(layers)
     return model
 
 if __name__ =='__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--network_path', type=str, required=True, help='path of output network prototxt')
+    parser.add_argument('--clip_length', type=int)
     parser.add_argument('--height', type=int)
     parser.add_argument('--width', type=int)
     parser.add_argument('--batch', type=int, default=8)
@@ -73,15 +74,17 @@ if __name__ =='__main__':
     model_name= args.model
     model = eval(model_name)(model_name=model_name, 
                          batch=args.batch,
+                         clip_length=args.clip_length,
                          height=args.height,
                          width=args.width,
                          loss=args.loss)
-
+    print args.network_path
     with open(args.network_path, 'w') as f:
         f.write(pb.text_format.MessageToString(model))
 
     model = eval(model_name)(model_name=model_name, 
                          batch=args.batch,
+                         clip_length=args.clip_length,
                          height=args.height,
                          width=args.width,
                          loss=args.loss,

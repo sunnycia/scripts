@@ -10,6 +10,16 @@ layer {
   }
 }
 layer {
+  name: "gt"
+  type: "Python"
+  top: "gt"
+  python_param {
+    module: "CustomData"
+    layer: "CustomData"
+    param_str: "2,1,16,112,112"
+  }
+}
+layer {
   name: "conv1"
   type: "Convolution3D"
   bottom: "data"
@@ -1279,4 +1289,12 @@ layer {
     }
     temporal_pad: 1
   }
+}
+layer {
+  name: "loss"
+  type: "EuclideanLoss"
+  bottom: "predict"
+  bottom: "gt"
+  top: "loss"
+  loss_weight: 1.0
 }

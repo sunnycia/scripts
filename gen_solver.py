@@ -1,3 +1,6 @@
+import caffe
+import argparse
+import os
 
 def write_solver(solver_path,
                  net_path, 
@@ -38,13 +41,15 @@ def write_solver(solver_path,
     sovler_string.snapshot = 10000
     sovler_string.solver_mode = caffe.proto.caffe_pb2.SolverParameter.GPU  
 
+    # print solver_file
     with open(solver_file, 'w') as f:
         f.write(str(sovler_string))
 
 if __name__ == '__main__':
-    parser = ArgumentParser()
+    parser = argparse.ArgumentParser()
     parser.add_argument('--network_path', type=str,default='prototxt/train.prototxt')
     parser.add_argument('--solver_path', type=str,default='prototxt/solver.prototxt')
+    parser.add_argument('--snapshot_iter', type=int, default=5000)
     parser.add_argument('--snapshot_dir', type=str)
     parser.add_argument('--base_lr', type=float)
     parser.add_argument('--lr_policy', type=str)

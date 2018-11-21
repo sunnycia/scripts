@@ -1,4 +1,4 @@
-name: "vo_v4_2_connect_resnet_dropout"
+name: "ns_v1_naive"
 layer {
   name: "data"
   type: "Python"
@@ -7,6 +7,16 @@ layer {
     module: "CustomData"
     layer: "CustomData"
     param_str: "2,3,16,112,112"
+  }
+}
+layer {
+  name: "gt"
+  type: "Python"
+  top: "gt"
+  python_param {
+    module: "CustomData"
+    layer: "CustomData"
+    param_str: "2,1,16,112,112"
   }
 }
 layer {
@@ -1163,27 +1173,6 @@ layer {
   }
 }
 layer {
-  name: "bndeconv1"
-  type: "BatchNorm"
-  bottom: "deconv1"
-  top: "deconv1"
-}
-layer {
-  name: "scaledeconv1"
-  type: "Scale"
-  bottom: "deconv1"
-  top: "deconv1"
-  scale_param {
-    filler {
-      value: 1.0
-    }
-    bias_term: true
-    bias_filler {
-      value: 0.0
-    }
-  }
-}
-layer {
   name: "deconv1_activation"
   type: "ReLU"
   bottom: "deconv1"
@@ -1219,27 +1208,6 @@ layer {
       type: "bilinear"
     }
     temporal_pad: 1
-  }
-}
-layer {
-  name: "bndeconv2"
-  type: "BatchNorm"
-  bottom: "deconv2"
-  top: "deconv2"
-}
-layer {
-  name: "scaledeconv2"
-  type: "Scale"
-  bottom: "deconv2"
-  top: "deconv2"
-  scale_param {
-    filler {
-      value: 1.0
-    }
-    bias_term: true
-    bias_filler {
-      value: 0.0
-    }
   }
 }
 layer {
@@ -1279,4 +1247,12 @@ layer {
     }
     temporal_pad: 1
   }
+}
+layer {
+  name: "loss"
+  type: "EuclideanLoss"
+  bottom: "predict"
+  bottom: "gt"
+  top: "loss"
+  loss_weight: 1.0
 }

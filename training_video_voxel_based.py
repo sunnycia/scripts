@@ -31,7 +31,7 @@ def get_arguments():
     
     parser.add_argument('--plot_iter', type=int, default=50, help='training mini batch')
     parser.add_argument('--valid_iter', type=int, default=500, help='training mini batch')
-    parser.add_argument('--snapshot_dir', type='str', required=True, help='directory to save model and figure')
+    parser.add_argument('--snapshot_dir', type=str, required=True, help='directory to save model and figure')
     parser.add_argument('--snapshot_iter', type=int, default=5000, help='training mini batch')
     parser.add_argument('--snapshot_in_code', type=bool, default=False, help='save snapshot in code')
     
@@ -42,7 +42,7 @@ def get_arguments():
     parser.add_argument('--batch',type=int,default=25, help='training mini-batch')
     parser.add_argument('--height',type=int,default=25, help='image height')
     parser.add_argument('--width',type=int,default=25, help='image width')
-    parser.add_argument('--connection', type=bool, default=False)
+    # parser.add_argument('--connection', type=bool, default=False)
     
     parser.add_argument('--debug', type=int, default=0, help='If debug is ture, a mini set will run into training.Or a complete set will.')
     return parser.parse_args()
@@ -51,7 +51,7 @@ print "Parsing arguments..."
 args = get_arguments()
 
 snapshot_path = args.use_snapshot
-connection = args.connection
+# connection = args.connection
 
 # Check if snapshot exists
 if snapshot_path is not '':
@@ -138,26 +138,27 @@ plt.ylabel('kld metric')
 
 _step=0
 while _step < max_iter:
-    if connection:
-        frame_data, density_data, reference_density = tranining_dataset.get_frame_connection_c3d(mini_batch=batch, phase='training', density_length='full', data_augmentation=data_augmentation)
-    else:
-        frame_data, density_data = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='training', density_length='full', data_augmentation=data_augmentation)
+    # if connection:
+    #     frame_data, density_data, reference_density = tranining_dataset.get_frame_connection_c3d(mini_batch=batch, phase='training', density_length='full', data_augmentation=data_augmentation)
+    # else:
+        # frame_data, density_data = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='training', density_length='full', data_augmentation=data_augmentation)
+    frame_data, density_data = tranining_dataset.get_frame_c3d(mini_batch=batch, phase='training', density_length='full', data_augmentation=data_augmentation)
 
     solver.net.blobs['data'].data[...] = frame_data
-    solver.net.blobs['ground_truth'].data[...] = density_data
-    if connection:
-        solver.net.blobs['reference_density'].data[...] = reference_density
+    solver.net.blobs['gt'].data[...] = density_data
+    # if connection:
+    #     solver.net.blobs['reference_density'].data[...] = reference_density
 
     solver.step(1)
 
     plot_dict['x'].append(_step)
     plot_dict['y_loss'].append(solver.net.blobs['loss'].data[...].tolist())
 
-    if args.debug==1:
-        layer_list = ['predict_reshape', 'concat2']
-        for layer in layer_list:
-            data = solver.net.blobs[layer].data[...].tolist()
-            print layer, np.mean(data), np.sum(data)
+    # if args.debug==1:
+        # layer_list = ['predict_reshape', 'concat2']
+        # for layer in layer_list:
+            # data = solver.net.blobs[layer].data[...].tolist()
+            # print layer, np.mean(data), np.sum(data)
 
 
     if _step % valid_iter==0:
@@ -171,7 +172,7 @@ while _step < max_iter:
             index += 1
             valid_frame_data, valid_density_data = data_tuple
             solver.net.blobs['data'].data[...] = valid_frame_data
-            solver.net.blobs['ground_truth'].data[...] = valid_density_data
+            solver.net.blobs['gt'].data[...] = valid_density_data
             solver.net.forward()
             predictions = solver.net.blobs['predict'].data[...].tolist() # shape like this "8,1,16,112,112"
 
