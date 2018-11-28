@@ -1,6 +1,6 @@
-train_net: "./prototxt/ns_v1_naive.prototxt"
-base_lr: 0.00999999977648
-display: 50
+train_net: "./prototxt/ns_v1_3dresnet18_pyramid.prototxt"
+base_lr: 1.00000001169e-07
+display: 1
 max_iter: 1000000
 lr_policy: "inv"
 gamma: 0.000500000023749
@@ -8,5 +8,5 @@ power: 0.75
 momentum: 0.899999976158
 weight_decay: 9.99999974738e-05
 snapshot: 10000
-snapshot_prefix: "../training_output/debug_ns_v1_naive/2018112116:25:02/snapshot_"
+snapshot_prefix: "../training_output/ns_v1_3dresnet18_pyramid/2018112511:01:47/snapshot_"
 solver_mode: GPU

@@ -11,7 +11,7 @@ from caffe.proto import caffe_pb2
 def vo_v4_2_resnet_BNdeconv_l1loss_dropout():
     pass
 
-def ns_v1_naive(model_name, batch, clip_length, height,width,loss, phase='train'):
+def ns_v1_c3d_resnet18(model_name, batch, clip_length, height,width,loss, phase='train'):
     model = caffe_pb2.NetParameter()
     model.name = model_name
     nums=[2,2,2,2]
@@ -40,11 +40,11 @@ def ns_v1_naive(model_name, batch, clip_length, height,width,loss, phase='train'
     ############################# upsample layers
     layers.append(Bilinear_upsample_3d('deconv1', layers[-1].top[0], 128, factor=4, temporal_factor=2))
     # layers.extend(Bn_Sc('deconv1', layers[-1].top[0]))
-    layers.extend(Act('deconv1', layers[-1].top[0]))
+    # layers.extend(Act('deconv1', layers[-1].top[0]))
     layers.append(Dropout('deconv2', layers[-1].top[0], dropout_ratio=0.5))
     layers.append(Bilinear_upsample_3d('deconv2', layers[-1].top[0], 32, factor=2, temporal_factor=2))
     # layers.extend(Bn_Sc('deconv2', layers[-1].top[0]))
-    layers.extend(Act('deconv2', layers[-1].top[0]))
+    # layers.extend(Act('deconv2', layers[-1].top[0]))
     layers.append(Dropout('deconv2', layers[-1].top[0], dropout_ratio=0.5))
     layers.append(Bilinear_upsample_3d('predict', layers[-1].top[0], 1, factor=2, temporal_factor=2))
     # layers.extend(Bn_Sc('predict', layers[-1].top[0]))

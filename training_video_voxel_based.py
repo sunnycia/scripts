@@ -70,8 +70,8 @@ data_augmentation = args.data_augmentation
 
 solver_path = args.solver_prototxt
 
-shutil.copy(train_prototxt, os.path.join(snapshot_dir, os.path.basename(train_prototxt)))
-shutil.copy(solver_path, os.path.join(snapshot_dir, os.path.basename(solver_path)))
+# shutil.copy(train_prototxt, os.path.join(snapshot_dir, os.path.basename(train_prototxt)))
+# shutil.copy(solver_path, os.path.join(snapshot_dir, os.path.basename(solver_path)))
 
 solver = caffe.SGDSolver(solver_path)
 solver.net.copy_from(args.pretrained_model)
@@ -86,17 +86,19 @@ elif dataset=='ledov':
 elif dataset=='hollywood':
     train_frame_basedir = '/data/SaliencyDataset/Video/ActionInTheEye/Hollywood2/frames'
     train_density_basedir = '/data/SaliencyDataset/Video/ActionInTheEye/Hollywood2/density'
+elif dataset =='dhf1k':
+    train_frame_basedir='/data/SaliencyDataset/Video/DHF1K/frames'
+    train_density_basedir='/data/SaliencyDataset/Video/DHF1K/density'
 elif dataset == 'ucf':
     train_frame_basedir=''
     train_density_basedir=''
-elif train_frame_basedir =='voc':
+elif dataset =='voc':
     train_frame_basedir=''
     train_density_basedir=''
-elif train_frame_basedir =='dhf1k':
-    train_frame_basedir=''
-    train_density_basedir=''
+else: 
+    raise NotImplementedError
 tranining_dataset = VideoDataset(train_frame_basedir, train_density_basedir, img_size=(112,112), bgr_mean_list=[98,102,90], sort='rgb')
-tranining_dataset.setup_video_dataset_c3d(overlap=args.overlap, training_example_props=args.training_example_props)
+tranining_dataset.setup_video_dataset_c3d(overlap=args.overlap, training_example_props=args.training_example_props,debug=args.debug)
 
 plot_figure_dir = os.path.join(snapshot_dir, 'figure')
 if not os.path.isdir(plot_figure_dir):
@@ -121,7 +123,7 @@ plot_dict = {
 'y_sim':[], 
 'y_kld':[]
 }
- 
+
 plt.subplot(4, 1, 1)
 plt.plot(plot_dict['x'], plot_dict['y_loss'])
 plt.ylabel('loss')
@@ -174,13 +176,47 @@ while _step < max_iter:
             solver.net.blobs['data'].data[...] = valid_frame_data
             solver.net.blobs['gt'].data[...] = valid_density_data
             solver.net.forward()
-            predictions = solver.net.blobs['predict'].data[...].tolist() # shape like this "8,1,16,112,112"
+            # print solver.net.blobs;exit()
+            data = solver.net.blobs['data'].data[...].tolist() # shape like this "8,1,16,112,112"
+            gt = solver.net.blobs['gt'].data[...].tolist() # shape like this "8,1,16,112,112"
+            # conv1 = solver.net.blobs['conv1'].data[...].tolist() # shape like this "8,1,16,112,112"
+            # # conv1_activation = solver.net.blobs['conv1_activation'].data[...].tolist() # shape like this "8,1,16,112,112"
+            # res2a_branch2a = solver.net.blobs['res2a_branch2a'].data[...].tolist() # shape like this "8,1,16,112,112"
+            # res2a = solver.net.blobs['res2a'].data[...].tolist() # shape like this "8,1,16,112,112"
+            # res2b = solver.net.blobs['res2b'].data[...].tolist() # shape like this "8,1,16,112,112"
+            # res3a = solver.net.blobs['res3a'].data[...].tolist() # shape like this "8,1,16,112,112"
+            # res3b = solver.net.blobs['res3b'].data[...].tolist() # shape like this "8,1,16,112,112"
+            # res4a = solver.net.blobs['res4a'].data[...].tolist() # shape like this "8,1,16,112,112"
+            # res4b = solver.net.blobs['res4b'].data[...].tolist() # shape like this "8,1,16,112,112"
+            # res5a = solver.net.blobs['res5a'].data[...].tolist() # shape like this "8,1,16,112,112"
+            # res5b = solver.net.blobs['res5b'].data[...].tolist() # shape like this "8,1,16,112,112"
+            # deconv1 = solver.net.blobs['deconv1'].data[...].tolist() # shape like this "8,1,16,112,112"
+            # deconv2 = solver.net.blobs['deconv2'].data[...].tolist() # shape like this "8,1,16,112,112"
+            predicts = solver.net.blobs['predict'].data[...].tolist() # shape like this "8,1,16,112,112"
+            loss = solver.net.blobs['loss'].data[...].tolist()
 
+            # print 'max value data:%s, min value data:%s' %(str(np.max(data)), str(np.min(data)))
+            # print 'max value gt:%s, min value gt:%s' %(str(np.max(gt)), str(np.min(gt)))
+            # print 'max value conv1:%s, min value conv1:%s' %(str(np.max(conv1)), str(np.min(conv1)))
+            # # print 'max value conv1_activation:%s, min value conv1_activation:%s' %(str(np.max(conv1_activation)), str(np.min(conv1_activation)))
+            # print 'max value res2a_branch2a:%s, min value res2a_branch2a:%s' %(str(np.max(res2a_branch2a)), str(np.min(res2a_branch2a)))
+            # print 'max value res2a:%s, min value res2a:%s' %(str(np.max(res2a)), str(np.min(res2a)))
+            # print 'max value res2b:%s, min value res2b:%s' %(str(np.max(res2b)), str(np.min(res2b)))
+            # print 'max value res3a:%s, min value res3a:%s' %(str(np.max(res3a)), str(np.min(res3a)))
+            # print 'max value res3b:%s, min value res3b:%s' %(str(np.max(res3b)), str(np.min(res3b)))
+            # print 'max value res4a:%s, min value res4a:%s' %(str(np.max(res4a)), str(np.min(res4a)))
+            # print 'max value res4b:%s, min value res4b:%s' %(str(np.max(res4b)), str(np.min(res4b)))
+            # print 'max value res5a:%s, min value res5a:%s' %(str(np.max(res5a)), str(np.min(res5a)))
+            # print 'max value res5b:%s, min value res5b:%s' %(str(np.max(res5b)), str(np.min(res5b)))
+            # print 'max value deconv1:%s, min value deconv1:%s'%(str(np.max(deconv1)), str(np.min(deconv1)))
+            # print 'max value deconv2:%s, min value deconv2:%s'%(str(np.max(deconv2)), str(np.min(deconv2)))
+            # print 'max value predict:%s, min value predict:%s'%(str(np.max(predicts)), str(np.min(predicts)))
+            print 'loss', loss
             ##Calculating metric
-            for (prediction, ground_truth) in zip(predictions, valid_density_data):
+            for (predict, ground_truth) in zip(predicts, valid_density_data):
                 ## shape like this "1, 16, 112, 112"
-                prediction = np.array(prediction[0]);ground_truth = np.array(ground_truth[0])
-                for (pred, gt) in zip(prediction, ground_truth):
+                predict = np.array(predict[0]);ground_truth = np.array(ground_truth[0])
+                for (pred, gt) in zip(predict, ground_truth):
                     # print CC(pred, gt), SIM(pred, gt), KLdiv(pred, gt)
                     tmp_cc.append(CC(pred, gt))
                     tmp_sim.append(SIM(pred, gt))
@@ -195,6 +231,8 @@ while _step < max_iter:
         plot_dict['y_cc'].append(np.mean(tmp_cc))
         plot_dict['y_sim'].append(np.mean(tmp_sim))
         plot_dict['y_kld'].append(np.mean(tmp_kld))
+
+
 
     if _step%plot_iter==0:
         plot_xlength=500

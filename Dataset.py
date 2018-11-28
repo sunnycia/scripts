@@ -2,22 +2,22 @@ import os, glob, cv2, numpy as np
 import random
 from random import shuffle
 
-def get_frame_and_density_dir(dataset):
-    if dataset=='msu':
-        frame_basedir = '/data/sunnycia/SaliencyDataset/Video/MSU/frames'
-        density_basedir = '/data/sunnycia/SaliencyDataset/Video/MSU/density/sigma32'
-    elif dataset=='ledov':
-        frame_basedir = '/data/SaliencyDataset/Video/LEDOV/frames'
-        density_basedir = '/data/SaliencyDataset/Video/LEDOV/density/sigma32'
-    elif dataset=='hollywood':
-        frame_basedir = '/data/SaliencyDataset/Video/ActionInTheEye/Hollywood2/frames'
-        density_basedir = '/data/SaliencyDataset/Video/ActionInTheEye/Hollywood2/density'
-    elif dataset == 'videoset':
-        frame_basedir='/data/SaliencyDataset/Video/VideoSet/ImageSet/Seperate/frame'
-        density_basedir='/data/SaliencyDataset/Video/VideoSet/ImageSet/Seperate/density/sigma32'
-    else:
-        return None, None
-    return frame_basedir, density_basedir
+# def get_frame_and_density_dir(dataset):
+#     if dataset=='msu':
+#         frame_basedir = '/data/sunnycia/SaliencyDataset/Video/MSU/frames'
+#         density_basedir = '/data/sunnycia/SaliencyDataset/Video/MSU/density/sigma32'
+#     elif dataset=='ledov':
+#         frame_basedir = '/data/SaliencyDataset/Video/LEDOV/frames'
+#         density_basedir = '/data/SaliencyDataset/Video/LEDOV/density/sigma32'
+#     elif dataset=='hollywood':
+#         frame_basedir = '/data/SaliencyDataset/Video/ActionInTheEye/Hollywood2/frames'
+#         density_basedir = '/data/SaliencyDataset/Video/ActionInTheEye/Hollywood2/density'
+#     elif dataset == 'videoset':
+#         frame_basedir='/data/SaliencyDataset/Video/VideoSet/ImageSet/Seperate/frame'
+#         density_basedir='/data/SaliencyDataset/Video/VideoSet/ImageSet/Seperate/density/sigma32'
+#     else:
+#         return None, None
+#     return frame_basedir, density_basedir
 
 class StaticDataset():
     def __init__(self, frame_basedir, density_basedir, debug, img_size=(480, 288), training_example_props=0.8):
@@ -229,12 +229,17 @@ class VideoDataset():
         # self.training_tuple_list, self.validation_tuple_list=get_training_validation_sample_from_chunk(self.fold_index)
 
 
-    def setup_video_dataset_c3d(self, overlap=0, training_example_props=0.8, skip_head=10): ## skip those bad data in the previous of a video
+    def setup_video_dataset_c3d(self, overlap=0, training_example_props=0.8, skip_head=10, debug=0): ## skip those bad data in the previous of a video
         # pass
         self.tuple_list = []
         assert overlap < self.video_length, "overlap should smaller than videolength."
         step = self.video_length - overlap
-        for i in range(len(self.video_dir_list)):
+
+        if debug==1:
+            total_sample = int(0.1*len(self.video_dir_list))
+        else:
+            total_sample=  len(self.video_dir_list)
+        for i in range(total_sample):
             video_dir = self.video_dir_list[i]
             frame_list = glob.glob(os.path.join(video_dir,'*.*'))
             total_frame = len(frame_list)
@@ -244,8 +249,7 @@ class VideoDataset():
                     break
                 tup = (i,j) # video index and first frame index
                 self.tuple_list.append(tup)
-            # print self.tuple_list;exit()
-        
+
         self.num_examples = len(self.tuple_list)
         shuffle(self.tuple_list)
         self.num_training_examples = int(self.num_examples * training_example_props)
