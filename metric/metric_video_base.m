@@ -1,5 +1,5 @@
 % delete(gcp)
-pool = parpool(4)
+pool = parpool(2)
 % matlabpool 7
 clc;
 % clear;

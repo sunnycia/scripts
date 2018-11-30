@@ -1,5 +1,3 @@
-
-
 %  _______  _______  _______  _______  ___   _______  _______  ___   _______  _______ 
 % |       ||       ||   _   ||       ||   | |       ||       ||   | |       ||       |
 % |  _____||_     _||  |_|  ||_     _||   | |  _____||_     _||   | |       ||  _____|
@@ -23,12 +21,12 @@ end
 
 met_count = 6;
 
-vomat_list = dir(fullfile(save_base, '*.mat'));
+vomat_list=dir(fullfile(save_base, '*.mat'));
 met_sum=zeros(met_count,1);
 frame_count=zeros(met_count,1);
 
 for j=1:length(vomat_list)
-    vomat_path=fullfile(modeldir, vomat_list(j).name);
+    vomat_path=fullfile(save_base, vomat_list(j).name);
     load(vomat_path);
     % saliency_score([6], :) = []; % delete row 5&6, namely emd
 

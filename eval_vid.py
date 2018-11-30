@@ -100,5 +100,5 @@ for model in model_list:
             exit()
     
     # stastics
-    cmd = 'matlab -nodesktop -nosplash -nodisplay -r "addpath(\'metric_code\');save_base=\'%s\';model_name=\'%s\';metric_stastics;exit()"' % (os.path.join(save_base, model), model)
+    cmd = 'matlab -nodesktop -nosplash -nodisplay -r "addpath(\'metric\');save_base=\'%s\';model_name=\'%s\';metric_statistics;exit()"' % (os.path.join(save_base, model), model)
     os.system(cmd)
