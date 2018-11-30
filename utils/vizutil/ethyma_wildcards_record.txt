@@ -1,0 +1,9 @@
+/data/SaliencyDataset/Image/ETHyma/ETHyma_falsemap, falsemap
+/data/SaliencyDataset/Image/ETHyma/reinhard, Reinhard map
+/data/SaliencyDataset/Image/ETHyma/density, Ground Truth
+/data/SaliencyDataset/Image/ETHyma/saliency_map/reinhard/ITTIKOCH, ITTIKOCH
+/data/SaliencyDataset/Image/ETHyma/saliency_map/reinhard/GBVS, GBVS
+/data/SaliencyDataset/Image/ETHyma/saliency_map/reinhard/SALICON, SALICON
+/data/SaliencyDataset/Image/ETHyma/saliency_map/reinhard/covsal, covsal
+/data/SaliencyDataset/Image/ETHyma/saliency_map/reinhard/SAM, SAM
+/data/SaliencyDataset/Image/ETHyma/saliency_map/fusion/MINKOWSKI/MINKOWSKI-fusion-v1_single_mscale_tripleres_resnet50_2018110500:09:34_iter-120000_norm+border+center, MINKOWSKI

@@ -1,4 +1,6 @@
 history
 *.caffemodel
 *.solverstate
-
+*.pkl
+*.png
+*.mat

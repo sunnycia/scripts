@@ -1,0 +1,11 @@
+/data/SaliencyDataset/Image/HDREYE/images/falsecolor, False Color
+/data/SaliencyDataset/Image/HDREYE/images/reinhard, Reinhard map
+/data/SaliencyDataset/Image/HDREYE/density_map/HDR, Ground Truth
+/data/SaliencyDataset/Image/HDREYE/saliency_map/reinhard-toolbox/ITTIKOCH, ITTIKOCH
+/data/SaliencyDataset/Image/HDREYE/saliency_map/reinhard-toolbox/GBVS, GBVS
+/data/SaliencyDataset/Image/HDREYE/saliency_map/reinhard-toolbox/SALICON, SALICON
+/data/SaliencyDataset/Image/HDREYE/saliency_map/reinhard-toolbox/covsal, covsal
+/data/SaliencyDataset/Image/HDREYE/saliency_map/reinhard-toolbox/SAM, SAM
+/data/SaliencyDataset/Image/HDREYE/saliency_map/HDR/LBVS, LBVS
+/data/SaliencyDataset/Image/HDREYE/saliency_map/HDR/DONG/, Dong
+/data/SaliencyDataset/Image/HDREYE/saliency_map/fusion/GCW/GCW-fusion-v1_single_mscale_tripleres_resnet50_2018110500:09:34_iter-120000_norm+border+center, GCW
