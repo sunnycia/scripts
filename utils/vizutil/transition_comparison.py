@@ -55,14 +55,15 @@ random.shuffle(videoname_list)
 
 ## videoname
 # videoname = videoname_list[0]
-videoname='videoSRC155'
+videoname='videoSRC152'
 
 framename_list = []
 # for videoname in videoname_list:
 
 frame_list = os.listdir(os.path.join(dir_list[0], videoname))
 frame_number = len(frame_list)
-start_index = random.randint(0, frame_number-80)
+# start_index = random.randint(0, frame_number-80)
+start_index = 5
 end_index = start_index + samples*interval
 for i in range(start_index, end_index, interval):
     framename_list.append(frame_list[i])

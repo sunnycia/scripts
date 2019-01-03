@@ -27,7 +27,7 @@ def get_arguments():
 
     parser.add_argument('--use_snapshot', type=str, default='', help='Snapshot path.')
     parser.add_argument('--pretrained_model', type=str, default='../pretrained_model/c3d_ucf101_iter_40000.caffemodel', help='Pretrained model')
-    parser.add_argument('--data_augmentation', type=bool, default=True, help='If use data augmentation techinique')
+    parser.add_argument('--data_augmentation', type=bool, default=False, help='If use data augmentation techinique')
     
     parser.add_argument('--plot_iter', type=int, default=50, help='training mini batch')
     parser.add_argument('--valid_iter', type=int, default=500, help='training mini batch')
@@ -40,8 +40,8 @@ def get_arguments():
     parser.add_argument('--clip_length',type=int,default=16, help='length of video')
     parser.add_argument('--overlap',type=int,default=15, help='dataset overlap')
     parser.add_argument('--batch',type=int,default=25, help='training mini-batch')
-    parser.add_argument('--height',type=int,default=25, help='image height')
-    parser.add_argument('--width',type=int,default=25, help='image width')
+    parser.add_argument('--height',type=int,default=112, required=True, help='image height')
+    parser.add_argument('--width',type=int,default=112, required=True, help='image width')
     # parser.add_argument('--connection', type=bool, default=False)
     
     parser.add_argument('--debug', type=int, default=0, help='If debug is ture, a mini set will run into training.Or a complete set will.')
@@ -97,7 +97,7 @@ elif dataset =='voc':
     train_density_basedir=''
 else: 
     raise NotImplementedError
-tranining_dataset = VideoDataset(train_frame_basedir, train_density_basedir, img_size=(112,112), bgr_mean_list=[98,102,90], sort='rgb')
+tranining_dataset = VideoDataset(train_frame_basedir, train_density_basedir, img_size=(args.width,args.height), bgr_mean_list=[98,102,90], sort='rgb')
 tranining_dataset.setup_video_dataset_c3d(overlap=args.overlap, training_example_props=args.training_example_props,debug=args.debug)
 
 plot_figure_dir = os.path.join(snapshot_dir, 'figure')

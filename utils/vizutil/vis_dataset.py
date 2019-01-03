@@ -3,11 +3,13 @@ import cv2
 from random import shuffle
 from grey_to_rgb import *
 from jigsaw import *
-frame_dir = '/data/SaliencyDataset/Video/VideoSet/ImageSet/Seperate/frame'
+frame_dir = '/data/SaliencyDataset/Video/VideoSet/ImageSet/Seperate/frames'
 density_dir = '/data/SaliencyDataset/Video/VideoSet/ImageSet/Seperate/density/sigma32'
 output_path = './dataset_jigsaw.jpg'
-# video_name_list = os.listdir(frame_dir)
-video_name_list = ['videoSRC001','videoSRC017','videoSRC023','videoSRC043','videoSRC067','videoSRC152','videoSRC211']
+video_name_list = os.listdir(frame_dir)
+# video_name_list = ['videoSRC001','videoSRC017','videoSRC023','videoSRC043','videoSRC067','videoSRC152','videoSRC211', 'videoSRC115', 'videoSRC079', 'videoSRC167', 'videoSRC180', 'videoSRC119']
+video_name_list = ['videoSRC074', 'videoSRC075', 'videoSRC076', 'videoSRC045','videoSRC151', 'videoSRC158','videoSRC183','videoSRC118']
+
 shuffle(video_name_list)
 
 def get_frame_index(frame_path):
@@ -19,21 +21,23 @@ if not os.path.isdir(tmp_dir):
     os.makedirs(tmp_dir)
 else:
     shutil.rmtree(tmp_dir)
+    os.makedirs(tmp_dir)
     
 video_num = 5
 counter = 0
+frame_interv=10
 for video_name in video_name_list[:video_num]:
     frame_path_list = glob.glob(os.path.join(frame_dir, video_name, '*.*'))
     density_path_list = glob.glob(os.path.join(density_dir, video_name, '*.*'))
+    print frame_dir
 
     frame_path_list.sort(key=get_frame_index)
     density_path_list.sort(key=get_frame_index)
     
     total_frame = len(frame_path_list)
-
     for i in range(10, 101, 20):
         frame = cv2.imread(frame_path_list[i])
-        density = grey_to_rgb(cv2.imread(density_path_list[i]), 'y')
+        density = grey_to_rgb(cv2.imread(density_path_list[i]), 'r')
 
         blend = cv2.addWeighted(frame, 1.0, density, 1.0, 1.0)
         save_name = str(counter).zfill(3)+'.jpg'

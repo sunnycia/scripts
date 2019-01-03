@@ -50,9 +50,10 @@ for line in lines:
     dir_, model_name = line.split(', ')
     dir_list.append(dir_)
     model_list.append(model_name)
-print 
+print
 
 image_name_list = os.listdir(dir_list[0])
+# print image_name_list
 random.shuffle(image_name_list)
 # framename_list = []
 # for videoname in image_path_list:

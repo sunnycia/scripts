@@ -1,5 +1,5 @@
 % delete(gcp)
-pool = parpool(2)
+pool = parpool(5)
 % matlabpool 7
 clc;
 % clear;
@@ -11,9 +11,9 @@ addpath(genpath(metricsFolder))
 cc_msk  = 1;
 sim_msk = 1;
 jud_msk = 1;
-bor_msk = 1;
-kl_msk  = 1;
-nss_msk = 1;
+bor_msk = 0;
+kl_msk  = 0;
+nss_msk = 0;
 
 if ~exist('model_name', 'var')
     fprintf('model_name variable not exists\n');

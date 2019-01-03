@@ -102,10 +102,12 @@ if __name__ =='__main__':
         video_base = '/data/SaliencyDataset/Video/ActionInTheEye/Hollywood2/Hollywood2-actions/AVIClips'
         saliency_video_base = '/data/SaliencyDataset/Video/ActionInTheEye/Hollywood2/saliency_video'
         saliency_map_base = '/data/SaliencyDataset/Video/ActionInTheEye/Hollywood2/saliency_map'
-    elif args.dataset == 'dhf':
+    elif args.dataset == 'dhf1k':
         video_base = '/data/SaliencyDataset/Video/DHF1K/videos'
         saliency_video_base = '/data/SaliencyDataset/Video/DHF1K/saliency_video'
         saliency_map_base = '/data/SaliencyDataset/Video/DHF1K/saliency_map'
+    else:
+        raise NotImplementedError
     # else:
     #     raise 
     model_name = os.path.dirname(video_model_path).split('/')[-1] + '_'+ os.path.basename(video_model_path).split('.')[0] + '_threshold'+str(threshold) + '_overlap'+str(overlap)

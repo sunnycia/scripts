@@ -12,6 +12,8 @@ parser.add_argument('--output_path', type=str, required=True)
 parser.add_argument('--wildcards_record', type=str, required=True)
 parser.add_argument('--samples', type=int, default=8)
 parser.add_argument('--transition', type=int, default=3)
+parser.add_argument('--orientation', type=str, default='right', help='right or down')
+
 ###demo wildcards_record.txt path, model_name
 # /data/SaliencyDataset/Video/MSU/frames/*/*.*, RGB frame
 # /data/SaliencyDataset/Video/MSU/density/sigma32/*/*.*, Ground Truth
@@ -68,19 +70,23 @@ for videoname in videoname_list:
 
 # random.shuffle(rgb_list)
 counter = 1
-for m in range(len(dir_list)):
-    # img_array = np.array(glob.glob(dir_list[m]))[perm]
-    # print dir_list[m]
+
+if args.orientation=='right':
+    for m in range(len(dir_list)):
+        for i in range(samples):
+            img_path=os.path.join(dir_list[m], videoname_list[i], framename_list[i])
+            des_name = str(counter).zfill(5)+'.'+img_path.split('.')[-1]
+            shutil.copy(img_path, os.path.join(tmp_dir, des_name))
+
+            counter += 1
+
+elif args.orientation=='down':
     for i in range(samples):
-        img_path=os.path.join(dir_list[m], videoname_list[i], framename_list[i])
-
-        # print dir_list[m].replace('*/*.*', '%s/%s')
-        # img_path = dir_list[m].replace('*/*.*', '%s/%s') % (video_name_list[i], frame_name_list[i])
-        # img_path = img_array[i]
-        des_name = str(counter).zfill(5)+'.'+img_path.split('.')[-1]
-        shutil.copy(img_path, os.path.join(tmp_dir, des_name))
-
-        counter += 1
+        for m in range(len(dir_list)):
+            img_path=os.path.join(dir_list[m], videoname_list[i], framename_list[i])
+            des_name = str(counter).zfill(5)+'.'+img_path.split('.')[-1]
+            shutil.copy(img_path, os.path.join(tmp_dir, des_name))
+            counter += 1
 
 jigsaw(tmp_dir, output_path, stdsize=standard_size, padding=padding, tall_img=False)
 

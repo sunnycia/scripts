@@ -1,0 +1,12 @@
+train_net: "./prototxt/ns_v2_p3d_sport1m.prototxt"
+base_lr: 1.00000001169e-07
+display: 1
+max_iter: 1000000
+lr_policy: "inv"
+gamma: 0.000500000023749
+power: 0.75
+momentum: 0.899999976158
+weight_decay: 9.99999974738e-05
+snapshot: 10000
+snapshot_prefix: "snapshot/debug_ns_v2_p3d_sport1m/2018120416:27:54/snapshot_"
+solver_mode: GPU

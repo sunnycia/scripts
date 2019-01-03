@@ -55,14 +55,8 @@ elif args.dsname == 'dhf1k':
     dens_dir='/data/SaliencyDataset/Video/DHF1K/density'
     sal_base='/data/SaliencyDataset/Video/DHF1K/saliency_map_1128'
     fixa_dir='/data/SaliencyDataset/Video/DHF1K/fixation'
-# elif args.dsname == 'ucf':
-#     dens_dir=''
-#     sal_base=''
-#     fixa_dir=''
-# elif args.dsname =='voc':
-#     dens_dir=''
-#     sal_base=''
-#     fixa_dir=''
+else:
+    raise NotImplementedError
 
 save_base = os.path.join(args.metric_dir, args.dsname)
 if not os.path.isdir(save_base):
@@ -71,6 +65,8 @@ if not os.path.isdir(save_base):
 print sal_base,dens_dir,fixa_dir
 
 model_list =  [ name for name in os.listdir(sal_base) if os.path.isdir(os.path.join(sal_base, name)) ]
+
+# print sal_base, model_list;exit()
 
 for model in model_list:
     sal_dir = os.path.join(sal_base, model)
@@ -99,6 +95,7 @@ for model in model_list:
         if args.debug == 1:
             exit()
     
+for model in model_list:
     # stastics
     cmd = 'matlab -nodesktop -nosplash -nodisplay -r "addpath(\'metric\');save_base=\'%s\';model_name=\'%s\';metric_statistics;exit()"' % (os.path.join(save_base, model), model)
     os.system(cmd)
